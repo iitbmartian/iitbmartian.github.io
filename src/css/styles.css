@@ -1,0 +1,223 @@
+/******************************************
+            Importing Fonts 
+*****************************************/
+@import url("https://fonts.googleapis.com/css?family=Quicksand&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text&display=swap');
+
+/******************************************
+            Common Features 
+*****************************************/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  /* overflow-x: hidden; */
+  scroll-behavior: smooth;
+  font-family: "Lato", sans-serif;
+}
+
+.red-hat-font {
+  font-family: 'Red Hat Text', sans-serif;
+}
+
+.monserrat-font {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/**********************************************
+        Navbar Hamburger Animation
+**********************************************/
+.hamburger-animated {
+  width: 30px;
+  height: 20px;
+  position: relative;
+  margin: 0px;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: 0.5s ease-in-out;
+  -moz-transition: 0.5s ease-in-out;
+  -o-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+  cursor: pointer;
+  border: none;
+}
+
+.hamburger-animated span {
+  display: block;
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  opacity: 1;
+  left: 0;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transition: 0.25s ease-in-out;
+  -moz-transition: 0.25s ease-in-out;
+  -o-transition: 0.25s ease-in-out;
+  transition: 0.25s ease-in-out;
+  border: none;
+}
+
+.navbar-toggle,
+.navbar-toggler:focus,
+.navbar-toggler:active {
+  outline: none !important;
+  box-shadow: none;
+  border: none !important;
+}
+
+.hamburger-animated span {
+  background: #ffffff;
+}
+
+.hamburger-animated span:nth-child(1) {
+  top: 0px;
+}
+
+.hamburger-animated span:nth-child(2) {
+  top: 10px;
+}
+
+.hamburger-animated span:nth-child(3) {
+  top: 20px;
+}
+
+.hamburger-animated.open span:nth-child(1) {
+  top: 11px;
+  -webkit-transform: rotate(135deg);
+  -moz-transform: rotate(135deg);
+  -o-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+
+.hamburger-animated.open span:nth-child(2) {
+  top: -200px !important;
+}
+
+.hamburger-animated.open span:nth-child(3) {
+  top: 11px;
+  -webkit-transform: rotate(-135deg);
+  -moz-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+
+/**********************************************
+                Navbar
+    **********************************************/
+.navbar-brand,
+.nav-link {
+  color: white !important;
+  transition: 0.3s ease;
+  font-size: 23px;
+  font-style: normal;
+  font-family: "Red Hat Text";
+  font-weight: 500;
+  line-height: normal;
+  /* font-stretch: normal; */
+}
+
+.navbar-brand {
+  font-size: 22px;
+}
+
+#transparent-navbar {
+  position: fixed !important;
+  /* transition: top 0.5s; */
+  transition-timing-function: ease;
+  transition: 0.4s;
+}
+
+.navbar {
+  width: 100%;
+  z-index: 100;
+}
+
+.nav-link {
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  letter-spacing: normal;
+  margin: 0px 8px !important;
+  border-radius: 8px;
+}
+
+.nav-link:hover,
+.nav-link:active {
+  background-color: rgba(217, 217, 217, 0.2);
+}
+
+.active {
+  background-color: rgba(217, 217, 217, 0.2);
+}
+
+/* .nav-link:hover,
+  .nav-link:active {
+    padding-right: 30px !important;
+    padding-left: 30px !important;
+    transition: 0.4s ease;
+    box-shadow: 0px 1.4px 0px 0px #ffffff;
+  } */
+.nav-scrolled {
+  transition: 0.7s ease;
+  /* box-shadow: 0 7px 12px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.32) !important; */
+}
+
+@media (max-width: 900px) {
+  .nav-link {
+    font-size: 20px;
+  }
+}
+
+.empty-div {
+  height: 65px;
+  background-color: #000;
+}
+
+.mrt-socials {
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  width: 35%;
+}
+
+.mrt-socials a {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 45px;
+}
+
+.mrt-contact {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.bg-image {
+  width: 100%;
+}
+
+.mrt-contact h2 {
+  font-family: 'Saira';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 25px;
+  line-height: 39px;
+  text-align: center;
+  color: white;
+}

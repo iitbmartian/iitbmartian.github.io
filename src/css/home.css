@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Saira&display=swap');
+
+#home {
+    background: url("../img/mars_image.png") no-repeat center;
+    background-size: cover;
+}
+
+#aboutUs {
+    background: url("../img/mars_rover_about_us.png") no-repeat center;
+    background-size: cover;
+}
+
+#elec_soft {
+    background: url("../img/elec_soft_home.png") no-repeat center;
+    background-size: cover;
+}
+
+#mechanical {
+    background: url("../img/mech_home.png") no-repeat center;
+    background-size: cover;
+}
+
+#bioscience {
+    background: url("../img/bio_home.png") no-repeat center;
+    background-size: cover;
+}
+
+#mdm {
+    background: url("../img/mdm_home.png") no-repeat center;
+    background-size: cover;
+}
+
+#contact_home {
+    background: url("../img/space.png") no-repeat center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#contact_home h2 {
+    font-family: 'Saira';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 39px;
+    text-align: center;
+    color: white;
+}
+
+.bg-image {
+    width: 100%;
+}
+
+.div-centered-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-intro-text {
+    color: white;
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 35px;
+    line-height: 48px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 65%;
+}
+
+.home-intro-text h2 {
+    font-weight: 800;
+    font-size: 45px;
+    line-height: 61px;
+    text-align: center;
+}
+
+.aboutUs-text {
+    color: white;
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 35px;
+    line-height: 48px;
+    padding: 63px 0px 0px 99px;
+}
+
+.aboutUs-text h2 {
+    font-weight: 600;
+    font-size: 45px;
+    line-height: 61px;
+}
+
+.sub-home-text {
+    color: white;
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 25px;
+    line-height: 34px;
+    width: 75%;
+    padding: 73px 0px 0px 99px;
+}
+
+.sub-home-text h2 {
+    font-weight: 500;
+    font-size: 45px;
+    line-height: 61px;
+}

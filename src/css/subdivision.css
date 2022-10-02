@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Saira&display=swap');
+
+#subdivisions {
+    background: url("../img/space_sym.png");
+    background-repeat: repeat-y;
+    /* background-size: cover; */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#subdivisions h1 {
+    color: white;
+    margin-top: 30px;
+    font-family: 'Saira';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 63px;
+}
+
+.subCard {
+    background: rgba(217, 217, 217, 0.1);
+    backdrop-filter: blur(7.5px);
+    /* Note: backdrop-filter has minimal browser support */
+
+    border-radius: 20px;
+    height: 566px;
+    width: 75%;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24.25px 65px 60px 65px;
+}
+
+.subCard h2 {
+    font-family: 'Saira';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 39px;
+    color: white;
+}
+
+.subList {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.subButton {
+    width: 170px;
+    height: 47px;
+    border-radius: 10px;
+    border: none;
+    background-color: #2A2F32;
+    color: white;
+    font-family: 'Saira';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 31px;
+    text-align: center;
+}
+
+.activeButton {
+    background-color: #78797B;
+}
+
+.subCardContent {
+    display: flex;
+    margin-top: 40px;
+}
+
+.subCardContent img {
+    height: 349px;
+    width: 50%;
+    border-radius: 3px;
+}
+
+.subCardDis {
+    width: 50%;
+    color: white;
+    /* padding: 0px 62px 0px 25px; */
+    padding-left: 30px;
+    text-align: center;
+    font-family: 'Saira';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 31px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.subCardDis h3 {
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 39px;
+}
+
+.subCardDis p {
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 24px;
+}
