@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Saira&display=swap');
+
+#gallery {
+    background: url("../img/space_sym.png");
+    background-repeat: repeat-y;
+    /* background-size: cover; */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#gallery h1 {
+    color: white;
+    margin-top: 30px;
+    font-family: 'Saira';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 63px;
+}
+
+.galleryList {
+    display: flex;
+    justify-content: space-between;
+    width: 75%;
+    align-items: center;
+}
+
+.roverButton {
+    width: 170px;
+    height: 47px;
+    border-radius: 10px;
+    border: none;
+    background-color: #161616;
+    color: white;
+    font-family: 'Saira';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 31px;
+    text-align: center;
+}
+
+.activeButton {
+    background-color: #6C6C6C;
+}
+
+.galleryCard {
+    background: rgba(217, 217, 217, 0.1);
+    backdrop-filter: blur(7.5px);
+    /* Note: backdrop-filter has minimal browser support */
+
+    border-radius: 20px;
+    /* height: 750px; */
+    width: 75%;
+    margin-top: 50px;
+    padding: 30px;
+    display: flex;
+}
+
+.gallery-img{
+    /* width: 100%; */
+    /* overflow: hidden; */
+}

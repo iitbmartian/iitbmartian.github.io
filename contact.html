@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="src/css/styles.css">
-    <link rel="stylesheet" href="src/css/rover.css">
+    <link rel="stylesheet" href="src/css/contact.css">
 </head>
 
 <body>
@@ -32,50 +32,58 @@
                     <a class="nav-link" href="./index.html">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="./rovers.html">Rovers</a>
+                    <a class="nav-link" href="./rovers.html">Rovers</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="./subdivisions.html">Subdivisions</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="team.html">Teams</a>
+                    <a class="nav-link" href="./team.html">Teams</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="faq.html">Gallery</a>
+                    <a class="nav-link" href="./gallery.html">Gallery</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#contactus">Contact</a>
+                    <a class="nav-link active" href="./contact.html">Contact</a>
                 </li>
             </ul>
         </div>
     </nav>
     <div class="empty-div"></div>
-    <div id="rovers" class="bg-image" style="height: 911px;">
-        <h1>
-            ROVERS
-        </h1>
-        <div class="roverList">
-            <button class="roverButton activeButton">Rover 1</button>
-            <button class="roverButton">Rover 2</button>
-            <button class="roverButton">Rover 3</button>
-            <button class="roverButton">Rover 4</button>
-            <button class="roverButton">Rover 5</button>
+    <div id="contact" class="bg-image" style="height: 911px;">
+        <div class="contactCard">
+            <h2>Got Queries/Suggestions</h2>
+            <form class="w-100 mt-4">
+                <div class="row form-row">
+                    <div class="col field mr-2">
+                        <input type="text" class="form-control form-input" id="name" placeholder=" ">
+                        <label for="name">Name</label>
+                    </div>
+                    <div class="col field ml-2">
+                        <input type="email" class="form-control form-input" id="email" placeholder=" ">
+                        <label for="email">Email</label>
+                    </div>
+                </div>
+                <div class="row mt-4 form-row">
+                    <div class="col field mr-2">
+                        <input type="text" class="form-control form-input" id="phone" placeholder=" ">
+                        <label for="phone">Phone Number</label>
+                    </div>
+                    <div class="col field ml-2">
+                        <input type="text" class="form-control form-input" id="subject" placeholder=" ">
+                        <label for="subject">Subject</label>
+                    </div>
+                </div>
+                <div class="form-group mt-4 field">
+                    <textarea class="form-control" id="comment" rows="7"
+                        placeholder=" "></textarea>
+                    <label for="comment">Type your Message</label>
+                </div>
+                <div class="form-group text-center"> 
+                    <button type="submit" class="send-btn">Send</button>
+                </div>
+            </form>
         </div>
-        <div class="roverCard">
-            <div class="roverCardImg">
-                <img src="src/img/rover1.png" alt="">
-                <p>Ac risus lacus justo vulputate elit tellus mauris.</p>
-            </div>
-            <div class="roverCardDis">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Adipiscing odio lacus tellus tincidunt. Proin
-                amet facilisis ultrices gravida ligula tellus, nunc eu lobortis. Suspendisse eu donec massa, urna, sit
-                ante augue. Purus mi, amet facilisi turpis. Vulputate posuere tempus elementum et auctor tristique
-                rhoncus. Congue sociis hac duis amet vitae a dignissim faucibus ultrices.
-                Feugiat quis tempus pretium tempus fermentum vel eu. Et in integer lacus dui id. Eu vivamus at pharetra
-                nullam tellus.
-            </div>
-        </div>
-        
 
         <div class="mrt-contact">
             <h2>CONTACT</h2>

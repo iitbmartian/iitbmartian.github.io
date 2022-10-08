@@ -1,0 +1,75 @@
+/*basic styling */
+.contactForm {
+    text-align: center;
+    margin: auto;
+    width: 300px;
+    padding-top: 15px
+  }
+  .contactForm > div {
+    position: relative;
+    width: 100%;
+  }
+  .contactForm > div input {
+    width: 100%;
+    height: 42px;
+    margin: 10px;
+    border: none;
+    border-bottom: 2px solid #eee;
+    border-left: 2px solid #eee;
+    padding: 0 10px;
+    transition: all .3s ease;
+    outline: none !important;
+  }
+  .contactForm > div label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 20px;
+    transition: all .3s ease;
+  }
+  .contactForm > div input:focus {
+    border-color: #ff6291;
+  }
+  .contactForm > div input:not(:placeholder-shown) {
+    border-color: #26e9b9;
+  }
+  /* END of basic styling*/
+  
+    /*************************************************/
+   /*     NOW that's the part that interests us     */
+  /*************************************************/
+  
+  /* label goes up when input is focused OR filled */
+  .contactForm > div input:focus ~ label,
+  .contactForm > div input:not(:placeholder-shown) ~ label {
+    font-size: 12px;
+    transform: translateY(-30px);
+  }
+  
+  /* label color on focused state */
+  .contactForm > div input:focus ~ label {
+    color: #ff6291;
+  }
+  
+  /* label color on filled state */
+  .contactForm > div input:not(:placeholder-shown) ~ label {
+    color: #26e9b9;
+  }
+  
+  /* button styling */
+  .submit {
+    color: #fff!important;
+    background-image: linear-gradient(to right,#ff017d 0,#ff7f78 40%,#fff 50%,#26e9b9 60%,#44c0ff 100%)!important;
+    background-size: 300% 200%!important;
+    background-position: -1px 0;
+    transition: background-position .3s;
+    border: none!important;
+    border-radius: 50px;
+    padding: 10px 42px;
+    text-transform: uppercase;
+  }
+  
+  .submit:hover {
+      background-position: 95% 0 !important;
+      cursor: pointer;
+  }

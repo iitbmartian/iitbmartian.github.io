@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Saira&display=swap');
+
+#contact {
+    background: url("../img/space.png") no-repeat center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.contactCard {
+    background: rgba(217, 217, 217, 0.1);
+    backdrop-filter: blur(7.5px);
+    /* Note: backdrop-filter has minimal browser support */
+    margin-top: 80px;
+    border-radius: 20px;
+    height: 648px;
+    width: 72%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 29px 43px 20px 43px;
+    color: white;
+}
+
+.contactCard h2 {
+    font-family: 'Saira';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 47px;
+}
+
+.form-row {
+    height: 64px;
+}
+
+.form-input {
+    height: 100% !important;
+}
+
+::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    opacity: 1;
+    font-family: 'Saira';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 39px;
+    color: #000 !important;
+    /* Firefox */
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    font-family: 'Saira';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 39px;
+    color: #000 !important;
+}
+
+::-ms-input-placeholder {
+    /* Microsoft Edge */
+    font-family: 'Saira';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 39px;
+    color: #000 !important;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+
+    background-color: #D9D9D9BF !important;
+    font-size: 25px !important;
+    color: #000 !important;
+}
+
+.send-btn {
+    width: 147px;
+    height: 54px;
+    border: 1px solid #FFFFFF;
+    border-radius: 10px;
+    font-family: 'Saira';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 47px;
+    text-align: center;
+    background-color: Transparent;
+    color: white;
+    transition-timing-function: ease;
+    transition: 0.2s;
+}
+
+.send-btn:hover{
+    color: black;
+    background-color: white;
+}
+
+.field {
+    display: flex;
+    flex-flow: column-reverse;
+    margin-bottom: 1em;
+    position: relative;
+  }
+  /**
+  * Add a transition to the label and input.
+  * I'm not even sure that touch-action: manipulation works on
+  * inputs, but hey, it's new and cool and could remove the 
+  * pesky delay.
+  */
+  label, input {
+    transition: all 0.2s;
+    touch-action: manipulation;
+  }
+  
+  input {
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    font-family: inherit;
+    -webkit-appearance: none;
+    border-radius: 0;
+    /* padding: 0 10px; */
+    cursor: text;
+    transition: all .2s ease;
+    outline: none !important;
+  }
+  
+  
+  label {
+    /* text-transform: uppercase; */
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 5px 5px 5px 15px;
+    font-size: 25px;
+    transition: all .2s ease;
+    color: #000;
+  }
+  /**
+    Floating Label
+  */
+  input:focus ~ label,
+  input:not(:placeholder-shown) ~ label {
+    font-size: 25px;
+    transform: translateY(-45px);
+  }
+  
+  /* label color on focused state */
+  input:focus ~ label {
+    color: #00ffd5;
+  }
+  
+  /* label color on filled state */
+  input:not(:placeholder-shown) ~ label {
+    color: #26e940;
+  }
+
+  /* Textarea */
+  textarea:focus ~ label,
+  textarea:not(:placeholder-shown) ~ label {
+    font-size: 25px;
+    transform: translateY(-45px);
+  }
+  
+  /* label color on focused state */
+  textarea:focus ~ label {
+    color: #00ffd5;
+  }
+  
+  /* label color on filled state */
+  textarea:not(:placeholder-shown) ~ label {
+    color: #26e940;
+  }
