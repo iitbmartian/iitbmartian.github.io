@@ -4,31 +4,37 @@
 #home {
     background: url("../img/mars_image.png") no-repeat center;
     background-size: cover;
+    padding: 350px 0px 350px 0px;
 }
 
 #aboutUs {
     background: url("../img/mars_rover_about_us.png") no-repeat center;
     background-size: cover;
+    padding: 50px 0px 50px 0px;
 }
 
 #elec_soft {
     background: url("../img/elec_soft_home.png") no-repeat center;
     background-size: cover;
+    padding-bottom: 50px;
 }
 
 #mechanical {
     background: url("../img/mech_home.png") no-repeat center;
     background-size: cover;
+    padding-bottom: 50px;
 }
 
 #bioscience {
     background: url("../img/bio_home.png") no-repeat center;
     background-size: cover;
+    padding-bottom: 50px;
 }
 
 #mdm {
     background: url("../img/mdm_home.png") no-repeat center;
     background-size: cover;
+    padding-bottom: 50px;
 }
 
 #contact_home {
@@ -88,6 +94,7 @@
     font-weight: 400;
     font-size: 35px;
     line-height: 48px;
+    width: 45%;
     padding: 63px 0px 0px 99px;
 }
 
@@ -106,10 +113,42 @@
     line-height: 34px;
     width: 75%;
     padding: 73px 0px 0px 99px;
+    margin-bottom: 30px;
 }
 
 .sub-home-text h2 {
     font-weight: 500;
     font-size: 45px;
     line-height: 61px;
+}
+
+@media screen and (max-width: 992px) {
+    #home{
+        padding: 150px 0px 150px 0px;
+    }
+    .aboutUs-text {
+        width: 80% !important;
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 18px;
+    }
+
+    .aboutUs-text h2 {
+        font-weight: 600;
+        font-size: 25px;
+        line-height: 21px;
+    }
+    
+    .sub-home-text {
+        font-weight: 300;
+        font-size: 15px;
+        line-height: 18px;
+        width: 75%;
+    }
+    
+    .sub-home-text h2 {
+        font-weight: 500;
+        font-size: 25px;
+        line-height: 21px;
+    }
 }

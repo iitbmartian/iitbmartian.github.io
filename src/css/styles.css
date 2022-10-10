@@ -203,6 +203,16 @@ button {
   font-size: 45px;
 }
 
+@media screen and (max-width: 992px) {
+  .mrt-socials {
+    width: 75% !important;
+  }
+
+  .mrt-socials a {
+    font-size: 25px;
+  }
+}
+
 .mrt-contact {
   margin-top: auto;
   width: 100%;
@@ -226,6 +236,35 @@ button {
   color: white;
 }
 
-.col-no-padding{
+.col-no-padding {
   padding: 0 !important;
+}
+
+.homeButton {
+  width: 170px;
+  height: 47px;
+  border: none;
+  background: rgba(217, 217, 217, 0.2);
+  backdrop-filter: blur(5px);
+  /* Note: backdrop-filter has minimal browser support */
+
+  border-radius: 12px;
+  color: white;
+  font-family: 'Saira';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 31px;
+  text-align: center;
+}
+
+.homeButton:hover {
+  color: black;
+  background: white;
+}
+
+.centered-element {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

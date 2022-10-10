@@ -26,7 +26,7 @@
     /* Note: backdrop-filter has minimal browser support */
 
     border-radius: 20px;
-    height: 566px;
+    /* height: 566px; */
     width: 75%;
     margin-top: 50px;
     display: flex;
@@ -50,6 +50,7 @@
     width: 100%;
     align-items: center;
     margin-top: 10px;
+    flex-wrap: wrap;
 }
 
 .subButton {
@@ -74,19 +75,26 @@
 .subCardContent {
     display: flex;
     margin-top: 40px;
+    flex-wrap: wrap;
 }
 
-.subCardContent img {
-    height: 349px;
-    width: 50%;
+.subCardImage {
+    /* flex: 50%; */
+    /* height: 349px; */
+    /* width: 50%; */
+    border-radius: 3px;
+}
+
+.subCardImage img{
     border-radius: 3px;
 }
 
 .subCardDis {
-    width: 50%;
+    /* flex: 50%; */
+    /* width: 50%; */
     color: white;
     /* padding: 0px 62px 0px 25px; */
-    padding-left: 30px;
+    /* padding-left: 30px; */
     text-align: center;
     font-family: 'Saira';
     font-style: normal;
@@ -108,4 +116,11 @@
     font-weight: 600;
     font-size: 15px;
     line-height: 24px;
+}
+
+@media screen and (max-width: 992px) {
+    .subCard{
+        padding: 20px;
+        width: 100%;
+    }
 }
