@@ -1,30 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
+
 <body>
-    <form class="contactForm">
+    <div>
+        <div class="row">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="row">
+                    <h1>
+                        Get in touch
+                    </h1>
+                </div>
 
-        <div>
-            <input id="contactName" value="" name="name" type="text" placeholder=" ">
-            <label for="contactName">name</label>
-        </div>
-        <div>
-            <input id="contactCompany" value="" name="company" type="text" placeholder=" ">
-            <label for="contactCompany">company</label>
-        </div>
-          <div>
-            <input id="contactPosition" value="" name="position" type="text" placeholder=" ">
-            <label for="contactPosition">position</label>
-        </div>
-  <div>
+                <div class="row mt-4">
+                    <div class="col-lg-1 p-0">
+                        <i class="fa fa-envelope-o contact-us-icon" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-lg-11 ">
+                        <h3 class="font-weight-bold"> Email Us </h3>
+                        <h4 class="text-warning"> mrt.iitb@gmail.com </h4>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-lg-1 p-0">
+                        <img src="../src/img/location-icon-min.png" class="contact-us-icon" alt="">
+                    </div>
+                    <div class="col-lg-11 ">
+                        <h4 class="font-weight-bold"> Location </h4>
+                        <h4> Mars Rover Lab, Aerospace Department, IIT-Bombay, Mumbai </h4>
+                        <div id="map-container-google-1" class="map-container w-100">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15077.891646704249!2d72.9184755!3d19.1307657!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xf581fe1534507e87!2sIIT-B%20Mars%20Rover%20Lab!5e0!3m2!1sen!2sin!4v1665348546714!5m2!1sen!2sin" class="w-100" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-lg-1 p-0">
+                        <img src="../src/img/phone-icon-min.png" class="contact-us-icon" alt="">
+                    </div>
+                    <div class="col-lg-11 ">
+                        <h3 class="font-weight-bold"> Call Us </h3>
+                        <h4 class="text-warning"> +12 3455231 </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <div class="row">
+                    <h1>Got Queries/Suggestions</h1>
+                </div>
+                <form class="w-100 mt-4">
+                    <div class="row form-row">
+                        <div class="col field mr-2">
+                            <input type="text" class="form-control form-input" id="name" placeholder=" ">
+                            <label for="name">Name</label>
+                        </div>
+                        <div class="col field ml-2">
+                            <input type="email" class="form-control form-input" id="email" placeholder=" ">
+                            <label for="email">Email</label>
+                        </div>
+                    </div>
+                    <div class="row mt-4 form-row">
+                        <div class="col field mr-2">
+                            <input type="text" class="form-control form-input" id="phone" placeholder=" ">
+                            <label for="phone">Phone Number</label>
+                        </div>
+                        <div class="col field ml-2">
+                            <input type="text" class="form-control form-input" id="subject" placeholder=" ">
+                            <label for="subject">Subject</label>
+                        </div>
+                    </div>
+                    <div class="form-group mt-4 field">
+                        <textarea class="form-control" id="comment" rows="7"
+                            placeholder=" "></textarea>
+                        <label for="comment">Type your Message</label>
+                    </div>
+                    <div class="form-group text-center"> 
+                        <button type="submit" class="send-btn">Send</button>
+                    </div>
+                </form>
 
-        <button type="submit" class="submit">Send</button>
-    </form>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
