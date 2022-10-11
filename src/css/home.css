@@ -126,11 +126,27 @@
     #home{
         padding: 150px 0px 150px 0px;
     }
+
+    .home-intro-text {
+
+        font-weight: 400;
+        font-size: 25px;
+        line-height: 28px;
+        width: 85%;
+    }
+    
+    .home-intro-text h2 {
+        font-weight: 600;
+        font-size: 35px;
+        line-height: 31px;
+    }
+
     .aboutUs-text {
         width: 80% !important;
         font-weight: 400;
         font-size: 15px;
         line-height: 18px;
+        padding: 43px 0px 0px 49px;
     }
 
     .aboutUs-text h2 {
@@ -143,7 +159,8 @@
         font-weight: 300;
         font-size: 15px;
         line-height: 18px;
-        width: 75%;
+        width: 95%;
+        padding: 43px 0px 0px 49px;
     }
     
     .sub-home-text h2 {
