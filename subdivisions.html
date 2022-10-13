@@ -66,32 +66,32 @@
                     <div class="col-lg-6">
                         <div class="row">
                             <div class="col-sm-6">
-                                <button class="subButton activeButton mb-2">Rover 1</button>
+                                <button class="subButton activeButton mb-2" onclick="setSub(this, 'elecSoft', 'controlSystem', '1')">Rover 1</button>
                             </div>
                             <div class="col-sm-6">
-                                <button class="subButton mb-2">Rover 2</button>
+                                <button class="subButton mb-2" onclick="setSub(this, 'elecSoft', 'autonomousNavigation', '1')">Rover 2</button>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="row">
                             <div class="col-sm-6">
-                                <button class="subButton mb-2">Rover 3</button>
+                                <button class="subButton mb-2" onclick="setSub(this, 'elecSoft', 'baseStation', '1')">Rover 3</button>
                             </div>
                             <div class="col-sm-6">
-                                <button class="subButton mb-2">Rover 4</button>
+                                <button class="subButton mb-2" onclick="setSub(this, 'elecSoft', 'wirelessComm', '1')">Rover 4</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-lg-6">
-                        <img class="subCardImage w-100" src="src/img/rover1.png" alt="">
+                        <img class="subCardImage w-100" src="src/img/rover1.png" id="subImg1" alt="">
                     </div>
                     <div class="col-lg-6">
                         <div class="subCardDis">
-                            <h3>CONTROL SYSTEMS FOR ROVER</h3>
-                            <p>All 6 wheels are driven independently from GPIO pins of Raspberry Pi 3 in open loop, 4 steering
+                            <h3 id="subTitle1">CONTROL SYSTEMS FOR ROVER</h3>
+                            <p id="subContent1">All 6 wheels are driven independently from GPIO pins of Raspberry Pi 3 in open loop, 4 steering
                                 wheels (Front and Rear) are steered using closed loop control (see fig. on left)
                                 Steering is controlled by Roboclaw Motor Drivers onto which we employ a Type II control system,
                                 to track ramp input (see fig. on left, tracking of i/p, dotted line, is done by o/p, solid
@@ -107,39 +107,39 @@
 
         <div class="subCard">
             <h2 class="my-2">
-                Electronics & Software
+                Mechanical
             </h2>
             <div class="container px-0 text-center">
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="row">
                             <div class="col-sm-6">
-                                <button class="subButton activeButton mb-2">Rover 1</button>
+                                <button class="subButton activeButton mb-2" onclick="setSub(this, 'mechanical', 'robotArm', '2')">Rover 1</button>
                             </div>
                             <div class="col-sm-6">
-                                <button class="subButton mb-2">Rover 2</button>
+                                <button class="subButton mb-2" onclick="setSub(this, 'mechanical', 'suspension', '2')">Rover 2</button>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="row">
                             <div class="col-sm-6">
-                                <button class="subButton mb-2">Rover 3</button>
+                                <button class="subButton mb-2" onclick="setSub(this, 'mechanical', 'bioassembly', '2')">Rover 3</button>
                             </div>
                             <div class="col-sm-6">
-                                <button class="subButton mb-2">Rover 4</button>
+                                <button class="subButton mb-2" onclick="setSub(this, 'mechanical', 'chassis', '2')">Rover 4</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-lg-6">
-                        <img class="subCardImage w-100" src="src/img/rover1.png" alt="">
+                        <img class="subCardImage w-100" src="src/img/rover1.png" alt="" id="subImg2">
                     </div>
                     <div class="col-lg-6">
                         <div class="subCardDis">
-                            <h3>CONTROL SYSTEMS FOR ROVER</h3>
-                            <p>All 6 wheels are driven independently from GPIO pins of Raspberry Pi 3 in open loop, 4 steering
+                            <h3 id="subTitle2">CONTROL SYSTEMS FOR ROVER</h3>
+                            <p id="subContent2">All 6 wheels are driven independently from GPIO pins of Raspberry Pi 3 in open loop, 4 steering
                                 wheels (Front and Rear) are steered using closed loop control (see fig. on left)
                                 Steering is controlled by Roboclaw Motor Drivers onto which we employ a Type II control system,
                                 to track ramp input (see fig. on left, tracking of i/p, dotted line, is done by o/p, solid
@@ -155,39 +155,39 @@
 
         <div class="subCard">
             <h2 class="my-2">
-                Electronics & Software
+                BioScience
             </h2>
             <div class="container px-0 text-center">
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="row">
                             <div class="col-sm-6">
-                                <button class="subButton activeButton mb-2">Rover 1</button>
+                                <button class="subButton activeButton mb-2" onclick="setSub(this, 'bioscience', 'lifeDetection', '3')">Rover 1</button>
                             </div>
                             <div class="col-sm-6">
-                                <button class="subButton mb-2">Rover 2</button>
+                                <button class="subButton mb-2" onclick="setSub(this, 'bioscience', 'bioSensors', '3')">Rover 2</button>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="row">
                             <div class="col-sm-6">
-                                <button class="subButton mb-2">Rover 3</button>
+                                <button class="subButton mb-2" onclick="setSub(this, 'bioscience', 'geoSurvey', '3')">Rover 3</button>
                             </div>
                             <div class="col-sm-6">
-                                <button class="subButton mb-2">Rover 4</button>
+                                <button class="subButton mb-2" onclick="setSub(this, 'bioscience', 'sample', '3')">Rover 4</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-lg-6">
-                        <img class="subCardImage w-100" src="src/img/rover1.png" alt="">
+                        <img class="subCardImage w-100" src="src/img/rover1.png" alt="" id="subImg3">
                     </div>
                     <div class="col-lg-6">
                         <div class="subCardDis">
-                            <h3>CONTROL SYSTEMS FOR ROVER</h3>
-                            <p>All 6 wheels are driven independently from GPIO pins of Raspberry Pi 3 in open loop, 4 steering
+                            <h3 id="subTitle3">CONTROL SYSTEMS FOR ROVER</h3>
+                            <p id="subContent3">All 6 wheels are driven independently from GPIO pins of Raspberry Pi 3 in open loop, 4 steering
                                 wheels (Front and Rear) are steered using closed loop control (see fig. on left)
                                 Steering is controlled by Roboclaw Motor Drivers onto which we employ a Type II control system,
                                 to track ramp input (see fig. on left, tracking of i/p, dotted line, is done by o/p, solid
@@ -203,135 +203,39 @@
 
         <div class="subCard">
             <h2 class="my-2">
-                Electronics & Software
+                Media, Design & Marketing
             </h2>
             <div class="container px-0 text-center">
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="row">
                             <div class="col-sm-6">
-                                <button class="subButton activeButton mb-2">Rover 1</button>
+                                <button class="subButton activeButton mb-2" onclick="setSub(this, 'mdm', 'design', '4')">Rover 1</button>
                             </div>
                             <div class="col-sm-6">
-                                <button class="subButton mb-2">Rover 2</button>
+                                <button class="subButton mb-2" onclick="setSub(this, 'mdm', 'photoshoot', '4')">Rover 2</button>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="row">
                             <div class="col-sm-6">
-                                <button class="subButton mb-2">Rover 3</button>
+                                <button class="subButton mb-2" onclick="setSub(this, 'mdm', 'webdev', '4')">Rover 3</button>
                             </div>
                             <div class="col-sm-6">
-                                <button class="subButton mb-2">Rover 4</button>
+                                <button class="subButton mb-2" onclick="setSub(this, 'mdm', 'business', '4')">Rover 4</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-lg-6">
-                        <img class="subCardImage w-100" src="src/img/rover1.png" alt="">
+                        <img class="subCardImage w-100" src="src/img/rover1.png" alt="" id="subImg4">
                     </div>
                     <div class="col-lg-6">
                         <div class="subCardDis">
-                            <h3>CONTROL SYSTEMS FOR ROVER</h3>
-                            <p>All 6 wheels are driven independently from GPIO pins of Raspberry Pi 3 in open loop, 4 steering
-                                wheels (Front and Rear) are steered using closed loop control (see fig. on left)
-                                Steering is controlled by Roboclaw Motor Drivers onto which we employ a Type II control system,
-                                to track ramp input (see fig. on left, tracking of i/p, dotted line, is done by o/p, solid
-                                purple), while drive is controlled by Hercules motor Drivers
-                                We are working towards getting a state space description of the same, so that we can employ
-                                Inverse Kinematics or LQR control for the arm, using Moveit! motion planning plugin (see fig. on
-                                left)</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="subCard text-center">
-            <h2 class="my-2">
-                Electronics & Software
-            </h2>
-            <div class="container px-0 text-center">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <button class="subButton activeButton mb-2">Rover 1</button>
-                            </div>
-                            <div class="col-sm-6">
-                                <button class="subButton mb-2">Rover 2</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <button class="subButton mb-2">Rover 3</button>
-                            </div>
-                            <div class="col-sm-6">
-                                <button class="subButton mb-2">Rover 4</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-lg-6">
-                        <img class="subCardImage w-100" src="src/img/rover1.png" alt="">
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="subCardDis">
-                            <h3>CONTROL SYSTEMS FOR ROVER</h3>
-                            <p>All 6 wheels are driven independently from GPIO pins of Raspberry Pi 3 in open loop, 4 steering
-                                wheels (Front and Rear) are steered using closed loop control (see fig. on left)
-                                Steering is controlled by Roboclaw Motor Drivers onto which we employ a Type II control system,
-                                to track ramp input (see fig. on left, tracking of i/p, dotted line, is done by o/p, solid
-                                purple), while drive is controlled by Hercules motor Drivers
-                                We are working towards getting a state space description of the same, so that we can employ
-                                Inverse Kinematics or LQR control for the arm, using Moveit! motion planning plugin (see fig. on
-                                left)</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="subCard">
-            <h2 class="my-2">
-                Electronics & Software
-            </h2>
-            <div class="container px-0 text-center">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <button class="subButton activeButton mb-2">Rover 1</button>
-                            </div>
-                            <div class="col-sm-6">
-                                <button class="subButton mb-2">Rover 2</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <button class="subButton mb-2">Rover 3</button>
-                            </div>
-                            <div class="col-sm-6">
-                                <button class="subButton mb-2">Rover 4</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-lg-6">
-                        <img class="subCardImage w-100" src="src/img/rover1.png" alt="">
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="subCardDis">
-                            <h3>CONTROL SYSTEMS FOR ROVER</h3>
-                            <p>All 6 wheels are driven independently from GPIO pins of Raspberry Pi 3 in open loop, 4 steering
+                            <h3 id="subTitle4">CONTROL SYSTEMS FOR ROVER</h3>
+                            <p id="subContent4">All 6 wheels are driven independently from GPIO pins of Raspberry Pi 3 in open loop, 4 steering
                                 wheels (Front and Rear) are steered using closed loop control (see fig. on left)
                                 Steering is controlled by Roboclaw Motor Drivers onto which we employ a Type II control system,
                                 to track ramp input (see fig. on left, tracking of i/p, dotted line, is done by o/p, solid
@@ -378,6 +282,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="./src/js/script.js"></script>
+
     <script>
         AOS.init({
             disable: false,
