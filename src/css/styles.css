@@ -183,6 +183,12 @@ button {
   .nav-link {
     font-size: 20px;
   }
+  .navbar{
+    padding: 0 !important;
+  }
+  .navbar-collapse{
+    background-color: rgba(0,0,0,0.5);
+  }
 }
 
 .empty-div {
