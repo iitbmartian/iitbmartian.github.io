@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRT-IITB</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="src/css/styles.css">
+    <link rel="stylesheet" href="src/css/rover.css">
+</head>
+
+<body>
+    
+    <div id="rovers" class="bg-image" style="padding-bottom: 50px;">
+        <h1>
+            ROVERS
+        </h1>
+        <div class="container w-75 mx-0">
+            <div class="row">
+                <div class="col-lg-4 px-0 py-2 text-center">
+                    <button class="roverButton activeButton" onclick="setRover(this, 'rover-1', '1')">Rover 1</button>
+                </div>
+                <div class="col-lg-4 px-0 py-2 text-center">
+                    <button class="roverButton" onclick="setRover(this, 'rover-2', '1')">Rover 2</button>
+                </div>
+                <div class="col-lg-4 px-0 py-2 text-center">
+                    <button class="roverButton" onclick="setRover(this, 'rover-3', '1')">Rover 3</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="roverCard">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="roverCardImg">
+                            <img src="src/img/rover1.png" alt="" id="img1">
+                            <p id="cardTitle1">Rover 1 title</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="roverCardDis" id="cardContent1">
+                            Rover 1 content sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nibh sed pulvinar proin gravida. In nisl nisi scelerisque eu. Tellus molestie nunc non blandit. Tempor commodo ullamcorper a lacus vestibulum sed arcu non odio. Ornare quam viverra orci sagittis eu volutpat odio facilisis mauris. Metus dictum at tempor commodo ullamcorper a. Nascetur ridiculus mus mauris vitae ultricies leo integer malesuada. Enim sed faucibus turpis in eu mi bibendum neque egestas.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container w-75 mx-0">
+            <div class="row">
+                <div class="col-lg-4 px-0 py-2 text-center">
+                    <button class="roverButton activeButton" onclick="setRover(this, 'rover-4', '2')">Rover 4</button>
+                </div>
+                <div class="col-lg-4 px-0 py-2 text-center">
+                    <button class="roverButton" onclick="setRover(this, 'rover-5', '2')">Rover 5</button>
+                </div>
+                <div class="col-lg-4 px-0 py-2 text-center">
+                    <button class="roverButton" onclick="setRover(this, 'rover-6', '2')">Rover 6</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="roverCard">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="roverCardImg">
+                            <img src="src/img/rover1.png" alt="" id="img2">
+                            <p id="cardTitle2">Rover 1 title</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="roverCardDis" id="cardContent2">
+                            Rover 1 content sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nibh sed pulvinar proin gravida. In nisl nisi scelerisque eu. Tellus molestie nunc non blandit. Tempor commodo ullamcorper a lacus vestibulum sed arcu non odio. Ornare quam viverra orci sagittis eu volutpat odio facilisis mauris. Metus dictum at tempor commodo ullamcorper a. Nascetur ridiculus mus mauris vitae ultricies leo integer malesuada. Enim sed faucibus turpis in eu mi bibendum neque egestas.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- scripts -->
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="./src/js/script.js"></script>
+    <script>
+        AOS.init({
+            disable: false,
+            offset: 80,
+            duration: 1000,
+        });
+
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162930243-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-162930243-1');
+    </script>
+</body>
+
+</html>

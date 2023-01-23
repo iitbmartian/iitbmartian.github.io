@@ -12,6 +12,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="src/css/styles.css">
     <link rel="stylesheet" href="src/css/rover.css">
+    <link href="src/css/rover_new.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -34,8 +35,14 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="./rovers.html">Rovers</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./subdivisions.html">Subdivisions</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" href="#">Subdivisions</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="./subdivisions/mech.html">Mechanical</a></li>
+                        <li><a class="dropdown-item" href="./subdivisions/elec.html">Electronics & Software</a></li>
+                        <li><a class="dropdown-item" href="./subdivisions/bio.html">Bioscience</a></li>
+                        <li><a class="dropdown-item" href="./subdivisions/mdm.html">Design and Logistics</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="team.html">Teams</a>
@@ -44,80 +51,480 @@
                     <a class="nav-link" href="./gallery.html">Gallery</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./contact.html">Contact</a>
+                    <a class="nav-link" href="./contact-us.html">Contact</a>
                 </li>
             </ul>
         </div>
     </nav>
-    <div class="empty-div"></div>
-    <div id="rovers" class="bg-image">
-        <h1>
-            ROVERS
-        </h1>
-        <div class="container w-75 mx-0">
-            <div class="row">
-                <div class="col-lg-4 px-0 py-2 text-center">
-                    <button class="roverButton activeButton" onclick="setRover(this, 'rover-1')">Rover 1</button>
-                </div>
-                <div class="col-lg-4 px-0 py-2 text-center">
-                    <button class="roverButton" onclick="setRover(this, 'rover-2')">Rover 2</button>
-                </div>
-                <div class="col-lg-4 px-0 py-2 text-center">
-                    <button class="roverButton" onclick="setRover(this, 'rover-3')">Rover 3</button>
-                </div>
-            </div>
-
-        </div>
-        <div class="roverCard">
+    <div class="page-wrapper">
+        <div class="section-hero">
+            <div class="background-layer"></div>
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="roverCardImg">
-                            <img src="src/img/rover1.png" alt="" id="img">
-                            <p id="cardTitle">Rover 1 title</p>
+                <div class="padding-vertical-xxlarge">
+                    <div class="timeline-hero_heading-wrapper">
+                        <h1>Mars Rover Team <span class="text-underline">Timeline</span></h1>
+                        <div class="margin-bottom-medium">
+                            <h4>The IIT Mars Rover team has been making ground-breaking progress over the years.</h4>
+                        </div>
+                        <p class="paragraph-large">The Mars Rover team's accomplishments have been well-documented over
+                            the past few years. Every year, the team spends months designing and building a new rover,
+                            with each iteration pushing the boundaries of science and technology.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-timeline-heading">
+            <div class="container">
+                <div class="padding-vertical-xlarge">
+                    <div class="timeline-main_heading-wrapper">
+                        <div class="margin-bottom-medium">
+                            <h2>The story of how we got started</h2>
+                        </div>
+                        <p class="paragraph-large">MRT was started by 5 students with the same mission. <br />Our story
+                            starts 11 years ago... Strap in.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-timeline">
+            <div class="container ">
+                <!-- w-no-margin-left -->
+                <div class="timeline_component ">
+                    <div class="timeline_progress">
+                        <div data-w-id="d5abcf1f-3370-3eea-ccfd-66f076babfdd" class="timeline_progress-bar"></div>
+                    </div>
+                    <div data-w-id="d5abcf1f-3370-3eea-ccfd-66f076babfe0" class="timeline_item">
+                        <div id="w-node-d5abcf1f-3370-3eea-ccfd-66f076babfe1-8257968a" class="timeline_left">
+                            <div class="timeline_date-text">September 2012</div>
+                        </div>
+                        <div id="w-node-d5abcf1f-3370-3eea-ccfd-66f076babfe4-8257968a" class="timeline_centre">
+                            <div class="timeline_circle"></div>
+                        </div>
+                        <div id="w-node-d5abcf1f-3370-3eea-ccfd-66f076babfe6-8257968a" class="timeline_right">
+                            <div class="margin-bottom-xlarge">
+                                <div class="timeline_text">The IITB Mars Rover team was established in 2012, and since
+                                    then, the team has been working relentlessly to achieve great success in the field
+                                    of interplanetary exploration. Over the past eight years, the team has grown from a
+                                    small group of students to a large organization with several members.</div>
+                            </div>
+                            <div class="timeline_image-wrapper"><img src="src/images/logo.png" loading="lazy"
+                                    width="480" sizes="(max-width: 479px) 48px, (max-width: 767px) 64px, 36vw" alt="" />
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="roverCardDis" id="cardContent">
-                            Rover 1 content sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nibh sed pulvinar proin gravida. In nisl nisi scelerisque eu. Tellus molestie nunc non blandit. Tempor commodo ullamcorper a lacus vestibulum sed arcu non odio. Ornare quam viverra orci sagittis eu volutpat odio facilisis mauris. Metus dictum at tempor commodo ullamcorper a. Nascetur ridiculus mus mauris vitae ultricies leo integer malesuada. Enim sed faucibus turpis in eu mi bibendum neque egestas.
+                    <div data-w-id="0488106f-ce92-9b7b-01c3-8ad75f3f5e35" class="timeline_item">
+                        <div id="w-node-_0488106f-ce92-9b7b-01c3-8ad75f3f5e36-8257968a" class="timeline_left">
+                            <div class="timeline_date-text">May 2015</div>
                         </div>
+                        <div id="w-node-_0488106f-ce92-9b7b-01c3-8ad75f3f5e39-8257968a" class="timeline_centre">
+                            <div class="timeline_circle"></div>
+                        </div>
+                        <div class="timeline_right">
+                            <div class="margin-bottom-medium">
+                                <div class="timeline_text">Akrula 1.0 was the first prototype ever created by IITB Mars
+                                    Rover Team and it was launched in 2015. With its advanced sensors, powerful
+                                    computing systems and robust mobility, Akrula 1.0 is capable of navigating through
+                                    the harsh terrain of Mars with ease. <br /></div>
+                            </div>
+                            <div class="timeline_image-wrapper"><img src="src/images/rovers/akrula.png" loading="lazy"
+                                    width="380" sizes="(max-width: 479px) 48px, (max-width: 767px) 64px, 36vw" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div data-w-id="5b7ae63b-6f00-e542-a023-96ea5c4a96e3" class="timeline_item">
+                        <div id="w-node-_5b7ae63b-6f00-e542-a023-96ea5c4a96e4-8257968a" class="timeline_left">
+                            <div class="timeline_date-text">June 2016</div>
+                        </div>
+                        <div id="w-node-_5b7ae63b-6f00-e542-a023-96ea5c4a96e7-8257968a" class="timeline_centre">
+                            <div class="timeline_circle"></div>
+                        </div>
+                        <div class="timeline_right">
+                            <div class="margin-bottom-medium">
+                                <div class="timeline_text">The second Mars rover prototype, Agathsya 1.0, was built in
+                                    2016. Agathsya 1.0 has sophisticated navigational systems as well as data-gathering
+                                    cameras. It has sophisticated sensors and an advanced AI that can detect things in
+                                    real-time and evaluate data. <br /></div>
+                            </div>
+                            <div class="timeline_image_carousel">
+                                <!-- 470x274 = 1.715 -->
+                                <div class="slideshow-container">
+                                    <div class="mySlides1 ">
+                                        <img src="src/images/rovers/akrula1.jpg" style="width:100%">
+                                    </div>
+
+                                    <div class="mySlides1 ">
+                                        <img src="src/images/rovers/akrula3.jpg" style="width:100%">
+                                    </div>
+
+                                    <div class="mySlides1 ">
+                                        <img src="src/images/rovers/akrula1.jpg" style="width:100%">
+                                    </div>
+
+                                    <div class="mySlides1 ">
+                                        <img src="src/images/rovers/akrula4.jpg" style="width:100%">
+                                    </div>
+
+                                    <div class="mySlides1 ">
+                                        <img src="src/images/rovers/akrula5.jpg" style="width:100%">
+                                    </div>
+
+                                    <div class="mySlides1 ">
+                                        <img src="src/images/rovers/akrula6.jpg" style="width:100%">
+                                    </div>
+
+                                    <a class="prev" onclick="plusSlides(-1, 0)">&#10094;</a>
+                                    <a class="next" onclick="plusSlides(1, 0)">&#10095;</a>
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div data-w-id="e0f4f25e-22f1-da39-65d5-a453ca30c731" class="timeline_item">
+                        <div id="w-node-e0f4f25e-22f1-da39-65d5-a453ca30c732-8257968a" class="timeline_left">
+                            <div class="timeline_date-text">April 2017</div>
+                        </div>
+                        <div id="w-node-e0f4f25e-22f1-da39-65d5-a453ca30c735-8257968a" class="timeline_centre">
+                            <div class="timeline_circle"></div>
+                        </div>
+                        <div class="timeline_right">
+                            <div class="margin-bottom-medium">
+                                <div class="timeline_text">Agathsya 2.0, the third version of the Mars rovers created in 2017, is revolutionizing our understanding of the Red Planet. Equipped with advanced camera and sensor technology, Agathsya 2.0 is able to explore even further and faster than any previous Mars rover.<br /></div>
+                            </div>
+                            
+                            
+                            <div class="timeline_image_carousel">
+                                
+
+                                <div class="slideshow-container">
+                                    <div class="mySlides2">
+                                        <img src="src/images/rovers/rover_16_2.png" style="width:100%">
+                                    </div>
+
+                                    <div class="mySlides2">
+                                        <img src="src/images/rovers/rover_16_1.png" style="width:100%">
+                                    </div>
+
+                                    <div class="mySlides2">
+                                        <img src="src/images/rovers/rover_16_0.png" style="width:100%">
+                                    </div>
+
+                                    <div class="mySlides2">
+                                        <img src="src/images/rovers/rover_16_3.png" style="width:100%">
+                                    </div>
+
+                                    <div class="mySlides2">
+                                        <img src="src/images/rovers/rover_16_4.png" style="width:100%">
+                                    </div>
+
+                                    <a class="prev" onclick="plusSlides(-1, 1)">&#10094;</a>
+                                    <a class="next" onclick="plusSlides(1, 1)">&#10095;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-w-id="ca21cc2f-00d7-84a3-f446-587e32a59c00" class="timeline_item">
+                        <div id="w-node-ca21cc2f-00d7-84a3-f446-587e32a59c01-8257968a" class="timeline_left">
+                            <div class="timeline_date-text">May 2018</div>
+                        </div>
+                        <div id="w-node-ca21cc2f-00d7-84a3-f446-587e32a59c04-8257968a" class="timeline_centre">
+                            <div class="timeline_circle"></div>
+                        </div>
+                        <div class="timeline_right">
+                            <div class="margin-bottom-medium">
+                                <div class="timeline_text">Hemant 1.0 is the fourth version of the Mars rovers created in 2018. It combines the latest AI technology with an innovative design, allowing it to traverse even the harshest terrain on Mars. <br /></div>
+                            </div>
+                            
+                            <div class="timeline_image_carousel">
+                                
+
+                                <div class="slideshow-container">
+                                    <div class="mySlides3">
+                                        <img src="src/images/rovers/2018_1.png" style="width:100%">
+                                    </div>
+
+                                    <div class="mySlides3">
+                                        <img src="src/images/rovers/2018_0.png" style="width:100%">
+                                    </div>
+
+                                    <div class="mySlides3">
+                                        <img src="src/images/rovers/2018_2.png" style="width:100%">
+                                    </div>
+
+                                    <div class="mySlides3">
+                                        <img src="src/images/rovers/2018_3.png" style="width:100%">
+                                    </div>
+
+                                    <div class="mySlides3">
+                                        <img src="src/images/rovers/2018_4.jpg" style="width:100%">
+                                    </div>
+
+
+                                    <a class="prev" onclick="plusSlides(-1, 2)">&#10094;</a>
+                                    <a class="next" onclick="plusSlides(1, 2)">&#10095;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-w-id="37ab9472-ef92-a1c7-f6c5-ffbef2542158" class="timeline_item">
+                        <div id="w-node-_37ab9472-ef92-a1c7-f6c5-ffbef2542159-8257968a" class="timeline_left">
+                            <div class="timeline_date-text">April 2019</div>
+                        </div>
+                        <div id="w-node-_37ab9472-ef92-a1c7-f6c5-ffbef254215c-8257968a" class="timeline_centre">
+                            <div class="timeline_circle"></div>
+                        </div>
+                        <div class="timeline_right">
+                            <div class="margin-bottom-medium">
+                                <div class="timeline_text">Agruni 1.0 was the fifth version of the mars rover created by the IITB mars rover team.<br /></div>
+                            </div>
+                            
+                            
+                            <div class="timeline_image_carousel">
+                                
+
+                                <div class="slideshow-container">
+                                    <div class="mySlides4">
+                                        <img src="src/images/rovers/agruni_3.jpg" style="width:100%">
+                                    </div>
+
+                                    <div class="mySlides4">
+                                        <img src="src/images/rovers/agruni_2.jpg" style="width:100%">
+                                    </div>
+
+                                    <div class="mySlides4">
+                                        <img src="src/images/rovers/agruni_1.jpg" style="width:100%">
+                                    </div>
+
+                                    <div class="mySlides4">
+                                        <img src="src/images/rovers/agruni_4.jpg" style="width:100%">
+                                    </div>
+
+                                    <div class="mySlides4">
+                                        <img src="src/images/rovers/agruni_5.jpg" style="width:100%">
+                                    </div>
+
+
+                                    <a class="prev" onclick="plusSlides(-1, 3)">&#10094;</a>
+                                    <a class="next" onclick="plusSlides(1, 3)">&#10095;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-w-id="3f36ed1c-86ad-66f2-a7e0-a2e345d5b491" class="timeline_item">
+                        <div id="w-node-_3f36ed1c-86ad-66f2-a7e0-a2e345d5b492-8257968a" class="timeline_left">
+                            <div class="timeline_date-text">December 2019</div>
+                        </div>
+                        <div id="w-node-_3f36ed1c-86ad-66f2-a7e0-a2e345d5b495-8257968a" class="timeline_centre">
+                            <div class="timeline_circle"></div>
+                        </div>
+                        <div class="timeline_right">
+                            <div class="margin-bottom-medium">
+                                <div class="timeline_text">Finished among the top teams in University Rover Challenge (2019)<br /></div>
+                            </div>
+                            
+                            <div class="timeline_image_carousel">
+                                
+
+                                <div class="slideshow-container">
+                        
+
+                                    <div class="mySlides5">
+                                        <img src="src/images/rovers/agruni_2.jpg" style="width:100%">
+                                    </div>
+
+                                    <div class="mySlides5">
+                                        <img src="src/images/rovers/agruni_5.jpg" style="width:100%">
+                                    </div>
+
+
+                                    <a class="prev" onclick="plusSlides(-1, 4)">&#10094;</a>
+                                    <a class="next" onclick="plusSlides(1, 4)">&#10095;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-w-id="24c49997-4a3d-4bd7-0915-1f0630d904ae" class="timeline_item">
+                        <div id="w-node-_24c49997-4a3d-4bd7-0915-1f0630d904af-8257968a" class="timeline_left">
+                            <div class="timeline_date-text">June 2020</div>
+                        </div>
+                        <div id="w-node-_24c49997-4a3d-4bd7-0915-1f0630d904b2-8257968a" class="timeline_centre">
+                            <div class="timeline_circle"></div>
+                        </div>
+                        <div class="timeline_right">
+                            <div class="timeline_milestone-badge">
+                                <div>🚀 Current Version created </div>
+                            </div>
+                            <div class="margin-bottom-medium">
+                                <div class="timeline_text">Current Version of the rover<br /></div>
+                            </div>
+                            
+                            
+                            <div class="timeline_image_carousel">
+                                
+
+                                <div class="slideshow-container">
+                        
+
+                                    <div class="mySlides6">
+                                        <img src="src/images/rovers/current_2.png" style="width:100%">
+                                    </div>
+
+                                    <div class="mySlides6">
+                                        <img src="src/images/rovers/current_3.jpg" style="width:100%">
+                                    </div>
+
+                                    <div class="mySlides6">
+                                        <img src="src/images/rovers/current_4.png" style="width:100%">
+                                    </div>
+
+
+                                    <a class="prev" onclick="plusSlides(-1, 5)">&#10094;</a>
+                                    <a class="next" onclick="plusSlides(1, 5)">&#10095;</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-w-id="24c49997-4a3d-4bd7-0915-1f0630d904ae" class="timeline_item">
+                        <div id="w-node-_24c49997-4a3d-4bd7-0915-1f0630d904af-8257968a" class="timeline_left">
+                            <div class="timeline_date-text">August 2020</div>
+                        </div>
+                        <div id="w-node-_24c49997-4a3d-4bd7-0915-1f0630d904b2-8257968a" class="timeline_centre">
+                            <div class="timeline_circle"></div>
+                        </div>
+                        <div class="timeline_right">
+                            
+                            <div class="margin-bottom-medium">
+                                <div class="timeline_text">4th place in International Rover Design Challenge<br /></div>
+                            </div>
+
+                            <div class="timeline_image-wrapper"><img src="src/images/rovers/irdc_2020.jpg" loading="lazy"
+                                width="480" sizes="(max-width: 479px) 48px, (max-width: 767px) 64px, 36vw" alt="" />
+                        </div>
+                            
+                            
+                            
+                        </div>
+                    </div>
+                    <div data-w-id="24c49997-4a3d-4bd7-0915-1f0630d904ae" class="timeline_item">
+                        <div id="w-node-_24c49997-4a3d-4bd7-0915-1f0630d904af-8257968a" class="timeline_left">
+                            <div class="timeline_date-text">August 2021</div>
+                        </div>
+                        <div id="w-node-_24c49997-4a3d-4bd7-0915-1f0630d904b2-8257968a" class="timeline_centre">
+                            <div class="timeline_circle"></div>
+                        </div>
+                        <div class="timeline_right">
+                            
+                            <div class="margin-bottom-medium">
+                                <div class="timeline_text">Best navigation award among 28+ teams in European Rover Challenge<br /></div>
+                            </div>
+
+                            <div class="timeline_image-wrapper"><img src="src/images/rovers/erc_1.jpeg" loading="lazy"
+                                width="480" sizes="(max-width: 479px) 48px, (max-width: 767px) 64px, 36vw" alt="" />
+                        </div>
+                            
+                            
+                            
+                        </div>
+                    </div>
+                    <div data-w-id="cea39288-a86d-bc98-0716-192fe18bb831" class="timeline_item">
+                        <div id="w-node-cea39288-a86d-bc98-0716-192fe18bb832-8257968a" class="timeline_left">
+                            <div class="timeline_date-text">December 2022</div>
+                        </div>
+                        <div id="w-node-cea39288-a86d-bc98-0716-192fe18bb835-8257968a" class="timeline_centre">
+                            <div class="timeline_circle"></div>
+                        </div>
+                        <div class="timeline_right">
+
+                            <div class="margin-bottom-medium">
+                                <div class="timeline_text">Qualified for SDDR stage in IRC 2023 finals<br /></div>
+                            </div>
+
+                            <div class="timeline_image-wrapper"><img src="src/images/rovers/irc_2022.jpg" loading="lazy"
+                                width="480" sizes="(max-width: 479px) 48px, (max-width: 767px) 64px, 36vw" alt="" />
+                            
+                            
+                            
+                        </div>
+                    </div>
+                    <div class="overlay-fade-bottom"></div>
+                    <div class="overlay-fade-top"></div>
+                </div>
+            </div>
+        </div>
+        <div data-w-id="a33510ee-228e-eaaa-6baf-5bde8b8e2d5c" class="section-timeline-cta">
+            <div class="container">
+                <div class="padding-vertical-xlarge">
+                    <div class="timeline-main_heading-wrapper">
+                        <div class="margin-bottom-medium">
+                            <div class="timeline_date-text">Today</div>
+                        </div>
+                        <div class="margin-bottom-small">
+                            <div class="timeline_text">Today Mars Rover Team IITB is a team run by 50+ student with the same mission in life - Build meaningful
+                                relationships and do great work.<br /></div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="mrt-contact">
-            <h2>CONTACT</h2>
-            <div class="mrt-socials">
-                <a href="">
-                    <i class="fa fa-envelope" aria-hidden="true"></i>
-                </a>
-                <a href="">
-                    <i class="fa fa-phone" aria-hidden="true"></i>
-                </a>
-                <a href="">
-                    <i class="fa fa-instagram" aria-hidden="true"></i>
-                </a>
-                <a href="">
-                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
-                </a>
-                <a href="">
-                    <i class="fa fa-linkedin-square" aria-hidden="true"></i>
-                </a>
-                <a href="">
-                    <i class="fa fa-youtube-play" aria-hidden="true"></i>
-                </a>
-
+        
+        <div class="section-footer">
+            <div class="background-layer"></div>
+            <div class="container">
+                <div class="padding-vertical-footer">
+                    <div class="footer_text-wrapper">
+                        <div class="margin-bottom-small">
+                            <h2>We'd Love to hear from you</h2>
+                        </div>
+                        <div class="margin-bottom-medium">
+                            <h4>Stay in the loop for future MRT news!</h4>
+                        </div>
+                        <div class="margin-bottom-large">
+                            <p class="paragraph-large">You can find us at the basement of the Aerospace Department, IIT Bombay, Powai, Mumbai, Maharashtra, India</p>
+                        </div>
+                        <div class="mrt-contact2">
+                            <h2>CONTACT US</h2>
+                            <div class="mrt-socials2">
+                                <a href="">
+                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                </a>
+                                <a href="">
+                                    <i class="fa fa-phone" aria-hidden="true"></i>
+                                </a>
+                                <a href="">
+                                    <i class="fa fa-instagram" aria-hidden="true"></i>
+                                </a>
+                                <a href="">
+                                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                                </a>
+                                <a href="">
+                                    <i class="fa fa-linkedin-square" aria-hidden="true"></i>
+                                </a>
+                                <a href="">
+                                    <i class="fa fa-youtube-play" aria-hidden="true"></i>
+                                </a>
+                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer_credits-wrapper">
+                        <p>© 2022, MRT IITB. All Rights Reserved.</p>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
+    
     <!-- scripts -->
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
     <script src="./src/js/script.js"></script>
     <script>
         AOS.init({
@@ -136,6 +543,10 @@
 
         gtag('config', 'UA-162930243-1');
     </script>
+    <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=63b5c37c16128f6deb579685"
+    type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous"></script>
+    <script src="src/js/rover.js"></script>
 </body>
 
 </html>

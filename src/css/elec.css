@@ -1,0 +1,108 @@
+@import url("https://fonts.googleapis.com/css?family=Quicksand&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text&display=swap');
+
+
+
+.sub-nav{
+    background: url("../img/elec_soft_home.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding-top: 15vh;
+    height: 100vh;
+    scroll-snap-align: start;
+}
+.sub-nav h1{
+    margin: 5% 0;
+}
+.nav-items{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 2%;
+    flex-wrap: wrap;
+}
+.item{
+    height: 15vh;
+    min-width: 20%;
+}
+a{
+    text-decoration: none;
+}
+#parent{
+    /* scroll-snap-stop: always; */
+    scroll-snap-type: y mandatory;
+    height: 100vh;
+    overflow-y:scroll;
+    /* overflow-y:visible; */
+    
+}
+.sub-nav-section{
+    scroll-snap-align: start;
+    /* scroll-snap-stop: always;
+    scroll-snap-type: y mandatory; */
+    color: white;
+    height: 100vh;
+    padding:10% 0;
+    background: url("../img/elec_bg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.content{
+    display: flex;
+    justify-content: space-evenly;
+    margin: auto;
+    /* trial */
+    position: relative;
+    transform: translateY(150px);
+    transition: all 2s ease;
+    opacity: 0;
+}
+.content.current {
+    transform: translateY(0px);
+    opacity: 1;
+}
+.content img{
+    width: 40%;
+}
+.info{
+    width: 40%;
+    /* font-family: 'Montserrat'; */
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 30px;
+}
+@media (max-width:900px) and (min-width:650px){
+    .content img {
+        margin: auto;
+        width: 75%  !important;
+    }
+}
+@media (max-width:900px){
+    .sub-nav-section{
+        height: 100vh;
+        padding-top: 10vh;
+    }
+    .content{
+        flex-direction: column;
+        padding: 5%;
+    }
+    .content img{
+        width: 100%;
+    }
+    .info{
+        width: 100%;
+        line-height: 25px;
+        text-align: justify;
+        font-size: 17px;
+    }
+    .even{
+        flex-direction: column-reverse
+    }
+}

@@ -15,6 +15,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  scroll-behavior: smooth;
 }
 
 html,
@@ -22,7 +23,31 @@ body {
   height: 100%;
   /* overflow-x: hidden; */
   scroll-behavior: smooth;
-  font-family: "Lato", sans-serif;
+  font-family: Relative, sans-serif;
+}
+/* main{
+  width: 100%;
+  height: 100vh;
+} */
+.loading-screen {
+  position: relative;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 0;
+  background-color: #4bedc2;
+  width: 0%;
+  height: 100%;
+}
+
+.load-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 10;
+  pointer-events: none;
 }
 
 button {
@@ -35,6 +60,30 @@ button {
 
 .monserrat-font {
   font-family: 'Montserrat', sans-serif;
+}
+
+@font-face {
+  font-family: 'Relative';
+  src: url('../font/Relative-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Relative';
+  src: url('../font/Relative-Book.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Relative';
+  src: url('../font/Relative-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
 }
 
 /**********************************************
@@ -128,7 +177,7 @@ button {
   transition: 0.3s ease;
   font-size: 23px;
   font-style: normal;
-  font-family: "Red Hat Text";
+  font-family: Relative, sans-serif;
   font-weight: 500;
   line-height: normal;
   /* font-stretch: normal; */
@@ -178,6 +227,10 @@ button {
   transition: 0.7s ease;
   /* box-shadow: 0 7px 12px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.32) !important; */
 }
+/* .dropdown-menu{
+  background: transparent;
+  color: white;
+} */
 
 @media (max-width: 900px) {
   .nav-link {
@@ -196,6 +249,10 @@ button {
   background-color: #000;
 }
 
+.bg-image {
+  width: 100%;
+}
+
 .mrt-socials {
   color: #ffffff;
   display: flex;
@@ -209,6 +266,19 @@ button {
   font-size: 45px;
 }
 
+.mrt-socials2 {
+  color: #000;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.mrt-socials2 a {
+  text-decoration: none;
+  color: #000;
+  font-size: 45px;
+}
+
 .mrt-contact {
   margin-top: auto;
   width: 100%;
@@ -218,18 +288,33 @@ button {
   align-items: center;
 }
 
-.bg-image {
-  width: 100%;
-}
-
 .mrt-contact h2 {
-  font-family: 'Saira';
+  /* font-family: 'Saira'; */
   font-style: normal;
   font-weight: 600;
   font-size: 25px;
   line-height: 39px;
   text-align: center;
   color: white;
+}
+
+.mrt-contact2 {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mrt-contact2 h2 {
+  /* font-family: 'Saira'; */
+  font-style: normal;
+  font-weight: 600;
+  font-size: 25px;
+  line-height: 39px;
+  text-align: center;
+  color: #000;
 }
 
 .col-no-padding {
@@ -245,7 +330,7 @@ button {
 
   border-radius: 12px;
   color: white;
-  font-family: 'Saira';
+  font-family: Relative, sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 20px;

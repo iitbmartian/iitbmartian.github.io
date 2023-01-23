@@ -1,8 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Saira&display=swap');
 
 #subdivisions {
-    background: url("../img/space_sym.png");
-    background-repeat: repeat-y;
+    padding-top: 9%;
+    background: url("../img/bg3.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     /* background-size: cover; */
     display: flex;
     flex-direction: column;
@@ -22,16 +25,16 @@
 
 
 .teamCard {
-    background: rgba(217, 217, 217, 0.1);
-    backdrop-filter: blur(7.5px);
+    /* background: rgba(217, 217, 217, 0.1); */
+    /* backdrop-filter: blur(7.5px); */
     /* Note: backdrop-filter has minimal browser support */
 
     border-radius: 20px;
     /* height: 346px; */
-    width: 85%;
-    margin-top: 50px;
+    width: 90%;
+    margin-top: 20px;
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     align-items: center;
     padding: 24.25px 65px 60px 65px;
 }
@@ -75,8 +78,69 @@
     line-height: 39px;
 }
 
+.memberSocials{
+    width: 40%;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+}
+
 .memberSocials a {
     text-decoration: none;
-    color: #ffffff;
+    color: orangered !important;
     font-size: 30px;
-  }
+    
+}
+
+.tooltip1 {
+    position: relative;
+    display: inline-block;
+    font-size: 30px;
+}
+
+.tooltip1 a {
+    text-decoration: none;
+    color: orangered !important;
+    font-size: 30px;
+    background: #fff;
+
+}
+
+.tooltip1 .tooltiptext {
+    visibility: hidden;
+    width: 140px;
+    font-size: 15px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 3px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 105%;
+    left: 50%;
+    margin-left: -70px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip1 .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip1:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.no-border-button{
+    border: 0px !important;
+    background: #fff !important;
+}
