@@ -14,12 +14,13 @@
         <link rel="stylesheet" href="../src/css/mech.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"> -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     </head>
 
     <body>
         <nav id="transparent-navbar" class="navbar navbar-expand-lg red-hat-font">
             <a class="navbar-brand" href="index.html">
-                <img src="../src/img/logo_mrt.png" width="75px">
+                <img src="./src/img/logo_mrt.png" width="75px">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,29 +31,35 @@
                 <ul class="navbar-nav mr-auto">
                 </ul>
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="../index.html">Home</a>
+                    <li class="nav-item animate-this">
+                        <a class="nav-link" href="./index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../rovers.html">Rovers</a>
+                        <a class="nav-link" href="./rovers.html">Rovers</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" href="#">Subdivisions</a>
+                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                            href="#">Subdivisions</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="mech.html">Mechanical</a></li>
-                            <li><a class="dropdown-item" href="elec.html">Electronics & Software</a></li>
-                            <li><a class="dropdown-item" href="bio.html">Bioscience</a></li>
-                            <li><a class="dropdown-item" href="mdm.html">Design and Logistics</a></li>
+                            <li><a class="dropdown-item" href="./subdivisions/mech.html">Mechanical</a></li>
+                            <li><a class="dropdown-item" href="./subdivisions/elec.html">Electronics & Software</a></li>
+                            <li><a class="dropdown-item" href="./subdivisions/bio.html">Bioscience</a></li>
+                            <li><a class="dropdown-item" href="./subdivisions/mdm.html">Design and Logistics</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                            href="#">Teams</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="./team.html">Current Team</a></li>
+                            <li><a class="dropdown-item" href="./alumni.html">Alumni</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../team.html">Teams</a>
+                        <a class="nav-link" href="./comp.html">Competitions</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../gallery.html">Gallery</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../contact-us.html">Contact</a>
+                        <a class="nav-link" href="./contact-us.html">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -129,8 +136,11 @@
             </section>
         </section>
         
+        <div class="loader-wrapper">
+            <span class="loader"><span class="loader-inner"></span></span>
+        </div>
 
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+        <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script> -->
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>

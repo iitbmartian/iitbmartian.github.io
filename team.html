@@ -12,91 +12,13 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="src/css/styles.css">
     <link rel="stylesheet" href="src/css/team.css">
+    <!-- <link href="src/css/rover_new.css" rel="stylesheet" type="text/css" /> -->
 
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
 
     <style>
-        .teamCard {
-            width: 94vw;
-            display: flex;
-            /* flex-direction: row; */
-            /* justify-content: space-evenly; */
-            /* flex-wrap: wrap; */
-        }
-
-        .member {
-            background-color: white;
-            border: 2px solid white;
-            margin: 2%;
-            padding: 2% 2%;
-            box-shadow: 8px 8px 5px rgb(18, 18, 27), -8px -8px 5px rgb(18, 18, 27);
-            /* width: 15vw; */
-        }
-
-        .teamCard img {
-            width: 75%;
-            border-radius: 50%;
-            border: 4px solid orangered;
-        }
-
-        h5 {
-            margin: 5px 0;
-            font-weight: bold;
-        }
-
-        .role {
-            color: orangered;
-        }
-
-        i {
-            color: orangered;
-        }
-
-        .half-section {
-            justify-content: space-evenly;
-
-        }
-
-        @media (max-width:950px) and (min-width:500px) {
-            .teamCard {
-                flex-direction: column;
-            }
-
-            .teamCard img {
-                width: 70%;
-            }
-
-            .half-section {
-                width: 100vw;
-            }
-
-            .member {
-                padding: 5%;
-                width: 40%;
-                margin: 5% 0;
-            }
-        }
-
-        @media (max-width:500px) {
-            .teamCard {
-                flex-direction: column;
-                padding: 10%;
-            }
-
-            .teamCard img {
-                width: 70%;
-            }
-
-            .half-section {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .member {
-                padding-top: 14px;
-                margin: 7% 0;
-            }
-        }
+        
     </style>
 </head>
 
@@ -135,11 +57,16 @@
                         <li><a class="dropdown-item" href="./subdivisions/mdm.html">Design and Logistics</a></li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="team.html">Teams</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
+                        href="#">Teams</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="./team.html">Current Team</a></li>
+                        <li><a class="dropdown-item" href="./alumni.html">Alumni</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./gallery.html">Gallery</a>
+                    <a class="nav-link" href="./comp.html">Competitions</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="./contact-us.html">Contact</a>
@@ -149,23 +76,30 @@
     </nav>
     <!-- <div class="empty-div"></div> -->
 
-    <main data-barba="container" data-barba-namespace="team">
+    <main class="hero-section" data-barba="container" data-barba-namespace="team">
         <div id="subdivisions" class="bg-image">
             <h1>
-                TEAM
+                MEET OUR TEAM
             </h1>
+
+            <div class="team-gallery">
+                <div class="slideshow-container">
+                    <img src="src/img/teams_gallery/team_current.JPG" style="width:100%">
+
+                </div>
+            </div>
 
             <!-- Team Leaders-->
             <h1>Team Leaders</h1>
             <div class="teamCard text-center">
                 <!-- . -->
-                <div class="half-section" style="display: flex;">
-                    <div class="member">
+                <div class="three-section" style="display: flex;">
+                    <div class="member-3">
                         <img src="src/img/team/nishant.png" alt="">
                         <h5>Nishant Mittal</h5>
                         <h5 class="role">Team Lead</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('nishant.mittal@iitb.ac.in',1)" onmouseout="outFunc(1)">
@@ -179,12 +113,12 @@
                             </a>
                         </div>
                     </div>
-                    <div class="member">
+                    <div class="member-3">
                         <img src="src/img/team/liza.png" alt="">
                         <h5>Liza Dahiya</h5>
                         <h5 class="role">Team Lead</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('lizadahiya23@gmail.com',2)" onmouseout="outFunc(2)">
@@ -198,12 +132,12 @@
                             </a>
                         </div>
                     </div>
-                    <div class="member">
+                    <div class="member-3">
                         <img src="src/img/team/tejas.png" alt="">
                         <h5>Tejas Shintre</h5>
                         <h5 class="role">Team Lead</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('190010068@iitb.ac.in',3)" onmouseout="outFunc(3)">
@@ -224,13 +158,13 @@
             <h1>Core Team Members </h1>
             <div class="teamCard text-center">
                 <!-- . -->
-                <div class="half-section" style="display: flex;">
-                    <div class="member">
+                <div class="three-section" style="display: flex;">
+                    <div class="member-3">
                         <img src="src/img/team/Neha_Hardware_Mobility.jpg" alt="">
                         <h5>Neha Vyas</h5>
                         <h5 class="role">Core Team Member - Electrical and Software</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('190070037@iitb.ac.in',4)" onmouseout="outFunc(4)">
@@ -244,12 +178,12 @@
                             </a>
                         </div>
                     </div>
-                    <div class="member">
+                    <div class="member-3">
                         <img src="src/img/team/sanskar.jpg" alt="">
                         <h5>Sanskar Jaiswal</h5>
                         <h5 class="role">Core Team Member - Electrical and Software</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('19d110017@iitb.ac.in',5)" onmouseout="outFunc(5)">
@@ -263,12 +197,12 @@
                             </a>
                         </div>
                     </div>
-                    <div class="member">
+                    <div class="member-3">
                         <img src="src/img/team/mihir.jpg" alt="">
                         <h5>Mihir Nandanwat</h5>
                         <h5 class="role">Core Team Member - Mechanical</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('190020071@iitb.ac.in',6)" onmouseout="outFunc(6)">
@@ -289,13 +223,12 @@
 
             <div class="teamCard text-center">
                 <!-- . -->
-                <div class="half-section" style="display: flex;">
-                    <div class="member">
+                <div class="three-section" style="display: flex;">
+                    <div class="member-3">
                         <img src="src/img/team/aarush_mrt.jpg" alt="">
                         <h5>Aarush Billaiya</h5>
                         <h5 class="role">Core Team Member - Electrical and Software</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('aarushbillaiya@gmail.com',7)" onmouseout="outFunc(7)">
@@ -309,12 +242,11 @@
                             </a>
                         </div>
                     </div>
-                    <div class="member">
+                    <div class="member-3">
                         <img src="src/img/team/Sharath_pawan_Hardware_Mobility.png" alt="">
                         <h5>Boda Sharath Pavan</h5>
                         <h5 class="role">Core Team Member - MDM</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('190100039@iitb.ac.in',8)" onmouseout="outFunc(8)">
@@ -328,12 +260,11 @@
                             </a>
                         </div>
                     </div>
-                    <div class="member">
+                    <div class="member-3">
                         <img src="src/img/team/Jos_MDM.jpg" alt="">
                         <h5>Jos Katiyare</h5>
                         <h5 class="role">Core Team Member - MDM</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('190020054@iitb.ac.in ',9)" onmouseout="outFunc(9)">
@@ -359,8 +290,8 @@
                         <img src="src/img/team/Harsh_Shah_IP.jpg" alt="">
                         <h5>Harsh Shah</h5>
                         <h5 class="role">Subsystem Lead - Image Processing</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('prodigy.harsh18@gmail.com ',10)" onmouseout="outFunc(10)">
@@ -378,8 +309,8 @@
                         <img src="src/img/team/khush_Autonomous_2021.jpg" alt="">
                         <h5>Khush Jain</h5>
                         <h5 class="role">Subsystem Lead - Autonomous</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('200010040@iitb.ac.in ',11)" onmouseout="outFunc(11)">
@@ -399,8 +330,8 @@
                         <img src="src/img/team/AkshayKaushal_Hardware_Mobility.jpg" alt="">
                         <h5>Akshay Kaushal</h5>
                         <h5 class="role">Team Member <br> Hardware</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('20D070007@iitb.ac.in',12)" onmouseout="outFunc(12)">
@@ -418,8 +349,8 @@
                         <img src="src/img/team/Ayush_raisoni_Hardware_Mobility.jpg" alt="">
                         <h5>Ayush Rasoni</h5>
                         <h5 class="role">Team Member <br> Hardware</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('200100041@iitb.ac.in  ',13)" onmouseout="outFunc(13)">
@@ -444,8 +375,8 @@
                         <img src="src/img/team/vedika_rathi.png" alt="">
                         <h5>Vedika Rathi</h5>
                         <h5 class="role">Team Member <br> Hardware</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('21d070089@iitb.ac.in',14)" onmouseout="outFunc(14)">
@@ -463,8 +394,8 @@
                         <img src="src/img/team/ishan_u.jpg" alt="">
                         <h5>Ishan Upadhyay</h5>
                         <h5 class="role">Team Member <br> Software</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('200010040@iitb.ac.in ',15)" onmouseout="outFunc(15)">
@@ -484,8 +415,8 @@
                         <img src="src/img/team/hriday.jpg" alt="">
                         <h5>Hriday Jasani</h5>
                         <h5 class="role">Team Member <br> Hardware</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('210110048@iitb.ac.in',16)" onmouseout="outFunc(16)">
@@ -503,8 +434,8 @@
                         <img src="src/img/team/default_g.jpg" alt="">
                         <h5>Navdha</h5>
                         <h5 class="role">Team Member <br> Hardware</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('210260035@iitb.ac.in',17)" onmouseout="outFunc(17)">
@@ -529,8 +460,8 @@
                         <img src="src/img/team/default_b.jpg" alt="">
                         <h5>Aditya Choudhary</h5>
                         <h5 class="role">Team Member <br> Hardware</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('21b090001@iitb.ac.in',18)" onmouseout="outFunc(18)">
@@ -548,8 +479,8 @@
                         <img src="src/img/team/default_b.jpg" alt="">
                         <h5>Umang Agarwal</h5>
                         <h5 class="role">Team Member <br> Software</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('21d070083@iitb.ac.in',19)" onmouseout="outFunc(19)">
@@ -569,8 +500,8 @@
                         <img src="src/img/team/anirudhh.png" alt="">
                         <h5>KP Annirudh</h5>
                         <h5 class="role">Team Member <br> Hardware</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('210070009@iitb.ac.in',20)" onmouseout="outFunc(20)">
@@ -588,8 +519,8 @@
                         <img src="src/img/team/devansh.jpg" alt="">
                         <h5>Devansh Satra</h5>
                         <h5 class="role">Team Member <br> Hardware</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('210110037@iitb.ac.in',21)" onmouseout="outFunc(21)">
@@ -615,8 +546,8 @@
                         <img src="src/img/team/Daniel_WC.jpg" alt="">
                         <h5>Daniel Gracias </h5>
                         <h5 class="role">Subsystem lead <br> Wheels</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('200110029@iitb.ac.in',22)" onmouseout="outFunc(22)">
@@ -634,8 +565,8 @@
                         <img src="src/img/team/Ragasree_RA.jpeg" alt="">
                         <h5>RAGASREE R K</h5>
                         <h5 class="role">Subsystem Lead <br> Robotic Arm</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('200100126@iitb.ac.in',23)" onmouseout="outFunc(23)">
@@ -655,8 +586,8 @@
                         <img src="src/img/team/Gaurav_suspension.jpg" alt="">
                         <h5>Gaurav Rathod</h5>
                         <h5 class="role">Subsystem Lead <br> Suspension</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('200010025@iitb.ac.in',24)" onmouseout="outFunc(24)">
@@ -674,8 +605,8 @@
                         <img src="src/img/team/Mayank_panda_2021.jpg" alt="">
                         <h5>Mayank Panda</h5>
                         <h5 class="role">Subsystem LEad <br> BioAssembly</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('200010043@iitb.ac.in',25)" onmouseout="outFunc(25)">
@@ -700,8 +631,8 @@
                         <img src="src/img/team/apoorva.jpg" alt="">
                         <h5>Apoorva Kanti</h5>
                         <h5 class="role">Team Member <br> Mechanical</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('210010013@iitb.ac.in ',26)" onmouseout="outFunc(26)">
@@ -719,8 +650,8 @@
                         <img src="src/img/team/prakriti.jpg" alt="">
                         <h5>Prakriti Janbandhu</h5>
                         <h5 class="role">Team Member <br> Mechanical</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('210100113@iitb.ac.in',27)" onmouseout="outFunc(27)">
@@ -740,8 +671,8 @@
                         <img src="src/img/team/yash_kotkar.jpg" alt="">
                         <h5>Yash Kotkar</h5>
                         <h5 class="role">Subsystem Lead <br> Wheels</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('kotkaryash2003@gmail.com',28)" onmouseout="outFunc(28)">
@@ -759,8 +690,8 @@
                         <img src="src/img/team/mohit_chandak.jpg" alt="">
                         <h5>Mohit Chandak</h5>
                         <h5 class="role">Team Member <br> Mechanical</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('210110079@iitb.ac.in',29)" onmouseout="outFunc(29)">
@@ -780,13 +711,13 @@
 
             <div class="teamCard text-center">
                 <!-- . -->
-                <div class="half-section" style="display: flex;">
-                    <div class="member">
+                <div class="three-section" style="display: flex;">
+                    <div class="member-3">
                         <img src="src/img/team/default_b.jpg" alt="">
                         <h5>Priyanth Elango</h5>
                         <h5 class="role">Team Member <br> Mechanical</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('elangopriyanth@gmail.com',30)" onmouseout="outFunc(30)">
@@ -800,12 +731,12 @@
                             </a>
                         </div>
                     </div>
-                    <div class="member">
+                    <div class="member-3">
                         <img src="src/img/team/default_b.jpg" alt="">
                         <h5>Sannidhya Kaushal</h5>
                         <h5 class="role">Team Member <br> Mechanical</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('sannidhya1307@gmail.com',31)" onmouseout="outFunc(31)">
@@ -819,12 +750,12 @@
                             </a>
                         </div>
                     </div>
-                    <div class="member">
+                    <div class="member-3">
                         <img src="src/img/team/kushal_agarwal.jpg" alt="">
                         <h5>Kushal Agarwal</h5>
                         <h5 class="role">Team Member <br> Mechanical</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('210100087@iitb.ac.in',32)" onmouseout="outFunc(32)">
@@ -849,8 +780,8 @@
                         <img src="src/img/team/anniket.jpg" alt="">
                         <h5>Anniket Mohalik</h5>
                         <h5 class="role">Subsystem lead <br> Media</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('21u130008@iitb.ac.in',33)" onmouseout="outFunc(33)">
@@ -868,8 +799,8 @@
                         <img src="src/img/team/ashish_pol.jpeg" alt="">
                         <h5>Ashish Pol</h5>
                         <h5 class="role">Subsystem Lead <br> Web Development</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('190070011@iitb.ac.in',34)" onmouseout="outFunc(34)">
@@ -889,8 +820,8 @@
                         <img src="src/img/team/nandana.jpg" alt="">
                         <h5>Nandana K V</h5>
                         <h5 class="role">Team Member <br> Media</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('nandananileshwar@gmail.com',35)" onmouseout="outFunc(35)">
@@ -908,8 +839,8 @@
                         <img src="src/img/team/tushar.jpg" alt="">
                         <h5>Tushaar Jhamtani</h5>
                         <h5 class="role">Team Member <br> Business</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('210110110@iitb.ac.in',36)" onmouseout="outFunc(36)">
@@ -934,8 +865,8 @@
                         <img src="src/img/team/default_b.jpg" alt="">
                         <h5>Durgesh Sahane</h5>
                         <h5 class="role">Team Member <br> Web Development</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('210110096@iitb.ac.in',37)" onmouseout="outFunc(37)">
@@ -953,8 +884,8 @@
                         <img src="src/img/team/ashwin.jpg" alt="">
                         <h5>Ashwin Panchal</h5>
                         <h5 class="role">Team Member <br> Web Development</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('ashwinpanchal.iitb@gmail.com',38)" onmouseout="outFunc(38)">
@@ -974,8 +905,8 @@
                         <img src="src/img/team/sristi.jpg" alt="">
                         <h5>Srishti Gautam </h5>
                         <h5 class="role">Team Member <br> Design</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('21b090019@iitb.ac.in',39)" onmouseout="outFunc(39)">
@@ -993,8 +924,8 @@
                         <img src="src/img/team/subodh.jpg" alt="">
                         <h5>Subodh Singh</h5>
                         <h5 class="role">Team Member <br> Design</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
-                        </p>
+                        <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quis quos illum soluta
+                        </p> -->
                         <div class="memberSocials">
                             <div class="tooltip1">
                                 <button type="button" class="no-border-button" onclick="myFunction('21d170042@iitb.ac.in',40)" onmouseout="outFunc(40)">
@@ -1041,9 +972,13 @@
         </div>
     </main>
 
+    <div class="loader-wrapper">
+        <span class="loader"><span class="loader-inner"></span></span>
+    </div>
+    
     <!-- scripts -->
 
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -1077,6 +1012,8 @@
 
         gtag('config', 'UA-162930243-1');
     </script>
+    <script src="src/js/rover.js"></script>
+
 </body>
 
 </html>

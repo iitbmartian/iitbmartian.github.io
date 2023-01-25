@@ -214,7 +214,7 @@ th {
 }
 
 /* ==========================================================================
-   Start of base Webflow CSS - If you're looking for some ultra-clean CSS, skip the boilerplate and see the unminified code below.
+   Base CSS
    ========================================================================== */
 
 .w-icon-slider-right:before {
@@ -2257,7 +2257,7 @@ textarea.w-select {
 }
 
 /* ==========================================================================
-      Start of custom Webflow CSS
+       custom CSS
       ========================================================================== */
 body {
     font-family: Relative, sans-serif;
