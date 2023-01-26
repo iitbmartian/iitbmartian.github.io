@@ -4,7 +4,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text&display=swap');
 
 
-
+.scroll{
+    scroll-snap-align: start;
+    /* scroll-margin: 0; */
+    scroll-snap-stop: normal;
+    /* scroll-margin: 50vh; */
+}
 .sub-nav{
     background: url("../img/mech_home.png");
     background-size: cover;
@@ -12,9 +17,9 @@
     background-position: center;
     color: white;
     text-align: center;
-    padding-top: 15vh;
+    padding:10% 0;
     height: 100vh;
-    scroll-snap-align: start;
+    /* scroll-snap-align: start; */
 }
 .sub-nav h1{
     margin: 5% 0;
@@ -36,18 +41,18 @@ a{
     /* scroll-snap-stop: always; */
     scroll-snap-type: y mandatory;
     height: 100vh;
-    overflow-y:scroll;
+    overflow-y:auto;
     /* overflow-y:visible; */
     
 }
 .sub-nav-section{
-    scroll-snap-align: start;
+    /* scroll-snap-align: start; */
     /* scroll-snap-stop: always;
     scroll-snap-type: y mandatory; */
     color: white;
     height: 100vh;
     padding:10% 0;
-    background: url("../img/mech_bg_compressed.jpg");
+    background: url("../img/mech_bg_new.webp");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

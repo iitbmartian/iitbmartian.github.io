@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MRT-IITB</title>
+    <link rel="icon" type="image/x-icon" href="./src/img/logo_mrt.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -75,13 +76,13 @@
 
     <main data-barba="container" data-barba-namespace="home">
         <div id="home" class="bg-image div-centered-text">
-            <div class="home-intro-text">
+            <div class="home-intro-text animate">
                 <h2>MARS ROVER TEAM</h2>Student initiative at IIT Bombay to build a prototype Mars rover capable of
                 extra-terrestrial robotics.
             </div>
         </div>
         <div id="aboutUs" class="bg-image">
-            <div class="aboutUs-text">
+            <div class="aboutUs-text animate">
                 <h2>ABOUT US</h2>The IITB Mars Rover Team was founded in 2012 with the goal of understanding the science and engineering behind building a rover for the red planet. The team has grown to be a platform for experimentation and production of rover prototypes, similar to how NASA has produced rovers such as the Pathfinder. The team has its own line of 6 rovers that have been upgraded to become more advanced and robust over time. 
                 <br>
                 <div class="read-more">
@@ -91,7 +92,48 @@
             </div>
         </div>
 
-        
+        <section class="comp">
+            <div class="container animate">
+                <h1>Achievements</h1>
+                <p>The IIT Mars Rover team has been making ground-breaking progress over the years.
+                    The Mars Rover team's accomplishments have been well-documented over the past few years. Every year, the team spends months designing and building a new rover, with each iteration pushing the boundaries of science and technology.</p>
+                <!-- <p>The .caption class adds proper padding and a dark grey color to text inside thumbnails.</p>
+                <p>Click on the images to enlarge them.</p> -->
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="thumbnail">
+                      <a href="" target="_blank">
+                        <img src="./src/images/rovers/erc_1.jpeg" alt="Lights" style="width: 100%;";">
+                        <!-- <div class="caption">
+                          <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
+                        </div> -->
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="thumbnail">
+                      <a href="" target="_blank">
+                        <img src="./src/images/rovers/irdc_2020.jpg" alt="Nature" style="width:100%">
+                        <!-- <div class="caption">
+                          <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
+                        </div> -->
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="thumbnail">
+                      <a href="" target="_blank">
+                        <img src="./src/images/rovers/irc_2022.jpg" alt="Fjords" style="width:100%">
+                        <!-- <div class="caption">
+                          <p>Lorem ipsum donec id elit non mi porta gravida at eget metus.</p>
+                        </div> -->
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+        </section>
     
         <div class="sub">
             <h1>Subsystems</h1>
@@ -99,43 +141,68 @@
                 <div class="vcard v1">
                     <div class="v-content">
                         <h2 class="v-title">Electronic and Software</h2>
-                        <p class="v-copy">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                        <p class="v-copy">
+                            <ul>
+                                <li>Controls</li>
+                                <li>Navigation </li>
+                                <li>GUI</li>
+                                <li>Wireless</li>
+                                <li>Power Distribution</li>
+                            </ul>
                         </p>
-                        <button class="btn-vcard">READ MORE</button>
+                        <button class="btn-vcard"><a href="./subdivisions/elec.html">READ MORE</a> </button>
                     </div>
                 </div>
         
                 <div class="vcard v2">
                     <div class="v-content">
-                        <h2 class="v-title">Electronic and Software</h2>
-                        <p class="v-copy">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                        <h2 class="v-title">Mechanical</h2>
+                        <p class="v-copy">
+                            <ul>
+                                <li>Robotic Arm</li>
+                                <li>Suspension</li>
+                                <li>Bio-assembly</li>
+                                <li>Chassis</li>
+                                <li>Wheels</li>
+                            </ul>
                         </p>
-                        <button class="btn-vcard">READ MORE</button>
+                        <button class="btn-vcard"><a href="./subdivisions/mech.html">READ MORE</a> </button>
                     </div>
                 </div>
         
                 <div class="vcard v3">
                     <div class="v-content">
-                        <h2 class="v-title">Electronic and Software</h2>
-                        <p class="v-copy">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                        <h2 class="v-title">Bioscience</h2>
+                        <p class="v-copy">
+                            <ul>
+                                <li>Life detection test</li>
+                                <li>Bio sensors</li>
+                                <li>Geological survey</li>
+                                <li>Sample collection</li>
+                            </ul>
                         </p>
-                        <button class="btn-vcard">READ MORE</button>
+                        <button class="btn-vcard"><a href="./subdivisions/bio.html"> READ MORE</a></button>
                     </div>
                 </div>
         
                 <div class="vcard v4">
                     <div class="v-content">
-                        <h2 class="v-title">Electronic and Software</h2>
-                        <p class="v-copy">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                        <h2 class="v-title">MDM</h2>
+                        <p class="v-copy">
+                            <ul>
+                                <li>Media</li>
+                                <li>Design</li>
+                                <li>Marketing</li>
+                            </ul>
                         </p>
-                        <button class="btn-vcard">READ MORE</button>
+                        <button class="btn-vcard"><a href="./subdivisions/mdm.html">READ MORE</a> </button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Competitions and achievements section -->
+        
     
         <div id="contact_home" class="bg-image" style="height: 156px;">
             <h2>CONTACT</h2>
@@ -192,6 +259,20 @@
             duration: 1000,
         });
 
+        const observer = new IntersectionObserver((entries)=>{
+                entries.forEach((entry)=>{
+                    console.log(entry)
+                    if (entry.isIntersecting){
+                        entry.target.classList.add('current');
+                    }
+                    else{
+                        entry.target.classList.remove('current');
+                    }
+                });
+            });
+
+            const hiddenElements = document.querySelectorAll('.animate')
+            hiddenElements.forEach((el) =>observer.observe(el));
         
 
     </script>

@@ -6,6 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>MRT-IITB</title>
+        <link rel="icon" type="image/x-icon" href="../src/img/logo_mrt.png">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -20,7 +21,7 @@
     <body>
         <nav id="transparent-navbar" class="navbar navbar-expand-lg red-hat-font">
             <a class="navbar-brand" href="index.html">
-                <img src="./src/img/logo_mrt.png" width="75px">
+                <img src="../src/img/logo_mrt.png" width="75px">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,34 +33,34 @@
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item animate-this">
-                        <a class="nav-link" href="./index.html">Home</a>
+                        <a class="nav-link" href="../index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./rovers.html">Rovers</a>
+                        <a class="nav-link" href="../rovers.html">Rovers</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
                             href="#">Subdivisions</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="./subdivisions/mech.html">Mechanical</a></li>
-                            <li><a class="dropdown-item" href="./subdivisions/elec.html">Electronics & Software</a></li>
-                            <li><a class="dropdown-item" href="./subdivisions/bio.html">Bioscience</a></li>
-                            <li><a class="dropdown-item" href="./subdivisions/mdm.html">Design and Logistics</a></li>
+                            <li><a class="dropdown-item" href="./mech.html">Mechanical</a></li>
+                            <li><a class="dropdown-item" href="./elec.html">Electronics & Software</a></li>
+                            <li><a class="dropdown-item" href="./bio.html">Bioscience</a></li>
+                            <li><a class="dropdown-item" href="./mdm.html">Design and Logistics</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
                             href="#">Teams</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="./team.html">Current Team</a></li>
-                            <li><a class="dropdown-item" href="./alumni.html">Alumni</a></li>
+                            <li><a class="dropdown-item" href="../team.html">Current Team</a></li>
+                            <li><a class="dropdown-item" href="../alumni.html">Alumni</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./comp.html">Competitions</a>
+                        <a class="nav-link" href="../comp.html">Competitions</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./contact-us.html">Contact</a>
+                        <a class="nav-link" href="../contact-us.html">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -67,36 +68,39 @@
         <!-- <div class="empty-div"></div> -->
         <section id="parent">
         <section class="sub-nav" >
-            <h1>Mechanical Subsystem</h1>
+            <h1>Electronics and Software Subsystem</h1>
             <div class="nav-items">
                 <div class="item">
                     <i class="fa fa-gear fa-spin" style="font-size:48px"></i>
-                    <a href="#arm"><h3 >Robotic Arm</h3></a>
+                    <a href="#arm"><h3 >Controls</h3></a>
                 </div>
                 <div class="item">
                     <i class="fa fa-gear fa-spin" style="font-size:48px"></i>
-                    <a href="#suspension"><h3>Suspension</h3></a>
+                    <a href="#suspension"><h3>Autonomous</h3></a>
                 </div>
                 <div class="item">
                     <i class="fa fa-gear fa-spin" style="font-size:48px"></i>
-                    <a href="#bio"><h3>Bio-assembly</h3></a>
+                    <a href="#bio"><h3> GUI</h3></a>
                 </div>
                 <div class="item">
                     <i class="fa fa-gear fa-spin" style="font-size:48px"></i>
-                    <a href="#chassis"><h3>Chassis</h3></a>
+                    <a href="#chassis"><h3>Wireless</h3></a>
                 </div>
                 <div class="item">
                     <i class="fa fa-gear fa-spin" style="font-size:48px"></i>
-                    <a href="#wheels"><h3>Wheels</h3></a>
+                    <a href="#wheels"><h3>Power Distribution and BMS</h3></a>
                 </div>
             </div>
         </section>
         
             <section class="sub-nav-section" id="arm">
                 <div class="content">
-                    <img src="../src/img/mech1.jpg" alt="">
+                    <img src="../src/img/elec_1.png" alt="">
                     <div class="info">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae vitae consequuntur, accusamus voluptate nobis, distinctio dolorum quaerat modi eligendi nam unde porro quis ipsam magnam dolorem obcaecati molestias ipsa corporis placeat! Unde at ipsum illum laborum! Nihil distinctio placeat voluptatem repellat in esse repellendus veniam, laudantium, qui eligendi ea a, incidunt fugit soluta at consectetur consequuntur nulla? Tempore, iste. Adipisci ab repellat magnam, dicta modi illum, eum expedita beatae velit qui unde aut officiis deserunt neque provident culpa distinctio iste.
+                        <h2>Controls</h2>
+                        All 6 wheels are driven independently from GPIO pins of Raspberry Pi 3 in open loop, 4 steering wheels (Front and Rear) are steered using closed loop control . <br>
+Steering is controlled by Roboclaw Motor Drivers onto which we employ a Type II control system, to track ramp input , while drive is controlled by Hercules motor Drivers. <br>
+We are working towards getting a state space description of the same, so that we can employ Inverse Kinematics or LQR control for the arm, using Moveit! motion planning plugin . <br>
                     </div>
                 </div>
             </section>
@@ -104,16 +108,22 @@
                 <div class="content even">
                     
                     <div class="info">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae vitae consequuntur, accusamus voluptate nobis, distinctio dolorum quaerat modi eligendi nam unde porro quis ipsam magnam dolorem obcaecati molestias ipsa corporis placeat! Unde at ipsum illum laborum! Nihil distinctio placeat voluptatem repellat in esse repellendus veniam, laudantium, qui eligendi ea a, incidunt fugit soluta at consectetur consequuntur nulla? Tempore, iste. Adipisci ab repellat magnam, dicta modi illum, eum expedita beatae velit qui unde aut officiis deserunt neque provident culpa distinctio iste.
+                        <h2>Autonomous</h2>
+                        Surrounding mapping is done using SLAM; requires a high-power LIDAR for visualising the map. <br>
+The whole system is up and running on Gazebo in a simulated environment and the algorithm is being improved for better performance. (video on right). <br>
+We are working to employ the algorithm on our smaller prototype of the rover first, and then later shift to main rover. <br>
                     </div>
-                    <img src="../src/img/mech1.jpg" alt="">
+                    <img src="../src/img/GUI1.png" alt="">
                 </div>
             </section>
             <section class="sub-nav-section" id="bio">
                 <div class="content">
-                    <img src="../src/img/mech1.jpg" alt="">
+                    <img src="../src/img/GUI2.png" alt="">
                     <div class="info">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae vitae consequuntur, accusamus voluptate nobis, distinctio dolorum quaerat modi eligendi nam unde porro quis ipsam magnam dolorem obcaecati molestias ipsa corporis placeat! Unde at ipsum illum laborum! Nihil distinctio placeat voluptatem repellat in esse repellendus veniam, laudantium, qui eligendi ea a, incidunt fugit soluta at consectetur consequuntur nulla? Tempore, iste. Adipisci ab repellat magnam, dicta modi illum, eum expedita beatae velit qui unde aut officiis deserunt neque provident culpa distinctio iste.
+                        <h2>GUI</h2>
+URDF Visualisation: As a first step towards automating the system, an URDF of rover (pic on left) was made, which helps us translate what rover is doing on field onto the GUI and autonomous node. <br>
+Plotting GPS data from APM module (pic on left): GPS lat long received from APM using mavros library is mapped onto RViZ aerialmapdisplay plugin using QT gui. <br>
+IP Camera interfacing with GUI: RTSP stream of IP camera is obtained using opencv and using ROS-OpenCV bridge, stream is converted to image message. The GUI widget ‘Image View’, is used to visualise the message. <br>
                     </div>
                 </div>
             </section>
@@ -121,16 +131,23 @@
                 <div class="content even">
                     
                     <div class="info">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae vitae consequuntur, accusamus voluptate nobis, distinctio dolorum quaerat modi eligendi nam unde porro quis ipsam magnam dolorem obcaecati molestias ipsa corporis placeat! Unde at ipsum illum laborum! Nihil distinctio placeat voluptatem repellat in esse repellendus veniam, laudantium, qui eligendi ea a, incidunt fugit soluta at consectetur consequuntur nulla? Tempore, iste. Adipisci ab repellat magnam, dicta modi illum, eum expedita beatae velit qui unde aut officiis deserunt neque provident culpa distinctio iste.
+                        <h2>Wireless</h2>
+                        We are using commercial off-the-shelf PoE wireless bridges which operate in 5.6 GHz band , and have maximum EIRP of 36 dBm, compliant with FCC UNII-1 regulations. <br>
+These have been tested to give 1 km non-LOS range, and use adaptive channel selection techniques  to shift to a different channel once the current channel starts degrading, to tolerate interference. <br>
+Video feed is obtained via IP cameras on board and telemetry is achieved by passing messages between ROS nodes. <br>
                     </div>
-                    <img src="../src/img/mech1.jpg" alt="">
+                    <img src="../src/img/ruckus.png" alt="">
                 </div>
             </section>
             <section class="sub-nav-section" id="wheels">
                 <div class="content">
-                    <img src="../src/img/mech1.jpg" alt="">
+                    <img src="../src/img/control3.png" alt="">
                     <div class="info">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae vitae consequuntur, accusamus voluptate nobis, distinctio dolorum quaerat modi eligendi nam unde porro quis ipsam magnam dolorem obcaecati molestias ipsa corporis placeat! Unde at ipsum illum laborum! Nihil distinctio placeat voluptatem repellat in esse repellendus veniam, laudantium, qui eligendi ea a, incidunt fugit soluta at consectetur consequuntur nulla? Tempore, iste. Adipisci ab repellat magnam, dicta modi illum, eum expedita beatae velit qui unde aut officiis deserunt neque provident culpa distinctio iste.
+                        <h2>Power</h2>
+                        The entire rover will be powered by a 24 Volt custom battery pack consisting 3.7 Volts lipo cells. <br>
+24V - 12V and 24V - 5V DC-DC buck converters are used on a custom made PCB to distribute power for every components. <br>
+A Capacitor bank is used on the PCB to compensate for the effect of back EMF generated from the motors and actuators. <br>
+We are designing a Battery Management System for cell balancing and monitor the health of lipo cells during charging and discharging. <br>
                     </div>
                 </div>
             </section>

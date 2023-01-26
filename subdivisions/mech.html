@@ -6,6 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>MRT-IITB</title>
+        <link rel="icon" type="image/x-icon" href="../src/img/logo_mrt.png">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -20,7 +21,7 @@
     <body>
         <nav id="transparent-navbar" class="navbar navbar-expand-lg red-hat-font">
             <a class="navbar-brand" href="index.html">
-                <img src="./src/img/logo_mrt.png" width="75px">
+                <img src="../src/img/logo_mrt.png" width="75px">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,105 +33,130 @@
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item animate-this">
-                        <a class="nav-link" href="./index.html">Home</a>
+                        <a class="nav-link" href="../index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./rovers.html">Rovers</a>
+                        <a class="nav-link" href="../rovers.html">Rovers</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
                             href="#">Subdivisions</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="./subdivisions/mech.html">Mechanical</a></li>
-                            <li><a class="dropdown-item" href="./subdivisions/elec.html">Electronics & Software</a></li>
-                            <li><a class="dropdown-item" href="./subdivisions/bio.html">Bioscience</a></li>
-                            <li><a class="dropdown-item" href="./subdivisions/mdm.html">Design and Logistics</a></li>
+                            <li><a class="dropdown-item" href="./mech.html">Mechanical</a></li>
+                            <li><a class="dropdown-item" href="./elec.html">Electronics & Software</a></li>
+                            <li><a class="dropdown-item" href="./bio.html">Bioscience</a></li>
+                            <li><a class="dropdown-item" href="./mdm.html">Design and Logistics</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"
                             href="#">Teams</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="./team.html">Current Team</a></li>
-                            <li><a class="dropdown-item" href="./alumni.html">Alumni</a></li>
+                            <li><a class="dropdown-item" href="../team.html">Current Team</a></li>
+                            <li><a class="dropdown-item" href="../alumni.html">Alumni</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./comp.html">Competitions</a>
+                        <a class="nav-link" href="../comp.html">Competitions</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./contact-us.html">Contact</a>
+                        <a class="nav-link" href="../contact-us.html">Contact</a>
                     </li>
                 </ul>
             </div>
         </nav>
         <!-- <div class="empty-div"></div> -->
         <section id="parent">
-        <section class="sub-nav">
-            <h1>Mechanical Subsystem</h1>
-            <div class="nav-items">
-                <div class="item">
-                    <i class="fa fa-gear fa-spin" style="font-size:48px"></i>
-                    <a href="#arm"><h3 >Robotic Arm</h3></a>
-                </div>
-                <div class="item">
-                    <i class="fa fa-gear fa-spin" style="font-size:48px"></i>
-                    <a href="#suspension"><h3>Suspension</h3></a>
-                </div>
-                <div class="item">
-                    <i class="fa fa-gear fa-spin" style="font-size:48px"></i>
-                    <a href="#bio"><h3>Bio-assembly</h3></a>
-                </div>
-                <div class="item">
-                    <i class="fa fa-gear fa-spin" style="font-size:48px"></i>
-                    <a href="#chassis"><h3>Chassis</h3></a>
-                </div>
-                <div class="item">
-                    <i class="fa fa-gear fa-spin" style="font-size:48px"></i>
-                    <a href="#wheels"><h3>Wheels</h3></a>
+        <section class="sub-nav scroll">
+            <div>
+                <h1>Mechanical Subsystem</h1>
+                <div class="nav-items">
+                    <div class="item">
+                        <i class="fa fa-gear fa-spin" style="font-size:48px"></i>
+                        <a href="#arm"><h3 >Robotic Arm</h3></a>
+                    </div>
+                    <div class="item">
+                        <i class="fa fa-gear fa-spin" style="font-size:48px"></i>
+                        <a href="#suspension"><h3>Suspension</h3></a>
+                    </div>
+                    <div class="item">
+                        <i class="fa fa-gear fa-spin" style="font-size:48px"></i>
+                        <a href="#bio"><h3>Bio-assembly</h3></a>
+                    </div>
+                    <div class="item">
+                        <i class="fa fa-gear fa-spin" style="font-size:48px"></i>
+                        <a href="#chassis"><h3>Chassis</h3></a>
+                    </div>
+                    <div class="item">
+                        <i class="fa fa-gear fa-spin" style="font-size:48px"></i>
+                        <a href="#wheels"><h3>Wheels</h3></a>
+                    </div>
                 </div>
             </div>
+            
         </section>
         
-            <section class="sub-nav-section" id="arm">
+            <section class="sub-nav-section scroll" id="arm">
                 <div class="content">
-                    <img src="../src/img/mech1.jpg" alt="">
+                    <img src="../src/img/mech_3.jpeg" alt="">
                     <div class="info">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae vitae consequuntur, accusamus voluptate nobis, distinctio dolorum quaerat modi eligendi nam unde porro quis ipsam magnam dolorem obcaecati molestias ipsa corporis placeat! Unde at ipsum illum laborum! Nihil distinctio placeat voluptatem repellat in esse repellendus veniam, laudantium, qui eligendi ea a, incidunt fugit soluta at consectetur consequuntur nulla? Tempore, iste. Adipisci ab repellat magnam, dicta modi illum, eum expedita beatae velit qui unde aut officiis deserunt neque provident culpa distinctio iste.
+                        <h3>Robotic Arm</h3>
+                        We design and build a multiple degree-of-freedom robotic arm that should be capable of performing the following tasks:
+                        Lift/drop objects upto 5 kgs,
+                        Turn knobs,
+                        Push buttons,
+                        Open drawers ,
+                        and other precise movements… <br>
+                        There is a variety of stuff we work
+                        towards in this subsystem: mechanisms, materials, easier and precise control, robustness
                     </div>
                 </div>
             </section>
-            <section class="sub-nav-section " id="suspension">
+            <section class="sub-nav-section scroll" id="suspension">
                 <div class="content even">
                     
                     <div class="info">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae vitae consequuntur, accusamus voluptate nobis, distinctio dolorum quaerat modi eligendi nam unde porro quis ipsam magnam dolorem obcaecati molestias ipsa corporis placeat! Unde at ipsum illum laborum! Nihil distinctio placeat voluptatem repellat in esse repellendus veniam, laudantium, qui eligendi ea a, incidunt fugit soluta at consectetur consequuntur nulla? Tempore, iste. Adipisci ab repellat magnam, dicta modi illum, eum expedita beatae velit qui unde aut officiis deserunt neque provident culpa distinctio iste.
+                        <h3>Suspension</h3>
+                        The rover uses an entirely passive rocker-bogie suspension mechanism, which is tried and tested and thus <br>
+A novel 4-bar differential mechanism gives the chassis greater stability and also keeps it level while the rover traverses considerably rough terrain. <br>
+The suspension has been designed to climb over rocks of upto 0.5 metre high and traverse slopes excess of 50 degrees. <br>
+We are also designing an alternate 4-wheel suspension mechanism that uses differential steer as a backup to the current suspension. <br>
                     </div>
-                    <img src="../src/img/mech1.jpg" alt="">
+                    <img src="../src/img/mech_2.jpeg" alt="">
                 </div>
             </section>
-            <section class="sub-nav-section" id="bio">
+            <section class="sub-nav-section scroll" id="bio">
                 <div class="content">
-                    <img src="../src/img/mech1.jpg" alt="">
+                    <img src="../src/img/mech_1.jpeg" alt="">
                     <div class="info">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae vitae consequuntur, accusamus voluptate nobis, distinctio dolorum quaerat modi eligendi nam unde porro quis ipsam magnam dolorem obcaecati molestias ipsa corporis placeat! Unde at ipsum illum laborum! Nihil distinctio placeat voluptatem repellat in esse repellendus veniam, laudantium, qui eligendi ea a, incidunt fugit soluta at consectetur consequuntur nulla? Tempore, iste. Adipisci ab repellat magnam, dicta modi illum, eum expedita beatae velit qui unde aut officiis deserunt neque provident culpa distinctio iste.
+                        <h3>Bio-assembly</h3>
+                        Under the science task, the rover needs to collect the soil and rocks sample from multiple selected locations. <br>
+Soil sample acquisition is implemented as end effector to the robotic arm using drill based approach to collect sample from 10 cm depth, and double scoop based approach to scrape from the surface. <br>
+Soil sample is further distributed maintaining the contamination and functionality standards. <br>
+Sophisticated machinery is employed as aid for execution of on rover bio assay for living form detection. <br>
                     </div>
                 </div>
             </section>
-            <section class="sub-nav-section" id="chassis">
+            <section class="sub-nav-section scroll" id="chassis">
                 <div class="content even">
                     
                     <div class="info">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae vitae consequuntur, accusamus voluptate nobis, distinctio dolorum quaerat modi eligendi nam unde porro quis ipsam magnam dolorem obcaecati molestias ipsa corporis placeat! Unde at ipsum illum laborum! Nihil distinctio placeat voluptatem repellat in esse repellendus veniam, laudantium, qui eligendi ea a, incidunt fugit soluta at consectetur consequuntur nulla? Tempore, iste. Adipisci ab repellat magnam, dicta modi illum, eum expedita beatae velit qui unde aut officiis deserunt neque provident culpa distinctio iste.
+                        <h3>Chassis</h3>
+                        A robust chassis made using lightweight hollow aluminium pipes is compatible to carry the robotic arm and the bioassembly whilst carrying all the electrical components. <br>
+The links are so designed that there is no stress accumulation. <br>
+It is designed so that all the components mounted on it are modular and can be removed easily. <br>
                     </div>
-                    <img src="../src/img/mech1.jpg" alt="">
+                    <img src="../src/img/mech_5.jpeg" alt="">
                 </div>
             </section>
-            <section class="sub-nav-section" id="wheels">
+            <section class="sub-nav-section scroll" id="wheels">
                 <div class="content">
-                    <img src="../src/img/mech1.jpg" alt="">
+                    <img src="../src/img/mech_4.jpeg" alt="">
                     <div class="info">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae vitae consequuntur, accusamus voluptate nobis, distinctio dolorum quaerat modi eligendi nam unde porro quis ipsam magnam dolorem obcaecati molestias ipsa corporis placeat! Unde at ipsum illum laborum! Nihil distinctio placeat voluptatem repellat in esse repellendus veniam, laudantium, qui eligendi ea a, incidunt fugit soluta at consectetur consequuntur nulla? Tempore, iste. Adipisci ab repellat magnam, dicta modi illum, eum expedita beatae velit qui unde aut officiis deserunt neque provident culpa distinctio iste.
+                        <h3>Wheels</h3>
+The wheels are capable of traversing through Martian like terrains. <br>
+3-D printed wheel has been designed specifically to provide adequate traction and reduce the impact transfer to the suspension system. <br>
+The wheel hub design is compact and capable of load transfer while supporting the motor and its shaft. <br>
                     </div>
                 </div>
             </section>

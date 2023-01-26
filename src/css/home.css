@@ -29,13 +29,16 @@
 #home {
     background: url("../img/mars_image.png") no-repeat center;
     background-size: cover;
-    padding: 350px 0px 350px 0px;
+    /* padding: 350px 0px 350px 0px; */
+    height: 100vh;
 }
 
 #aboutUs {
     background: url("../img/home_bg.png") no-repeat center;
     background-size: cover;
     padding: 50px 0px 50px 0px;
+    height: 110vh;
+    padding-top: 10%;
 }
 
 #elec_soft {
@@ -103,6 +106,18 @@
     flex-direction: column;
     text-align: center;
     width: 65%;
+    transform: translateY(150px);
+    transition: all 2s ease;
+    opacity: 0;
+}
+.animate.current {
+    transform: translateY(0px);
+    opacity: 1;
+}
+.animate{
+    transform: translateY(150px);
+    transition: all 2s ease;
+    opacity: 0;
 }
 
 .home-intro-text h2 {
@@ -122,7 +137,7 @@
     width: 45%;
     /* padding: 63px 0px 0px 99px; */
     margin-left: auto;
-    margin-top: 25%;
+    margin-top: 15%;
     margin-right: 5%;
 }
 
@@ -162,6 +177,9 @@
     font-weight: 500;
     font-size: 45px;
     line-height: 61px;
+}
+.subdivisions ul{
+    list-style-type: none;
 }
 
 @media screen and (max-width: 992px) {
@@ -234,7 +252,7 @@
 }
 
 .sub{
-    background-color: black;
+    background: linear-gradient(180deg, #666666, #57392f, #421605);
     /* height: 100vh; */
     display: flex;
     flex-direction: column;
@@ -285,6 +303,7 @@
     }
 
     .sub{
+        background: linear-gradient(180deg, #666666, #57392f, #421605);
         /* height: 100vh; */
     }
 }
@@ -417,4 +436,22 @@
     .vcard:focus-within .v-content>*:not(.v-title) {
         transition-duration: 0s;
     }
+}
+
+.comp{
+    /* height: 100vh; */
+    background: linear-gradient(180deg, #666666, #a46955, #a23b12);
+    color: white;
+    text-align: center;
+    padding: 5% 0;
+}
+.comp h1{
+    font-family: cursive;
+}
+.comp img{
+    border-radius: 5px;
+    margin: 5% 0;
+}
+.comp img:hover{
+    /* transform: scale(1.2); */
 }
