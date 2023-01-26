@@ -379,6 +379,10 @@
     border: none;
 }
 
+.btn-vcard a{
+    text-decoration: none;
+}
+
 .btn-vcard:hover {
     background-color: #0d0d0d;
 }
@@ -455,3 +459,35 @@
 .comp img:hover{
     /* transform: scale(1.2); */
 }
+
+/* sponsor */
+
+#sponsor{
+    text-align: center;
+    background-color: white;
+    padding: 50px 0px 50px 0px;
+}
+
+.spon-head{
+    color: black;
+    margin-bottom: 1rem;
+    font-weight: 800;
+}
+
+.spon-img{
+    display: inline-block;
+    margin: 40px;
+}
+
+.iit-img{
+    display: block;
+    margin: 40px auto;
+}
+
+@media (max-width: 792px) {
+    .servo-img{
+        margin-top: 80px;
+    }
+}
+
+
