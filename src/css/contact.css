@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Saira&display=swap');
 
 #contact {
-  background: url("../img/space.png") no-repeat center;
+  background: url("../img/space.jpg") no-repeat center;
   background-size: cover;
   display: flex;
   flex-direction: column;

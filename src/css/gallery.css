@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Saira&display=swap');
 
 #gallery {
-    background: url("../img/space_sym.png");
+    background: url("../img/space_sym.jpg");
     background-repeat: repeat-y;
     /* background-size: cover; */
     display: flex;

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Saira&display=swap');
 
 #rovers {
-  background: url("../img/space.png");
+  background: url("../img/space.jpg");
   background-repeat: repeat-y;
   display: flex;
   flex-direction: column;
