@@ -17,6 +17,8 @@ window.onscroll = function () {
     if (prevScrollpos > 0 && currentScrollPos > 0) {
         if (prevScrollpos > currentScrollPos) {
             document.getElementById("transparent-navbar").style.top = "0";
+            document.getElementById("transparent-navbar").style.backgroundImage = 'linear-gradient(to bottom, rgba(0,0,0,1) 0%,rgba(0,0,0,0.8) 65%,rgba(0,0,0,0.2) 92%,rgba(0,0,0,0) 100%)'; /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+
         } else {
             document.getElementById("transparent-navbar").style.top = "-70px";
         }
