@@ -1,0 +1,493 @@
+@font-face{
+    font-family:Slussen;
+    src:url(/fonts/Slussen-Compressed-Black.woff2) format("woff2");
+    font-display:swap;
+    font-weight:900;
+    font-stretch:compressed;
+}
+@font-face{
+    font-family:Slussen;
+    src:url(/fonts/Slussen-Expanded-Black.woff2) format("woff2");
+    font-display:swap;
+    font-weight:900;
+    font-stretch:expanded;
+}
+@font-face{
+    font-family:Slussen;
+    src:url(/fonts/Slussen-Regular.woff2) format("woff2");
+    font-display:swap;
+    font-weight:400
+}
+@font-face{
+    font-family:Slussen;
+    src:url(/fonts/Slussen-Bold.woff2) format("woff2");
+    font-display:swap;
+    font-weight:700;
+}
+    
+html {
+    scroll-behavior: initial;
+    overflow: hidden;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: Slussen;
+    font-size: 16px;
+    font-weight: 400;
+    background: #000;
+    color: #fff;
+}
+
+
+
+@media (min-width: 768px) {
+    h2 {
+        font-size: 60px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    /* Add other styles for larger screens as needed */
+}
+
+/* Medium-sized screens */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 40px; /* Adjust the font size for smaller screens */
+    }
+
+    h3 {
+        font-size: 16px; /* Adjust the font size for smaller screens */
+    }
+
+    /* Add other styles for medium-sized screens as needed */
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+    h2 {
+        font-size: 30px; /* Adjust the font size for even smaller screens */
+    }
+
+    h3 {
+        font-size: 14px; /* Adjust the font size for even smaller screens */
+    }
+
+    /* Add other styles for small screens as needed */
+}
+h2 {
+    font-size: 60px;
+    font-weight: 900;
+    line-height: 85%;
+    border-left: 3px solid #ff98a2;
+    padding: 25px;
+    margin: 0
+}
+
+h2 span { display: block; }
+
+h3 {font-size: 20px;font-stretch: expanded;color: #ff98a2;line-height: 100%;}
+
+h2,h3,h4 {text-transform: uppercase;}
+.section1 {
+    height: 100vh;
+    width: 100%;
+    overflow: auto;
+    position: relative;
+}
+
+h4 {font-size: 15px;font-stretch: expanded;color: #ef9797;line-height: 100%;}
+h5 {font-size: 20px;font-stretch: expanded;color: #fca311;line-height: 100%;}
+.container {
+    width: 95%;
+    margin: auto;
+}
+
+section {
+    padding: 50px 0;
+}
+
+.col {
+    width: 50%;
+}
+
+#vertical {
+    height: auto; /* Remove fixed height */
+    width: 100vw;
+}
+
+.vertical__content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.vertical__content .col_left {
+    height: 100%;
+}
+
+.vertical__content .col.col_right {
+    width: 40%;
+}
+
+.vertical__item:not(:last-child) {
+    margin-bottom: 40px; /* Adjust the margin */
+}
+
+#horizontal {
+    padding: 100px 0;
+}
+
+.horizontal__content {
+    display: flex;
+    align-items: center; /* Center items vertically */
+}
+
+.horizontal__item {
+    border: 1px solid #ff98a2;
+    padding: 2px 2px; /* Adjust padding for video container */
+    text-align: center; /* Center the content */
+    border: 1px solid #ff98a2;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.horizontal__item img {
+    display: block; /* Make the image a block element */
+    margin: 0 auto; /* Center-align the image horizontally */
+}
+
+
+
+.horizontal__item:not(:last-child) {
+    margin-right: 20px; /* Adjust the margin */
+}
+
+
+
+
+
+
+.section2 {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow: auto;
+}
+
+
+
+body {
+    overflow: auto;
+}
+HTML CSSResult Skip Results Iframe
+*{
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+h1{
+  font-size: 2.5rem;
+  font-family: 'Montserrat';
+  font-weight: normal;
+  color: #444;
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.wrapper{
+  width: 90%;
+  margin: 0 auto;
+  max-width: 80rem;
+}
+
+.cols{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.col{
+  width: calc(25% - 2rem);
+  margin: 1rem;
+  cursor: pointer;
+}
+
+.container{
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-perspective: 1000px;
+          perspective: 1000px;
+}
+
+.front,
+.back{
+  background-size: cover;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.25);
+  border-radius: 10px;
+  background-position: center;
+  -webkit-transition: -webkit-transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transition: -webkit-transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
+  -o-transition: transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transition: transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transition: transform .7s cubic-bezier(0.4, 0.2, 0.2, 1), -webkit-transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  text-align: center;
+  min-height: 280px;
+  height: auto;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.back{
+  background: #cedce7;
+  background: -webkit-linear-gradient(45deg,  #cedce7 0%,#596a72 100%);
+  background: -o-linear-gradient(45deg,  #cedce7 0%,#596a72 100%);
+  background: linear-gradient(45deg,  #cedce7 0%,#596a72 100%);
+}
+
+.front:after{
+  position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    content: '';
+    display: block;
+    opacity: 0.1;
+    background-color: #000;
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+    border-radius: 10px;
+}
+.container:hover .front,
+.container:hover .back{
+    -webkit-transition: -webkit-transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transition: -webkit-transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
+    -o-transition: transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transition: transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transition: transform .7s cubic-bezier(0.4, 0.2, 0.2, 1), -webkit-transform .7s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+
+
+.back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.inner {
+  
+    background-size: cover;
+    background-position: center;
+    -webkit-transform: translateY(-50%) translateZ(60px) scale(0.94);
+    transform: translateY(-50%) translateZ(60px) scale(0.94);
+    top: 50%;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    padding: 2rem;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    outline: 1px solid transparent;
+    -webkit-perspective: inherit;
+    perspective: inherit;
+    z-index: 1;
+}
+
+
+
+.container .back{
+    -webkit-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+}
+
+.container .front{
+    -webkit-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+}
+
+.container:hover .back{
+  -webkit-transform: rotateY(0deg);
+          transform: rotateY(0deg);
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+}
+
+.container:hover .front{
+  -webkit-transform: rotateY(-180deg);
+          transform: rotateY(-180deg);
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+}
+
+.front .inner p{
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.front .inner p:after{
+  content: '';
+  width: 4rem;
+  height: 2px;
+  position: absolute;
+  background: #C6D4DF;
+  display: block;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  bottom: -.75rem;
+}
+
+.front .inner span{
+  color: rgba(255,255,255,0.7);
+  font-family: 'Montserrat';
+  font-weight: 300;
+}
+
+@media screen and (max-width: 64rem){
+  .col{
+    width: calc(33.333333% - 2rem);
+  }
+}
+
+@media screen and (max-width: 48rem){
+  .col{
+    width: calc(50% - 2rem);
+  }
+}
+
+@media screen and (max-width: 32rem){
+  .col{
+    width: 100%;
+    margin: 0 0 2rem 0;
+  }
+}
+
+/* Apply your existing CSS styles to the .li class */
+.li {
+    width: 104px; /* Adjust the width and height to fit your custom SVG */
+    height: 164px;
+    fill: #0274B3; /* Change the fill color to match the LinkedIn blue */
+}
+
+.video-container {
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+
+
+
+
+a {
+    display: inline-block; /* Make links inline-block */
+    margin-right: 10px; /* Adjust the margin between links */
+}
+
+svg {
+    width: 48px; /* Set a fixed width for the icons */
+    height: 48px; /* Set a fixed height for the icons */
+}
+
+
+body {
+    background-color: black;
+  }
+  div > h1 {
+    text-transform: capitalize;
+    letter-spacing: 0.8px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 900;
+    font-size: clamp(3.4375rem, 3.25rem + 0.75vw, 4rem);
+    background-color: #aa7a00;
+    background-image: linear-gradient(45deg, #88aa00, #585358);
+    background-size: 100%;
+    background-repeat: repeat;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+  }
+
+  .image-container {
+    max-width: 100%; /* Ensure the container doesn't exceed its parent's width */
+}
+
+.image-container img {
+    max-width: 100%; /* Set a maximum width for the image */
+    height: auto; /* Maintain the image's aspect ratio */
+}
+
+@media (max-width: 768px) {
+    .vertical__item {
+        /* Adjust styles for .vertical__item on smaller screens */
+    }
+
+    .vertical__item p {
+        /* Adjust styles for the <p> element on smaller screens */
+        font-size: 14px; /* Example: Reduce font size for smaller screens */
+    }
+}
+
+#contact_home1 .team_name{
+    font-size: 20px;
+    margin-bottom: 0;
+  }
+  
+  #contact_home1 .p_ta{
+    margin-top: 1rem;
+    opacity: 70%;
+  }
+  
+  #contact_home1 {
+    /* background: url("../img/space.jpg") no-repeat center;
+    background-size: cover; */
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4%;
+    color: white;
+  }
+  
+  #contact_home1 h2 {
+    font-family: 'Saira';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 39px;
+    text-align: center;
+    color: white;
+  }
+  
+  .contact-div{
+    text-align: center;
+  }
