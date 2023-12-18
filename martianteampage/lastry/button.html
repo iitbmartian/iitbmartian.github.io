@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Media Icons</title>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #0A122A;
+    }
+
+    /* Let's style the wrapper in such a way that, 
+    it should always be at the center of the browser */
+    .wrapper2 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 550px;
+    }
+
+    /* Style the Un-order list by setting its list-style to none */
+    .wrapper2 ul {
+      list-style: none;
+    }
+
+    /* Style the list items inside the UL list, by setting its width, height and line-height 
+      and float them to left and set its border and border-radius.
+    */
+    .wrapper2 ul li {
+      width: 75px;
+      height: 75px;
+      line-height: 75px;
+      margin: 0 10px;
+      text-align: center;
+      cursor: pointer;
+      border-radius: 50%;
+      border: 5px solid #D8E2DC;
+      float: left;
+      transition: all 0.5s ease;
+    }
+
+    /* Style the icons by setting its color and margin-top value to 20px 
+    to align it properly */
+    .wrapper2 ul li .fa {
+      color: #D8E2DC;
+      margin-top: 20px;
+      transition: all 0.5s ease;
+    }
+
+
+
+
+  
+
+    /*linkedin*/
+    .wrapper2 ul li:hover.linkedin {
+      border: 5px solid #0077B5;
+      box-shadow: 0 0 15px #0077B5;
+      transition: all 0.5s ease;
+    }
+
+    .wrapper2 ul li:hover .fa-linkedin {
+      color: #0077B5;
+      text-shadow: 0 0 15px #0077B5;
+      transition: all 0.5s ease;
+    }
+
+    /*email*/
+    .wrapper2 ul li:hover.email {
+      border: 5px solid #D14836;
+      box-shadow: 0 0 15px #D14836;
+      transition: all 0.5s ease;
+    }
+
+    .wrapper2 ul li:hover .fa-envelope {
+      color: #D14836;
+      text-shadow: 0 0 15px #D14836;
+      transition: all 0.5s ease;
+    }
+
+    /* media queries */
+
+    @media screen and (max-width: 640px){
+      .wrapper2 {
+        width: 350px;
+      }
+      .wrapper2 ul li{
+        margin-top: 10px;
+      }
+      .wrapper2 ul li.google{
+        margin-left: 60px;
+      }
+    }
+
+    @media screen and (max-width: 340px){
+      .wrapper2 {
+        width: 150px;
+      }
+      .wrapper2 ul li{
+        margin:15px;
+      }
+      .wrapper2 ul li.google{
+        margin-left: 15px;
+      }
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="wrapper2">
+    <ul>
+     
+     
+      
+      <li class="linkedin"><a href="#"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i></a></li>
+      <li class="email"><a href="#"><i class="fa fa-envelope fa-2x" aria-hidden="true"></i></a></li>
+    </ul>
+  </div>
+
+
+</body>
+</html>
+
+
+
+
+
+
