@@ -268,7 +268,10 @@ display: none;
       <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="widget company-intro-widget">
-            <a href="index.html" class="site-logo"><img src="src/img/logo_mrt.png" alt="logo"></a>
+            <a href="index.html" class="site-logo" target="_parent">
+              <img src="src/img/logo_mrt.png" alt="logo">
+          </a>
+          
             <p>MRT Lab, Aerospace department basement <br>
                 YP Road,<br>
                 IIT Area, Powai,<br>
@@ -284,13 +287,14 @@ display: none;
             <h5 class="widget-title" style="font-family: 'Roboto', sans-serif;">Quick links</h5>
 
             <ul class="courses-link-list">
-              <li><a href="index.html"><i class="fas fa-long-arrow-alt-right"></i>Home</a></li>
-              <li><a href="index.html"><i class="fas fa-long-arrow-alt-right"></i>About us</a></li>
-              <li><a href="team2023.html"><i class="fas fa-long-arrow-alt-right"></i>Team</a></li>
-              <li><a href="contact-us.html"><i class="fas fa-long-arrow-alt-right"></i>Contact</a></li>
-              <li><a href="comp.html"><i class="fas fa-long-arrow-alt-right"></i>Achievements</a></li>
-              <li><a href="rovers.html"><i class="fas fa-long-arrow-alt-right"></i>Rovers</a></li>
-            </ul>
+              <li><a href="index.html" target="_parent"><i class="fas fa-long-arrow-alt-right"></i>Home</a></li>
+              <li><a href="index.html" target="_parent"><i class="fas fa-long-arrow-alt-right"></i>About us</a></li>
+              <li><a href="team2023.html" target="_parent"><i class="fas fa-long-arrow-alt-right"></i>Team</a></li>
+              <li><a href="contact-us.html" target="_parent"><i class="fas fa-long-arrow-alt-right"></i>Contact</a></li>
+              <li><a href="comp.html" target="_parent"><i class="fas fa-long-arrow-alt-right"></i>Achievements</a></li>
+              <li><a href="rovers.html" target="_parent"><i class="fas fa-long-arrow-alt-right"></i>Rovers</a></li>
+          </ul>
+          
           </div>
         </div><!-- widget end -->
         <div class="col-lg-3 col-md-6 col-sm-6">
@@ -350,21 +354,19 @@ display: none;
     <div class="container">
       <div class="row">
           <div class="col-md-6 col-sm-6 text-sm-left text-center">
-            <span class="copy-right-text">© 2024 <a href="index.html">MRT</a> Copyright:-IITB.</span>
+            <span class="copy-right-text">© 2024 <a href="index.html" target="_parent">MRT</a> Copyright: IITB.</span>
+
           </div>
           <div class="col-md-6 col-sm-6">
           
 <div class="wrapper">
-    <ul>
-     
-        <li class="linkedin"><a href="https://www.linkedin.com/company/mrtiitb/?originalSubdomain=in"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i></a></li>
-      <li class="instagram"><a href="https://www.instagram.com/p/Cm4AuP8DiHn/"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a></li>
-      <li class="google"><a href="https://www.youtube.com/watch?v=EtQ17VXOWpU"><i class="fa fa-google fa-2x" aria-hidden="true"></i></a></li>
-      <li class="youtube"><a href="https://www.youtube.com/watch?v=EtQ17VXOWpU"><i class="fa fa-youtube-play fa-2x" aria-hidden="true"></i></a></li>
-      
+  <ul>
+    <li class="linkedin"><a href="https://www.linkedin.com/company/mrtiitb/?originalSubdomain=in" target="_parent"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i></a></li>
+    <li class="instagram"><a href="https://www.instagram.com/p/Cm4AuP8DiHn/" target="_parent"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a></li>
+    <li class="google"><a href="https://www.youtube.com/watch?v=EtQ17VXOWpU" target="_parent"><i class="fa fa-google fa-2x" aria-hidden="true"></i></a></li>
+    <li class="youtube"><a href="https://www.youtube.com/watch?v=EtQ17VXOWpU" target="_parent"><i class="fa fa-youtube-play fa-2x" aria-hidden="true"></i></a></li>
+</ul>
 
-     
-    </ul>
   
   
   
@@ -527,6 +529,65 @@ to align it properly */
   }
   .wrapper ul li.google{
       margin-left: 15px;
+  }
+}
+
+
+
+
+
+
+
+/* Add the following media query */
+@media screen and (max-width: 767px) {
+  .wrapper {
+    text-align: center; /* Center the buttons */
+  }
+
+  .wrapper ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap; /* Prevent buttons from wrapping to the next line */
+  }
+
+  .wrapper ul li {
+    margin: 10px; /* Add some spacing between buttons */
+  }
+}
+
+
+
+
+
+
+/* Your existing styles for the wrapper and social media buttons */
+
+/* Add the following media query */
+@media screen and (max-width: 767px) {
+  .wrapper {
+    text-align: center; /* Center the buttons */
+    width: 100%; /* Make the wrapper full width on smaller screens */
+  }
+
+  .wrapper ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap; /* Prevent buttons from wrapping to the next line */
+  }
+
+  .wrapper ul li {
+    margin: 5px; /* Add some spacing between buttons */
+    width: 50px; /* Adjust the width of each button */
+    height: 50px; /* Adjust the height of each button */
+    line-height: 50px; /* Adjust the line-height of each button */
+    float: none; /* Remove float property */
+    border: 0; /* Remove the border */
+  }
+
+  .wrapper ul li .fa {
+    margin-top: 0; /* Reset margin-top value */
   }
 }
 
