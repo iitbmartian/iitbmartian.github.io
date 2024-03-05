@@ -18,6 +18,37 @@
     
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <div id="preloader-container">
+      <video id="preloader-video" autoplay muted loop>
+        <source src="mrtlogovideo2.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+          var video = document.getElementById('preloader-video');
+          var preloader = document.getElementById('preloader-container');
+        
+          video.addEventListener('loadeddata', function () {
+            // Optionally add a delay or other conditions before hiding the preloader
+            setTimeout(function () {
+              fadeOut(preloader);
+            }, 2100); // Adjust the delay before hiding the preloader
+          });
+        
+          function fadeOut(element) {
+            var opacity = 1;
+            var interval = setInterval(function () {
+              if (opacity <= 0) {
+                clearInterval(interval);
+                element.style.display = 'none';
+              } else {
+                element.style.opacity = opacity;
+                opacity -= 0.01; // Adjust the decrement value for the desired fade speed
+              }
+            }, 10); // Adjust the interval for the smoothness of the fade-out effect
+          }
+        });</script>
       <style>
  
  h3 {
@@ -293,6 +324,7 @@
         menu.classList.toggle('open');
       }
     </script> 
+
     <div id="brand"><a href="/">
       <img src="src/img/logo_mrt.png" width="75px">
     </a></div>
@@ -1592,7 +1624,7 @@
         
                   <div class="col" ontouchstart="this.classList.toggle('hover');">
                     <div class="container">
-                      <div class="front" style="background-image: url(martianteampage/lastry/img/Shrushti\ Visave-fotor-2024030354713.jpeg)">
+                      <div class="front" style="background-image: url(martianteampage/lastry/img/Shrushti\ Visave-fotor-2024030354713.jpeg.jpeg)">
             
                         <div class="inner"  style="top: 90%;background-color: white; padding: 10x;">
                          
