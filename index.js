@@ -21,16 +21,8 @@ function hideLoader() {
     // Display your content
     document.querySelector(".home-page").style.display = "block";
 }
-document.addEventListener('DOMContentLoaded', function () {
-    var video = document.getElementById('preloader-video');
-    var preloader = document.getElementById('preloader-container');
-  
-    video.addEventListener('loadeddata', function () {
-      // Optionally add a delay or other conditions before hiding the preloader
-      setTimeout(function () {
-        fadeOut(preloader);
-      }, 2100); // Adjust the delay before hiding the preloader
-    });
+
+
   
     function fadeOut(element) {
       var opacity = 1;
