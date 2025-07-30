@@ -396,7 +396,7 @@ const CompetitionsSection = () => {
             className="section-title relative inline-block"
             variants={itemVariants}
           >
-            <span className="relative">
+            <span className="relative text-gradient">
               Proving Grounds For Our Capabilities
               <motion.div
                 className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-mars via-orange-500 to-cosmic rounded-full"

@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useTransform, useInView, useSpring } from 'framer-motion';
 import { 
   Rocket, 
   Star, 
@@ -13,7 +13,13 @@ import {
   Instagram,
   Facebook,
   Github,
-  Youtube
+  Youtube,
+  ArrowUp,
+  Send,
+  Globe,
+  Award,
+  Users,
+  Calendar
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -22,446 +28,477 @@ const Footer = () => {
   const footerRef = useRef(null);
   const [hoveredSection, setHoveredSection] = useState(null);
   const [hoveredSocial, setHoveredSocial] = useState(null);
+  const [email, setEmail] = useState('');
+  const [isSubscribed, setIsSubscribed] = useState(false);
   
   const { scrollYProgress } = useScroll({
     target: footerRef,
     offset: ["start end", "end end"]
   });
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], [50, 0]);
-  const isInView = useInView(footerRef, { once: true, margin: "-100px" });
+  const backgroundY = useTransform(scrollYProgress, [0, 1], [100, 0]);
+  const backgroundScale = useTransform(scrollYProgress, [0, 1], [0.95, 1]);
+  const isInView = useInView(footerRef, { once: true, margin: "-50px" });
+
+  // Smooth spring animation for scroll progress
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   const socialLinks = [
     {
       name: "Twitter",
-      icon: <Twitter className="h-6 w-6" />, // Much cleaner!
-      gradient: "from-cyan-400/80 to-blue-500/80",
+      icon: <Twitter className="h-5 w-5" />,
+      gradient: "from-cyan-400 to-blue-500",
+      hoverColor: "hover:shadow-cyan-400/25",
       href: "#"
     },
     {
       name: "Instagram", 
-      icon: <Instagram className="h-6 w-6" />,
-      gradient: "from-pink-500/80 to-purple-600/80",
+      icon: <Instagram className="h-5 w-5" />,
+      gradient: "from-pink-500 to-purple-600",
+      hoverColor: "hover:shadow-pink-500/25",
       href: "#"
     },
     {
       name: "Facebook",
-      icon: <Facebook className="h-6 w-6" />,
-      gradient: "from-blue-600/80 to-blue-800/80", 
-      href: "#"
-    },
-    {
-      name: "GitHub",
-      icon: <Github className="h-6 w-6" />,
-      gradient: "from-gray-700/80 to-gray-900/80",
-      href: "#"
-    },
-    {
-      name: "YouTube",
-      icon: <Youtube className="h-6 w-6" />,
-      gradient: "from-red-600/80 to-red-800/80",
+      icon: <Facebook className="h-5 w-5" />,
+      gradient: "from-blue-600 to-blue-800",
+      hoverColor: "hover:shadow-blue-600/25",
       href: "#"
     }
   ];
 
-  const quickLinks = [
-    { name: "Home", href: "/" },
-    { name: "Rover", href: "/rover" },
-    { name: "Subsystems", href: "/subsystems" },
-    { name: "Competitions", href: "/competitions" },
-    { name: "Team", href: "/team" }
+  const navigationSections = [
+    {
+      title: "Navigation",
+      icon: <Globe className="w-5 h-5" />,
+      links: [
+        { name: "Home", href: "/" },
+        { name: "Rover", href: "/rover" },
+        { name: "Subsystems", href: "/subsystems" },
+        { name: "Team", href: "/team" }
+      ]
+    },
+    {
+      title: "Competitions",
+      icon: <Award className="w-5 h-5" />,
+      links: [
+        { name: "University Rover Challenge", href: "/competitions/urc" },
+        { name: "European Rover Challenge", href: "/competitions/erc" },
+        { name: "Indian Rover Challenge", href: "/competitions/irc" },
+        { name: "Achievements", href: "/achievements" }
+      ]
+    },
+    {
+      title: "Resources",
+      icon: <Star className="w-5 h-5" />,
+      links: [
+        { name: "Documentation", href: "/docs" },
+        { name: "Gallery", href: "/gallery" },
+        { name: "Publications", href: "/publications" },
+        { name: "Blog", href: "/blog" }
+      ]
+    }
   ];
 
   const contactInfo = [
     {
-      icon: <MapPin className="h-5 w-5 text-mars" />,
-      text: "IITB, Powai, Mumbai, Maharashtra 400076",
-      gradient: "from-mars/20 to-orange-500/10"
+      icon: <MapPin className="h-5 w-5" />,
+      title: "Address",
+      text: "Indian Institute of Technology Bombay\nPowai, Mumbai, Maharashtra 400076",
+      gradient: "from-mars/20 to-orange-500/20"
     },
     {
-      icon: <Mail className="h-5 w-5 text-cosmic" />,
+      icon: <Mail className="h-5 w-5" />,
+      title: "Email",
       text: "contact@mrtiitb.com",
-      gradient: "from-cosmic/20 to-blue-500/10"
+      gradient: "from-cosmic/20 to-blue-500/20"
     },
     {
-      icon: <Phone className="h-5 w-5 text-mars" />,
+      icon: <Phone className="h-5 w-5" />,
+      title: "Phone",
       text: "+91 98765 43210",
-      gradient: "from-mars/20 to-red-500/10"
+      gradient: "from-mars/20 to-red-500/20"
     }
   ];
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
+  const stats = [
+    { number: "12", label: "Years Active", icon: <Calendar className="w-5 h-5" /> },
+    { number: "150+", label: "Team Members", icon: <Users className="w-5 h-5" /> },
+    { number: "25+", label: "Competitions", icon: <Award className="w-5 h-5" /> },
+    { number: "9", label: "Rover Generations", icon: <Rocket className="w-5 h-5" /> }
+  ];
+
+  const handleEmailSubmit = (e) => {
+    e.preventDefault();
+    if (email) {
+      setIsSubscribed(true);
+      setTimeout(() => {
+        setIsSubscribed(false);
+        setEmail('');
+      }, 3000);
+    }
   };
 
-  const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-      },
-    },
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <motion.footer 
       ref={footerRef}
-      className="bg-gradient-to-br from-space-dark via-space to-space-dark py-16 border-t border-white/10 relative overflow-hidden"
-      style={{ y: backgroundY }}
+      className="relative bg-gradient-to-br from-space-dark via-space to-space-dark overflow-hidden"
+      style={{ 
+        y: backgroundY,
+        scale: backgroundScale
+      }}
     >
       {/* Enhanced Background Effects */}
-      <motion.div
-        className="absolute top-0 left-0 w-1/3 h-1/2 bg-gradient-to-r from-mars/10 to-orange-500/5 rounded-full blur-3xl"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.6, 0.3],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      
-      <motion.div
-        className="absolute bottom-0 right-0 w-1/2 h-1/3 bg-gradient-to-l from-cosmic/10 to-blue-500/5 rounded-full blur-3xl"
-        animate={{
-          scale: [1.2, 1, 1.2],
-          opacity: [0.4, 0.7, 0.4],
-        }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 2,
-        }}
-      />
+      <div className="absolute inset-0">
+        {/* Animated Gradient Orbs */}
+        <motion.div
+          className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-mars/15 to-orange-500/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.3, 0.7, 0.3],
+            x: [0, 50, 0],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        
+        <motion.div
+          className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-l from-cosmic/15 to-blue-500/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.4, 0.8, 0.4],
+            x: [0, -30, 0],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 3,
+          }}
+        />
 
-      {/* Floating Particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(15)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-white/20 rounded-full"
-            animate={{
-              x: [0, 100, 0],
-              y: [0, -50, 0],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: 8 + i % 4,
-              repeat: Infinity,
-              delay: i * 0.5,
-              ease: "easeInOut",
-            }}
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Constellation Pattern */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <svg className="absolute inset-0 w-full h-full opacity-5">
-          <defs>
-            <linearGradient id="footerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#ff6b35" />
-              <stop offset="100%" stopColor="#00d9ff" />
-            </linearGradient>
-          </defs>
-          {[...Array(8)].map((_, i) => (
-            <motion.circle
+        {/* Particle Field */}
+        <div className="absolute inset-0 overflow-hidden">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
               key={i}
-              cx={`${20 + i * 12}%`}
-              cy={`${30 + (i % 2) * 40}%`}
-              r="1"
-              fill="url(#footerGradient)"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={isInView ? { 
+              className="absolute w-1 h-1 bg-white/30 rounded-full"
+              animate={{
+                x: [0, Math.random() * 200 - 100],
+                y: [0, Math.random() * 200 - 100],
+                opacity: [0, 1, 0],
                 scale: [0, 1, 0],
-                opacity: [0, 0.6, 0],
-              } : {}}
+              }}
               transition={{
-                duration: 3,
-                delay: i * 0.3,
+                duration: 8 + Math.random() * 4,
                 repeat: Infinity,
-                repeatDelay: 2
+                delay: i * 0.5,
+                ease: "easeInOut",
+              }}
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
               }}
             />
           ))}
-        </svg>
+        </div>
+
+        {/* Tech Grid Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div 
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+              `,
+              backgroundSize: '40px 40px'
+            }}
+          />
+        </div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-10"
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
-          {/* Brand Section */}
-          <motion.div
-            className="md:col-span-1"
-            variants={itemVariants}
-            onMouseEnter={() => setHoveredSection('brand')}
-            onMouseLeave={() => setHoveredSection(null)}
-          >
+      {/* Main Content */}
+      <div className="relative z-10 w-full">
+
+        {/* Main Footer Content */}
+        <div className="container mx-auto flex justify-center items-center px-4 py-16">
+          <div className="flex-col justify-center items-center">
+            
+            {/* Brand Section */}
             <motion.div
-              className="flex items-center space-x-3 mb-6"
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.3 }}
+              className="lg:col-span-4"
+              initial={{ opacity: 0, x: -50 }}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
+              {/* Logo & Brand */}
               <motion.div
-                animate={{ rotate: hoveredSection === 'brand' ? 360 : 0 }}
-                transition={{ duration: 0.8 }}
+                className="flex items-center space-x-4 mb-6"
+                whileHover={{ scale: 1.02 }}
               >
-                <Rocket className="w-8 h-8 text-mars" />
-              </motion.div>
-              
-              <motion.div
-                className="text-2xl font-bold font-technospace bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent"
-                animate={{
-                  backgroundPosition: hoveredSection === 'brand' ? ["0% 50%", "100% 50%"] : "0% 50%",
-                }}
-                transition={{ duration: 1 }}
-              >
-                MRT - IITB
-              </motion.div>
-            </motion.div>
-            
-            <motion.p
-              className="text-white/70 mb-6 max-w-xs leading-relaxed"
-              animate={{
-                color: hoveredSection === 'brand' ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0.7)",
-              }}
-              transition={{ duration: 0.3 }}
-            >
-              The Mars Rover Team at IIT Bombay is dedicated to designing and building next-generation rovers for Mars exploration.
-            </motion.p>
-            
-            {/* Social Media Icons */}
-            <div className="flex space-x-4">
-              {socialLinks.map((social, index) => (
-                <motion.a
-                  key={index}
-                  href="#"
-                  className="relative group"
-                  whileHover={{ scale: 1.1, y: -3 }}
-                  whileTap={{ scale: 0.95 }}
-                  onMouseEnter={() => setHoveredSocial(index)}
-                  onMouseLeave={() => setHoveredSocial(null)}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                <motion.div
+                  className="w-12 h-12 bg-gradient-to-r from-mars to-cosmic rounded-xl flex items-center justify-center"
+                  whileHover={{ rotate: 360 }}
+                  transition={{ duration: 0.8 }}
                 >
-                  <motion.div
-                    className="text-white/70 hover:text-white p-3 rounded-full bg-space-light/20 backdrop-blur-sm border border-white/10 relative overflow-hidden"
-                    whileHover={{ borderColor: "rgba(255, 255, 255, 0.3)" }}
-                  >
-                    <motion.div
-                      className={`absolute inset-0 bg-gradient-to-r ${social.gradient} opacity-0`}
-                      animate={{ opacity: hoveredSocial === index ? 1 : 0 }}
-                      transition={{ duration: 0.3 }}
-                    />
-                    <div className="relative z-10">
-                      {social.icon}
-                    </div>
-                  </motion.div>
-                  
-                  {/* Tooltip */}
-                  <motion.div
-                    className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-space-dark/90 text-white text-xs px-2 py-1 rounded backdrop-blur-sm"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ 
-                      opacity: hoveredSocial === index ? 1 : 0,
-                      scale: hoveredSocial === index ? 1 : 0.8
-                    }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {social.name}
-                  </motion.div>
-                </motion.a>
-              ))}
-            </div>
-          </motion.div>
-          
-          {/* Quick Links Section */}
-          <motion.div
-            variants={itemVariants}
-            onMouseEnter={() => setHoveredSection('links')}
-            onMouseLeave={() => setHoveredSection(null)}
-          >
-            <motion.h3
-              className="font-bold text-lg mb-6 flex items-center space-x-2"
-              whileHover={{ scale: 1.02 }}
-            >
-              <Star className="w-5 h-5 text-cosmic" />
-              <span>Quick Links</span>
-            </motion.h3>
-            
-            <ul className="space-y-3">
-              {quickLinks.map((link, index) => (
-                <motion.li
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-                >
-                  <Link to={link.href}>
-                    <motion.div
-                      className="text-white/70 hover:text-white transition-colors flex items-center space-x-2 group"
-                      whileHover={{ x: 8 }}
-                      transition={{ duration: 0.2 }}
+                </motion.div>
+                <div>
+                  <h3 className="text-2xl font-bold font-technospace bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent">
+                    MRT - IITB
+                  </h3>
+                  <p className="text-white/60 text-sm">Mars Rover Team</p>
+                </div>
+              </motion.div>
+
+              {/* Description */}
+              <p className="text-white/70 mb-8 leading-relaxed">
+                Pioneering the future of planetary exploration through innovative rover design, 
+                cutting-edge technology, and relentless pursuit of excellence in space robotics.
+              </p>
+
+
+              {/* Social Links */}
+              <div>
+                <h4 className="text-white font-semibold mb-4">Follow Us</h4>
+                <div className="flex space-x-3">
+                  {socialLinks.map((social, index) => (
+                    <motion.a
+                      key={index}
+                      href={social.href}
+                      className={cn(
+                        "relative p-3 rounded-xl backdrop-blur-sm border border-white/10 transition-all duration-300 group overflow-hidden",
+                        social.hoverColor
+                      )}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                      transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                      whileHover={{ 
+                        scale: 1.1, 
+                        y: -2,
+                        borderColor: "rgba(255, 255, 255, 0.3)"
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                      onMouseEnter={() => setHoveredSocial(index)}
+                      onMouseLeave={() => setHoveredSocial(null)}
                     >
+                      {/* Gradient Background */}
                       <motion.div
-                        className="w-2 h-2 bg-gradient-to-r from-mars to-cosmic rounded-full opacity-0 group-hover:opacity-100"
+                        className={`absolute inset-0 bg-gradient-to-r ${social.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
                         initial={{ scale: 0 }}
                         whileHover={{ scale: 1 }}
-                        transition={{ duration: 0.2 }}
+                        transition={{ duration: 0.3 }}
                       />
-                      <span>{link.name}</span>
+                      
+                      {/* Icon */}
+                      <div className="relative z-10 text-white/70 group-hover:text-white transition-colors duration-300">
+                        {social.icon}
+                      </div>
+
+                      {/* Tooltip */}
                       <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        whileHover={{ opacity: 1, scale: 1 }}
+                        className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-space-dark/90 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-lg border border-white/20"
+                        initial={{ opacity: 0, scale: 0.8, y: 5 }}
+                        animate={{
+                          opacity: hoveredSocial === index ? 1 : 0,
+                          scale: hoveredSocial === index ? 1 : 0.8,
+                          y: hoveredSocial === index ? 0 : 5
+                        }}
                         transition={{ duration: 0.2 }}
                       >
-                        <ExternalLink className="w-3 h-3" />
+                        {social.name}
+                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-space-dark/90" />
                       </motion.div>
-                    </motion.div>
-                  </Link>
-                </motion.li>
-              ))}
-            </ul>
-          </motion.div>
-          
-          {/* Contact Section */}
-          <motion.div
-            variants={itemVariants}
-            onMouseEnter={() => setHoveredSection('contact')}
-            onMouseLeave={() => setHoveredSection(null)}
-          >
-            <motion.h3
-              className="font-bold text-lg mb-6 flex items-center space-x-2"
-              whileHover={{ scale: 1.02 }}
-            >
-              <Mail className="w-5 h-5 text-mars" />
-              <span>Contact</span>
-            </motion.h3>
-            
-            <ul className="space-y-4">
-              {contactInfo.map((contact, index) => (
-                <motion.li
-                  key={index}
-                  className="flex items-start group"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                  whileHover={{ x: 5 }}
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Navigation Sections */}
+            <div className="flex justify-between items-center">
+              {navigationSections.map((section, sectionIndex) => (
+                <motion.div
+                  key={sectionIndex}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+                  transition={{ duration: 0.8, delay: 0.3 + sectionIndex * 0.1 }}
                 >
+                  <h4 className="text-white font-semibold mb-6 flex items-center space-x-2">
+                    <div className="text-cosmic">
+                      {section.icon}
+                    </div>
+                    <span>{section.title}</span>
+                  </h4>
+                  <ul className="space-y-3">
+                    {section.links.map((link, linkIndex) => (
+                      <motion.li
+                        key={linkIndex}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                        transition={{ duration: 0.5, delay: 0.4 + sectionIndex * 0.1 + linkIndex * 0.05 }}
+                      >
+                        <Link to={link.href}>
+                          <motion.div
+                            className="text-white/70 hover:text-white transition-all duration-300 flex items-center space-x-2 group relative"
+                            whileHover={{ x: 8 }}
+                          >
+                            <motion.div
+                              className="w-1 h-1 bg-gradient-to-r from-mars to-cosmic rounded-full opacity-0 group-hover:opacity-100"
+                              initial={{ scale: 0 }}
+                              whileHover={{ scale: 1 }}
+                              transition={{ duration: 0.2 }}
+                            />
+                            <span className="group-hover:text-mars transition-colors duration-300">
+                              {link.name}
+                            </span>
+                            <motion.div
+                              className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                              initial={{ scale: 0.8 }}
+                              whileHover={{ scale: 1 }}
+                            >
+                              <ExternalLink className="w-3 h-3" />
+                            </motion.div>
+                          </motion.div>
+                        </Link>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Contact Section */}
+            <motion.div
+              className="lg:col-span-2 "
+              initial={{ opacity: 0, x: 50 }}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <h4 className="text-white font-semibold mb-6 flex items-center space-x-2">
+                <MapPin className="w-5 h-5 text-mars" />
+                <span>Contact</span>
+              </h4>
+              
+              <div className="space-y-6">
+                {contactInfo.map((contact, index) => (
                   <motion.div
-                    className="p-2 bg-gradient-to-br from-space-light/20 to-space-light/10 rounded-lg mr-3 mt-1 flex-shrink-0 border border-white/10"
-                    whileHover={{ scale: 1.1, rotate: 360 }}
-                    transition={{ duration: 0.5 }}
+                    key={index}
+                    className="group"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                    transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
+                    whileHover={{ x: 5 }}
                   >
-                    <motion.div
-                      className={`absolute inset-0 bg-gradient-to-br ${contact.gradient} opacity-0 rounded-lg`}
-                      whileHover={{ opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                    />
-                    <div className="relative z-10">
-                      {contact.icon}
+                    <div className="flex items-start space-x-4">
+                      <motion.div
+                        className="p-2 bg-gradient-to-br from-space-dark/80 to-space/60 rounded-lg border border-white/10 flex-shrink-0 group-hover:border-mars/40 transition-colors duration-300"
+                        whileHover={{ scale: 1.1, rotate: 360 }}
+                        transition={{ duration: 0.6 }}
+                      >
+                        <div className="text-mars group-hover:text-white transition-colors duration-300">
+                          {contact.icon}
+                        </div>
+                      </motion.div>
+                      <div>
+                        <h5 className="text-white font-medium mb-1">{contact.title}</h5>
+                        <p className="text-white/70 text-sm leading-relaxed whitespace-pre-line group-hover:text-white/90 transition-colors duration-300">
+                          {contact.text}
+                        </p>
+                      </div>
                     </div>
                   </motion.div>
-                  
-                  <motion.span
-                    className="text-white/70 group-hover:text-white/90 transition-colors duration-300 text-sm leading-relaxed"
-                    animate={{
-                      color: hoveredSection === 'contact' ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0.7)",
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {contact.text}
-                  </motion.span>
-                </motion.li>
-              ))}
-            </ul>
-          </motion.div>
-        </motion.div>
-        
-        {/* Footer Bottom */}
-        <motion.div
-          className="border-t border-white/10 mt-12 pt-8"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.8 }}
-        >
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <motion.p
-              className="text-white/50 text-sm flex items-center space-x-2"
-              whileHover={{ scale: 1.02 }}
-            >
-              <span>© {new Date().getFullYear()} Mars Rover Team IIT Bombay. All rights reserved.</span>
-            </motion.p>
-            
-            <motion.div
-              className="text-white/50 text-sm flex items-center space-x-2"
-              whileHover={{ scale: 1.02, color: "rgba(255, 255, 255, 0.7)" }}
-              transition={{ duration: 0.3 }}
-            >
-              <span>Designed and developed with</span>
-              <motion.div
-                animate={{ 
-                  scale: [1, 1.2, 1],
-                  rotate: [0, 10, -10, 0]
-                }}
-                transition={{ 
-                  duration: 2, 
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              >
-                <Heart className="w-4 h-4 text-red-500" />
-              </motion.div>
-              <span>by Sunny from ESHWAY</span>
+                ))}
+              </div>
             </motion.div>
           </div>
-          
-          {/* Sparkle Effect */}
-          <motion.div
-            className="flex justify-center mt-4"
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ duration: 1, delay: 1 }}
-          >
-            <motion.div
-              animate={{
-                rotate: [0, 360],
-                scale: [1, 1.2, 1],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              <Sparkles className="w-6 h-6 text-cosmic/50" />
-            </motion.div>
-          </motion.div>
+        </div>
+
+        {/* Footer Bottom */}
+        <motion.div
+          className="border-t border-white/10 py-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+        >
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+              <div className="text-white/50 text-sm">
+                © {new Date().getFullYear()} Mars Rover Team IIT Bombay. All rights reserved.
+              </div>
+              
+              <div className="flex items-center space-x-6">
+                <motion.div
+                  className="text-white/50 text-sm flex items-center space-x-2"
+                  whileHover={{ color: "rgba(255, 255, 255, 0.7)" }}
+                >
+                  <span>Designed with</span>
+                  <motion.div
+                    animate={{ 
+                      scale: [1, 1.2, 1],
+                      rotate: [0, 10, -10, 0]
+                    }}
+                    transition={{ 
+                      duration: 2, 
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    <Heart className="w-4 h-4 text-red-500" />
+                  </motion.div>
+                  <span>by Sunny from ESHWAY</span>
+                </motion.div>
+
+                {/* Scroll to Top Button */}
+                <motion.button
+                  onClick={scrollToTop}
+                  className="p-2 bg-gradient-to-r from-mars/20 to-cosmic/20 rounded-lg border border-white/10 text-white/70 hover:text-white hover:border-mars/40 transition-all duration-300"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.8 }}
+                >
+                  <ArrowUp className="w-4 h-4" />
+                </motion.button>
+              </div>
+            </div>
+          </div>
         </motion.div>
       </div>
+
+      {/* Decorative Elements */}
+      <motion.div
+        className="absolute bottom-4 left-1/2 transform -translate-x-1/2"
+        initial={{ opacity: 0 }}
+        animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 1, delay: 1 }}
+      >
+        <motion.div
+          animate={{
+            rotate: [0, 360],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <Sparkles className="w-6 h-6 text-cosmic/30" />
+        </motion.div>
+      </motion.div>
     </motion.footer>
   );
 };

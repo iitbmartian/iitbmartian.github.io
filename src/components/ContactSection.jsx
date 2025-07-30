@@ -226,7 +226,7 @@ const ContactSection = () => {
             className="section-title relative inline-block"
             variants={itemVariants}
           >
-            <span className="relative">
+            <span className="relative text-gradient">
               Contact Us
               <motion.div
                 className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-mars via-orange-500 to-cosmic rounded-full"
@@ -381,7 +381,7 @@ const ContactSection = () => {
                 className="text-2xl font-bold mb-8 font-technospace flex items-center space-x-2 relative z-10"
                 whileHover={{ scale: 1.02 }}
               >
-                <Send className="w-6 h-6 text-cosmic" />
+                <Send className="w-6 h-6 text-cosmic " />
                 <span>Send us a message</span>
               </motion.h3>
               
@@ -405,7 +405,7 @@ const ContactSection = () => {
                         id="name" 
                         type="text" 
                         placeholder="Your name" 
-                        className="bg-space-light/50 border-white/10 text-white focus:border-cosmic/50 transition-all duration-300"
+                        className="bg-space-light/50 text-black border-white/10 focus:border-cosmic/50 transition-all duration-300"
                         onFocus={() => setFocusedField('name')}
                         onBlur={() => setFocusedField(null)}
                       />
@@ -435,7 +435,7 @@ const ContactSection = () => {
                         id="email" 
                         type="email" 
                         placeholder="Your email" 
-                        className="bg-space-light/50 border-white/10 text-white focus:border-cosmic/50 transition-all duration-300"
+                        className="bg-space-light/50 border-white/10 text-black focus:border-cosmic/50 transition-all duration-300"
                         onFocus={() => setFocusedField('email')}
                         onBlur={() => setFocusedField(null)}
                       />
@@ -466,7 +466,7 @@ const ContactSection = () => {
                       id="subject" 
                       type="text" 
                       placeholder="Subject" 
-                      className="bg-space-light/50 border-white/10 text-white focus:border-cosmic/50 transition-all duration-300"
+                      className="bg-space-light/50 border-white/10 text-black focus:border-cosmic/50 transition-all duration-300"
                       onFocus={() => setFocusedField('subject')}
                       onBlur={() => setFocusedField(null)}
                     />
@@ -496,7 +496,7 @@ const ContactSection = () => {
                       id="message" 
                       rows={4} 
                       placeholder="Your message" 
-                      className="w-full bg-space-light/50 border border-white/10 rounded-md px-3 py-2 text-white focus:outline-none focus:border-cosmic/50 resize-none transition-all duration-300"
+                      className="w-full bg-space-light/50 border border-white/10 rounded-md px-3 py-2 text-black focus:outline-none focus:border-cosmic/50 resize-none transition-all duration-300"
                       onFocus={() => setFocusedField('message')}
                       onBlur={() => setFocusedField(null)}
                     />

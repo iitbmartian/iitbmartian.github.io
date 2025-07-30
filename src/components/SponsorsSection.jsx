@@ -10,7 +10,6 @@ import Robu from '../mrt/sponsors/Robu.in.png';
 import SBGSystems from '../mrt/sponsors/SBG_Systems.png';
 import IITBombay from '../mrt/sponsors/IIT_BOMBAY.png';
 
-
 const SponsorCard = ({ name, logo, url, index, category, gradient }) => {
   const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef(null);
@@ -19,7 +18,7 @@ const SponsorCard = ({ name, logo, url, index, category, gradient }) => {
   return (
     <motion.div
       ref={cardRef}
-      className="relative group"
+      className="relative group w-full"
       initial={{ opacity: 0, y: 40, scale: 0.9 }}
       animate={isInView ? { 
         opacity: 1, 
@@ -47,7 +46,7 @@ const SponsorCard = ({ name, logo, url, index, category, gradient }) => {
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="block relative overflow-hidden rounded-2xl bg-gradient-to-br from-white/95 to-white/90 backdrop-blur-sm border border-white/20 p-6 h-32 group transition-all duration-300"
+        className="block relative overflow-hidden rounded-2xl bg-gradient-to-br from-white/95 to-white/90 backdrop-blur-sm border border-white/20 w-full aspect-[4/3] group transition-all duration-300"
         whileTap={{ scale: 0.95 }}
       >
         {/* Animated Background Gradient */}
@@ -88,25 +87,33 @@ const SponsorCard = ({ name, logo, url, index, category, gradient }) => {
           ))}
         </div>
 
-        {/* Logo Container */}
-        <div className="relative z-10 h-full flex items-center justify-center">
-          <motion.img
-            src={logo}
-            alt={name}
-            className="max-w-full max-h-16 object-contain filter transition-all duration-500"
-            animate={{
-              filter: isHovered 
-                ? "grayscale(0%) brightness(1.1) saturate(1.2)" 
-                : "grayscale(30%) brightness(0.9) saturate(0.8)",
-              scale: isHovered ? 1.1 : 1,
-            }}
-            transition={{ duration: 0.4 }}
-          />
+        {/* Logo Container with Fixed Dimensions */}
+        <div className="relative z-10 h-full flex items-center justify-center p-6">
+          <div className="w-full h-full flex items-center justify-center">
+            <motion.img
+              src={logo}
+              alt={name}
+              className="max-w-full max-h-full object-contain filter transition-all duration-500"
+              style={{
+                maxWidth: '120px',
+                maxHeight: '60px',
+                width: 'auto',
+                height: 'auto'
+              }}
+              animate={{
+                filter: isHovered 
+                  ? "grayscale(0%) brightness(1.1) saturate(1.2)" 
+                  : "grayscale(30%) brightness(0.9) saturate(0.8)",
+                scale: isHovered ? 1.1 : 1,
+              }}
+              transition={{ duration: 0.4 }}
+            />
+          </div>
         </div>
 
         {/* Category Badge */}
         <motion.div
-          className="absolute top-2 right-2 px-2 py-1 rounded-full bg-gradient-to-r from-cosmic/80 to-blue-500/80 backdrop-blur-sm"
+          className="absolute top-3 right-3 px-2 py-1 rounded-full bg-gradient-to-r from-cosmic/80 to-blue-500/80 backdrop-blur-sm"
           initial={{ scale: 0, opacity: 0 }}
           animate={{ 
             scale: isHovered ? 1 : 0,
@@ -119,7 +126,7 @@ const SponsorCard = ({ name, logo, url, index, category, gradient }) => {
 
         {/* External Link Icon */}
         <motion.div
-          className="absolute bottom-2 right-2 p-1 rounded-full bg-gradient-to-r from-mars/80 to-orange-500/80 backdrop-blur-sm"
+          className="absolute bottom-3 right-3 p-1.5 rounded-full bg-gradient-to-r from-mars/80 to-orange-500/80 backdrop-blur-sm"
           initial={{ scale: 0, opacity: 0 }}
           animate={{ 
             scale: isHovered ? 1 : 0,
@@ -358,7 +365,7 @@ const SponsorsSection = () => {
             className="section-title relative inline-block"
             variants={itemVariants}
           >
-            <span className="relative">
+            <span className="relative text-gradient">
               Our Sponsors
               <motion.div
                 className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-mars via-orange-500 to-cosmic rounded-full"
@@ -415,9 +422,9 @@ const SponsorsSection = () => {
           </motion.div>
         </motion.div>
         
-        {/* Sponsors Grid */}
+        {/* Sponsors Grid with Uniform Sizing */}
         <motion.div
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto"
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 max-w-7xl mx-auto"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"

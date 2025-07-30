@@ -1,0 +1,526 @@
+import React, { useState, useRef } from 'react';
+import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
+import { Cog, Code, Beaker, Presentation, Zap, Star, ArrowRight, Settings, Cpu, FlaskConical, Megaphone } from 'lucide-react';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+
+const SubsystemsPage = () => {
+  const sectionRef = useRef(null);
+  const [activeSubsystem, setActiveSubsystem] = useState("mechanical");
+  const [hoveredCard, setHoveredCard] = useState(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const backgroundScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+
+  const subsystems = [
+    {
+      id: "mechanical",
+      title: "Mechanical",
+      icon: <Settings className="h-6 w-6 text-mars" />,
+      color: "text-mars",
+      bgColor: "bg-mars/20",
+      gradient: "from-mars/30 to-orange-500/20",
+      description: "Designing and building the physical structure of the rover",
+      content: [
+        {
+          title: "Robotic Arm",
+          description: "We design and build a multi-degree-of-freedom robotic arm capable of lifting and dropping objects up to 5 kg, turning knobs, pushing buttons, opening drawers, and performing other precise movement. Our work focuses on developing robust mechanisms, selecting the right materials, and improving control precision and system reliability."
+        },
+        {
+          title: "Mobility System",
+          description: "The rover uses a fully passive rocker-bogie suspension system — a tried and tested design for rough terrains. A novel 4-bar differential mechanism further improves chassis stability, keeping the rover level while traversing uneven ground. The suspension is built to climb over rocks up to 0.5 meters high and handle slopes steeper than 50 degrees. We are also developing an alternative 4-wheel suspension system using differential steering as a backup."
+        },
+        {
+          title: "Bio-Assembly",
+          description: "The rover collects soil and rock samples from various locations using a robotic arm with a drill-based method for depths up to 10 cm and a double-scoop mechanism for surface scraping. Samples are distributed to maintain contamination control and functionality standards, while advanced machinery on board enables bioassays to detect signs of life."
+        },
+        {
+          title: "Chassis Design",
+          description: "The chassis, made from lightweight hollow aluminium pipes, is robust enough to support the robotic arm, bioassembly, and all electrical components. It is designed to prevent stress accumulation, while the modular structure allows for easy removal and replacement of components."
+        },
+        {
+          title: "Wheels",
+          description: "The wheels, designed for Martian-like terrains, are 3d-printed to offer excellent traction while reducing impact transfer to the suspension system. The compact wheel hub efficiently supports load transfer, the motor, and its shaft."
+        }
+      ]
+    },
+    {
+      id: "electronics",
+      title: "Electronics & Control",
+      icon: <Cpu className="h-6 w-6 text-cosmic" />,
+      color: "text-cosmic",
+      bgColor: "bg-cosmic/20",
+      gradient: "from-cosmic/30 to-blue-500/20",
+      description: "Developing the electrical systems and control mechanisms",
+      content: [
+        {
+          title: "Controls",
+          description: "All six wheels are independently driven via GPIO pins on a Raspberry Pi 3 in open loop, while the four steering wheels (front and rear) are steered using closed-loop control. Steering is managed by Roboclaw motor drivers with a Type II control system to track ramp inputs, while Hercules motor drivers control the drive. We are working on deriving a state-space description to enable the use of Inverse Kinematics or LQR control for the robotic arm, utilising the MoveIt! motion planning plugin."
+        },
+        {
+          title: "Power",
+          description: "The rover is powered by a custom 24v battery pack consisting of 3.7v LiPo cells. Power distribution is managed through a custom PCB with 24v-12v and 24v-5v DC-DC buck converters for each component. A capacitor bank is included on the PCB to mitigate the effects of back EMF from motors and actuators. Additionally, we are designing a Battery Management System (BMS) for cell balancing and monitoring the health of the LiPo cells during charging and discharging."
+        },
+        {
+          title: "Communications",
+          description: "We are using commercial off-the-shelf Poe wireless bridges operating in the 5.6 GHz band, with a maximum EIRP of 36 dBm, compliant with FCC UNII-1 regulations. These bridges have been tested for a 1 km non-LOS range and employ adaptive channel selection to switch to a different channel when interference occurs. The video feed is captured via onboard IP cameras, while telemetry is handled by passing messages between ROS nodes."
+        }
+      ]
+    },
+    {
+      id: "software",
+      title: "Software & Automation",
+      icon: <Code className="h-6 w-6 text-mars" />,
+      color: "text-mars",
+      bgColor: "bg-mars/20",
+      gradient: "from-purple-500/30 to-indigo-500/20",
+      description: "Creating algorithms and software for autonomous operation",
+      content: [
+        {
+          title: "Autonomation",
+          description: "We use SLAM for mapping the environment, utilising high-power LIDAR for accurate visualisation. The system is currently running on Gazebo in a simulated environment, with continuous improvements to the algorithm. Initially, we will implement the algorithm on our smaller rover prototype before transitioning it to the main rover."
+        },
+        {
+          title: "Visualisation",
+          description: "We have created a URDF model of the rover to visualise its actions in the field through the GUI and autonomous node. GPS data from the APM module is plotted onto the RViz aerial map display using the mavros library and QT GUI. Additionally, we integrate the IP camera by streaming its RTSP feed through Opencv, converting it into an image message via the ROS-Opencv bridge, and visualising it in the GUI with the Image View widget."
+        }
+      ]
+    },
+    {
+      id: "biosciences",
+      title: "Biosciences",
+      icon: <FlaskConical className="h-6 w-6 text-cosmic" />,
+      color: "text-cosmic",
+      bgColor: "bg-cosmic/20",
+      gradient: "from-green-500/30 to-emerald-500/20",
+      description: "Preliminary tests for moisture, temperature, and methane content are conducted using integrated sensors. The rover also performs microscopy to detect bacteria using the Gram staining method, with image processing used to quantify the findings. In-situ visible and UV range spectrometry helps identify biomolecules like proteins and ATP in samples. Additionally, new techniques such as microfluidics are being explored for potential on-rover bio-assay methods",
+      content: []
+    },
+    {
+      id: "media",
+      title: "Media, Design, Marketing & Business",
+      icon: <Megaphone className="h-6 w-6 text-mars" />,
+      color: "text-mars",
+      bgColor: "bg-mars/20",
+      gradient: "from-pink-500/30 to-rose-500/20",
+      description: "Managing team representation, outreach and sponsorships",
+      content: [
+        {
+          title: "Media",
+          description: "A crucial part of the student rover design competitions is making a video which demonstrates the capabilities of the rover design. For this, we need people with good video capturing and editing skills, so that we can showcase the working of the rover in its entirety. The work would typically include coming up with ideas of different ways/shots we can take of the rover, and making a high-quality video for submission purposes."
+        },
+        {
+          title: "Design",
+          description: "The design team is responsible for creating visually appealing and user-friendly designs for projects like websites, mobile apps, and marketing materials. They collaborate closely with the development team to ensure that designs are both functional and meet the team's needs. Skilled in design software and tools, the team has a strong grasp of design principles, user experience, and branding. They excel at thinking creatively and finding innovative solutions to design challenges, playing a crucial role in delivering a positive user experience and effectively communicating the team's message."
+        },
+        {
+          title: "Market Outreach",
+          description: "We aim to deepen our expertise in robotics while also sharing our knowledge with the broader community to spark greater interest in technology. By participating in exhibitions and conferences, we connect with like-minded individuals and promote knowledge exchange. Members of this subdivision get the opportunity to represent the team, meet new people, and design outreach materials like posters, flyers, and more."
+        }
+      ]
+    }
+  ];
+
+  const selectedSubsystem = subsystems.find(sub => sub.id === activeSubsystem);
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 30, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 40, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-space via-space-dark to-space">
+      <Navbar />
+      
+      <section 
+        ref={sectionRef}
+        className="pt-28 pb-20 bg-gradient-to-br from-space-dark via-space to-space-dark relative overflow-hidden"
+      >
+        {/* Enhanced Background Effects */}
+        <motion.div
+          className="absolute top-1/4 right-0 w-1/3 h-1/3 bg-gradient-to-l from-mars/15 to-orange-500/8 rounded-full blur-3xl"
+          style={{ 
+            y: backgroundY,
+            scale: backgroundScale 
+          }}
+          animate={{
+            rotate: [0, 360],
+            scale: [1, 1.3, 1],
+          }}
+          transition={{
+            rotate: { duration: 150, repeat: Infinity, ease: "linear" },
+            scale: { duration: 50, repeat: Infinity, ease: "easeInOut" }
+          }}
+        />
+        
+        <motion.div
+          className="absolute bottom-1/4 left-0 w-1/3 h-1/3 bg-gradient-to-r from-cosmic/15 to-blue-500/8 rounded-full blur-3xl"
+          style={{ 
+            y: backgroundY,
+            scale: backgroundScale 
+          }}
+          animate={{
+            rotate: [360, 0],
+            scale: [1.2, 1, 1.2],
+          }}
+          transition={{
+            rotate: { duration: 140, repeat: Infinity, ease: "linear" },
+            scale: { duration: 45, repeat: Infinity, ease: "easeInOut", delay: 12 }
+          }}
+        />
+
+        {/* Floating Tech Icons */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(12)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute"
+              animate={{
+                y: [0, -50, 0],
+                rotate: [0, 360],
+                opacity: [0.1, 0.3, 0.1],
+              }}
+              transition={{
+                duration: 25 + i * 3,
+                repeat: Infinity,
+                delay: i * 2.5,
+                ease: "easeInOut",
+              }}
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+            >
+              <Zap className="w-4 h-4 text-white/10" />
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Circuit Pattern Lines */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <svg className="absolute inset-0 w-full h-full opacity-5">
+            <defs>
+              <linearGradient id="circuitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#ff6b35" />
+                <stop offset="50%" stopColor="#00d9ff" />
+                <stop offset="100%" stopColor="#ff6b35" />
+              </linearGradient>
+            </defs>
+            {[...Array(8)].map((_, i) => (
+              <motion.path
+                key={i}
+                d={`M ${i * 15},0 L ${i * 15 + 50},50 L ${i * 15 + 100},0 L ${i * 15 + 150},50`}
+                fill="none"
+                stroke="url(#circuitGradient)"
+                strokeWidth="1"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ 
+                  pathLength: 1, 
+                  opacity: [0, 0.4, 0],
+                }}
+                transition={{
+                  pathLength: { duration: 5, delay: i * 0.3 },
+                  opacity: { duration: 5, delay: i * 0.3, repeat: Infinity, repeatDelay: 8 }
+                }}
+              />
+            ))}
+          </svg>
+        </div>
+        
+        <div className="container mx-auto px-4 md:px-6 relative z-10">
+          {/* Header Section */}
+          <motion.div
+            className="text-center mb-16"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <motion.h1 
+              className="section-title relative inline-block"
+              variants={itemVariants}
+            >
+              <span className="relative">
+                Our Subsystems
+                <motion.div
+                  className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-mars via-orange-500 to-cosmic rounded-full"
+                  initial={{ width: 0 }}
+                  whileInView={{ width: "100%" }}
+                  transition={{ duration: 1.5, delay: 0.5 }}
+                  viewport={{ once: true }}
+                />
+              </span>
+            </motion.h1>
+            
+            <motion.p 
+              className="section-subtitle flex items-center justify-center space-x-2"
+              variants={itemVariants}
+            >
+              <Star className="w-5 h-5 text-cosmic" />
+              <span>Specialized teams working together to create advanced rovers for extraterrestrial exploration.</span>
+            </motion.p>
+          </motion.div>
+          
+          {/* Subsystem Tabs */}
+          <motion.div
+            className="flex flex-wrap justify-center gap-4 mb-16"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            {subsystems.map((subsystem, index) => (
+              <motion.button
+                key={subsystem.id}
+                onClick={() => setActiveSubsystem(subsystem.id)}
+                className={cn(
+                  "py-3 px-6 rounded-xl flex items-center space-x-3 transition-all duration-300 relative overflow-hidden border backdrop-blur-sm",
+                  activeSubsystem === subsystem.id 
+                    ? `${subsystem.bgColor} ${subsystem.color} border-white/30 shadow-lg` 
+                    : "bg-space-light/20 text-white/70 hover:text-white border-white/10 hover:border-white/20"
+                )}
+                variants={itemVariants}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+              >
+                {/* Background Gradient Effect */}
+                <motion.div
+                  className={`absolute inset-0 bg-gradient-to-br ${subsystem.gradient} opacity-0`}
+                  animate={{ 
+                    opacity: activeSubsystem === subsystem.id ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.3 }}
+                />
+                
+                <motion.div
+                  className="relative z-10"
+                  animate={{ rotate: activeSubsystem === subsystem.id ? 360 : 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  {subsystem.icon}
+                </motion.div>
+                <span className="relative z-10 font-medium whitespace-nowrap">{subsystem.title}</span>
+                
+                {/* Active Indicator */}
+                <motion.div
+                  className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-mars to-cosmic rounded-full"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: activeSubsystem === subsystem.id ? 1 : 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.button>
+            ))}
+          </motion.div>
+          
+          {/* Subsystem Content */}
+          <AnimatePresence mode="wait">
+            {selectedSubsystem && (
+              <motion.div
+                key={selectedSubsystem.id}
+                className="max-w-6xl mx-auto"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -30 }}
+                transition={{ duration: 0.5 }}
+              >
+                {/* Subsystem Header */}
+                <motion.div
+                  className="text-center mb-12"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                  <motion.div
+                    className={`inline-flex p-6 rounded-2xl ${selectedSubsystem.bgColor} mb-6 relative overflow-hidden`}
+                    whileHover={{ scale: 1.05, rotate: 5 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <motion.div
+                      className={`absolute inset-0 bg-gradient-to-br ${selectedSubsystem.gradient}`}
+                      animate={{
+                        scale: [1, 1.1, 1],
+                        opacity: [0.3, 0.6, 0.3],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    />
+                    <motion.div
+                      className="relative z-10"
+                      animate={{ rotate: [0, 360] }}
+                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    >
+                      {selectedSubsystem.icon}
+                    </motion.div>
+                  </motion.div>
+                  
+                  <motion.h2
+                    className={`text-4xl font-bold mb-4 font-technospace ${selectedSubsystem.color}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                  >
+                    {selectedSubsystem.title}
+                  </motion.h2>
+                  
+                  <motion.p
+                    className="text-white/80 text-lg max-w-3xl mx-auto leading-relaxed"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                  >
+                    {selectedSubsystem.description}
+                  </motion.p>
+                </motion.div>
+                
+                {/* Content Cards */}
+                {selectedSubsystem.content.length > 0 ? (
+                  <motion.div
+                    className="grid md:grid-cols-2 gap-6"
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    {selectedSubsystem.content.map((item, index) => (
+                      <motion.div
+                        key={index}
+                        variants={cardVariants}
+                        whileHover={{ y: -8, scale: 1.02 }}
+                        onMouseEnter={() => setHoveredCard(index)}
+                        onMouseLeave={() => setHoveredCard(null)}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <Card className="bg-gradient-to-br from-space-light/30 to-space-light/10 border-white/10 backdrop-blur-sm h-full relative overflow-hidden group">
+                          {/* Card Background Effect */}
+                          <motion.div
+                            className={`absolute inset-0 bg-gradient-to-br ${selectedSubsystem.gradient} opacity-0`}
+                            animate={{ 
+                              opacity: hoveredCard === index ? 0.1 : 0,
+                              scale: hoveredCard === index ? 1 : 0.9
+                            }}
+                            transition={{ duration: 0.4 }}
+                          />
+                          
+                          <CardHeader className="relative z-10">
+                            <motion.div
+                              className="flex items-center space-x-3"
+                              animate={{
+                                x: hoveredCard === index ? 5 : 0,
+                              }}
+                              transition={{ duration: 0.3 }}
+                            >
+                              <motion.div
+                                className={`p-2 rounded-lg ${selectedSubsystem.bgColor}`}
+                                whileHover={{ rotate: 360, scale: 1.1 }}
+                                transition={{ duration: 0.6 }}
+                              >
+                                <ArrowRight className={`w-4 h-4 ${selectedSubsystem.color}`} />
+                              </motion.div>
+                              <CardTitle className="text-white group-hover:text-cyan-300 transition-colors duration-300">
+                                {item.title}
+                              </CardTitle>
+                            </motion.div>
+                          </CardHeader>
+                          
+                          <CardContent className="relative z-10">
+                            <CardDescription className="text-white/80 text-base leading-relaxed group-hover:text-white/90 transition-colors duration-300">
+                              {item.description}
+                            </CardDescription>
+                          </CardContent>
+                          
+                          {/* Hover Border Effect */}
+                          <motion.div
+                            className="absolute inset-0 rounded-lg border-2 border-transparent"
+                            animate={{
+                              borderColor: hoveredCard === index ? "rgba(0, 217, 255, 0.4)" : "transparent",
+                            }}
+                            transition={{ duration: 0.3 }}
+                          />
+                          
+                          {/* Progress Indicator */}
+                          <motion.div
+                            className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-mars to-cosmic rounded-full"
+                            initial={{ width: 0 }}
+                            animate={{ width: hoveredCard === index ? "100%" : "0%" }}
+                            transition={{ duration: 0.4 }}
+                          />
+                        </Card>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    className="text-center py-12"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                  >
+                    <motion.div
+                      className={`inline-flex p-6 rounded-2xl ${selectedSubsystem.bgColor} mb-6`}
+                      whileHover={{ scale: 1.05, rotate: 10 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {selectedSubsystem.icon}
+                    </motion.div>
+                    <h3 className="text-2xl font-bold text-white/80 mb-4">
+                      Comprehensive Overview
+                    </h3>
+                    <p className="text-white/60 max-w-2xl mx-auto">
+                      This subsystem covers all aspects described above in an integrated approach.
+                    </p>
+                  </motion.div>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </section>
+      
+      <Footer />
+    </div>
+  );
+};
+
+export default SubsystemsPage;
