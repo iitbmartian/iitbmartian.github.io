@@ -1,15 +1,17 @@
+"use client";
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown, Rocket } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
-  const location = useLocation();
-  const navigate = useNavigate();
+  const pathname = usePathname();
+  const router = useRouter();
   
   const { scrollY } = useScroll();
   const headerOpacity = useTransform(scrollY, [0, 100], [1, 0.95]);
@@ -26,11 +28,11 @@ const Navbar = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [location.pathname]);
+  }, [pathname]);
 
   // Handle contact section scrolling with hash routing
   const handleContactClick = () => {
-    if (location.pathname === '/') {
+    if (pathname === '/') {
       // If already on home page, scroll to contact section
       setTimeout(() => {
         const contactSection = document.getElementById('contact');
@@ -44,19 +46,15 @@ const Navbar = () => {
 
   // Check for contact hash and scroll
   useEffect(() => {
-    if (location.hash === '#contact' || location.state?.scrollToContact) {
+    if (window.location.hash === '#contact') {
       setTimeout(() => {
         const contactSection = document.getElementById('contact');
         if (contactSection) {
           contactSection.scrollIntoView({ behavior: 'smooth' });
         }
-        // Clear the state
-        if (location.state?.scrollToContact) {
-          window.history.replaceState({}, document.title);
-        }
       }, 100);
     }
-  }, [location.hash, location.state]);
+  }, [pathname]);
 
   const navLinks = [
     { name: 'Home', href: '/', icon: '🏠' },
@@ -70,9 +68,14 @@ const Navbar = () => {
   ];
 
   const isActiveLink = (href: string) => {
-    if (href === '/') return location.pathname === '/';
-    if (href === '/#contact') return location.hash === '#contact';
-    return location.pathname.startsWith(href);
+    if (href === '/') return pathname === '/';
+    if (href === '/#contact') {
+      if (typeof window !== 'undefined') {
+        return window.location.hash === '#contact';
+      }
+      return false;
+    }
+    return pathname.startsWith(href);
   };
 
   return (
@@ -125,7 +128,7 @@ const Navbar = () => {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="flex items-center space-x-2 group cursor-pointer flex-shrink-0"
           >
-            <Link to="/" className="flex items-center space-x-2">
+            <Link href="/" className="flex items-center space-x-2">
               <motion.div
                 whileHover={{ rotate: 360, scale: 1.1 }}
                 transition={{ duration: 0.6, ease: "easeInOut" }}
@@ -181,14 +184,15 @@ const Navbar = () => {
                 onMouseEnter={() => setHoveredLink(link.name)}
                 onMouseLeave={() => setHoveredLink(null)}
               >
-                <button 
-                  onClick={
-                    ()=>{
-
-                      link.href === '/#contact' ? handleContactClick : undefined;
-                      navigate(link.href)
+                <button
+                  onClick={() => {
+                    if (link.href === '/#contact') {
+                      handleContactClick();
+                      router.push('/#contact');
+                    } else {
+                      router.push(link.href);
                     }
-                    }
+                  }}
                 >
                   <motion.div
                     className={cn(
@@ -314,8 +318,8 @@ const Navbar = () => {
                       }}
                       transition={{ duration: 0.2 }}
                     >
-                      <Link 
-                        to={link.href} 
+                      <Link
+                        href={link.href}
                         onClick={() => {
                           setIsMobileMenuOpen(false);
                           if (link.href === '/#contact') {

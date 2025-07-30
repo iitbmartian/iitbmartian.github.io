@@ -1,8 +1,9 @@
+"use client";
 import React, { useRef, useState } from 'react';
 import { ArrowRight, Rocket, Calendar, Zap } from 'lucide-react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 const RoversSection = () => {
@@ -365,7 +366,7 @@ const RoversSection = () => {
           transition={{ duration: 0.8, delay: 0.5 }}
           viewport={{ once: true }}
         >
-          <Link to="/rover">
+          <Link href="/rover">
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

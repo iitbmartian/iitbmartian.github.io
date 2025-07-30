@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
 import { Linkedin, Globe, Users, Star, Zap, Award, ArrowRight, UserPlus } from 'lucide-react';

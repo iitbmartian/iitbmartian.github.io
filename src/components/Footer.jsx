@@ -1,3 +1,4 @@
+"use client";
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useInView, useSpring } from 'framer-motion';
 import { 
@@ -21,7 +22,7 @@ import {
   Users,
   Calendar
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 const Footer = () => {
@@ -349,7 +350,7 @@ const Footer = () => {
                         animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                         transition={{ duration: 0.5, delay: 0.4 + sectionIndex * 0.1 + linkIndex * 0.05 }}
                       >
-                        <Link to={link.href}>
+                        <Link href={link.href}>
                           <motion.div
                             className="text-white/70 hover:text-white transition-all duration-300 flex items-center space-x-2 group relative"
                             whileHover={{ x: 8 }}

@@ -1,4 +1,4 @@
-
+"use client";
 import React from 'react';
 import { Award, Flag, Users, Star, Rocket } from 'lucide-react';
 import { cn } from '@/lib/utils';

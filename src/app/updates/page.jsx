@@ -1,3 +1,4 @@
+'use client';
 import React, { useRef, useState } from 'react';
 import { Calendar, Newspaper, ExternalLink, Star, Clock, TrendingUp } from 'lucide-react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';

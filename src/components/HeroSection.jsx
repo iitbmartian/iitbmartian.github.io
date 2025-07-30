@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from 'react';
 import { ChevronDown, Rocket, Star, Earth } from 'lucide-react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
@@ -7,6 +8,7 @@ import MarsRoverLogo from '@/mrt/Logo/mrtLogo.png';
 
 const HeroSection = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [particles, setParticles] = useState([]);
   const { scrollY } = useScroll();
   
   // Parallax effects
@@ -24,6 +26,14 @@ const HeroSection = () => {
     };
 
     window.addEventListener('mousemove', handleMouseMove);
+
+    // Generate particles on client-side only
+    const newParticles = Array.from({ length: 20 }).map(() => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+    }));
+    setParticles(newParticles);
+
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
@@ -110,7 +120,7 @@ const HeroSection = () => {
 
       {/* Floating Particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
+        {particles.map((particle, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-white/20 rounded-full"
@@ -126,8 +136,8 @@ const HeroSection = () => {
               ease: "easeInOut",
             }}
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: particle.left,
+              top: particle.top,
             }}
           />
         ))}

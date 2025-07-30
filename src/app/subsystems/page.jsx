@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
 import { Cog, Code, Beaker, Presentation, Zap, Star, ArrowRight, Settings, Cpu, FlaskConical, Megaphone } from 'lucide-react';

@@ -1,3 +1,4 @@
+"use client";
 import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { ExternalLink, Heart, Handshake, Star, Sparkles } from 'lucide-react';
