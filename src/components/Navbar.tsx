@@ -19,7 +19,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 30);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -30,10 +30,8 @@ const Navbar = () => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  // Handle contact section scrolling with hash routing
   const handleContactClick = () => {
     if (pathname === '/') {
-      // If already on home page, scroll to contact section
       setTimeout(() => {
         const contactSection = document.getElementById('contact');
         if (contactSection) {
@@ -44,7 +42,6 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   };
 
-  // Check for contact hash and scroll
   useEffect(() => {
     if (window.location.hash === '#contact') {
       setTimeout(() => {
@@ -64,7 +61,7 @@ const Navbar = () => {
     { name: 'Records', href: '/competitions', icon: '🏆' },
     { name: 'Team', href: '/team', icon: '👥' },
     { name: 'Gallery', href: '/gallery', icon: '📸' },
-    { name: 'Contact', href: '/#contact', icon: '📞' }, // Using hash routing
+    { name: 'Contact', href: '/#contact', icon: '📞' },
   ];
 
   const isActiveLink = (href: string) => {
@@ -79,207 +76,190 @@ const Navbar = () => {
   };
 
   return (
-    <motion.nav
-      style={{ opacity: headerOpacity, scale: headerScale }}
-      className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out',
-        isScrolled 
-          ? 'bg-gradient-to-r from-space/95 via-space-dark/95 to-space/95 backdrop-blur-xl shadow-2xl py-1' 
-          : 'bg-transparent py-2'
-      )}
-    >
-      {/* Animated border gradient */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-cyan-500/20 opacity-0"
-        animate={{ opacity: isScrolled ? 1 : 0 }}
-        transition={{ duration: 0.5 }}
-      />
-      
-      {/* Floating particles effect */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(4)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-0.5 h-0.5 bg-blue-400/30 rounded-full"
-            animate={{
-              x: [0, 60, 0],
-              y: [0, -30, 0],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: 3 + i,
-              repeat: Infinity,
-              delay: i * 0.6,
-            }}
-            style={{
-              left: `${15 + i * 20}%`,
-              top: '50%',
-            }}
-          />
-        ))}
-      </div>
+    <>
+      <motion.nav
+        style={{ opacity: headerOpacity, scale: headerScale }}
+        className={cn(
+          'fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out',
+          isScrolled 
+            ? 'bg-gradient-to-r from-space/90 via-space-dark/90 to-space/90 backdrop-blur-2xl shadow-xl py-2 border-b border-mars/20' 
+            : 'bg-transparent py-3'
+        )}
+      >
+        {/* Compact animated border gradient */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-mars/10 via-cosmic/10 to-mars/10"
+          animate={{ 
+            opacity: isScrolled ? 1 : 0,
+            backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+          }}
+          transition={{ 
+            opacity: { duration: 0.5 },
+            backgroundPosition: { duration: 6, repeat: Infinity, ease: "linear" }
+          }}
+          style={{ backgroundSize: '200% 100%' }}
+        />
 
-      <div className="container mx-auto px-2 sm:px-4 relative">
-        <div className="flex items-center justify-between">
-          {/* Logo with enhanced animations */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="flex items-center space-x-2 group cursor-pointer flex-shrink-0"
-          >
-            <Link href="/" className="flex items-center space-x-2">
-              <motion.div
-                whileHover={{ rotate: 360, scale: 1.1 }}
-                transition={{ duration: 0.6, ease: "easeInOut" }}
-                className="relative"
-              >
-                <Rocket className="w-5 h-5 text-blue-400" />
+        <div className="container mx-auto px-4 relative">
+          <div className="flex items-center justify-between">
+            {/* Compact Logo */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="flex items-center space-x-2 group cursor-pointer flex-shrink-0"
+            >
+              <Link href="/" className="flex items-center space-x-2">
                 <motion.div
-                  className="absolute inset-0 bg-blue-400/20 rounded-full blur-sm"
-                  animate={{ 
-                    scale: [1, 1.2, 1],
-                    opacity: [0.5, 0.8, 0.5] 
+                  whileHover={{ 
+                    rotate: 360, 
+                    scale: 1.1,
                   }}
-                  transition={{ 
-                    duration: 2, 
-                    repeat: Infinity,
-                    ease: "easeInOut" 
-                  }}
-                />
-              </motion.div>
-              
-              <motion.div
-                className="relative overflow-hidden"
-                whileHover={{ scale: 1.03 }}
-                transition={{ duration: 0.3 }}
-              >
-                <span className="text-lg sm:text-xl font-technospace font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent whitespace-nowrap">
-                  MRT - IITB
-                </span>
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-blue-400/10 via-purple-400/10 to-cyan-400/10"
-                  initial={{ x: '-100%' }}
-                  whileHover={{ x: '100%' }}
-                  transition={{ duration: 0.6 }}
-                />
-              </motion.div>
-            </Link>
-          </motion.div>
-
-          {/* Desktop Menu with enhanced animations */}
-          <motion.div 
-            className="hidden xl:flex items-center space-x-0.5"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            {navLinks.map((link, index) => (
-              <motion.div
-                key={link.name}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="relative"
-                onMouseEnter={() => setHoveredLink(link.name)}
-                onMouseLeave={() => setHoveredLink(null)}
-              >
-                <button
-                  onClick={() => {
-                    if (link.href === '/#contact') {
-                      handleContactClick();
-                      router.push('/#contact');
-                    } else {
-                      router.push(link.href);
-                    }
-                  }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                  className="relative"
                 >
+                  <Rocket className="w-5 h-5 text-mars" />
                   <motion.div
-                    className={cn(
-                      'relative px-2.5 py-1.5 text-xs font-medium rounded-lg transition-all duration-300 whitespace-nowrap',
-                      isActiveLink(link.href) 
-                        ? 'text-white bg-gradient-to-r from-blue-500/20 to-purple-500/20' 
-                        : 'text-white/80 hover:text-white',
-                      'before:absolute before:inset-0 before:bg-gradient-to-r before:from-blue-500/10 before:to-purple-500/10',
-                      'before:rounded-lg before:opacity-0 before:transition-opacity before:duration-300',
-                      'hover:before:opacity-100'
-                    )}
-                    whileHover={{ scale: 1.03, y: -1 }}
-                    whileTap={{ scale: 0.97 }}
-                    transition={{ duration: 0.2 }}
+                    className="absolute inset-0 bg-mars/30 rounded-full blur-sm"
+                    animate={{ 
+                      scale: [1, 1.3, 1],
+                      opacity: [0.4, 0.7, 0.4] 
+                    }}
+                    transition={{ 
+                      duration: 2, 
+                      repeat: Infinity,
+                      ease: "easeInOut" 
+                    }}
+                  />
+                </motion.div>
+                
+                <motion.div
+                  className="relative overflow-hidden"
+                  whileHover={{ scale: 1.03 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <span className="text-lg font-bold bg-gradient-to-r from-mars via-orange-400 to-cosmic bg-clip-text text-transparent whitespace-nowrap">
+                    MRT - IITB
+                  </span>
+                </motion.div>
+              </Link>
+            </motion.div>
+
+            {/* Compact Desktop Menu */}
+            <motion.div 
+              className="hidden xl:flex items-center space-x-0.5"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              {navLinks.map((link, index) => (
+                <motion.div
+                  key={link.name}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  className="relative"
+                  onMouseEnter={() => setHoveredLink(link.name)}
+                  onMouseLeave={() => setHoveredLink(null)}
+                >
+                  <button
+                    onClick={() => {
+                      if (link.href === '/#contact') {
+                        handleContactClick();
+                        router.push('/#contact');
+                      } else {
+                        router.push(link.href);
+                      }
+                    }}
                   >
-                    <span className="relative z-10 flex items-center space-x-1.5">
-                      <span className="text-sm">{link.icon}</span>
-                      <span>{link.name}</span>
-                    </span>
-                    
-                    {/* Hover effect background */}
                     <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg"
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ 
-                        opacity: hoveredLink === link.name ? 1 : 0,
-                        scale: hoveredLink === link.name ? 1 : 0.9
+                      className={cn(
+                        'relative px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-300 whitespace-nowrap',
+                        isActiveLink(link.href) 
+                          ? 'text-white bg-gradient-to-r from-mars/30 to-cosmic/30 border border-mars/40' 
+                          : 'text-white/90 hover:text-white border border-transparent hover:border-mars/30',
+                        'backdrop-blur-sm'
+                      )}
+                      whileHover={{ 
+                        scale: 1.05, 
+                        y: -1
                       }}
+                      whileTap={{ scale: 0.95 }}
                       transition={{ duration: 0.2 }}
-                    />
-                    
-                    {/* Active indicator */}
-                    <motion.div
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"
-                      initial={{ scaleX: 0 }}
-                      animate={{ 
-                        scaleX: isActiveLink(link.href) || hoveredLink === link.name ? 1 : 0 
-                      }}
-                      transition={{ duration: 0.2 }}
-                    />
-                  </motion.div>
-                </button>
-              </motion.div>
-            ))}
-          </motion.div>
+                    >
+                      <span className="relative z-10 flex items-center space-x-1.5">
+                        <motion.span 
+                          className="text-sm"
+                          animate={hoveredLink === link.name ? { 
+                            scale: [1, 1.2, 1]
+                          } : {}}
+                          transition={{ duration: 0.3 }}
+                        >
+                          {link.icon}
+                        </motion.span>
+                        <span>{link.name}</span>
+                      </span>
+                      
+                      {/* Compact hover effect */}
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-mars/20 to-cosmic/20 rounded-lg"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ 
+                          opacity: hoveredLink === link.name ? 1 : 0,
+                          scale: hoveredLink === link.name ? 1 : 0.9
+                        }}
+                        transition={{ duration: 0.2 }}
+                      />
+                      
+                      {/* Compact active indicator */}
+                      <motion.div
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-mars to-cosmic rounded-full"
+                        initial={{ scaleX: 0 }}
+                        animate={{ 
+                          scaleX: isActiveLink(link.href) || hoveredLink === link.name ? 1 : 0
+                        }}
+                        transition={{ duration: 0.2 }}
+                      />
+                    </motion.div>
+                  </button>
+                </motion.div>
+              ))}
+            </motion.div>
 
-          {/* Mobile Menu Button with enhanced animation */}
-          <motion.button 
-            className="xl:hidden relative p-1.5 text-white group flex-shrink-0"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.4 }}
-          >
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg"
-              initial={{ opacity: 0 }}
-              whileHover={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-            />
-            <AnimatePresence mode="wait">
+            {/* Compact Mobile Menu Button */}
+            <motion.button 
+              className="xl:hidden relative p-1.5 text-white group flex-shrink-0 border border-mars/30 rounded-md"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4 }}
+            >
               <motion.div
-                key={isMobileMenuOpen ? 'close' : 'open'}
-                initial={{ rotate: -45, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: 45, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="relative z-10"
-              >
-                {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-              </motion.div>
-            </AnimatePresence>
-            
-            {/* Ripple effect */}
-            <motion.div
-              className="absolute inset-0 bg-white/10 rounded-lg"
-              initial={{ scale: 0, opacity: 0 }}
-              whileTap={{ scale: 1.3, opacity: 0.3 }}
-              transition={{ duration: 0.15 }}
-            />
-          </motion.button>
+                className="absolute inset-0 bg-gradient-to-r from-mars/20 to-cosmic/20 rounded-md"
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              />
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={isMobileMenuOpen ? 'close' : 'open'}
+                  initial={{ rotate: -45, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  exit={{ rotate: 45, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="relative z-10"
+                >
+                  {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+                </motion.div>
+              </AnimatePresence>
+            </motion.button>
+          </div>
         </div>
-      </div>
+      </motion.nav>
 
-      {/* Enhanced Mobile Menu */}
+      {/* Compact Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
@@ -287,15 +267,15 @@ const Navbar = () => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="xl:hidden overflow-hidden"
+            className="fixed top-12 left-0 right-0 xl:hidden overflow-hidden z-40"
           >
             <motion.div 
-              className="bg-gradient-to-br from-space-dark/95 via-space/95 to-space-dark/95 backdrop-blur-xl border-t border-white/10"
+              className="bg-gradient-to-br from-space-dark/95 via-space/95 to-space-dark/95 backdrop-blur-2xl border-b border-mars/20"
               initial={{ y: -10 }}
               animate={{ y: 0 }}
               transition={{ duration: 0.2, delay: 0.1 }}
             >
-              <div className="container mx-auto px-4 py-3">
+              <div className="container mx-auto px-4 py-4">
                 <motion.div 
                   className="grid grid-cols-2 sm:grid-cols-4 gap-2"
                   variants={{
@@ -329,16 +309,16 @@ const Navbar = () => {
                       >
                         <motion.div
                           className={cn(
-                            "w-full text-center p-3 rounded-lg border border-white/5 transition-all duration-200",
+                            "w-full text-center p-2.5 rounded-lg border transition-all duration-200",
                             isActiveLink(link.href)
-                              ? "bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-white"
-                              : "bg-gradient-to-r from-blue-500/10 to-purple-500/10 text-white/90 hover:text-white hover:bg-gradient-to-r hover:from-blue-500/20 hover:to-purple-500/20"
+                              ? "bg-gradient-to-r from-mars/30 to-cosmic/30 border-mars/50 text-white"
+                              : "bg-gradient-to-r from-mars/10 to-cosmic/10 border-mars/20 text-white/90 hover:text-white hover:border-mars/40"
                           )}
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                         >
                           <span className="flex flex-col items-center space-y-1">
-                            <span className="text-lg">{link.icon}</span>
+                            <span className="text-base">{link.icon}</span>
                             <span className="font-medium text-xs whitespace-nowrap">{link.name}</span>
                           </span>
                         </motion.div>
@@ -351,7 +331,7 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </>
   );
 };
 

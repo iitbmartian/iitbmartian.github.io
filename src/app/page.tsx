@@ -11,13 +11,13 @@ import ContactSection from '@/components/ContactSection';
 const Index = () => {
   return (
     <>
-      <HeroSection />           {/* done */}
-      <AboutSection />          {/* done */}
-      <RoversSection />         {/* done */}
-      <SubsystemsSection />     {/* done */}
-      <CompetitionsSection />   {/* done */}
-      <SponsorsSection />       {/* done */}  
-      <ContactSection />        {/* done */}
+      <HeroSection />           
+      <AboutSection />          
+      <RoversSection />         
+      <SubsystemsSection />     
+      <CompetitionsSection />   
+      <SponsorsSection />         
+      <ContactSection />        
     </>
 
   );
