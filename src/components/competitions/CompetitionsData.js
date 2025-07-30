@@ -1,10 +1,10 @@
 
 import { CompetitionProps } from './CompetitionCard';
-import URClogo from '../../mrt/Logo/Competitions/URC.png'; // <--- Corrected path
-import IRClogo from '../../mrt/Logo/Competitions/IRC_1.png'; 
-import ERClogo from '../../mrt/Logo/Competitions/ERC.png';
+import URClogo from '@/mrt/Logo/Competitions/URC.png'; // <--- Corrected path
+import IRClogo from '@/mrt/Logo/Competitions/IRC_1.png'; 
+import ERClogo from '@/mrt/Logo/Competitions/ERC.png';
 
-export const competitionsData: CompetitionProps[] = [
+export const competitionsData = [
   {
     title: "University Rover Challenge (URC)",
     location: "Mars Desert Research Station, Utah, USA",
