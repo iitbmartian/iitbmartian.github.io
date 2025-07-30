@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import Footer from '@/components/Footer';
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +18,33 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning={true}>
+      <body className={inter.className}>
+        {/* Background Effects */}
+        <div className="fixed inset-0 -z-50">
+          {/* Main gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"></div>
+          
+          {/* Grid pattern overlay */}
+          <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+          
+          {/* Floating animated orbs */}
+          <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+          <div className="absolute top-1/3 right-1/4 w-72 h-72 bg-yellow-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+          <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+        </div>
+
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navbar />
+          {children}
+          <Footer />
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

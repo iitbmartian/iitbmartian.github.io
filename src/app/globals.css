@@ -1,95 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
-
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 100%;
-
-    --popover: 0 0% 3%;
-    --popover-foreground: 0 0% 100%;
-
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
-
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 0 0% 8%;
-    --muted-foreground: 0 0% 70%;
-
-    --accent: 0 0% 12%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 0 0% 15%;
-    --input: 0 0% 100%; /* White background for inputs */
-    --ring: 0 0% 80%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 2%;
-    --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 0 0% 100%;
-    --sidebar-primary-foreground: 0 0% 0%;
-    --sidebar-accent: 0 0% 8%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 12%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-
-    /* Custom Mars Rover Team Colors */
-    --mars: 14 90% 53%;        /* Mars orange-red */
-    --cosmic: 195 100% 50%;    /* Cosmic blue */
-    --space: 0 0% 8%;          /* Dark space background */
-    --space-dark: 0 0% 3%;     /* Darker space */
-    --space-light: 0 0% 15%;   /* Lighter space elements */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
   }
 
   .dark {
-    --background: 0 0% 0%;
-    --foreground: 0 0% 100%;
-
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 100%;
-
-    --popover: 0 0% 3%;
-    --popover-foreground: 0 0% 100%;
-
-    --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 0%;
-
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 100%;
-
-    --muted: 0 0% 8%;
-    --muted-foreground: 0 0% 70%;
-
-    --accent: 0 0% 12%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 0 0% 15%;
-    --input: 0 0% 100%; /* White background for inputs in dark mode too */
-    --ring: 0 0% 80%;
-
-    --sidebar-background: 0 0% 2%;
-    --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 8%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 12%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
   }
 }
 
@@ -97,186 +18,36 @@
   * {
     @apply border-border;
   }
-
   body {
-    @apply bg-black text-white font-['Space_Grotesk'];
-  }
-
-  html {
-    @apply scroll-smooth bg-black;
-  }
-
-  /* Ensure all text is white by default EXCEPT inputs */
-  h1, h2, h3, h4, h5, h6, p, span, div, a {
-    @apply text-white;
-  }
-
-  /* Specific input styling */
-  input, textarea, select {
-    @apply bg-white text-black border border-gray-300 rounded-md px-3 py-2;
-  }
-
-  input::placeholder, textarea::placeholder {
-    @apply text-gray-500;
-  }
-
-  input:focus, textarea:focus, select:focus {
-    @apply outline-none ring-2 ring-cosmic/50 border-cosmic/50;
-  }
-
-  /* Custom font family classes */
-  .font-technospace {
-    font-family: 'Orbitron', monospace;
+    @apply bg-background text-foreground;
   }
 }
 
-@layer components {
-  /* Mars and Cosmic color utilities */
-  .text-mars {
-    color: hsl(var(--mars));
-  }
-
-  .text-cosmic {
-    color: hsl(var(--cosmic));
-  }
-
-  .bg-mars {
-    background-color: hsl(var(--mars));
-  }
-
-  .bg-cosmic {
-    background-color: hsl(var(--cosmic));
-  }
-
-  .bg-space {
-    background-color: hsl(var(--space));
-  }
-
-  .bg-space-dark {
-    background-color: hsl(var(--space-dark));
-  }
-
-  .bg-space-light {
-    background-color: hsl(var(--space-light));
-  }
-
-  /* Opacity variants */
-  .bg-mars\/5 { background-color: hsl(var(--mars) / 0.05); }
-  .bg-mars\/10 { background-color: hsl(var(--mars) / 0.1); }
-  .bg-mars\/20 { background-color: hsl(var(--mars) / 0.2); }
-  .bg-mars\/30 { background-color: hsl(var(--mars) / 0.3); }
-
-  .bg-cosmic\/5 { background-color: hsl(var(--cosmic) / 0.05); }
-  .bg-cosmic\/10 { background-color: hsl(var(--cosmic) / 0.1); }
-  .bg-cosmic\/20 { background-color: hsl(var(--cosmic) / 0.2); }
-  .bg-cosmic\/30 { background-color: hsl(var(--cosmic) / 0.3); }
-
-  .bg-space-light\/10 { background-color: hsl(var(--space-light) / 0.1); }
-  .bg-space-light\/20 { background-color: hsl(var(--space-light) / 0.2); }
-  .bg-space-light\/30 { background-color: hsl(var(--space-light) / 0.3); }
-
-  /* Glow effects */
-  .mars-glow {
-    box-shadow: 0 0 20px 8px hsl(var(--mars) / 0.3);
-  }
-  
-  .cosmic-glow {
-    box-shadow: 0 0 20px 8px hsl(var(--cosmic) / 0.3);
-  }
-  
-  .text-gradient {
-    @apply bg-gradient-to-r from-mars to-cosmic bg-clip-text text-transparent;
-  }
-
-  /* Enhanced gradient variations */
-  .text-gradient-reverse {
-    @apply bg-gradient-to-r from-cosmic to-mars bg-clip-text text-transparent;
-  }
-
-  .text-gradient-mars {
-    @apply bg-gradient-to-r from-mars to-orange-500 bg-clip-text text-transparent;
-  }
-
-  .text-gradient-cosmic {
-    @apply bg-gradient-to-r from-cosmic to-blue-500 bg-clip-text text-transparent;
-  }
-
-  /* Section styling */
-  .section-title {
-    @apply text-4xl md:text-5xl font-bold mb-8 text-gradient font-technospace;
-  }
-  
-  .section-subtitle {
-    @apply text-xl font-medium text-white/80 mb-12 max-w-3xl mx-auto leading-relaxed;
-  }
-
-  .section-padding {
-    @apply py-16 md:py-24;
-  }
-
-  /* Enhanced button styles */
-  .btn-mars {
-    @apply bg-gradient-to-r from-mars to-orange-500 hover:from-mars/90 hover:to-orange-600 text-white font-medium px-6 py-3 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl;
-  }
-
-  .btn-cosmic {
-    @apply bg-gradient-to-r from-cosmic to-blue-500 hover:from-cosmic/90 hover:to-blue-600 text-white font-medium px-6 py-3 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl;
-  }
-
-  /* Card styles */
-  .card-space {
-    @apply bg-gradient-to-br from-space-light/30 to-space-light/10 backdrop-blur-sm border border-white/10 rounded-xl;
-  }
-
-  /* Enhanced Input Styles */
-  .input-space {
-    @apply bg-white text-black border border-white/20 rounded-lg px-4 py-3 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cosmic/50 focus:border-cosmic/50 transition-all duration-300;
-  }
-
-  .input-space-dark {
-    @apply bg-white text-black border border-gray-300 rounded-lg px-4 py-3 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-mars/50 focus:border-mars/50 transition-all duration-300;
-  }
-
-  /* Text color utilities for different opacities */
-  .text-white\/90 { color: rgba(255, 255, 255, 0.9); }
-  .text-white\/80 { color: rgba(255, 255, 255, 0.8); }
-  .text-white\/70 { color: rgba(255, 255, 255, 0.7); }
-  .text-white\/60 { color: rgba(255, 255, 255, 0.6); }
-  .text-white\/50 { color: rgba(255, 255, 255, 0.5); }
-
-  /* Hover states */
-  .hover\:text-white\/90:hover { color: rgba(255, 255, 255, 0.9); }
-  .hover\:text-white:hover { color: rgba(255, 255, 255, 1); }
-
-  /* Border utilities */
-  .border-white\/10 { border-color: rgba(255, 255, 255, 0.1); }
-  .border-white\/20 { border-color: rgba(255, 255, 255, 0.2); }
-  .border-white\/30 { border-color: rgba(255, 255, 255, 0.3); }
-}
-
-/* Additional custom properties for consistency */
 @layer utilities {
-  .text-mars-light {
-    color: hsl(var(--mars) / 0.8);
+  .animate-blob {
+    animation: blob 7s infinite;
   }
-
-  .text-cosmic-light {
-    color: hsl(var(--cosmic) / 0.8);
+  
+  .animation-delay-2000 {
+    animation-delay: 2s;
   }
-
-  /* Ensure proper contrast for all interactive elements */
-  .interactive-element {
-    @apply text-white hover:text-white/90 transition-colors duration-300;
+  
+  .animation-delay-4000 {
+    animation-delay: 4s;
   }
+}
 
-  /* Background patterns */
-  .bg-pattern-space {
-    background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
-    background-size: 20px 20px;
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
   }
-
-  /* Force input styling */
-  .force-input-style {
-    @apply bg-white text-black !important;
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
   }
 }

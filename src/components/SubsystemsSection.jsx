@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Cog, Code, Beaker, Presentation, ArrowRight, Zap, Star } from 'lucide-react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -175,10 +175,28 @@ const Subsystem = ({ title, description, icon, color, gradient, index }) => {
 
 const SubsystemsSection = () => {
   const sectionRef = useRef(null);
+  const [constellationLines, setConstellationLines] = useState([]);
+  const [floatingStars, setFloatingStars] = useState([]);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
   });
+
+  useEffect(() => {
+    const newLines = Array.from({ length: 8 }).map(() => ({
+      x1: `${Math.random() * 100}%`,
+      y1: `${Math.random() * 100}%`,
+      x2: `${Math.random() * 100}%`,
+      y2: `${Math.random() * 100}%`,
+    }));
+    setConstellationLines(newLines);
+
+    const newStars = Array.from({ length: 12 }).map(() => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+    }));
+    setFloatingStars(newStars);
+  }, []);
 
   const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -50]);
   const backgroundScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
@@ -293,13 +311,13 @@ const SubsystemsSection = () => {
               <stop offset="100%" stopColor="#00d9ff" />
             </linearGradient>
           </defs>
-          {[...Array(8)].map((_, i) => (
+          {constellationLines.map((line, i) => (
             <motion.line
               key={i}
-              x1={`${Math.random() * 100}%`}
-              y1={`${Math.random() * 100}%`}
-              x2={`${Math.random() * 100}%`}
-              y2={`${Math.random() * 100}%`}
+              x1={line.x1}
+              y1={line.y1}
+              x2={line.x2}
+              y2={line.y2}
               stroke="url(#lineGradient)"
               strokeWidth="1"
               initial={{ pathLength: 0, opacity: 0 }}
@@ -318,7 +336,7 @@ const SubsystemsSection = () => {
 
       {/* Floating Stars */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(12)].map((_, i) => (
+        {floatingStars.map((star, i) => (
           <motion.div
             key={i}
             className="absolute"
@@ -334,8 +352,8 @@ const SubsystemsSection = () => {
               ease: "easeInOut",
             }}
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: star.left,
+              top: star.top,
             }}
           >
             <Star className="w-3 h-3 text-white/20" />

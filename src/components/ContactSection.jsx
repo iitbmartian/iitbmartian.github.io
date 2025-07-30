@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState,useEffect } from 'react';
 import { Mail, MapPin, Phone, Send, MessageCircle, Users, Globe, Star } from 'lucide-react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -10,11 +10,20 @@ const ContactSection = () => {
   const sectionRef = useRef(null);
   const [hoveredContact, setHoveredContact] = useState(null);
   const [focusedField, setFocusedField] = useState(null);
+  const [floatingIcons, setFloatingIcons] = useState([]);
   
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
   });
+
+  useEffect(() => {
+    const newIcons = Array.from({ length: 8 }).map(() => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+    }));
+    setFloatingIcons(newIcons);
+  }, []);
 
   const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -50]);
   const backgroundScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
@@ -156,7 +165,7 @@ const ContactSection = () => {
 
       {/* Floating Message Icons */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(8)].map((_, i) => (
+        {floatingIcons.map((icon, i) => (
           <motion.div
             key={i}
             className="absolute"
@@ -172,8 +181,8 @@ const ContactSection = () => {
               ease: "easeInOut",
             }}
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: icon.left,
+              top: icon.top,
             }}
           >
             <MessageCircle className="w-4 h-4 text-white/10" />

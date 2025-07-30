@@ -1,15 +1,15 @@
 "use client";
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { ExternalLink, Heart, Handshake, Star, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import Ansys from '../mrt/sponsors/Ansys.png';
-import Ruckus from '../mrt/sponsors/Ruckus.png';
-import SolidWorks from '../mrt/sponsors/Solidworks.png';
-import Servocity from '../mrt/sponsors/servocity.png';
-import Robu from '../mrt/sponsors/Robu.in.png';
-import SBGSystems from '../mrt/sponsors/SBG_Systems.png';
-import IITBombay from '../mrt/sponsors/IIT_BOMBAY.png';
+import Ansys from '@/mrt/sponsors/Ansys.png';
+import Ruckus from '@/mrt/sponsors/Ruckus.png';
+import SolidWorks from '@/mrt/sponsors/Solidworks.png';
+import Servocity from '@/mrt/sponsors/servocity.png';
+import Robu from '@/mrt/sponsors/Robu.in.png';
+import SBGSystems from '@/mrt/sponsors/SBG_Systems.png';
+import IITBombay from '@/mrt/sponsors/IIT_BOMBAY.png';
 
 const SponsorCard = ({ name, logo, url, index, category, gradient }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -170,10 +170,19 @@ const SponsorCard = ({ name, logo, url, index, category, gradient }) => {
 
 const SponsorsSection = () => {
   const sectionRef = useRef(null);
+  const [floatingIcons, setFloatingIcons] = useState([]);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
   });
+
+  useEffect(() => {
+    const newIcons = Array.from({ length: 6 }).map(() => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+    }));
+    setFloatingIcons(newIcons);
+  }, []);
 
   const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -50]);
   const backgroundScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
@@ -295,7 +304,7 @@ const SponsorsSection = () => {
 
       {/* Floating Partnership Icons */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(6)].map((_, i) => (
+        {floatingIcons.map((icon, i) => (
           <motion.div
             key={i}
             className="absolute"
@@ -311,8 +320,8 @@ const SponsorsSection = () => {
               ease: "easeInOut",
             }}
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: icon.left,
+              top: icon.top,
             }}
           >
             <Handshake className="w-5 h-5 text-white/10" />
