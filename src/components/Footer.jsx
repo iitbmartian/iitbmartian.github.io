@@ -20,7 +20,8 @@ import {
   Globe,
   Award,
   Users,
-  Calendar
+  Calendar,
+  ChevronUp
 } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
@@ -37,11 +38,10 @@ const Footer = () => {
     offset: ["start end", "end end"]
   });
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], [100, 0]);
-  const backgroundScale = useTransform(scrollYProgress, [0, 1], [0.95, 1]);
-  const isInView = useInView(footerRef, { once: true, margin: "-50px" });
+  const backgroundY = useTransform(scrollYProgress, [0, 1], [50, 0]);
+  const backgroundScale = useTransform(scrollYProgress, [0, 1], [0.98, 1]);
+  const isInView = useInView(footerRef, { once: true, margin: "-30px" });
 
-  // Smooth spring animation for scroll progress
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
@@ -51,23 +51,37 @@ const Footer = () => {
   const socialLinks = [
     {
       name: "Twitter",
-      icon: <Twitter className="h-5 w-5" />,
+      icon: <Twitter className="h-4 w-4" />,
       gradient: "from-cyan-400 to-blue-500",
       hoverColor: "hover:shadow-cyan-400/25",
       href: "#"
     },
     {
       name: "Instagram", 
-      icon: <Instagram className="h-5 w-5" />,
+      icon: <Instagram className="h-4 w-4" />,
       gradient: "from-pink-500 to-purple-600",
       hoverColor: "hover:shadow-pink-500/25",
       href: "#"
     },
     {
       name: "Facebook",
-      icon: <Facebook className="h-5 w-5" />,
+      icon: <Facebook className="h-4 w-4" />,
       gradient: "from-blue-600 to-blue-800",
       hoverColor: "hover:shadow-blue-600/25",
+      href: "#"
+    },
+    {
+      name: "Github",
+      icon: <Github className="h-4 w-4" />,
+      gradient: "from-gray-600 to-gray-800",
+      hoverColor: "hover:shadow-gray-600/25",
+      href: "#"
+    },
+    {
+      name: "Youtube",
+      icon: <Youtube className="h-4 w-4" />,
+      gradient: "from-red-500 to-red-700",
+      hoverColor: "hover:shadow-red-500/25",
       href: "#"
     }
   ];
@@ -75,51 +89,51 @@ const Footer = () => {
   const navigationSections = [
     {
       title: "Navigation",
-      icon: <Globe className="w-5 h-5" />,
+      icon: <Globe className="w-4 h-4" />,
       links: [
         { name: "Home", href: "/" },
+        { name: "Updates", href: "/updates" },
         { name: "Rover", href: "/rover" },
-        { name: "Subsystems", href: "/subsystems" },
-        { name: "Team", href: "/team" }
+        { name: "Subsystems", href: "/subsystems" }
       ]
     },
     {
-      title: "Competitions",
-      icon: <Award className="w-5 h-5" />,
+      title: "Explore",
+      icon: <Award className="w-4 h-4" />,
       links: [
-        { name: "University Rover Challenge", href: "/competitions/urc" },
-        { name: "European Rover Challenge", href: "/competitions/erc" },
-        { name: "Indian Rover Challenge", href: "/competitions/irc" },
-        { name: "Achievements", href: "/achievements" }
+        { name: "Records", href: "/competitions" },
+        { name: "Team", href: "/team" },
+        { name: "Gallery", href: "/gallery" },
+        { name: "Contact", href: "/#contact" }
       ]
     },
     {
       title: "Resources",
-      icon: <Star className="w-5 h-5" />,
+      icon: <Star className="w-4 h-4" />,
       links: [
         { name: "Documentation", href: "/docs" },
-        { name: "Gallery", href: "/gallery" },
         { name: "Publications", href: "/publications" },
-        { name: "Blog", href: "/blog" }
+        { name: "Blog", href: "/blog" },
+        { name: "Press Kit", href: "/press" }
       ]
     }
   ];
 
   const contactInfo = [
     {
-      icon: <MapPin className="h-5 w-5" />,
-      title: "Address",
-      text: "Indian Institute of Technology Bombay\nPowai, Mumbai, Maharashtra 400076",
+      icon: <MapPin className="h-4 w-4" />,
+      title: "Location",
+      text: "IIT Bombay, Powai\nMumbai, Maharashtra",
       gradient: "from-mars/20 to-orange-500/20"
     },
     {
-      icon: <Mail className="h-5 w-5" />,
+      icon: <Mail className="h-4 w-4" />,
       title: "Email",
       text: "contact@mrtiitb.com",
       gradient: "from-cosmic/20 to-blue-500/20"
     },
     {
-      icon: <Phone className="h-5 w-5" />,
+      icon: <Phone className="h-4 w-4" />,
       title: "Phone",
       text: "+91 98765 43210",
       gradient: "from-mars/20 to-red-500/20"
@@ -127,10 +141,10 @@ const Footer = () => {
   ];
 
   const stats = [
-    { number: "12", label: "Years Active", icon: <Calendar className="w-5 h-5" /> },
-    { number: "150+", label: "Team Members", icon: <Users className="w-5 h-5" /> },
-    { number: "25+", label: "Competitions", icon: <Award className="w-5 h-5" /> },
-    { number: "9", label: "Rover Generations", icon: <Rocket className="w-5 h-5" /> }
+    { number: "12+", label: "Years", icon: <Calendar className="w-4 h-4" /> },
+    { number: "150+", label: "Members", icon: <Users className="w-4 h-4" /> },
+    { number: "25+", label: "Competitions", icon: <Award className="w-4 h-4" /> },
+    { number: "9", label: "Rovers", icon: <Rocket className="w-4 h-4" /> }
   ];
 
   const handleEmailSubmit = (e) => {
@@ -157,65 +171,23 @@ const Footer = () => {
         scale: backgroundScale
       }}
     >
-      {/* Enhanced Background Effects */}
+      {/* Simplified Background Effects */}
       <div className="absolute inset-0">
-        {/* Animated Gradient Orbs */}
+        {/* Main gradient orb */}
         <motion.div
-          className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-mars/15 to-orange-500/10 rounded-full blur-3xl"
+          className="absolute top-1/4 left-1/3 w-96 h-96 bg-gradient-to-r from-mars/10 to-cosmic/10 rounded-full blur-3xl"
           animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.3, 0.7, 0.3],
-            x: [0, 50, 0],
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3],
           }}
           transition={{
-            duration: 12,
+            duration: 8,
             repeat: Infinity,
             ease: "easeInOut",
           }}
         />
         
-        <motion.div
-          className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-l from-cosmic/15 to-blue-500/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.4, 0.8, 0.4],
-            x: [0, -30, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 3,
-          }}
-        />
-
-        {/* Particle Field */}
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(20)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 bg-white/30 rounded-full"
-              animate={{
-                x: [0, Math.random() * 200 - 100],
-                y: [0, Math.random() * 200 - 100],
-                opacity: [0, 1, 0],
-                scale: [0, 1, 0],
-              }}
-              transition={{
-                duration: 8 + Math.random() * 4,
-                repeat: Infinity,
-                delay: i * 0.5,
-                ease: "easeInOut",
-              }}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Tech Grid Pattern */}
+        {/* Grid pattern */}
         <div className="absolute inset-0 opacity-5">
           <div 
             className="absolute inset-0"
@@ -224,7 +196,7 @@ const Footer = () => {
                 linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
               `,
-              backgroundSize: '40px 40px'
+              backgroundSize: '60px 60px'
             }}
           />
         </div>
@@ -232,69 +204,119 @@ const Footer = () => {
 
       {/* Main Content */}
       <div className="relative z-10 w-full">
+        <div className="container mx-auto px-4 py-12">
+          
+          {/* Stats Section */}
+          <motion.div
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            {stats.map((stat, index) => (
+              <motion.div
+                key={index}
+                className="bg-gradient-to-r from-mars/10 to-cosmic/10 backdrop-blur-sm border border-white/10 rounded-lg p-4 text-center group hover:border-mars/30 transition-all duration-300"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+                whileHover={{ scale: 1.05, y: -2 }}
+              >
+                <div className="flex items-center justify-center mb-2 text-mars group-hover:text-cosmic transition-colors duration-300">
+                  {stat.icon}
+                </div>
+                <div className="text-xl font-bold text-white mb-1">{stat.number}</div>
+                <div className="text-xs text-white/70 group-hover:text-white/90 transition-colors duration-300">{stat.label}</div>
+              </motion.div>
+            ))}
+          </motion.div>
 
-        {/* Main Footer Content */}
-        <div className="container mx-auto flex justify-center items-center px-4 py-16">
-          <div className="flex-col justify-center items-center">
+          {/* Main Footer Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
             
             {/* Brand Section */}
             <motion.div
-              className="lg:col-span-4"
-              initial={{ opacity: 0, x: -50 }}
-              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              className="lg:col-span-2"
+              initial={{ opacity: 0, x: -30 }}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
             >
-              {/* Logo & Brand */}
+              {/* Compact Logo */}
               <motion.div
-                className="flex items-center space-x-4 mb-6"
+                className="flex items-center space-x-3 mb-4"
                 whileHover={{ scale: 1.02 }}
               >
                 <motion.div
-                  className="w-12 h-12 bg-gradient-to-r from-mars to-cosmic rounded-xl flex items-center justify-center"
+                  className="w-10 h-10 bg-gradient-to-r from-mars to-cosmic rounded-lg flex items-center justify-center"
                   whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.8 }}
+                  transition={{ duration: 0.6 }}
                 >
+                  <Rocket className="w-5 h-5 text-white" />
                 </motion.div>
                 <div>
-                  <h3 className="text-2xl font-bold font-technospace bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent">
+                  <h3 className="text-xl font-bold font-technospace bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent">
                     MRT - IITB
                   </h3>
                   <p className="text-white/60 text-sm">Mars Rover Team</p>
                 </div>
               </motion.div>
 
-              {/* Description */}
-              <p className="text-white/70 mb-8 leading-relaxed">
-                Pioneering the future of planetary exploration through innovative rover design, 
-                cutting-edge technology, and relentless pursuit of excellence in space robotics.
+              {/* Compact description */}
+              <p className="text-white/70 text-sm leading-relaxed mb-6">
+                Pioneering planetary exploration through innovative rover design and cutting-edge space robotics technology.
               </p>
 
+              {/* Newsletter Signup */}
+              <motion.div
+                className="mb-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+              >
+                <h4 className="text-white font-medium mb-3 text-sm">Stay Updated</h4>
+                <form onSubmit={handleEmailSubmit} className="flex space-x-2">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Your email"
+                    className="flex-1 px-3 py-2 bg-space-dark/50 border border-white/20 rounded-lg text-white text-sm placeholder-white/50 focus:outline-none focus:border-mars/50 transition-colors duration-300"
+                  />
+                  <motion.button
+                    type="submit"
+                    className="px-4 py-2 bg-gradient-to-r from-mars to-cosmic rounded-lg text-white text-sm font-medium hover:shadow-lg transition-all duration-300"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    disabled={isSubscribed}
+                  >
+                    {isSubscribed ? '✓' : <Send className="w-4 h-4" />}
+                  </motion.button>
+                </form>
+              </motion.div>
 
-              {/* Social Links */}
+              {/* Compact Social Links */}
               <div>
-                <h4 className="text-white font-semibold mb-4">Follow Us</h4>
-                <div className="flex space-x-3">
+                <h4 className="text-white font-medium mb-3 text-sm">Follow Us</h4>
+                <div className="flex space-x-2">
                   {socialLinks.map((social, index) => (
                     <motion.a
                       key={index}
                       href={social.href}
                       className={cn(
-                        "relative p-3 rounded-xl backdrop-blur-sm border border-white/10 transition-all duration-300 group overflow-hidden",
+                        "relative p-2 rounded-lg backdrop-blur-sm border border-white/10 transition-all duration-300 group overflow-hidden",
                         social.hoverColor
                       )}
                       initial={{ opacity: 0, y: 20 }}
                       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                      transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                      transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
                       whileHover={{ 
                         scale: 1.1, 
-                        y: -2,
-                        borderColor: "rgba(255, 255, 255, 0.3)"
+                        y: -2
                       }}
                       whileTap={{ scale: 0.95 }}
                       onMouseEnter={() => setHoveredSocial(index)}
                       onMouseLeave={() => setHoveredSocial(null)}
                     >
-                      {/* Gradient Background */}
                       <motion.div
                         className={`absolute inset-0 bg-gradient-to-r ${social.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
                         initial={{ scale: 0 }}
@@ -302,25 +324,9 @@ const Footer = () => {
                         transition={{ duration: 0.3 }}
                       />
                       
-                      {/* Icon */}
                       <div className="relative z-10 text-white/70 group-hover:text-white transition-colors duration-300">
                         {social.icon}
                       </div>
-
-                      {/* Tooltip */}
-                      <motion.div
-                        className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-space-dark/90 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-lg border border-white/20"
-                        initial={{ opacity: 0, scale: 0.8, y: 5 }}
-                        animate={{
-                          opacity: hoveredSocial === index ? 1 : 0,
-                          scale: hoveredSocial === index ? 1 : 0.8,
-                          y: hoveredSocial === index ? 0 : 5
-                        }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        {social.name}
-                        <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-space-dark/90" />
-                      </motion.div>
                     </motion.a>
                   ))}
                 </div>
@@ -328,127 +334,104 @@ const Footer = () => {
             </motion.div>
 
             {/* Navigation Sections */}
-            <div className="flex justify-between items-center">
-              {navigationSections.map((section, sectionIndex) => (
-                <motion.div
-                  key={sectionIndex}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-                  transition={{ duration: 0.8, delay: 0.3 + sectionIndex * 0.1 }}
-                >
-                  <h4 className="text-white font-semibold mb-6 flex items-center space-x-2">
-                    <div className="text-cosmic">
-                      {section.icon}
-                    </div>
-                    <span>{section.title}</span>
-                  </h4>
-                  <ul className="space-y-3">
-                    {section.links.map((link, linkIndex) => (
-                      <motion.li
-                        key={linkIndex}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                        transition={{ duration: 0.5, delay: 0.4 + sectionIndex * 0.1 + linkIndex * 0.05 }}
-                      >
-                        <Link href={link.href}>
+            {navigationSections.map((section, sectionIndex) => (
+              <motion.div
+                key={sectionIndex}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                transition={{ duration: 0.6, delay: 0.3 + sectionIndex * 0.1 }}
+              >
+                <h4 className="text-white font-medium mb-4 flex items-center space-x-2 text-sm">
+                  <div className="text-cosmic">
+                    {section.icon}
+                  </div>
+                  <span>{section.title}</span>
+                </h4>
+                <ul className="space-y-2">
+                  {section.links.map((link, linkIndex) => (
+                    <motion.li
+                      key={linkIndex}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                      transition={{ duration: 0.5, delay: 0.4 + sectionIndex * 0.1 + linkIndex * 0.05 }}
+                    >
+                      <Link href={link.href}>
+                        <motion.div
+                          className="text-white/70 hover:text-white transition-all duration-300 flex items-center space-x-2 group relative text-sm"
+                          whileHover={{ x: 4 }}
+                        >
                           <motion.div
-                            className="text-white/70 hover:text-white transition-all duration-300 flex items-center space-x-2 group relative"
-                            whileHover={{ x: 8 }}
-                          >
-                            <motion.div
-                              className="w-1 h-1 bg-gradient-to-r from-mars to-cosmic rounded-full opacity-0 group-hover:opacity-100"
-                              initial={{ scale: 0 }}
-                              whileHover={{ scale: 1 }}
-                              transition={{ duration: 0.2 }}
-                            />
-                            <span className="group-hover:text-mars transition-colors duration-300">
-                              {link.name}
-                            </span>
-                            <motion.div
-                              className="opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                              initial={{ scale: 0.8 }}
-                              whileHover={{ scale: 1 }}
-                            >
-                              <ExternalLink className="w-3 h-3" />
-                            </motion.div>
-                          </motion.div>
-                        </Link>
-                      </motion.li>
-                    ))}
-                  </ul>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Contact Section */}
-            <motion.div
-              className="lg:col-span-2 "
-              initial={{ opacity: 0, x: 50 }}
-              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              <h4 className="text-white font-semibold mb-6 flex items-center space-x-2">
-                <MapPin className="w-5 h-5 text-mars" />
-                <span>Contact</span>
-              </h4>
-              
-              <div className="space-y-6">
-                {contactInfo.map((contact, index) => (
-                  <motion.div
-                    key={index}
-                    className="group"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                    transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                    whileHover={{ x: 5 }}
-                  >
-                    <div className="flex items-start space-x-4">
-                      <motion.div
-                        className="p-2 bg-gradient-to-br from-space-dark/80 to-space/60 rounded-lg border border-white/10 flex-shrink-0 group-hover:border-mars/40 transition-colors duration-300"
-                        whileHover={{ scale: 1.1, rotate: 360 }}
-                        transition={{ duration: 0.6 }}
-                      >
-                        <div className="text-mars group-hover:text-white transition-colors duration-300">
-                          {contact.icon}
-                        </div>
-                      </motion.div>
-                      <div>
-                        <h5 className="text-white font-medium mb-1">{contact.title}</h5>
-                        <p className="text-white/70 text-sm leading-relaxed whitespace-pre-line group-hover:text-white/90 transition-colors duration-300">
-                          {contact.text}
-                        </p>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
+                            className="w-1 h-1 bg-gradient-to-r from-mars to-cosmic rounded-full opacity-0 group-hover:opacity-100"
+                            initial={{ scale: 0 }}
+                            whileHover={{ scale: 1 }}
+                            transition={{ duration: 0.2 }}
+                          />
+                          <span className="group-hover:text-mars transition-colors duration-300">
+                            {link.name}
+                          </span>
+                        </motion.div>
+                      </Link>
+                    </motion.li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
           </div>
+
+          {/* Contact Section */}
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
+            {contactInfo.map((contact, index) => (
+              <motion.div
+                key={index}
+                className="flex items-center space-x-3 p-3 bg-gradient-to-r from-mars/5 to-cosmic/5 backdrop-blur-sm border border-white/10 rounded-lg group hover:border-mars/30 transition-all duration-300"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
+                whileHover={{ scale: 1.02, y: -1 }}
+              >
+                <div className="p-2 bg-gradient-to-br from-space-dark/80 to-space/60 rounded-lg border border-white/10 flex-shrink-0 group-hover:border-mars/40 transition-colors duration-300">
+                  <div className="text-mars group-hover:text-white transition-colors duration-300">
+                    {contact.icon}
+                  </div>
+                </div>
+                <div>
+                  <h5 className="text-white font-medium text-sm mb-1">{contact.title}</h5>
+                  <p className="text-white/70 text-xs leading-relaxed whitespace-pre-line group-hover:text-white/90 transition-colors duration-300">
+                    {contact.text}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
 
-        {/* Footer Bottom */}
+        {/* Compact Footer Bottom */}
         <motion.div
-          className="border-t border-white/10 py-8"
+          className="border-t border-white/10 py-6"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          transition={{ duration: 0.6, delay: 0.7 }}
         >
           <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-              <div className="text-white/50 text-sm">
+            <div className="flex flex-col sm:flex-row justify-between items-center space-y-3 sm:space-y-0">
+              <div className="text-white/50 text-xs">
                 © {new Date().getFullYear()} Mars Rover Team IIT Bombay. All rights reserved.
               </div>
               
-              <div className="flex items-center space-x-6">
+              <div className="flex items-center space-x-4">
                 <motion.div
-                  className="text-white/50 text-sm flex items-center space-x-2"
+                  className="text-white/50 text-xs flex items-center space-x-2"
                   whileHover={{ color: "rgba(255, 255, 255, 0.7)" }}
                 >
-                  <span>Designed with</span>
+                  <span>Made with</span>
                   <motion.div
                     animate={{ 
                       scale: [1, 1.2, 1],
-                      rotate: [0, 10, -10, 0]
                     }}
                     transition={{ 
                       duration: 2, 
@@ -456,12 +439,12 @@ const Footer = () => {
                       ease: "easeInOut"
                     }}
                   >
-                    <Heart className="w-4 h-4 text-red-500" />
+                    <Heart className="w-3 h-3 text-red-500" />
                   </motion.div>
-                  <span>by Sunny from ESHWAY</span>
+                  <span>by ESHWAY</span>
                 </motion.div>
 
-                {/* Scroll to Top Button */}
+                {/* Compact Scroll to Top */}
                 <motion.button
                   onClick={scrollToTop}
                   className="p-2 bg-gradient-to-r from-mars/20 to-cosmic/20 rounded-lg border border-white/10 text-white/70 hover:text-white hover:border-mars/40 transition-all duration-300"
@@ -471,7 +454,7 @@ const Footer = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 0.8 }}
                 >
-                  <ArrowUp className="w-4 h-4" />
+                  <ChevronUp className="w-4 h-4" />
                 </motion.button>
               </div>
             </div>
@@ -479,9 +462,9 @@ const Footer = () => {
         </motion.div>
       </div>
 
-      {/* Decorative Elements */}
+      {/* Subtle decorative element */}
       <motion.div
-        className="absolute bottom-4 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-2 left-1/2 transform -translate-x-1/2"
         initial={{ opacity: 0 }}
         animate={isInView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 1, delay: 1 }}
@@ -489,15 +472,14 @@ const Footer = () => {
         <motion.div
           animate={{
             rotate: [0, 360],
-            scale: [1, 1.2, 1],
           }}
           transition={{
-            duration: 6,
+            duration: 8,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: "linear",
           }}
         >
-          <Sparkles className="w-6 h-6 text-cosmic/30" />
+          <Sparkles className="w-4 h-4 text-cosmic/20" />
         </motion.div>
       </motion.div>
     </motion.footer>

@@ -1,15 +1,16 @@
 "use client";
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { ExternalLink, Heart, Handshake, Star, Sparkles } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import Ansys from '@/mrt/sponsors/Ansys.png';
-import Ruckus from '@/mrt/sponsors/Ruckus.png';
-import SolidWorks from '@/mrt/sponsors/Solidworks.png';
-import Servocity from '@/mrt/sponsors/servocity.png';
-import Robu from '@/mrt/sponsors/Robu.in.png';
-import SBGSystems from '@/mrt/sponsors/SBG_Systems.png';
-import IITBombay from '@/mrt/sponsors/IIT_BOMBAY.png';
+import Image from 'next/image';
+import Link from 'next/link';
+import Ansys from '../mrt/sponsors/Ansys.png';
+import Ruckus from '../mrt/sponsors/Ruckus.png';
+import SolidWorks from '../mrt/sponsors/Solidworks.png';
+import Servocity from '../mrt/sponsors/servocity.png';
+import Robu from '../mrt/sponsors/Robu.in.png';
+import SBGSystems from '../mrt/sponsors/SBG_Systems.png';
+import IITBombay from '../mrt/sponsors/IIT_BOMBAY.png';
 
 const SponsorCard = ({ name, logo, url, index, category, gradient }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -43,146 +44,140 @@ const SponsorCard = ({ name, logo, url, index, category, gradient }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <motion.a
+      <Link
         href={url}
         target="_blank"
         rel="noopener noreferrer"
         className="block relative overflow-hidden rounded-2xl bg-gradient-to-br from-white/95 to-white/90 backdrop-blur-sm border border-white/20 w-full aspect-[4/3] group transition-all duration-300"
-        whileTap={{ scale: 0.95 }}
       >
-        {/* Animated Background Gradient */}
         <motion.div
-          className={`absolute inset-0 ${gradient} opacity-0`}
-          animate={{ 
-            opacity: isHovered ? 0.1 : 0,
-            scale: isHovered ? 1 : 0.8
-          }}
-          transition={{ duration: 0.4 }}
-        />
+          whileTap={{ scale: 0.95 }}
+          className="h-full w-full"
+        >
+          {/* Animated Background Gradient */}
+          <motion.div
+            className={`absolute inset-0 ${gradient} opacity-0`}
+            animate={{ 
+              opacity: isHovered ? 0.1 : 0,
+              scale: isHovered ? 1 : 0.8
+            }}
+            transition={{ duration: 0.4 }}
+          />
 
-        {/* Floating Sparkles */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(3)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute"
-              animate={{
-                x: [0, 20, 0],
-                y: [0, -15, 0],
-                opacity: [0, 1, 0],
-                rotate: [0, 180, 360],
-              }}
-              transition={{
-                duration: 2 + i * 0.5,
-                repeat: Infinity,
-                delay: i * 0.4,
-                ease: "easeInOut",
-              }}
-              style={{
-                left: `${20 + i * 30}%`,
-                top: `${20 + i * 25}%`,
-              }}
-            >
-              <Sparkles className="w-2 h-2 text-cosmic/40" />
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Logo Container with Fixed Dimensions */}
-        <div className="relative z-10 h-full flex items-center justify-center p-6">
-          <div className="w-full h-full flex items-center justify-center">
-            <motion.img
-              src={logo}
-              alt={name}
-              className="max-w-full max-h-full object-contain filter transition-all duration-500"
-              style={{
-                maxWidth: '120px',
-                maxHeight: '60px',
-                width: 'auto',
-                height: 'auto'
-              }}
-              animate={{
-                filter: isHovered 
-                  ? "grayscale(0%) brightness(1.1) saturate(1.2)" 
-                  : "grayscale(30%) brightness(0.9) saturate(0.8)",
-                scale: isHovered ? 1.1 : 1,
-              }}
-              transition={{ duration: 0.4 }}
-            />
+          {/* Floating Sparkles */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {[...Array(3)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute"
+                animate={{
+                  x: [0, 20, 0],
+                  y: [0, -15, 0],
+                  opacity: [0, 1, 0],
+                  rotate: [0, 180, 360],
+                }}
+                transition={{
+                  duration: 2 + i * 0.5,
+                  repeat: Infinity,
+                  delay: i * 0.4,
+                  ease: "easeInOut",
+                }}
+                style={{
+                  left: `${20 + i * 30}%`,
+                  top: `${20 + i * 25}%`,
+                }}
+              >
+                <Sparkles className="w-2 h-2 text-purple-500/40" />
+              </motion.div>
+            ))}
           </div>
-        </div>
 
-        {/* Category Badge */}
-        <motion.div
-          className="absolute top-3 right-3 px-2 py-1 rounded-full bg-gradient-to-r from-cosmic/80 to-blue-500/80 backdrop-blur-sm"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ 
-            scale: isHovered ? 1 : 0,
-            opacity: isHovered ? 1 : 0
-          }}
-          transition={{ duration: 0.3 }}
-        >
-          <span className="text-xs text-white font-medium">{category}</span>
+          {/* Logo Container with Fixed Dimensions */}
+          <div className="relative z-10 h-full flex items-center justify-center p-6">
+            <div className="w-full h-full flex items-center justify-center">
+              <motion.div
+                animate={{
+                  filter: isHovered 
+                    ? "grayscale(0%) brightness(1.1) saturate(1.2)" 
+                    : "grayscale(30%) brightness(0.9) saturate(0.8)",
+                  scale: isHovered ? 1.1 : 1,
+                }}
+                transition={{ duration: 0.4 }}
+              >
+                <Image
+                  src={logo}
+                  alt={name}
+                  width={120}
+                  height={60}
+                  className="max-w-full max-h-full object-contain"
+                />
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Category Badge */}
+          <motion.div
+            className="absolute top-3 right-3 px-2 py-1 rounded-full bg-gradient-to-r from-purple-500/80 to-blue-500/80 backdrop-blur-sm"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ 
+              scale: isHovered ? 1 : 0,
+              opacity: isHovered ? 1 : 0
+            }}
+            transition={{ duration: 0.3 }}
+          >
+            <span className="text-xs text-white font-medium">{category}</span>
+          </motion.div>
+
+          {/* External Link Icon */}
+          <motion.div
+            className="absolute bottom-3 right-3 p-1.5 rounded-full bg-gradient-to-r from-red-500/80 to-orange-500/80 backdrop-blur-sm"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ 
+              scale: isHovered ? 1 : 0,
+              opacity: isHovered ? 1 : 0,
+              rotate: isHovered ? 360 : 0
+            }}
+            transition={{ duration: 0.4 }}
+          >
+            <ExternalLink className="w-3 h-3 text-white" />
+          </motion.div>
+
+          {/* Hover Border Effect */}
+          <motion.div
+            className="absolute inset-0 rounded-2xl border-2 border-transparent"
+            animate={{
+              borderColor: isHovered ? "rgba(0, 217, 255, 0.4)" : "transparent",
+            }}
+            transition={{ duration: 0.3 }}
+          />
+
+          {/* Partnership Level Indicator */}
+          <motion.div
+            className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-red-500 to-purple-500 rounded-full"
+            initial={{ width: 0 }}
+            animate={{ width: isInView ? "100%" : 0 }}
+            transition={{ duration: 1, delay: 0.2 + index * 0.1 }}
+          />
+
+          {/* Shimmer Effect */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12"
+            initial={{ x: "-100%" }}
+            animate={{ x: isHovered ? "200%" : "-100%" }}
+            transition={{ duration: 0.8 }}
+          />
         </motion.div>
-
-        {/* External Link Icon */}
-        <motion.div
-          className="absolute bottom-3 right-3 p-1.5 rounded-full bg-gradient-to-r from-mars/80 to-orange-500/80 backdrop-blur-sm"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ 
-            scale: isHovered ? 1 : 0,
-            opacity: isHovered ? 1 : 0,
-            rotate: isHovered ? 360 : 0
-          }}
-          transition={{ duration: 0.4 }}
-        >
-          <ExternalLink className="w-3 h-3 text-white" />
-        </motion.div>
-
-        {/* Hover Border Effect */}
-        <motion.div
-          className="absolute inset-0 rounded-2xl border-2 border-transparent"
-          animate={{
-            borderColor: isHovered ? "rgba(0, 217, 255, 0.4)" : "transparent",
-          }}
-          transition={{ duration: 0.3 }}
-        />
-
-        {/* Partnership Level Indicator */}
-        <motion.div
-          className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-mars to-cosmic rounded-full"
-          initial={{ width: 0 }}
-          animate={{ width: isInView ? "100%" : 0 }}
-          transition={{ duration: 1, delay: 0.2 + index * 0.1 }}
-        />
-
-        {/* Shimmer Effect */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12"
-          initial={{ x: "-100%" }}
-          animate={{ x: isHovered ? "200%" : "-100%" }}
-          transition={{ duration: 0.8 }}
-        />
-      </motion.a>
+      </Link>
     </motion.div>
   );
 };
 
 const SponsorsSection = () => {
   const sectionRef = useRef(null);
-  const [floatingIcons, setFloatingIcons] = useState([]);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
   });
-
-  useEffect(() => {
-    const newIcons = Array.from({ length: 6 }).map(() => ({
-      left: `${Math.random() * 100}%`,
-      top: `${Math.random() * 100}%`,
-    }));
-    setFloatingIcons(newIcons);
-  }, []);
 
   const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -50]);
   const backgroundScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
@@ -235,7 +230,7 @@ const SponsorsSection = () => {
       logo: IITBombay,
       url: "#",
       category: "Institution",
-      gradient: "bg-gradient-to-br from-mars/20 to-orange-500/10"
+      gradient: "bg-gradient-to-br from-red-500/20 to-orange-500/10"
     }
   ];
 
@@ -267,11 +262,11 @@ const SponsorsSection = () => {
     <section 
       ref={sectionRef}
       id="sponsors" 
-      className="section-padding bg-gradient-to-br from-space-dark via-space to-space-dark relative overflow-hidden"
+      className="py-20 bg-gradient-to-br from-space via-space-dark to-space relative overflow-hidden"
     >
       {/* Enhanced Background Effects */}
       <motion.div
-        className="absolute top-1/4 right-0 w-1/3 h-1/3 bg-gradient-to-l from-cosmic/10 to-blue-500/5 rounded-full blur-3xl"
+        className="absolute top-1/4 right-0 w-1/3 h-1/3 bg-gradient-to-l from-purple-500/10 to-blue-500/5 rounded-full blur-3xl"
         style={{ 
           y: backgroundY,
           scale: backgroundScale 
@@ -287,7 +282,7 @@ const SponsorsSection = () => {
       />
       
       <motion.div
-        className="absolute bottom-1/4 left-0 w-1/3 h-1/3 bg-gradient-to-r from-mars/10 to-orange-500/5 rounded-full blur-3xl"
+        className="absolute bottom-1/4 left-0 w-1/3 h-1/3 bg-gradient-to-r from-red-500/10 to-orange-500/5 rounded-full blur-3xl"
         style={{ 
           y: backgroundY,
           scale: backgroundScale 
@@ -304,7 +299,7 @@ const SponsorsSection = () => {
 
       {/* Floating Partnership Icons */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {floatingIcons.map((icon, i) => (
+        {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute"
@@ -320,8 +315,8 @@ const SponsorsSection = () => {
               ease: "easeInOut",
             }}
             style={{
-              left: icon.left,
-              top: icon.top,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
             }}
           >
             <Handshake className="w-5 h-5 text-white/10" />
@@ -362,7 +357,7 @@ const SponsorsSection = () => {
         </svg>
       </div>
       
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
+      <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-7xl">
         {/* Header Section */}
         <motion.div
           className="text-center mb-16"
@@ -372,13 +367,13 @@ const SponsorsSection = () => {
           viewport={{ once: true, margin: "-100px" }}
         >
           <motion.h2 
-            className="section-title relative inline-block"
+            className="text-4xl md:text-6xl font-bold text-white mb-6 relative inline-block"
             variants={itemVariants}
           >
-            <span className="relative text-gradient">
+            <span className="relative bg-gradient-to-r from-red-500 via-orange-500 to-purple-500 bg-clip-text text-transparent">
               Our Sponsors
               <motion.div
-                className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-mars via-orange-500 to-cosmic rounded-full"
+                className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-red-500 via-orange-500 to-purple-500 rounded-full"
                 initial={{ width: 0 }}
                 whileInView={{ width: "100%" }}
                 transition={{ duration: 1.5, delay: 0.5 }}
@@ -388,10 +383,10 @@ const SponsorsSection = () => {
           </motion.h2>
           
           <motion.p 
-            className="section-subtitle flex items-center justify-center space-x-2"
+            className="text-xl text-gray-400 max-w-3xl mx-auto flex items-center justify-center space-x-2"
             variants={itemVariants}
           >
-            <Heart className="w-5 h-5 text-mars animate-pulse" />
+            <Heart className="w-5 h-5 text-red-500 animate-pulse" />
             <span>We are grateful for the support of our sponsors who make our projects possible.</span>
           </motion.p>
 
@@ -405,7 +400,7 @@ const SponsorsSection = () => {
               whileHover={{ scale: 1.05 }}
             >
               <motion.div
-                className="text-2xl font-bold text-gradient"
+                className="text-2xl font-bold bg-gradient-to-r from-red-500 to-purple-500 bg-clip-text text-transparent"
                 animate={{ opacity: [0.7, 1, 0.7] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
@@ -421,7 +416,7 @@ const SponsorsSection = () => {
               whileHover={{ scale: 1.05 }}
             >
               <motion.div
-                className="text-2xl font-bold text-gradient"
+                className="text-2xl font-bold bg-gradient-to-r from-red-500 to-purple-500 bg-clip-text text-transparent"
                 animate={{ opacity: [0.7, 1, 0.7] }}
                 transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
               >
@@ -458,16 +453,16 @@ const SponsorsSection = () => {
           viewport={{ once: true }}
         >
           <motion.div
-            className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-space-light/20 to-space-light/10 rounded-full border border-white/10 backdrop-blur-sm"
+            className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-white/10 to-white/5 rounded-full border border-white/10 backdrop-blur-sm"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
           >
-            <Star className="w-5 h-5 text-cosmic" />
+            <Star className="w-5 h-5 text-purple-500" />
             <span className="text-white/80 font-medium">
               Interested in partnering with us? 
             </span>
             <motion.span
-              className="text-cosmic cursor-pointer hover:text-cyan-300 transition-colors"
+              className="text-purple-500 cursor-pointer hover:text-cyan-300 transition-colors"
               whileHover={{ scale: 1.05 }}
             >
               Get in touch

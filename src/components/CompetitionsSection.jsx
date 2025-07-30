@@ -2,143 +2,470 @@
 import React, { useRef, useState } from 'react';
 import { Award, Globe, MapPin, Trophy, Target, ArrowRight } from 'lucide-react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import Link from 'next/link';
+import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
-const competitions = [
-  {
-    title: "European Rover Challenge",
-    location: "Kielce, Poland",
-    icon: <Globe className="h-8 w-8 text-white" />,
-    description: "The European Rover Challenge is an international space and robotics competition held in Poland. It is one of the largest events of its kind in the world, bringing together teams of students, researchers, and professionals from various countries.",
-    date: "September 2023",
-    accolades: ["Ranked 1st in Asia", "World Rank 11th"],
-    image: "/mrt/DSCN9685.png"
-  },
-  {
-    title: "International Rover Challenge",
-    location: "Bangalore, India",
-    icon: <Trophy className="h-8 w-8 text-white" />,
-    description: "The International Rover Challenge is an annual robotics and space exploration competition held in India. It is organized by the Space Robotics Society and is one of the most prestigious events of its kind in Asia.",
-    date: "January 2023",
-    accolades: ["Ranked 1st in India", "World Rank 4th"],
-    image: "/mrt/DSCN9715.png"
-  },
-  {
-    title: "University Rover Challenge",
-    location: "Utah, USA",
-    icon: <MapPin className="h-8 w-8 text-white" />,
-    description: "The University Rover Challenge is a premier robotics competition for college students held annually in the desert of southern Utah in the United States. It is organized by the Mars Society and challenges teams to design and build the next generation of Mars rovers.",
-    date: "June 2022",
-    accolades: ["Qualified for finals"],
-    image: "/mrt/DSCN9743.png"
-  }
-];
 
-const CompetitionCard = ({ competition, index }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
+
+const Competition = ({ title, description, location, image, index, gradient }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef(null);
+  const isInView = useInView(cardRef, { once: true, margin: "-100px" });
 
   return (
     <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.2 }}
-      className="bg-gray-800/50 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg border border-gray-700 hover:shadow-cyan-400/20 transition-all duration-300 group"
+      ref={cardRef}
+      className="relative group overflow-hidden"
+      initial={{ opacity: 0, y: 60, rotateX: 20 }}
+      animate={isInView ? { 
+        opacity: 1, 
+        y: 0, 
+        rotateX: 0 
+      } : { 
+        opacity: 0, 
+        y: 60, 
+        rotateX: 20 
+      }}
+      transition={{ 
+        duration: 0.9, 
+        delay: index * 0.2,
+        ease: "easeOut"
+      }}
+      whileHover={{ 
+        y: -15,
+        scale: 1.03,
+        rotateY: 5
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="relative h-56">
-        <img src={competition.image} alt={competition.title} className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-        <div className="absolute top-4 left-4 bg-cyan-500/20 text-white p-3 rounded-full backdrop-blur-sm border border-cyan-500/30">
-          {competition.icon}
+      <motion.div
+        className="bg-gradient-to-br from-white/20 to-white/5 rounded-2xl overflow-hidden border border-white/10 backdrop-blur-sm relative h-full"
+        whileHover={{ borderColor: "rgba(255, 255, 255, 0.3)" }}
+        transition={{ duration: 0.3 }}
+      >
+        {/* Animated Background Gradient */}
+        <motion.div
+          className={`absolute inset-0 ${gradient} opacity-0`}
+          animate={{ 
+            opacity: isHovered ? 0.15 : 0,
+            scale: isHovered ? 1 : 0.9
+          }}
+          transition={{ duration: 0.4 }}
+        />
+
+        {/* Image Container */}
+        <div className="relative h-48 overflow-hidden">
+          {/* Image Placeholder with Enhanced Gradient */}
+          <motion.div
+            className={`w-full h-full ${gradient} opacity-70 relative overflow-hidden`}
+            animate={{
+              scale: isHovered ? 1.1 : 1,
+            }}
+            transition={{ duration: 0.6 }}
+          >
+            {/* Animated Tech Pattern */}
+            <motion.div
+              className="absolute inset-0 opacity-30"
+              style={{
+                backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255,255,255,0.1) 15px, rgba(255,255,255,0.1) 30px)`,
+              }}
+              animate={{
+                backgroundPosition: isHovered ? ["0px 0px", "30px 30px"] : "0px 0px",
+              }}
+              transition={{
+                duration: 3,
+                repeat: isHovered ? Infinity : 0,
+                ease: "linear",
+              }}
+            />
+
+            {/* Competition Icon */}
+            <motion.div
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+              animate={{
+                scale: isHovered ? 1.3 : 1,
+                rotate: isHovered ? 360 : 0,
+              }}
+              transition={{ 
+                duration: isHovered ? 2 : 0.3,
+                repeat: isHovered ? Infinity : 0,
+                ease: "linear"
+              }}
+            >
+              <Trophy className="w-16 h-16 text-white/80" />
+            </motion.div>
+
+            {/* Floating Particles */}
+            {[...Array(4)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-white/40 rounded-full"
+                animate={{
+                  x: [0, 40, 0],
+                  y: [0, -30, 0],
+                  opacity: [0, 1, 0],
+                }}
+                transition={{
+                  duration: 2 + i * 0.5,
+                  repeat: Infinity,
+                  delay: i * 0.3,
+                  ease: "easeInOut",
+                }}
+                style={{
+                  left: `${20 + i * 20}%`,
+                  top: `${30 + i * 15}%`,
+                }}
+              />
+            ))}
+          </motion.div>
+
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/30 to-transparent" />
+          
+          {/* Achievement Badge */}
+          <motion.div
+            className="absolute top-4 right-4 p-2 bg-gradient-to-r from-red-500/80 to-orange-500/80 rounded-full backdrop-blur-sm"
+            initial={{ scale: 0, rotate: -180 }}
+            animate={isInView ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -180 }}
+            transition={{ duration: 0.8, delay: 0.5 + index * 0.2 }}
+            whileHover={{ scale: 1.1, rotate: 360 }}
+          >
+            <Award className="w-5 h-5 text-white" />
+          </motion.div>
         </div>
-        <div className="absolute bottom-4 left-4">
-          <h3 className="text-2xl font-bold text-white">{competition.title}</h3>
-          <p className="text-sm text-gray-300 flex items-center"><MapPin className="h-4 w-4 mr-1" />{competition.location}</p>
-        </div>
-      </div>
-      <div className="p-6">
-        <p className="text-gray-400 mb-4 text-sm leading-relaxed">{competition.description}</p>
-        <div className="mb-4">
-          {competition.accolades.map((accolade, i) => (
-            <div key={i} className="flex items-center text-cyan-400 mb-2">
-              <Award className="h-5 w-5 mr-2" />
-              <span className="font-semibold">{accolade}</span>
-            </div>
-          ))}
-        </div>
-        <div className="flex justify-between items-center">
-          <span className="text-xs text-gray-500">{competition.date}</span>
-          <Button variant="link" className="text-cyan-400 group-hover:text-white transition-colors duration-300">
-            Learn More <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform duration-300" />
-          </Button>
-        </div>
-      </div>
+
+        {/* Content Section */}
+        <motion.div
+          className="p-6 relative z-10"
+          animate={{
+            y: isHovered ? -5 : 0,
+          }}
+          transition={{ duration: 0.3 }}
+        >
+          {/* Location */}
+          <motion.div
+            className="flex items-center mb-3 group"
+            whileHover={{ x: 5 }}
+            transition={{ duration: 0.2 }}
+          >
+            <motion.div
+              className="p-1 bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-full mr-3"
+              whileHover={{ rotate: 360, scale: 1.1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <MapPin className="h-4 w-4 text-red-500" />
+            </motion.div>
+            <motion.span
+              className="text-white/70 text-sm group-hover:text-white/90 transition-colors duration-300"
+              animate={{
+                color: isHovered ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0.7)",
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              {location}
+            </motion.span>
+          </motion.div>
+
+          {/* Title */}
+          <motion.h3
+            className="text-xl font-bold mb-3 relative"
+            animate={{
+              color: isHovered ? "#00d9ff" : "#ffffff",
+            }}
+            transition={{ duration: 0.3 }}
+          >
+            {title}
+            <motion.div
+              className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-red-500 to-purple-500 rounded-full"
+              initial={{ width: 0 }}
+              animate={{ width: isHovered ? "100%" : "0%" }}
+              transition={{ duration: 0.4 }}
+            />
+          </motion.h3>
+
+          {/* Description */}
+          <motion.p
+            className="text-white/70 leading-relaxed"
+            animate={{
+              color: isHovered ? "rgba(255, 255, 255, 0.85)" : "rgba(255, 255, 255, 0.7)",
+            }}
+            transition={{ duration: 0.3 }}
+          >
+            {description}
+          </motion.p>
+
+          {/* Competition Ranking Indicator */}
+          <motion.div
+            className="mt-4 flex items-center space-x-2"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Target className="w-4 h-4 text-purple-500" />
+            <span className="text-xs text-purple-500 font-medium">Global Competition</span>
+          </motion.div>
+        </motion.div>
+
+        {/* Hover Border Effect */}
+        <motion.div
+          className="absolute inset-0 rounded-2xl border-2 border-transparent"
+          animate={{
+            borderColor: isHovered ? "rgba(0, 217, 255, 0.4)" : "transparent",
+          }}
+          transition={{ duration: 0.3 }}
+        />
+
+        {/* Progress Line */}
+        <motion.div
+          className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-red-500 to-purple-500 rounded-full"
+          initial={{ width: 0 }}
+          animate={{ width: isInView ? "100%" : 0 }}
+          transition={{ duration: 1, delay: 0.3 + index * 0.2 }}
+        />
+      </motion.div>
     </motion.div>
   );
 };
 
 const CompetitionsSection = () => {
-  const ref = useRef(null);
+  const sectionRef = useRef(null);
   const { scrollYProgress } = useScroll({
-    target: ref,
+    target: sectionRef,
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ['-10%', '10%']);
+  const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const backgroundScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
+
+  const competitions = [
+    {
+      title: "University Rover Challenge (URC)",
+      description: "The world's premier robotics competition for university students, held annually in the desert of southern Utah, USA.",
+      location: "Mars Desert Research Station, Utah, USA",
+      image: "https://via.placeholder.com/600x400?text=URC",
+      gradient: "bg-gradient-to-br from-red-500/60 to-orange-600/40"
+    },
+    {
+      title: "International Rover Challenge (IRC)",
+      description: "A competition that tests rovers' capabilities in various challenges simulating real Mars mission scenarios.",
+      location: "India",
+      image: "https://via.placeholder.com/600x400?text=IRC",
+      gradient: "bg-gradient-to-br from-blue-500/60 to-cyan-500/40"
+    },
+    {
+      title: "European Rover Challenge (ERC)",
+      description: "One of the largest space and robotics events in Europe, featuring simulated Martian terrain challenges.",
+      location: "Poland",
+      image: "https://via.placeholder.com/600x400?text=ERC",
+      gradient: "bg-gradient-to-br from-purple-500/60 to-indigo-500/40"
+    }
+  ];
+
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 30, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        ease: "easeOut",
+      },
+    },
+  };
 
   return (
-    <div ref={ref} className="relative bg-black text-white py-20 sm:py-32 overflow-hidden">
+    <section 
+      ref={sectionRef}
+      id="competitions" 
+      className="py-20 bg-gradient-to-br from-space via-space-dark to-space relative overflow-hidden"
+    >
+      {/* Enhanced Background Effects */}
       <motion.div
-        style={{ y }}
-        className="absolute inset-0 z-0 opacity-10"
-      >
-        <div className="absolute inset-0 bg-grid-cyan-500/20"></div>
-      </motion.div>
+        className="absolute top-1/3 right-0 w-1/3 h-1/3 bg-gradient-to-l from-red-500/10 to-orange-500/5 rounded-full blur-3xl"
+        style={{ 
+          y: backgroundY,
+          scale: backgroundScale 
+        }}
+        animate={{
+          rotate: [0, 360],
+          scale: [1, 1.3, 1],
+        }}
+        transition={{
+          rotate: { duration: 50, repeat: Infinity, ease: "linear" },
+          scale: { duration: 15, repeat: Infinity, ease: "easeInOut" }
+        }}
+      />
+      
+      <motion.div
+        className="absolute bottom-1/3 left-0 w-1/3 h-1/3 bg-gradient-to-r from-purple-500/10 to-blue-500/5 rounded-full blur-3xl"
+        style={{ 
+          y: backgroundY,
+          scale: backgroundScale 
+        }}
+        animate={{
+          rotate: [360, 0],
+          scale: [1.2, 1, 1.2],
+        }}
+        transition={{
+          rotate: { duration: 45, repeat: Infinity, ease: "linear" },
+          scale: { duration: 12, repeat: Infinity, ease: "easeInOut", delay: 4 }
+        }}
+      />
 
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 left-0 w-64 h-64 bg-cyan-500/20 blur-3xl rounded-full"></div>
-        <div className="absolute bottom-0 right-0 w-64 h-64 bg-indigo-500/20 blur-3xl rounded-full"></div>
+      {/* Floating Trophy Icons */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute"
+            animate={{
+              y: [0, -25, 0],
+              rotate: [0, 360],
+              opacity: [0.1, 0.3, 0.1],
+            }}
+            transition={{
+              duration: 8 + i * 1.5,
+              repeat: Infinity,
+              delay: i * 1,
+              ease: "easeInOut",
+            }}
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+          >
+            <Trophy className="w-4 h-4 text-white/10" />
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Achievement Lines */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <svg className="absolute inset-0 w-full h-full opacity-5">
+          <defs>
+            <linearGradient id="achievementGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#ff6b35" />
+              <stop offset="50%" stopColor="#ffd700" />
+              <stop offset="100%" stopColor="#00d9ff" />
+            </linearGradient>
+          </defs>
+          {[...Array(6)].map((_, i) => (
+            <motion.path
+              key={i}
+              d={`M ${i * 20},0 Q ${i * 20 + 50},50 ${i * 20 + 100},100`}
+              fill="none"
+              stroke="url(#achievementGradient)"
+              strokeWidth="2"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ 
+                pathLength: 1, 
+                opacity: [0, 0.3, 0],
+              }}
+              transition={{
+                pathLength: { duration: 4, delay: i * 0.5 },
+                opacity: { duration: 4, delay: i * 0.5 }
+              }}
+            />
+          ))}
+        </svg>
       </div>
       
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-7xl">
+        {/* Header Section */}
         <motion.div
-          initial={{ opacity: 0, y: -50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center mb-16"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
         >
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-indigo-500">
-              Pushing the Boundaries
+          <motion.h2 
+            className="text-4xl md:text-6xl font-bold text-white mb-6 relative inline-block"
+            variants={itemVariants}
+          >
+            <span className="relative bg-gradient-to-r from-red-500 via-orange-500 to-purple-500 bg-clip-text text-transparent visible">
+              Proving Grounds For Our Capabilities
+              <motion.div
+                className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-red-500 via-orange-500 to-purple-500 rounded-full"
+                initial={{ width: 0 }}
+                whileInView={{ width: "100%" }}
+                transition={{ duration: 1.5, delay: 0.5 }}
+                viewport={{ once: true }}
+              />
             </span>
-          </h2>
-          <p className="max-w-3xl mx-auto text-lg text-gray-400">
-            Our team thrives on challenges, consistently proving our mettle in prestigious international competitions.
-          </p>
+          </motion.h2>
+          
+          <motion.p 
+            className="text-xl text-white/70 max-w-3xl mx-auto flex items-center justify-center space-x-2"
+            variants={itemVariants}
+          >
+            <Globe className="w-5 h-5 text-purple-500" />
+            <span>We test our rovers&apos; capabilities and our team&apos;s skills in premier international competitions.</span>
+          </motion.p>
         </motion.div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {competitions.map((comp, index) => (
-            <CompetitionCard key={index} competition={comp} index={index} />
+        
+        {/* Competitions Grid */}
+        <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto mb-16">
+          {competitions.map((competition, index) => (
+            <Competition 
+              key={index} 
+              {...competition} 
+              index={index}
+            />
           ))}
         </div>
-
+        
+        {/* Call to Action */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="text-center mt-16"
+          className="text-center"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          viewport={{ once: true }}
         >
-          <Button size="lg" className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold group">
-            Explore All Competitions
-            <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-          </Button>
+          <Link href="/competitions">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button className="bg-gradient-to-r from-red-500 via-orange-500 to-purple-500 hover:from-red-600 hover:via-orange-600 hover:to-purple-600 text-white group px-8 py-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 relative overflow-hidden font-bold text-lg">
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent"
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: "100%" }}
+                  transition={{ duration: 0.6 }}
+                />
+                
+                <span className="relative z-10 flex items-center space-x-2">
+                  <Trophy className="w-5 h-5" />
+                  <span className="font-semibold">View Our Competitive Records</span>
+                  <motion.div
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    <ArrowRight className="w-5 h-5" />
+                  </motion.div>
+                </span>
+              </Button>
+            </motion.div>
+          </Link>
         </motion.div>
       </div>
-    </div>
+    </section>
   );
 };
 
