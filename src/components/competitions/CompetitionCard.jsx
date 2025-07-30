@@ -2,21 +2,9 @@
 import React from 'react';
 import { Award, MapPin } from 'lucide-react';
 
-interface CompetitionResult {
-  year: string;
-  achievement: string;
-  description: string;
-}
 
-export interface CompetitionProps {
-  title: string;
-  location: string;
-  description: string;
-  image: string;
-  results: CompetitionResult[];
-}
 
-const CompetitionCard = ({ title, location, description, image, results }: CompetitionProps) => (
+const CompetitionCard = ({ title, location, description, image, results }) => (
   <div className="mb-16 bg-space-light/20 rounded-xl overflow-hidden border border-white/10">
     <div className="md:flex">
       <div className="md:w-1/3 h-64 md:h-auto">

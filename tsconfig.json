@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/AboutSection.jsx", "src/components/competitions/CompetitionsData.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/AboutSection.jsx", "src/components/competitions/CompetitionsData.js", "src/components/competitions/CompetitionCard.jsx", "src/components/competitions/CompetitionsTimeline.jsx"],
   "exclude": ["node_modules"]
 }

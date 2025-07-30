@@ -13,16 +13,9 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-interface TimelineEvent {
-  year: string;
-  event: string;
-}
 
-interface CompetitionsTimelineProps {
-  events: TimelineEvent[];
-}
 
-const CompetitionsTimeline = ({ events }: CompetitionsTimelineProps) => {
+const CompetitionsTimeline = ({ events }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
   
@@ -31,7 +24,7 @@ const CompetitionsTimeline = ({ events }: CompetitionsTimelineProps) => {
   const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent);
   const totalPages = Math.ceil(events.length / itemsPerPage);
   
-  const handlePageChange = (pageNumber: number) => {
+  const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
     window.scrollTo({ top: document.getElementById('timeline-section')?.offsetTop || 0, behavior: 'smooth' });
   };
@@ -108,7 +101,7 @@ const CompetitionsTimeline = ({ events }: CompetitionsTimelineProps) => {
   );
 };
 
-const TimelineCard = ({ year, event, index }: TimelineEvent & { index: number }) => {
+const TimelineCard = ({ year, event, index }) => {
   const colors = [
     "from-mars to-cosmic",
     "from-cosmic to-blue-500",
