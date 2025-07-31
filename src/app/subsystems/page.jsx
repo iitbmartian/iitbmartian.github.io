@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo, useCallback } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
 import { Cog, Code, Beaker, Presentation, Zap, Star, ArrowRight, Settings, Cpu, FlaskConical, Megaphone } from 'lucide-react';
 import Navbar from '@/components/Navbar';
@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 
 const SubsystemsPage = () => {
   const sectionRef = useRef(null);
+  const headerRef = useRef(null);
   const [activeSubsystem, setActiveSubsystem] = useState("mechanical");
   const [hoveredCard, setHoveredCard] = useState(null);
   
@@ -17,9 +18,18 @@ const SubsystemsPage = () => {
     offset: ["start end", "end start"]
   });
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const headerInView = useInView(headerRef, { 
+    once: false, 
+    margin: "-10% 0px -10% 0px",
+    amount: 0.3
+  });
 
-  const subsystems = [
+  // Optimized transforms
+  const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const orbOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 0.8, 0.3]);
+
+  // Memoized subsystems data
+  const subsystems = useMemo(() => [
     {
       id: "mechanical",
       title: "Mechanical",
@@ -126,46 +136,118 @@ const SubsystemsPage = () => {
         }
       ]
     }
-  ];
+  ], []);
 
-  const selectedSubsystem = subsystems.find(sub => sub.id === activeSubsystem);
+  const selectedSubsystem = useMemo(() => 
+    subsystems.find(sub => sub.id === activeSubsystem), 
+    [subsystems, activeSubsystem]
+  );
 
-  // Simplified animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.05,
-        delayChildren: 0.1,
-      },
+  // Optimized event handlers
+  const handleSubsystemChange = useCallback((id) => {
+    setActiveSubsystem(id);
+  }, []);
+
+  const handleCardHover = useCallback((index) => {
+    setHoveredCard(index);
+  }, []);
+
+  const handleCardLeave = useCallback(() => {
+    setHoveredCard(null);
+  }, []);
+
+  // Enhanced animation variants
+  const headerVariants = useMemo(() => ({
+    hidden: { 
+      opacity: 0, 
+      y: 50,
+      scale: 0.9
     },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 20, scale: 0.98 },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
       transition: {
-        duration: 0.4,
-        ease: "easeOut"
+        duration: 0.8,
+        ease: [0.25, 0.46, 0.45, 0.94],
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    },
+    exit: {
+      opacity: 0,
+      y: -30,
+      scale: 1.05,
+      transition: {
+        duration: 0.5,
+        ease: "easeInOut"
       }
     }
-  };
+  }), []);
+
+  const itemVariants = useMemo(() => ({
+    hidden: { y: 30, opacity: 0, scale: 0.9 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  }), []);
+
+  const cardVariants = useMemo(() => ({
+    hidden: { 
+      opacity: 0, 
+      y: 40, 
+      scale: 0.9,
+      rotateX: 15
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      rotateX: 0,
+      transition: {
+        duration: 0.6,
+        type: "spring",
+        stiffness: 120,
+        damping: 20
+      }
+    },
+    exit: {
+      opacity: 0,
+      y: -20,
+      scale: 0.95,
+      rotateX: -10,
+      transition: {
+        duration: 0.4,
+        ease: "easeInOut"
+      }
+    }
+  }), []);
+
+  const tabVariants = useMemo(() => ({
+    hidden: { 
+      opacity: 0, 
+      y: 20, 
+      scale: 0.9 
+    },
+    visible: (index) => ({
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        delay: index * 0.1,
+        type: "spring",
+        stiffness: 150,
+        damping: 20
+      }
+    })
+  }), []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-space-dark via-space to-space-dark">
@@ -174,22 +256,38 @@ const SubsystemsPage = () => {
         ref={sectionRef}
         className="pt-32 pb-24 relative overflow-hidden"
       >
-        {/* Simplified Background Effects */}
+        {/* Optimized Background Effects */}
         <div className="absolute inset-0">
-          {/* Simple gradient orbs - no complex animations */}
-          <div
-            className="absolute top-1/4 right-0 w-1/3 h-1/3 bg-gradient-to-l from-mars/15 to-orange-500/8 rounded-full blur-3xl opacity-60"
-            style={{ transform: `translateY(${backgroundY}px)` }}
+          {/* Enhanced gradient orbs with better performance */}
+          <motion.div
+            className="absolute top-1/4 right-0 w-1/3 h-1/3 bg-gradient-to-l from-mars/15 to-orange-500/8 rounded-full blur-3xl"
+            style={{ 
+              y: backgroundY,
+              opacity: orbOpacity
+            }}
           />
           
-          <div
-            className="absolute bottom-1/4 left-0 w-1/3 h-1/3 bg-gradient-to-r from-cosmic/15 to-blue-500/8 rounded-full blur-3xl opacity-60"
-            style={{ transform: `translateY(${backgroundY}px)` }}
+          <motion.div
+            className="absolute bottom-1/4 left-0 w-1/3 h-1/3 bg-gradient-to-r from-cosmic/15 to-blue-500/8 rounded-full blur-3xl"
+            style={{ 
+              y: backgroundY,
+              opacity: orbOpacity
+            }}
           />
 
-          {/* Static tech pattern */}
+          {/* Enhanced tech pattern */}
           <div className="absolute inset-0 opacity-5">
-            <svg className="absolute inset-0 w-full h-full">
+            <motion.svg 
+              className="absolute inset-0 w-full h-full"
+              animate={{
+                rotate: [0, 360],
+              }}
+              transition={{
+                duration: 60,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            >
               <defs>
                 <linearGradient id="circuitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stopColor="#ff6b35" />
@@ -197,38 +295,47 @@ const SubsystemsPage = () => {
                   <stop offset="100%" stopColor="#ff6b35" />
                 </linearGradient>
               </defs>
-              {[...Array(8)].map((_, i) => (
-                <path
+              {[...Array(6)].map((_, i) => (
+                <motion.path
                   key={i}
-                  d={`M ${i * 15},0 L ${i * 15 + 50},50 L ${i * 15 + 100},0 L ${i * 15 + 150},50`}
+                  d={`M ${i * 20},0 L ${i * 20 + 60},60 L ${i * 20 + 120},0 L ${i * 20 + 180},60`}
                   fill="none"
                   stroke="url(#circuitGradient)"
                   strokeWidth="1"
                   opacity="0.3"
+                  animate={{
+                    pathLength: [0, 1, 0],
+                  }}
+                  transition={{
+                    duration: 8 + i * 2,
+                    repeat: Infinity,
+                    delay: i * 1,
+                  }}
                 />
               ))}
-            </svg>
+            </motion.svg>
           </div>
 
-          {/* Simple floating tech icons */}
+          {/* Optimized floating elements */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {[...Array(6)].map((_, i) => (
+            {[...Array(4)].map((_, i) => (
               <motion.div
                 key={i}
                 className="absolute"
                 animate={{
-                  y: [0, -20, 0],
-                  opacity: [0.1, 0.3, 0.1],
+                  y: [0, -30, 0],
+                  opacity: [0.1, 0.4, 0.1],
+                  rotate: [0, 180, 360],
                 }}
                 transition={{
-                  duration: 8 + i * 2,
+                  duration: 12 + i * 3,
                   repeat: Infinity,
-                  delay: i * 1.5,
+                  delay: i * 2,
                   ease: "easeInOut",
                 }}
                 style={{
-                  left: `${15 + Math.random() * 70}%`,
-                  top: `${15 + Math.random() * 70}%`,
+                  left: `${20 + Math.random() * 60}%`,
+                  top: `${20 + Math.random() * 60}%`,
                 }}
               >
                 <Zap className="w-4 h-4 text-white/20" />
@@ -238,26 +345,19 @@ const SubsystemsPage = () => {
         </div>
         
         <div className="container mx-auto px-6 relative z-10">
-          {/* Header Section */}
+          {/* Enhanced Header Section */}
           <motion.div
+            ref={headerRef}
             className="text-center mb-16"
-            variants={containerVariants}
+            variants={headerVariants}
             initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            animate={headerInView ? "visible" : "exit"}
           >
             <motion.h1 
               className="text-5xl md:text-7xl font-bold font-orbitron bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent relative mb-6"
               variants={itemVariants}
             >
               Our Subsystems
-              <motion.div
-                className=""
-                initial={{ width: 0 }}
-                whileInView={{ width: "100%" }}
-                transition={{ duration: 1.5, delay: 0.5 }}
-                viewport={{ once: true }}
-              />
             </motion.h1>
             
             <motion.p 
@@ -269,7 +369,7 @@ const SubsystemsPage = () => {
               <Settings className="w-6 h-6 text-mars" />
             </motion.p>
 
-            {/* Subsystem Stats */}
+            {/* Enhanced Stats Grid */}
             <motion.div
               className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-4xl mx-auto"
               variants={itemVariants}
@@ -282,49 +382,94 @@ const SubsystemsPage = () => {
               ].map((stat, index) => (
                 <motion.div
                   key={index}
-                  className="bg-gradient-to-br from-space-light/20 to-space-light/10 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center group hover:border-white/30 transition-all duration-300"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+                  className="bg-gradient-to-br from-space-light/20 to-space-light/10 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center group hover:border-white/30 transition-all duration-300 perspective-1000"
+                  initial={{ opacity: 0, y: 30, scale: 0.8 }}
+                  animate={headerInView ? { 
+                    opacity: 1, 
+                    y: 0, 
+                    scale: 1 
+                  } : { 
+                    opacity: 0, 
+                    y: 30, 
+                    scale: 0.8 
+                  }}
+                  transition={{ 
+                    duration: 0.6, 
+                    delay: 0.4 + index * 0.1,
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 15
+                  }}
+                  whileHover={{ 
+                    scale: 1.05, 
+                    y: -5,
+                    rotateY: 5
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  style={{ transformStyle: "preserve-3d" }}
                 >
-                  <div className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${stat.gradient}/20 mb-3`}>
+                  <motion.div 
+                    className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${stat.gradient}/20 mb-3`}
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6 }}
+                  >
                     <div className={`bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`}>
                       {stat.icon}
                     </div>
+                  </motion.div>
+                  <motion.div 
+                    className="text-2xl font-bold text-white mb-1"
+                    initial={{ scale: 0 }}
+                    animate={headerInView ? { scale: 1 } : { scale: 0 }}
+                    transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
+                  >
+                    {stat.value}
+                  </motion.div>
+                  <div className="text-sm text-white/70 group-hover:text-white/90 transition-colors duration-300">
+                    {stat.label}
                   </div>
-                  <div className="text-2xl font-bold text-white mb-1">{stat.value}</div>
-                  <div className="text-sm text-white/70 group-hover:text-white/90 transition-colors duration-300">{stat.label}</div>
                 </motion.div>
               ))}
             </motion.div>
           </motion.div>
           
-          {/* Simplified Subsystem Tabs */}
+          {/* Enhanced Subsystem Tabs */}
           <motion.div
             className="flex flex-wrap justify-center gap-4 mb-16"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, staggerChildren: 0.1 }}
+            viewport={{ once: false, margin: "-10%" }}
           >
             {subsystems.map((subsystem, index) => (
               <motion.button
                 key={subsystem.id}
-                onClick={() => setActiveSubsystem(subsystem.id)}
+                onClick={() => handleSubsystemChange(subsystem.id)}
                 className={cn(
-                  "py-4 px-6 rounded-2xl flex items-center space-x-3 transition-all duration-300 border backdrop-blur-sm",
+                  "py-4 px-6 rounded-2xl flex items-center space-x-3 transition-all duration-300 border backdrop-blur-sm perspective-1000",
                   activeSubsystem === subsystem.id 
-                    ? `${subsystem.bgColor} ${subsystem.color} border-white/30 shadow-lg` 
+                    ? `${subsystem.bgColor} ${subsystem.color} border-white/30 shadow-lg shadow-mars/20` 
                     : "bg-space-light/20 text-white/70 hover:text-white border-white/10 hover:border-white/30"
                 )}
-                variants={itemVariants}
-                whileHover={{ scale: 1.02, y: -1 }}
-                whileTap={{ scale: 0.98 }}
+                variants={tabVariants}
+                initial="hidden"
+                whileInView="visible"
+                custom={index}
+                viewport={{ once: false, margin: "-10%" }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  y: -3,
+                  rotateY: 3
+                }}
+                whileTap={{ scale: 0.95 }}
+                style={{ transformStyle: "preserve-3d" }}
               >
                 <motion.div
-                  animate={{ rotate: activeSubsystem === subsystem.id ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
+                  animate={{ 
+                    rotate: activeSubsystem === subsystem.id ? 360 : 0,
+                    scale: activeSubsystem === subsystem.id ? 1.1 : 1
+                  }}
+                  transition={{ duration: 0.5, type: "spring" }}
                 >
                   {subsystem.icon}
                 </motion.div>
@@ -333,67 +478,101 @@ const SubsystemsPage = () => {
             ))}
           </motion.div>
           
-          {/* Subsystem Content */}
+          {/* Enhanced Subsystem Content */}
           <AnimatePresence mode="wait">
             {selectedSubsystem && (
               <motion.div
                 key={selectedSubsystem.id}
                 className="max-w-6xl mx-auto"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4 }}
+                initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 1.02 }}
+                transition={{ 
+                  duration: 0.6,
+                  type: "spring",
+                  stiffness: 120,
+                  damping: 20
+                }}
               >
-                {/* Subsystem Header */}
+                {/* Enhanced Subsystem Header */}
                 <motion.div
                   className="text-center mb-12"
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.1 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
                 >
                   <motion.div
                     className={`inline-flex p-6 rounded-2xl ${selectedSubsystem.bgColor} mb-6 relative overflow-hidden`}
-                    whileHover={{ scale: 1.05 }}
+                    whileHover={{ scale: 1.1, rotate: 5 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <div className={`absolute inset-0 bg-gradient-to-br ${selectedSubsystem.gradient} opacity-50`} />
+                    <motion.div 
+                      className={`absolute inset-0 bg-gradient-to-br ${selectedSubsystem.gradient} opacity-50`}
+                      animate={{
+                        backgroundPosition: ["0% 0%", "100% 100%"],
+                      }}
+                      transition={{ duration: 10, repeat: Infinity }}
+                    />
                     <div className="relative z-10">
                       {selectedSubsystem.icon}
                     </div>
                   </motion.div>
                   
-                  <h2 className={`text-4xl font-bold mb-4 font-orbitron ${selectedSubsystem.color}`}>
+                  <motion.h2 
+                    className={`text-4xl font-bold mb-4 font-orbitron ${selectedSubsystem.color}`}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                  >
                     {selectedSubsystem.title}
-                  </h2>
+                  </motion.h2>
                   
-                  <p className="text-white/80 text-lg max-w-4xl mx-auto leading-relaxed">
+                  <motion.p 
+                    className="text-white/80 text-lg max-w-4xl mx-auto leading-relaxed"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                  >
                     {selectedSubsystem.description}
-                  </p>
+                  </motion.p>
                 </motion.div>
                 
-                {/* Content Cards */}
+                {/* Enhanced Content Cards */}
                 {selectedSubsystem.content.length > 0 ? (
                   <motion.div
                     className="grid md:grid-cols-2 gap-6"
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate="visible"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ 
+                      duration: 0.5,
+                      delay: 0.4,
+                      staggerChildren: 0.1
+                    }}
                   >
                     {selectedSubsystem.content.map((item, index) => (
                       <motion.div
                         key={index}
                         variants={cardVariants}
-                        whileHover={{ y: -4, scale: 1.01 }}
-                        onMouseEnter={() => setHoveredCard(index)}
-                        onMouseLeave={() => setHoveredCard(null)}
+                        initial="hidden"
+                        animate="visible"
+                        whileHover={{ 
+                          y: -8, 
+                          scale: 1.02,
+                          rotateY: 2
+                        }}
+                        onMouseEnter={() => handleCardHover(index)}
+                        onMouseLeave={handleCardLeave}
                         transition={{ duration: 0.3 }}
+                        className="perspective-1000"
+                        style={{ transformStyle: "preserve-3d" }}
                       >
                         <Card className="bg-gradient-to-br from-space-light/30 to-space-light/10 border-white/10 backdrop-blur-sm h-full relative overflow-hidden group hover:border-white/30 transition-all duration-300">
-                          {/* Card Background Effect */}
+                          {/* Enhanced Card Background Effect */}
                           <motion.div
-                            className={`absolute inset-0 bg-gradient-to-br ${selectedSubsystem.gradient} opacity-0`}
+                            className={`absolute inset-0 bg-gradient-to-br ${selectedSubsystem.gradient}`}
+                            initial={{ opacity: 0 }}
                             animate={{ 
-                              opacity: hoveredCard === index ? 0.1 : 0,
+                              opacity: hoveredCard === index ? 0.15 : 0,
                             }}
                             transition={{ duration: 0.3 }}
                           />
@@ -402,8 +581,8 @@ const SubsystemsPage = () => {
                             <div className="flex items-center space-x-3">
                               <motion.div
                                 className={`p-2 rounded-lg ${selectedSubsystem.bgColor}`}
-                                whileHover={{ scale: 1.1 }}
-                                transition={{ duration: 0.3 }}
+                                whileHover={{ scale: 1.2, rotate: 360 }}
+                                transition={{ duration: 0.5 }}
                               >
                                 <ArrowRight className={`w-4 h-4 ${selectedSubsystem.color}`} />
                               </motion.div>
@@ -419,11 +598,22 @@ const SubsystemsPage = () => {
                             </CardDescription>
                           </CardContent>
                           
-                          {/* Simple hover indicator */}
+                          {/* Enhanced hover indicator */}
                           <motion.div
                             className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-mars to-cosmic rounded-full"
-                            initial={{ width: 0 }}
-                            animate={{ width: hoveredCard === index ? "100%" : "0%" }}
+                            initial={{ width: 0, opacity: 0 }}
+                            animate={{ 
+                              width: hoveredCard === index ? "100%" : "0%",
+                              opacity: hoveredCard === index ? 1 : 0
+                            }}
+                            transition={{ duration: 0.4, ease: "easeOut" }}
+                          />
+
+                          {/* Additional glow effect */}
+                          <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-mars/5 to-cosmic/5 rounded-xl pointer-events-none"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: hoveredCard === index ? 1 : 0 }}
                             transition={{ duration: 0.3 }}
                           />
                         </Card>
@@ -433,23 +623,39 @@ const SubsystemsPage = () => {
                 ) : (
                   <motion.div
                     className="text-center py-12"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.2 }}
+                    initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ 
+                      duration: 0.6, 
+                      delay: 0.4,
+                      type: "spring",
+                      stiffness: 150,
+                      damping: 20
+                    }}
                   >
                     <motion.div
                       className={`inline-flex p-6 rounded-2xl ${selectedSubsystem.bgColor} mb-6`}
-                      whileHover={{ scale: 1.05 }}
+                      whileHover={{ scale: 1.1, rotate: 10 }}
                       transition={{ duration: 0.3 }}
                     >
                       {selectedSubsystem.icon}
                     </motion.div>
-                    <h3 className="text-2xl font-bold text-white/80 mb-4">
+                    <motion.h3 
+                      className="text-2xl font-bold text-white/80 mb-4"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
+                    >
                       Comprehensive Overview
-                    </h3>
-                    <p className="text-white/60 max-w-2xl mx-auto">
+                    </motion.h3>
+                    <motion.p 
+                      className="text-white/60 max-w-2xl mx-auto"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.6 }}
+                    >
                       This subsystem covers all aspects described above in an integrated approach.
-                    </p>
+                    </motion.p>
                   </motion.div>
                 )}
               </motion.div>

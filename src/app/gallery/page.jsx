@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo, useCallback } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
 import { 
   X, 
@@ -42,8 +42,294 @@ import RoverT from '@/mrt/DSCN9799.png';
 import roverFull from '@/mrt/DSCN9731.png';
 import roverLook from '@/mrt/RoverArm.png';
 
+// Optimized Image Card Component
+const ImageCard = ({ image, index, viewMode, hoveredImage, setHoveredImage, openLightbox, favoritedImages, toggleFavorite, imageLoadStates, handleImageLoad }) => {
+  const cardRef = useRef(null);
+  const isInView = useInView(cardRef, { 
+    once: false, 
+    margin: "-15% 0px -15% 0px",
+    amount: 0.3
+  });
+
+  // Memoized animation variants
+  const cardVariants = useMemo(() => ({
+    hidden: { 
+      opacity: 0, 
+      y: 40, 
+      scale: 0.9,
+      rotateX: 15
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      rotateX: 0,
+      transition: {
+        duration: 0.6,
+        delay: (index % 12) * 0.05, // Stagger only visible items
+        type: "spring",
+        stiffness: 120,
+        damping: 20
+      }
+    },
+    exit: {
+      opacity: 0,
+      y: -20,
+      scale: 0.95,
+      rotateX: -10,
+      transition: {
+        duration: 0.4,
+        ease: "easeInOut"
+      }
+    }
+  }), [index]);
+
+  const handleClick = useCallback(() => {
+    openLightbox(image.src, index);
+  }, [image.src, index, openLightbox]);
+
+  const handleMouseEnter = useCallback(() => {
+    setHoveredImage(index);
+  }, [index, setHoveredImage]);
+
+  const handleMouseLeave = useCallback(() => {
+    setHoveredImage(null);
+  }, [setHoveredImage]);
+
+  const handleFavoriteClick = useCallback((e) => {
+    e.stopPropagation();
+    toggleFavorite(index);
+  }, [index, toggleFavorite]);
+
+  const isHovered = hoveredImage === index;
+
+  return (
+    <motion.div
+      ref={cardRef}
+      variants={cardVariants}
+      initial="hidden"
+      animate={isInView ? "visible" : "exit"}
+      className={cn(
+        "group relative overflow-hidden rounded-2xl bg-gradient-to-br from-space-light/30 to-space-light/10 cursor-pointer border border-white/10 backdrop-blur-sm hover:border-white/30 transition-all duration-300 perspective-1000",
+        viewMode === "list" && "flex items-center space-x-6 p-6"
+      )}
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      whileHover={{ 
+        y: -10, 
+        scale: 1.03,
+        rotateY: 2
+      }}
+      whileTap={{ scale: 0.98 }}
+      style={{ transformStyle: "preserve-3d" }}
+    >
+      {/* Image Container */}
+      <div className={cn(
+        "relative overflow-hidden",
+        viewMode === "grid" ? "aspect-square" : "w-32 h-32 flex-shrink-0 rounded-xl"
+      )}>
+        {/* Loading Placeholder */}
+        {!imageLoadStates[index] && (
+          <motion.div 
+            className="absolute inset-0 bg-gradient-to-br from-mars/20 to-cosmic/20 flex items-center justify-center"
+            animate={{
+              backgroundPosition: ["0% 0%", "100% 100%"],
+            }}
+            transition={{ duration: 3, repeat: Infinity }}
+          >
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            >
+              <Camera className="w-8 h-8 text-white/40" />
+            </motion.div>
+          </motion.div>
+        )}
+        
+        {/* Main Image */}
+        <motion.img 
+          src={image.src} 
+          alt={image.alt} 
+          className="w-full h-full object-cover"
+          onLoad={() => handleImageLoad(index)}
+          animate={{
+            scale: isHovered ? 1.08 : 1,
+          }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+        />
+        
+        {/* Enhanced Gradient Overlay */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-t from-space/90 via-space/20 to-transparent"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: isHovered ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+        />
+
+        {/* Animated border effect */}
+        <motion.div
+          className="absolute inset-0 rounded-xl"
+          style={{
+            background: `linear-gradient(45deg, transparent, ${isHovered ? 'rgba(255, 107, 53, 0.3)' : 'transparent'}, transparent)`,
+          }}
+          animate={{
+            background: isHovered 
+              ? ["linear-gradient(0deg, transparent, rgba(255, 107, 53, 0.3), transparent)",
+                 "linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.3), transparent)",
+                 "linear-gradient(180deg, transparent, rgba(255, 107, 53, 0.3), transparent)",
+                 "linear-gradient(270deg, transparent, rgba(0, 217, 255, 0.3), transparent)",
+                 "linear-gradient(360deg, transparent, rgba(255, 107, 53, 0.3), transparent)"]
+              : "linear-gradient(0deg, transparent, transparent, transparent)"
+          }}
+          transition={{ duration: 2, repeat: isHovered ? Infinity : 0 }}
+        />
+        
+        {/* Action Buttons */}
+        <motion.div
+          className="absolute top-4 right-4 flex space-x-2"
+          initial={{ opacity: 0, scale: 0.8, y: -10 }}
+          animate={{ 
+            opacity: isHovered ? 1 : 0,
+            scale: isHovered ? 1 : 0.8,
+            y: isHovered ? 0 : -10
+          }}
+          transition={{ duration: 0.3, staggerChildren: 0.05 }}
+        >
+          <motion.button
+            onClick={handleFavoriteClick}
+            className={cn(
+              "p-2 rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300",
+              favoritedImages.has(index) 
+                ? "bg-red-500/80 text-white shadow-lg shadow-red-500/25" 
+                : "bg-space-dark/80 text-white/70 hover:text-white"
+            )}
+            whileHover={{ scale: 1.15, rotate: 5 }}
+            whileTap={{ scale: 0.9 }}
+            animate={{
+              scale: favoritedImages.has(index) ? [1, 1.2, 1] : 1
+            }}
+            transition={{ duration: 0.3 }}
+          >
+            <Heart className={cn("w-4 h-4", favoritedImages.has(index) && "fill-current")} />
+          </motion.button>
+          
+          <motion.button
+            className="p-2 bg-space-dark/80 rounded-full backdrop-blur-sm border border-white/20 text-white/70 hover:text-white transition-all duration-300"
+            whileHover={{ scale: 1.15, rotate: -5 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <ZoomIn className="w-4 h-4" />
+          </motion.button>
+        </motion.div>
+        
+        {/* Enhanced Stats Overlay */}
+        <motion.div
+          className="absolute bottom-4 left-4 flex items-center space-x-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ 
+            opacity: isHovered ? 1 : 0,
+            y: isHovered ? 0 : 20
+          }}
+          transition={{ duration: 0.3, staggerChildren: 0.1 }}
+        >
+          <motion.div 
+            className="flex items-center space-x-1 px-3 py-1 bg-space-dark/80 rounded-full backdrop-blur-sm border border-white/20"
+            whileHover={{ scale: 1.05 }}
+          >
+            <Eye className="w-3 h-3 text-white/70" />
+            <span className="text-xs text-white/70">{image.views}</span>
+          </motion.div>
+          <motion.div 
+            className="flex items-center space-x-1 px-3 py-1 bg-space-dark/80 rounded-full backdrop-blur-sm border border-white/20"
+            whileHover={{ scale: 1.05 }}
+          >
+            <Heart className="w-3 h-3 text-white/70" />
+            <span className="text-xs text-white/70">{image.likes}</span>
+          </motion.div>
+        </motion.div>
+      </div>
+      
+      {/* Enhanced Content Section */}
+      <AnimatePresence>
+        {(viewMode === "list" || isHovered) && (
+          <motion.div
+            className={cn(
+              "relative z-10",
+              viewMode === "list" ? "flex-1" : "absolute bottom-0 left-0 right-0 p-6"
+            )}
+            initial={{ opacity: 0, y: viewMode === "grid" ? 20 : 0 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: viewMode === "grid" ? 20 : 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <motion.h3 
+              className="text-white font-semibold text-lg mb-2"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+            >
+              {image.alt}
+            </motion.h3>
+            <motion.p 
+              className="text-white/70 text-sm mb-3 line-clamp-2"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.3, delay: 0.15 }}
+            >
+              {image.description}
+            </motion.p>
+            
+            <motion.div 
+              className="flex items-center justify-between"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.2 }}
+            >
+              <div className="flex items-center space-x-4 text-xs text-white/50">
+                <div className="flex items-center space-x-1">
+                  <Calendar className="w-3 h-3" />
+                  <span>{new Date(image.date).toLocaleDateString()}</span>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <MapPin className="w-3 h-3" />
+                  <span>{image.location}</span>
+                </div>
+              </div>
+              
+              <div className="flex space-x-2">
+                {image.tags.slice(0, 2).map((tag, tagIndex) => (
+                  <motion.span 
+                    key={tagIndex}
+                    className="px-2 py-1 bg-mars/20 text-mars text-xs rounded-full border border-mars/30"
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.3, delay: 0.25 + tagIndex * 0.05 }}
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    #{tag}
+                  </motion.span>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Subtle glow effect */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-r from-mars/5 to-cosmic/5 rounded-2xl pointer-events-none"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isHovered ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+      />
+    </motion.div>
+  );
+};
+
 const GalleryPage = () => {
   const sectionRef = useRef(null);
+  const headerRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [activeCategory, setActiveCategory] = useState("all");
@@ -59,9 +345,18 @@ const GalleryPage = () => {
     offset: ["start end", "end start"]
   });
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const headerInView = useInView(headerRef, { 
+    once: false, 
+    margin: "-10% 0px -10% 0px",
+    amount: 0.3
+  });
 
-  const categories = [
+  // Optimized transforms
+  const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const orbOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 0.8, 0.3]);
+
+  // Memoized data
+  const categories = useMemo(() => [
     { 
       name: "All", 
       id: "all", 
@@ -104,9 +399,9 @@ const GalleryPage = () => {
       gradient: "from-yellow-500/40 to-amber-500/40",
       description: "Special events"
     }
-  ];
+  ], []);
 
-  const galleryImages = [
+  const galleryImages = useMemo(() => [
     {
       src: RoverInLab,
       alt: "Rover in the lab",
@@ -305,51 +600,56 @@ const GalleryPage = () => {
       likes: 94,
       views: 1125
     }
-  ];
+  ], []);
 
   // Update category counts
-  const categoriesWithCounts = categories.map(cat => ({
-    ...cat,
-    count: cat.id === "all" ? galleryImages.length : galleryImages.filter(img => img.category === cat.id).length
-  }));
+  const categoriesWithCounts = useMemo(() => 
+    categories.map(cat => ({
+      ...cat,
+      count: cat.id === "all" ? galleryImages.length : galleryImages.filter(img => img.category === cat.id).length
+    })), [categories, galleryImages]
+  );
 
   // Filter images
-  const filteredImages = galleryImages.filter(img => {
-    const matchesCategory = activeCategory === "all" || img.category === activeCategory;
-    const matchesSearch = searchQuery === "" || 
-      img.alt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      img.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      img.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-    return matchesCategory && matchesSearch;
-  });
+  const filteredImages = useMemo(() => 
+    galleryImages.filter(img => {
+      const matchesCategory = activeCategory === "all" || img.category === activeCategory;
+      const matchesSearch = searchQuery === "" || 
+        img.alt.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        img.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        img.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+      return matchesCategory && matchesSearch;
+    }), [galleryImages, activeCategory, searchQuery]
+  );
 
-  const handleImageLoad = (index) => {
+  // Optimized event handlers
+  const handleImageLoad = useCallback((index) => {
     setImageLoadStates(prev => ({ ...prev, [index]: true }));
-  };
+  }, []);
 
-  const openLightbox = (imageSrc, index) => {
+  const openLightbox = useCallback((imageSrc, index) => {
     setSelectedImage(imageSrc);
     setSelectedImageIndex(index);
     setIsLightboxOpen(true);
     document.body.style.overflow = 'hidden';
-  };
+  }, []);
 
-  const closeLightbox = () => {
+  const closeLightbox = useCallback(() => {
     setSelectedImage(null);
     setIsLightboxOpen(false);
     document.body.style.overflow = 'auto';
-  };
+  }, []);
 
-  const navigateLightbox = (direction) => {
+  const navigateLightbox = useCallback((direction) => {
     const newIndex = direction === 'next' 
       ? (selectedImageIndex + 1) % filteredImages.length
       : (selectedImageIndex - 1 + filteredImages.length) % filteredImages.length;
     
     setSelectedImageIndex(newIndex);
     setSelectedImage(filteredImages[newIndex].src);
-  };
+  }, [selectedImageIndex, filteredImages]);
 
-  const toggleFavorite = (index) => {
+  const toggleFavorite = useCallback((index) => {
     setFavoritedImages(prev => {
       const newSet = new Set(prev);
       if (newSet.has(index)) {
@@ -359,44 +659,49 @@ const GalleryPage = () => {
       }
       return newSet;
     });
-  };
+  }, []);
 
-  // Simplified animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.03,
-        delayChildren: 0.1,
-      },
+  // Enhanced animation variants
+  const headerVariants = useMemo(() => ({
+    hidden: { 
+      opacity: 0, 
+      y: 50,
+      scale: 0.9
     },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
     visible: {
-      y: 0,
       opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.25, 0.46, 0.45, 0.94],
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    },
+    exit: {
+      opacity: 0,
+      y: -30,
+      scale: 1.05,
       transition: {
         duration: 0.5,
-        ease: "easeOut",
-      },
-    },
-  };
-
-  const gridItemVariants = {
-    hidden: { opacity: 0, scale: 0.95, y: 20 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-      transition: {
-        duration: 0.4,
-        ease: "easeOut"
+        ease: "easeInOut"
       }
     }
-  };
+  }), []);
+
+  const itemVariants = useMemo(() => ({
+    hidden: { y: 30, opacity: 0, scale: 0.9 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  }), []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-space-dark via-space to-space-dark">
@@ -408,23 +713,33 @@ const GalleryPage = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
-        {/* Simplified Background Effects */}
+        {/* Enhanced Background Effects */}
         <div className="absolute inset-0">
-          {/* Simple gradient orbs - no complex animations */}
-          <div
-            className="absolute top-1/4 right-0 w-1/3 h-1/3 bg-gradient-to-l from-mars/15 to-orange-500/8 rounded-full blur-3xl opacity-60"
-            style={{ transform: `translateY(${backgroundY}px)` }}
+          {/* Optimized gradient orbs */}
+          <motion.div
+            className="absolute top-1/4 right-0 w-1/3 h-1/3 bg-gradient-to-l from-mars/15 to-orange-500/8 rounded-full blur-3xl"
+            style={{ 
+              y: backgroundY,
+              opacity: orbOpacity
+            }}
           />
           
-          <div
-            className="absolute bottom-1/4 left-0 w-1/3 h-1/3 bg-gradient-to-r from-cosmic/15 to-blue-500/8 rounded-full blur-3xl opacity-60"
-            style={{ transform: `translateY(${backgroundY}px)` }}
+          <motion.div
+            className="absolute bottom-1/4 left-0 w-1/3 h-1/3 bg-gradient-to-r from-cosmic/15 to-blue-500/8 rounded-full blur-3xl"
+            style={{ 
+              y: backgroundY,
+              opacity: orbOpacity
+            }}
           />
 
-          {/* Static grid pattern */}
+          {/* Enhanced grid pattern */}
           <div className="absolute inset-0 opacity-5">
-            <div 
+            <motion.div 
               className="absolute inset-0"
+              animate={{
+                backgroundPosition: ["0% 0%", "100% 100%"],
+              }}
+              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
               style={{
                 backgroundImage: `
                   linear-gradient(rgba(255, 107, 53, 0.3) 1px, transparent 1px),
@@ -434,29 +749,49 @@ const GalleryPage = () => {
               }}
             />
           </div>
+
+          {/* Floating gallery icons */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {[...Array(5)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute"
+                animate={{
+                  y: [0, -40, 0],
+                  opacity: [0.1, 0.4, 0.1],
+                  rotate: [0, 180, 360],
+                }}
+                transition={{
+                  duration: 15 + i * 3,
+                  repeat: Infinity,
+                  delay: i * 2,
+                  ease: "easeInOut",
+                }}
+                style={{
+                  left: `${15 + Math.random() * 70}%`,
+                  top: `${15 + Math.random() * 70}%`,
+                }}
+              >
+                <Camera className="w-5 h-5 text-white/20" />
+              </motion.div>
+            ))}
+          </div>
         </div>
 
         <div className="container mx-auto px-6 relative z-10">
-          {/* Simplified Header */}
+          {/* Enhanced Header */}
           <motion.div
+            ref={headerRef}
             className="text-center mb-20"
-            variants={containerVariants}
+            variants={headerVariants}
             initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            animate={headerInView ? "visible" : "exit"}
           >
             <motion.h1 
               className="text-5xl md:text-7xl font-bold font-orbitron bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent relative mb-6"
               variants={itemVariants}
             >
               Gallery
-              <motion.div
-                className=""
-                initial={{ width: 0 }}
-                whileInView={{ width: "100%" }}
-                transition={{ duration: 1.5, delay: 0.5 }}
-                viewport={{ once: true }}
-              />
             </motion.h1>
             
             <motion.p 
@@ -468,7 +803,7 @@ const GalleryPage = () => {
               <Sparkles className="w-6 h-6 text-mars" />
             </motion.p>
 
-            {/* Simplified Stats */}
+            {/* Enhanced Stats */}
             <motion.div
               className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-4xl mx-auto"
               variants={itemVariants}
@@ -481,45 +816,82 @@ const GalleryPage = () => {
               ].map((stat, index) => (
                 <motion.div
                   key={index}
-                  className="bg-gradient-to-br from-space-light/20 to-space-light/10 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center group hover:border-white/30 transition-all duration-300"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 + index * 0.05 }}
+                  className="bg-gradient-to-br from-space-light/20 to-space-light/10 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center group hover:border-white/30 transition-all duration-300 perspective-1000"
+                  initial={{ opacity: 0, y: 30, scale: 0.8 }}
+                  animate={headerInView ? { 
+                    opacity: 1, 
+                    y: 0, 
+                    scale: 1 
+                  } : { 
+                    opacity: 0, 
+                    y: 30, 
+                    scale: 0.8 
+                  }}
+                  transition={{ 
+                    duration: 0.6, 
+                    delay: 0.4 + index * 0.1,
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 15
+                  }}
+                  whileHover={{ 
+                    scale: 1.05, 
+                    y: -5,
+                    rotateY: 5
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  style={{ transformStyle: "preserve-3d" }}
                 >
-                  <div className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${stat.gradient}/20 mb-3`}>
+                  <motion.div 
+                    className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${stat.gradient}/20 mb-3`}
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6 }}
+                  >
                     <div className={`bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`}>
                       {stat.icon}
                     </div>
+                  </motion.div>
+                  <motion.div 
+                    className="text-2xl font-bold text-white mb-1"
+                    initial={{ scale: 0 }}
+                    animate={headerInView ? { scale: 1 } : { scale: 0 }}
+                    transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
+                  >
+                    {stat.value}
+                  </motion.div>
+                  <div className="text-sm text-white/70 group-hover:text-white/90 transition-colors duration-300">
+                    {stat.label}
                   </div>
-                  <div className="text-2xl font-bold text-white mb-1">{stat.value}</div>
-                  <div className="text-sm text-white/70 group-hover:text-white/90 transition-colors duration-300">{stat.label}</div>
                 </motion.div>
               ))}
             </motion.div>
           </motion.div>
 
-          {/* Simplified Search */}
+          {/* Enhanced Search */}
           <motion.div
             className="mb-12"
-            variants={itemVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: false, margin: "-10%" }}
           >
             <div className="relative max-w-2xl mx-auto">
-              <input
+              <motion.input
                 type="text"
                 placeholder="Search images by title, description, or tags..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full px-6 py-4 pl-14 pr-16 bg-space-light/20 backdrop-blur-sm border border-white/20 rounded-2xl text-white placeholder-white/50 focus:outline-none focus:border-cosmic/50 focus:ring-2 focus:ring-cosmic/20 transition-all duration-300"
+                whileFocus={{ scale: 1.02 }}
               />
               <Search className="absolute left-5 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
               {searchQuery && (
                 <motion.button
                   onClick={() => setSearchQuery("")}
                   className="absolute right-5 top-1/2 transform -translate-y-1/2 p-1 hover:bg-white/10 rounded-full transition-colors duration-200"
+                  initial={{ scale: 0, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0, opacity: 0 }}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -529,19 +901,19 @@ const GalleryPage = () => {
             </div>
           </motion.div>
 
-          {/* Simplified Filter Buttons */}
+          {/* Enhanced Filter Buttons */}
           <motion.div
             className="mb-12"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, staggerChildren: 0.05 }}
+            viewport={{ once: false, margin: "-10%" }}
           >
             <div className="flex justify-center mb-6">
               <motion.button
                 onClick={() => setViewMode(viewMode === "grid" ? "list" : "grid")}
                 className="p-3 bg-space-light/20 backdrop-blur-sm border border-white/20 rounded-xl text-white/70 hover:text-white hover:border-white/40 transition-all duration-300"
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05, rotate: 5 }}
                 whileTap={{ scale: 0.95 }}
               >
                 {viewMode === "grid" ? <List className="w-5 h-5" /> : <Grid3X3 className="w-5 h-5" />}
@@ -554,16 +926,32 @@ const GalleryPage = () => {
                   key={category.id}
                   onClick={() => setActiveCategory(category.id)}
                   className={cn(
-                    "py-4 px-6 rounded-2xl flex items-center space-x-3 transition-all duration-300 border backdrop-blur-sm",
+                    "py-4 px-6 rounded-2xl flex items-center space-x-3 transition-all duration-300 border backdrop-blur-sm perspective-1000",
                     activeCategory === category.id 
-                      ? "bg-gradient-to-r from-mars/20 to-cosmic/20 text-white border-white/30 shadow-lg" 
+                      ? "bg-gradient-to-r from-mars/20 to-cosmic/20 text-white border-white/30 shadow-lg shadow-mars/20" 
                       : "bg-space-light/20 text-white/70 hover:text-white border-white/10 hover:border-white/30"
                   )}
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.02, y: -1 }}
-                  whileTap={{ scale: 0.98 }}
+                  initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.5, delay: index * 0.05 }}
+                  viewport={{ once: false, margin: "-10%" }}
+                  whileHover={{ 
+                    scale: 1.03, 
+                    y: -3,
+                    rotateY: 2
+                  }}
+                  whileTap={{ scale: 0.97 }}
+                  style={{ transformStyle: "preserve-3d" }}
                 >
-                  {category.icon}
+                  <motion.div
+                    animate={{ 
+                      rotate: activeCategory === category.id ? 360 : 0,
+                      scale: activeCategory === category.id ? 1.1 : 1
+                    }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    {category.icon}
+                  </motion.div>
                   <div>
                     <span className="font-medium">{category.name}</span>
                     <div className="text-xs text-white/50 group-hover:text-white/70">
@@ -575,194 +963,83 @@ const GalleryPage = () => {
             </div>
           </motion.div>
           
-          {/* Simplified Gallery Grid */}
+          {/* Enhanced Gallery Grid */}
           <AnimatePresence mode="wait">
             <motion.div
-              key={`${activeCategory}-${searchQuery}`}
+              key={`${activeCategory}-${searchQuery}-${viewMode}`}
               className={cn(
                 "gap-6",
                 viewMode === "grid" 
                   ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" 
                   : "flex flex-col space-y-6"
               )}
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
             >
               {filteredImages.map((image, index) => (
-                <motion.div
-                  key={`${activeCategory}-${searchQuery}-${index}`}
-                  variants={gridItemVariants}
-                  className={cn(
-                    "group relative overflow-hidden rounded-2xl bg-gradient-to-br from-space-light/30 to-space-light/10 cursor-pointer border border-white/10 backdrop-blur-sm hover:border-white/30 transition-all duration-300",
-                    viewMode === "list" && "flex items-center space-x-6 p-6"
-                  )}
-                  onClick={() => openLightbox(image.src, index)}
-                  onMouseEnter={() => setHoveredImage(index)}
-                  onMouseLeave={() => setHoveredImage(null)}
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {/* Image Container */}
-                  <div className={cn(
-                    "relative overflow-hidden",
-                    viewMode === "grid" ? "aspect-square" : "w-32 h-32 flex-shrink-0 rounded-xl"
-                  )}>
-                    {/* Loading Placeholder */}
-                    {!imageLoadStates[index] && (
-                      <div className="absolute inset-0 bg-gradient-to-br from-mars/20 to-cosmic/20 flex items-center justify-center">
-                        <Camera className="w-8 h-8 text-white/40" />
-                      </div>
-                    )}
-                    
-                    {/* Main Image */}
-                    <motion.img 
-                      src={image.src} 
-                      alt={image.alt} 
-                      className="w-full h-full object-cover"
-                      onLoad={() => handleImageLoad(index)}
-                      animate={{
-                        scale: hoveredImage === index ? 1.05 : 1,
-                      }}
-                      transition={{ duration: 0.3 }}
-                    />
-                    
-                    {/* Gradient Overlay */}
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-t from-space/90 via-space/20 to-transparent"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: hoveredImage === index ? 1 : 0 }}
-                      transition={{ duration: 0.3 }}
-                    />
-                    
-                    {/* Action Buttons */}
-                    <motion.div
-                      className="absolute top-4 right-4 flex space-x-2"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ 
-                        opacity: hoveredImage === index ? 1 : 0,
-                        scale: hoveredImage === index ? 1 : 0.8
-                      }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <motion.button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleFavorite(index);
-                        }}
-                        className={cn(
-                          "p-2 rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300",
-                          favoritedImages.has(index) 
-                            ? "bg-red-500/80 text-white" 
-                            : "bg-space-dark/80 text-white/70 hover:text-white"
-                        )}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <Heart className={cn("w-4 h-4", favoritedImages.has(index) && "fill-current")} />
-                      </motion.button>
-                      
-                      <motion.button
-                        className="p-2 bg-space-dark/80 rounded-full backdrop-blur-sm border border-white/20 text-white/70 hover:text-white transition-all duration-300"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <ZoomIn className="w-4 h-4" />
-                      </motion.button>
-                    </motion.div>
-                    
-                    {/* Stats Overlay */}
-                    <motion.div
-                      className="absolute bottom-4 left-4 flex items-center space-x-4"
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ 
-                        opacity: hoveredImage === index ? 1 : 0,
-                        y: hoveredImage === index ? 0 : 10
-                      }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <div className="flex items-center space-x-1 px-3 py-1 bg-space-dark/80 rounded-full backdrop-blur-sm">
-                        <Eye className="w-3 h-3 text-white/70" />
-                        <span className="text-xs text-white/70">{image.views}</span>
-                      </div>
-                      <div className="flex items-center space-x-1 px-3 py-1 bg-space-dark/80 rounded-full backdrop-blur-sm">
-                        <Heart className="w-3 h-3 text-white/70" />
-                        <span className="text-xs text-white/70">{image.likes}</span>
-                      </div>
-                    </motion.div>
-                  </div>
-                  
-                  {/* Content Section */}
-                  {(viewMode === "list" || hoveredImage === index) && (
-                    <motion.div
-                      className={cn(
-                        "relative z-10",
-                        viewMode === "list" ? "flex-1" : "absolute bottom-0 left-0 right-0 p-6"
-                      )}
-                      initial={{ opacity: 0, y: viewMode === "grid" ? 10 : 0 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <h3 className="text-white font-semibold text-lg mb-2">{image.alt}</h3>
-                      <p className="text-white/70 text-sm mb-3 line-clamp-2">{image.description}</p>
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4 text-xs text-white/50">
-                          <div className="flex items-center space-x-1">
-                            <Calendar className="w-3 h-3" />
-                            <span>{new Date(image.date).toLocaleDateString()}</span>
-                          </div>
-                          <div className="flex items-center space-x-1">
-                            <MapPin className="w-3 h-3" />
-                            <span>{image.location}</span>
-                          </div>
-                        </div>
-                        
-                        <div className="flex space-x-2">
-                          {image.tags.slice(0, 2).map((tag, tagIndex) => (
-                            <span 
-                              key={tagIndex}
-                              className="px-2 py-1 bg-mars/20 text-mars text-xs rounded-full"
-                            >
-                              #{tag}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </motion.div>
+                <ImageCard
+                  key={`${activeCategory}-${searchQuery}-${viewMode}-${index}`}
+                  image={image}
+                  index={index}
+                  viewMode={viewMode}
+                  hoveredImage={hoveredImage}
+                  setHoveredImage={setHoveredImage}
+                  openLightbox={openLightbox}
+                  favoritedImages={favoritedImages}
+                  toggleFavorite={toggleFavorite}
+                  imageLoadStates={imageLoadStates}
+                  handleImageLoad={handleImageLoad}
+                />
               ))}
             </motion.div>
           </AnimatePresence>
           
-          {/* Empty State */}
+          {/* Enhanced Empty State */}
           {filteredImages.length === 0 && (
             <motion.div
               className="text-center py-20"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 40, scale: 0.9 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.6 }}
             >
               <motion.div
                 className="inline-flex p-8 bg-space-light/20 rounded-2xl mb-6 backdrop-blur-sm border border-white/10"
-                animate={{ scale: [1, 1.02, 1] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                animate={{ 
+                  scale: [1, 1.05, 1],
+                  rotate: [0, 5, -5, 0]
+                }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               >
                 <ImageIcon className="w-16 h-16 text-white/40" />
               </motion.div>
-              <h3 className="text-2xl font-semibold text-white mb-2">No Images Found</h3>
-              <p className="text-white/70 text-lg mb-6">
+              <motion.h3 
+                className="text-2xl font-semibold text-white mb-2"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                No Images Found
+              </motion.h3>
+              <motion.p 
+                className="text-white/70 text-lg mb-6"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
                 {searchQuery 
                   ? `No images match "${searchQuery}" in the ${activeCategory === "all" ? "gallery" : activeCategory + " category"}.`
                   : `No images found in the ${activeCategory} category.`
                 }
-              </p>
+              </motion.p>
               {searchQuery && (
                 <motion.button
                   onClick={() => setSearchQuery("")}
                   className="px-6 py-3 bg-gradient-to-r from-mars to-cosmic rounded-xl text-white font-medium hover:shadow-lg transition-all duration-300"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -774,7 +1051,7 @@ const GalleryPage = () => {
         </div>
       </motion.section>
       
-      {/* Simplified Lightbox */}
+      {/* Enhanced Lightbox */}
       <AnimatePresence>
         {isLightboxOpen && selectedImage && (
           <motion.div 
@@ -785,21 +1062,21 @@ const GalleryPage = () => {
             transition={{ duration: 0.3 }}
             onClick={closeLightbox}
           >
-            {/* Close Button */}
+            {/* Enhanced Close Button */}
             <motion.button 
               className="absolute top-8 right-8 text-white p-4 rounded-full bg-space-dark/80 hover:bg-space-dark backdrop-blur-sm border border-white/20 z-60 group"
               onClick={closeLightbox}
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0 }}
+              initial={{ scale: 0, rotate: -90 }}
+              animate={{ scale: 1, rotate: 0 }}
+              exit={{ scale: 0, rotate: 90 }}
               transition={{ duration: 0.3 }}
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.1, rotate: 90 }}
               whileTap={{ scale: 0.95 }}
             >
               <X className="h-6 w-6 group-hover:text-mars transition-colors duration-300" />
             </motion.button>
             
-            {/* Navigation Buttons */}
+            {/* Enhanced Navigation Buttons */}
             {filteredImages.length > 1 && (
               <>
                 <motion.button
@@ -808,11 +1085,11 @@ const GalleryPage = () => {
                     navigateLightbox('prev');
                   }}
                   className="absolute left-8 top-1/2 transform -translate-y-1/2 p-4 bg-space-dark/80 hover:bg-space-dark rounded-full backdrop-blur-sm border border-white/20 text-white z-60 group"
-                  initial={{ x: -50, opacity: 0 }}
+                  initial={{ x: -100, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: -50, opacity: 0 }}
+                  exit={{ x: -100, opacity: 0 }}
                   transition={{ duration: 0.3 }}
-                  whileHover={{ scale: 1.1 }}
+                  whileHover={{ scale: 1.1, x: -5 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <ArrowLeft className="w-6 h-6 group-hover:text-cosmic transition-colors duration-300" />
@@ -824,11 +1101,11 @@ const GalleryPage = () => {
                     navigateLightbox('next');
                   }}
                   className="absolute right-8 top-1/2 transform -translate-y-1/2 p-4 bg-space-dark/80 hover:bg-space-dark rounded-full backdrop-blur-sm border border-white/20 text-white z-60 group"
-                  initial={{ x: 50, opacity: 0 }}
+                  initial={{ x: 100, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: 50, opacity: 0 }}
+                  exit={{ x: 100, opacity: 0 }}
                   transition={{ duration: 0.3 }}
-                  whileHover={{ scale: 1.1 }}
+                  whileHover={{ scale: 1.1, x: 5 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <ArrowRight className="w-6 h-6 group-hover:text-cosmic transition-colors duration-300" />
@@ -836,40 +1113,62 @@ const GalleryPage = () => {
               </>
             )}
             
-            {/* Image Container */}
+            {/* Enhanced Image Container */}
             <motion.div
               className="relative max-w-[90vw] max-h-[80vh] mx-auto"
-              initial={{ scale: 0.9, opacity: 0, y: 50 }}
+              initial={{ scale: 0.8, opacity: 0, y: 100 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 50 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              exit={{ scale: 0.8, opacity: 0, y: 100 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
               onClick={(e) => e.stopPropagation()}
             >
-              <img 
+              <motion.img 
                 src={selectedImage} 
                 alt="Enlarged view" 
                 className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl"
+                layoutId={`image-${selectedImageIndex}`}
               />
               
-              {/* Simple Image Border */}
-              <div className="absolute inset-0 rounded-2xl border-2 border-cosmic/40" />
+              {/* Enhanced Image Border */}
+              <motion.div 
+                className="absolute inset-0 rounded-2xl border-2 border-cosmic/40" 
+                animate={{
+                  borderColor: ["rgba(64, 224, 255, 0.4)", "rgba(255, 107, 53, 0.4)", "rgba(64, 224, 255, 0.4)"],
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
               
-              {/* Image Info Panel */}
+              {/* Enhanced Image Info Panel */}
               {filteredImages[selectedImageIndex] && (
                 <motion.div
                   className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-space/95 to-transparent backdrop-blur-sm p-6 rounded-b-2xl"
-                  initial={{ y: 50, opacity: 0 }}
+                  initial={{ y: 100, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.4, delay: 0.1 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                  <h3 className="text-white text-xl font-semibold mb-2">
+                  <motion.h3 
+                    className="text-white text-xl font-semibold mb-2"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                  >
                     {filteredImages[selectedImageIndex].alt}
-                  </h3>
-                  <p className="text-white/80 text-sm mb-4">
+                  </motion.h3>
+                  <motion.p 
+                    className="text-white/80 text-sm mb-4"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                  >
                     {filteredImages[selectedImageIndex].description}
-                  </p>
+                  </motion.p>
                   
-                  <div className="flex items-center justify-between">
+                  <motion.div 
+                    className="flex items-center justify-between"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.5 }}
+                  >
                     <div className="flex items-center space-x-6 text-sm text-white/60">
                       <div className="flex items-center space-x-2">
                         <Calendar className="w-4 h-4" />
@@ -888,20 +1187,20 @@ const GalleryPage = () => {
                     <div className="flex items-center space-x-3">
                       <motion.button
                         className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors duration-300"
-                        whileHover={{ scale: 1.1 }}
+                        whileHover={{ scale: 1.1, rotate: 10 }}
                         whileTap={{ scale: 0.95 }}
                       >
                         <Download className="w-5 h-5 text-white" />
                       </motion.button>
                       <motion.button
                         className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors duration-300"
-                        whileHover={{ scale: 1.1 }}
+                        whileHover={{ scale: 1.1, rotate: -10 }}
                         whileTap={{ scale: 0.95 }}
                       >
                         <Share2 className="w-5 h-5 text-white" />
                       </motion.button>
                     </div>
-                  </div>
+                  </motion.div>
                 </motion.div>
               )}
             </motion.div>

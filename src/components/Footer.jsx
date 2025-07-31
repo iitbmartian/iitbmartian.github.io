@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useMemo, useCallback } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { 
   Rocket, 
@@ -35,6 +35,10 @@ import { cn } from '@/lib/utils';
 
 const Footer = () => {
   const footerRef = useRef(null);
+  const brandRef = useRef(null);
+  const statsRef = useRef(null);
+  const contactRef = useRef(null);
+  
   const [hoveredSection, setHoveredSection] = useState(null);
   const [hoveredSocial, setHoveredSocial] = useState(null);
   const [email, setEmail] = useState('');
@@ -42,21 +46,42 @@ const Footer = () => {
   const [hoveredStat, setHoveredStat] = useState(null);
   const [hoveredContact, setHoveredContact] = useState(null);
   
+  // Enhanced useInView for different sections
+  const brandInView = useInView(brandRef, { 
+    once: false, 
+    margin: "-10% 0px -10% 0px",
+    amount: 0.3
+  });
+
+  const statsInView = useInView(statsRef, { 
+    once: false, 
+    margin: "-15% 0px -15% 0px",
+    amount: 0.3
+  });
+
+  const contactInView = useInView(contactRef, { 
+    once: false, 
+    margin: "-15% 0px -15% 0px",
+    amount: 0.3
+  });
+
   const { scrollYProgress } = useScroll({
     target: footerRef,
     offset: ["start end", "end end"]
   });
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], [50, 0]);
-  const isInView = useInView(footerRef, { once: true, margin: "-50px" });
+  // Optimized transforms
+  const backgroundY = useTransform(scrollYProgress, [0, 1], [100, 0]);
+  const orbOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.3, 0.6, 0.8]);
 
-  const socialLinks = [
+  // Memoized data
+  const socialLinks = useMemo(() => [
     {
       name: "Twitter",
       icon: <Twitter className="h-5 w-5" />,
       gradient: "from-cyan-400 via-blue-500 to-blue-600",
       hoverColor: "hover:shadow-cyan-400/30",
-      href: "#",
+      href: "https://twitter.com/marsroverteam",
       description: "Latest updates"
     },
     {
@@ -64,7 +89,7 @@ const Footer = () => {
       icon: <Instagram className="h-5 w-5" />,
       gradient: "from-pink-500 via-purple-500 to-indigo-600",
       hoverColor: "hover:shadow-pink-500/30",
-      href: "#",
+      href: "https://instagram.com/marsroverteam",
       description: "Behind the scenes"
     },
     {
@@ -72,7 +97,7 @@ const Footer = () => {
       icon: <Facebook className="h-5 w-5" />,
       gradient: "from-blue-600 via-blue-700 to-blue-800",
       hoverColor: "hover:shadow-blue-600/30",
-      href: "#",
+      href: "https://facebook.com/marsroverteam",
       description: "Community updates"
     },
     {
@@ -80,7 +105,7 @@ const Footer = () => {
       icon: <Github className="h-5 w-5" />,
       gradient: "from-gray-600 via-gray-700 to-gray-900",
       hoverColor: "hover:shadow-gray-600/30",
-      href: "#",
+      href: "https://github.com/marsroverteam",
       description: "Open source projects"
     },
     {
@@ -88,12 +113,12 @@ const Footer = () => {
       icon: <Youtube className="h-5 w-5" />,
       gradient: "from-red-500 via-red-600 to-red-700",
       hoverColor: "hover:shadow-red-500/30",
-      href: "#",
+      href: "https://youtube.com/marsroverteam",
       description: "Video content"
     }
-  ];
+  ], []);
 
-  const navigationSections = [
+  const navigationSections = useMemo(() => [
     {
       title: "Navigation",
       icon: <Globe className="w-5 h-5" />,
@@ -124,30 +149,33 @@ const Footer = () => {
         { name: "Press Kit", href: "/press", icon: <ExternalLink className="w-3 h-3" /> }
       ]
     }
-  ];
+  ], []);
 
-  const contactInfo = [
+  const contactInfo = useMemo(() => [
     {
       icon: <MapPin className="h-5 w-5" />,
       title: "Location",
       text: "IIT Bombay, Powai\nMumbai, Maharashtra",
-      gradient: "from-mars/20 via-orange-500/20 to-red-500/20"
+      gradient: "from-mars/20 via-orange-500/20 to-red-500/20",
+      action: () => window.open("https://maps.google.com/?q=IIT+Bombay+Powai+Mumbai", "_blank")
     },
     {
       icon: <Mail className="h-5 w-5" />,
       title: "Email",
       text: "contact@mrtiitb.com",
-      gradient: "from-cosmic/20 via-blue-500/20 to-indigo-500/20"
+      gradient: "from-cosmic/20 via-blue-500/20 to-indigo-500/20",
+      action: () => window.open("mailto:contact@mrtiitb.com", "_blank")
     },
     {
       icon: <Phone className="h-5 w-5" />,
       title: "Phone",
       text: "+91 98765 43210",
-      gradient: "from-mars/20 via-red-500/20 to-pink-500/20"
+      gradient: "from-mars/20 via-red-500/20 to-pink-500/20",
+      action: () => window.open("tel:+919876543210", "_blank")
     }
-  ];
+  ], []);
 
-  const stats = [
+  const stats = useMemo(() => [
     { 
       number: "12+", 
       label: "Years", 
@@ -176,9 +204,83 @@ const Footer = () => {
       gradient: "from-red-500 to-mars",
       description: "built successfully"
     }
-  ];
+  ], []);
 
-  const handleEmailSubmit = (e) => {
+  // Enhanced animation variants
+  const footerVariants = useMemo(() => ({
+    hidden: { 
+      opacity: 0, 
+      y: 50
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.25, 0.46, 0.45, 0.94],
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    },
+    exit: {
+      opacity: 0,
+      y: 30,
+      transition: {
+        duration: 0.5,
+        ease: "easeInOut"
+      }
+    }
+  }), []);
+
+  const statVariants = useMemo(() => (index) => ({
+    hidden: { opacity: 0, y: 40, scale: 0.8, rotateX: 15 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      rotateX: 0,
+      transition: {
+        duration: 0.6,
+        delay: index * 0.1,
+        type: "spring",
+        stiffness: 120,
+        damping: 20
+      }
+    },
+    exit: {
+      opacity: 0,
+      y: -20,
+      scale: 0.95,
+      rotateX: -10,
+      transition: {
+        duration: 0.4,
+        ease: "easeInOut"
+      }
+    }
+  }), []);
+
+  const sectionVariants = useMemo(() => ({
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+        staggerChildren: 0.05
+      }
+    },
+    exit: {
+      opacity: 0,
+      y: -15,
+      transition: {
+        duration: 0.4
+      }
+    }
+  }), []);
+
+  // Optimized event handlers
+  const handleEmailSubmit = useCallback((e) => {
     e.preventDefault();
     if (email && email.includes('@')) {
       setIsSubscribed(true);
@@ -187,28 +289,83 @@ const Footer = () => {
         setEmail('');
       }, 3000);
     }
-  };
+  }, [email]);
 
-  const scrollToTop = () => {
+  const scrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  }, []);
+
+  const handleStatHover = useCallback((index) => {
+    setHoveredStat(index);
+  }, []);
+
+  const handleStatLeave = useCallback(() => {
+    setHoveredStat(null);
+  }, []);
+
+  const handleSocialHover = useCallback((index) => {
+    setHoveredSocial(index);
+  }, []);
+
+  const handleSocialLeave = useCallback(() => {
+    setHoveredSocial(null);
+  }, []);
+
+  const handleContactHover = useCallback((index) => {
+    setHoveredContact(index);
+  }, []);
+
+  const handleContactLeave = useCallback(() => {
+    setHoveredContact(null);
+  }, []);
 
   return (
     <motion.footer 
       ref={footerRef}
       className="relative bg-gradient-to-br from-space-dark via-space to-space-dark overflow-hidden"
       style={{ y: backgroundY }}
+      variants={footerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: false, margin: "-10%" }}
     >
-      {/* Simplified Background Effects */}
+      {/* Enhanced Background Effects */}
       <div className="absolute inset-0">
-        {/* Static gradient orbs */}
-        <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-gradient-to-r from-mars/10 via-cosmic/15 to-purple-500/10 rounded-full blur-3xl opacity-60" />
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-gradient-to-r from-cosmic/15 to-blue-500/10 rounded-full blur-2xl opacity-60" />
+        {/* Enhanced gradient orbs */}
+        <motion.div 
+          className="absolute top-1/4 left-1/3 w-96 h-96 bg-gradient-to-r from-mars/10 via-cosmic/15 to-purple-500/10 rounded-full blur-3xl"
+          style={{ opacity: orbOpacity }}
+          animate={{
+            scale: [1, 1.1, 1],
+            rotate: [0, 90, 180, 270, 360],
+          }}
+          transition={{
+            scale: { duration: 8, repeat: Infinity, ease: "easeInOut" },
+            rotate: { duration: 60, repeat: Infinity, ease: "linear" }
+          }}
+        />
         
-        {/* Simple grid pattern */}
+        <motion.div 
+          className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-gradient-to-r from-cosmic/15 to-blue-500/10 rounded-full blur-2xl"
+          style={{ opacity: orbOpacity }}
+          animate={{
+            scale: [1, 1.2, 1],
+            rotate: [360, 270, 180, 90, 0],
+          }}
+          transition={{
+            scale: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+            rotate: { duration: 45, repeat: Infinity, ease: "linear" }
+          }}
+        />
+
+        {/* Enhanced grid pattern */}
         <div className="absolute inset-0 opacity-5">
-          <div 
+          <motion.div 
             className="absolute inset-0"
+            animate={{
+              backgroundPosition: ["0% 0%", "100% 100%"],
+            }}
+            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
             style={{
               backgroundImage: `
                 linear-gradient(rgba(255,100,100,0.2) 1px, transparent 1px),
@@ -219,25 +376,26 @@ const Footer = () => {
           />
         </div>
 
-        {/* Simple floating particles */}
-        {Array.from({ length: 6 }).map((_, i) => (
+        {/* Enhanced floating particles */}
+        {Array.from({ length: 8 }).map((_, i) => (
           <motion.div
             key={i}
             className="absolute rounded-full bg-gradient-to-r from-mars/20 to-cosmic/20"
             style={{
-              width: 2,
-              height: 2,
+              width: 3,
+              height: 3,
               left: `${15 + Math.random() * 70}%`,
               top: `${15 + Math.random() * 70}%`,
             }}
             animate={{
-              y: [0, -30, 0],
-              opacity: [0, 0.6, 0],
+              y: [0, -40, 0],
+              opacity: [0, 0.8, 0],
+              scale: [0.5, 1.2, 0.5],
             }}
             transition={{
-              duration: 6 + i * 2,
+              duration: 8 + i * 2,
               repeat: Infinity,
-              delay: i * 1,
+              delay: i * 1.5,
               ease: "easeInOut",
             }}
           />
@@ -248,44 +406,60 @@ const Footer = () => {
       <div className="relative z-10 w-full">
         <div className="container mx-auto px-6 py-16">
           
-          {/* Simplified Stats Section */}
+          {/* Enhanced Stats Section */}
           <motion.div
+            ref={statsRef}
             className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            variants={sectionVariants}
+            initial="hidden"
+            animate={statsInView ? "visible" : "exit"}
           >
             {stats.map((stat, index) => (
               <motion.div
                 key={index}
-                className="relative group"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.5, delay: 0.2 + index * 0.05 }}
-                whileHover={{ scale: 1.03, y: -3 }}
-                onMouseEnter={() => setHoveredStat(index)}
-                onMouseLeave={() => setHoveredStat(null)}
+                className="relative group perspective-1000"
+                variants={statVariants(index)}
+                initial="hidden"
+                animate={statsInView ? "visible" : "exit"}
+                whileHover={{ 
+                  scale: 1.05, 
+                  y: -8,
+                  rotateY: 5
+                }}
+                whileTap={{ scale: 0.95 }}
+                onMouseEnter={() => handleStatHover(index)}
+                onMouseLeave={handleStatLeave}
+                style={{ transformStyle: "preserve-3d" }}
               >
                 <div className={`bg-gradient-to-br ${stat.gradient}/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 text-center transition-all duration-300 hover:border-white/40 relative overflow-hidden`}>
                   
-                  {/* Simple background effect */}
+                  {/* Enhanced background effect */}
                   <motion.div
-                    className={`absolute inset-0 bg-gradient-to-br ${stat.gradient}/10 opacity-0`}
-                    animate={{ opacity: hoveredStat === index ? 0.3 : 0 }}
+                    className={`absolute inset-0 bg-gradient-to-br ${stat.gradient}/10`}
+                    animate={{ opacity: hoveredStat === index ? 0.4 : 0 }}
                     transition={{ duration: 0.3 }}
                   />
                   
                   <div className={`flex items-center justify-center mb-4 text-2xl relative z-10`}>
-                    <div className={`p-3 rounded-xl bg-gradient-to-r ${stat.gradient}/20 border border-white/10 group-hover:border-white/30 transition-all duration-300`}>
+                    <motion.div 
+                      className={`p-3 rounded-xl bg-gradient-to-r ${stat.gradient}/20 border border-white/10 group-hover:border-white/30 transition-all duration-300`}
+                      whileHover={{ rotate: 360, scale: 1.1 }}
+                      transition={{ duration: 0.6 }}
+                    >
                       <div className={`bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`}>
                         {stat.icon}
                       </div>
-                    </div>
+                    </motion.div>
                   </div>
                   
-                  <div className="text-3xl font-bold text-white mb-2 relative z-10 font-orbitron">
+                  <motion.div 
+                    className="text-3xl font-bold text-white mb-2 relative z-10 font-orbitron"
+                    initial={{ scale: 0 }}
+                    animate={statsInView ? { scale: 1 } : { scale: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+                  >
                     {stat.number}
-                  </div>
+                  </motion.div>
                   
                   <div className="text-sm text-white/80 group-hover:text-white transition-colors duration-300 relative z-10 font-medium">
                     {stat.label}
@@ -299,6 +473,14 @@ const Footer = () => {
                   >
                     {stat.description}
                   </motion.div>
+
+                  {/* Enhanced glow effect */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-mars/5 to-cosmic/5 rounded-2xl pointer-events-none"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: hoveredStat === index ? 1 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
                 </div>
               </motion.div>
             ))}
@@ -307,122 +489,202 @@ const Footer = () => {
           {/* Main Footer Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
             
-            {/* Brand Section */}
+            {/* Enhanced Brand Section */}
             <motion.div
+              ref={brandRef}
               className="lg:col-span-2"
-              initial={{ opacity: 0, x: -30 }}
-              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              variants={sectionVariants}
+              initial="hidden"
+              animate={brandInView ? "visible" : "exit"}
             >
-              {/* Logo */}
+              {/* Enhanced Logo */}
               <motion.div
                 className="flex items-center space-x-4 mb-6"
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.02, x: 3 }}
+                transition={{ duration: 0.3 }}
               >
                 <motion.div
                   className="relative w-14 h-14 bg-gradient-to-br from-mars via-orange-500 to-cosmic rounded-2xl flex items-center justify-center group"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.3 }}
+                  whileHover={{ 
+                    scale: 1.1, 
+                    rotate: [0, 5, -5, 0]
+                  }}
+                  transition={{ duration: 0.5 }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-mars to-cosmic rounded-2xl blur-lg opacity-40 group-hover:opacity-70 transition-opacity duration-300" />
-                  <Rocket className="w-7 h-7 text-white relative z-10" />
+                  <motion.div
+                    animate={{ rotate: [0, 360] }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  >
+                    <Rocket className="w-7 h-7 text-white relative z-10" />
+                  </motion.div>
                 </motion.div>
                 <div>
-                  <h3 className="text-2xl font-bold font-orbitron bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent">
+                  <motion.h3 
+                    className="text-2xl font-bold font-orbitron bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent"
+                    whileHover={{ scale: 1.02 }}
+                  >
                     MRT - IITB
-                  </h3>
+                  </motion.h3>
                   <p className="text-white/70 text-sm font-medium">Mars Rover Team</p>
                 </div>
               </motion.div>
 
-              {/* Description */}
-              <p className="text-white/80 text-base leading-relaxed mb-8 font-light">
+              {/* Enhanced Description */}
+              <motion.p 
+                className="text-white/80 text-base leading-relaxed mb-8 font-light"
+                initial={{ opacity: 0.8 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              >
                 Pioneering the future of planetary exploration through innovative rover design, 
                 cutting-edge space robotics technology, and unwavering dedication to pushing 
                 the boundaries of what's possible.
-              </p>
+              </motion.p>
 
-              {/* Newsletter Signup */}
+              {/* Enhanced Newsletter Signup */}
               <motion.div
                 className="mb-8"
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
+                variants={sectionVariants}
               >
-                <h4 className="text-white font-semibold mb-4 text-base flex items-center space-x-2">
-                  <Sparkles className="w-4 h-4 text-cosmic" />
+                <motion.h4 
+                  className="text-white font-semibold mb-4 text-base flex items-center space-x-2"
+                  whileHover={{ x: 3 }}
+                >
+                  <motion.div
+                    animate={{ rotate: [0, 360] }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                  >
+                    <Sparkles className="w-4 h-4 text-cosmic" />
+                  </motion.div>
                   <span>Stay Updated</span>
-                </h4>
+                </motion.h4>
                 <form onSubmit={handleEmailSubmit} className="relative">
                   <div className="flex space-x-3">
-                    <input
+                    <motion.input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter your email address"
                       className="flex-1 px-4 py-3 bg-space-dark/60 backdrop-blur-md border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:border-mars/50 focus:ring-2 focus:ring-mars/20 transition-all duration-300"
+                      whileFocus={{ scale: 1.01 }}
                     />
                     <motion.button
                       type="submit"
                       className="px-6 py-3 bg-gradient-to-r from-mars to-cosmic rounded-xl text-white font-medium transition-all duration-300 disabled:opacity-50 hover:scale-105"
-                      whileHover={{ scale: 1.05 }}
+                      whileHover={{ scale: 1.05, rotate: 5 }}
                       whileTap={{ scale: 0.95 }}
                       disabled={isSubscribed}
                     >
                       {isSubscribed ? (
-                        <div className="flex items-center space-x-2">
-                          <span>✓</span>
+                        <motion.div 
+                          className="flex items-center space-x-2"
+                          initial={{ scale: 0.8 }}
+                          animate={{ scale: 1 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <motion.span
+                            animate={{ scale: [1, 1.2, 1] }}
+                            transition={{ duration: 0.5 }}
+                          >
+                            ✓
+                          </motion.span>
                           <span>Subscribed!</span>
-                        </div>
+                        </motion.div>
                       ) : (
-                        <Send className="w-5 h-5" />
+                        <motion.div
+                          whileHover={{ rotate: 15 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <Send className="w-5 h-5" />
+                        </motion.div>
                       )}
                     </motion.button>
                   </div>
                 </form>
               </motion.div>
 
-              {/* Social Links */}
+              {/* Enhanced Social Links */}
               <div>
-                <h4 className="text-white font-semibold mb-4 text-base flex items-center space-x-2">
-                  <Globe className="w-4 h-4 text-cosmic" />
+                <motion.h4 
+                  className="text-white font-semibold mb-4 text-base flex items-center space-x-2"
+                  whileHover={{ x: 3 }}
+                >
+                  <motion.div
+                    animate={{ rotate: [0, 360] }}
+                    transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                  >
+                    <Globe className="w-4 h-4 text-cosmic" />
+                  </motion.div>
                   <span>Connect With Us</span>
-                </h4>
+                </motion.h4>
                 <div className="flex space-x-3">
                   {socialLinks.map((social, index) => (
                     <motion.a
                       key={index}
                       href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="relative p-3 rounded-xl backdrop-blur-md border border-white/20 transition-all duration-300 group overflow-hidden hover:border-white/40"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                      transition={{ duration: 0.4, delay: 0.5 + index * 0.05 }}
-                      whileHover={{ scale: 1.1, y: -3 }}
+                      initial={{ opacity: 0, y: 20, scale: 0.8 }}
+                      animate={brandInView ? { 
+                        opacity: 1, 
+                        y: 0, 
+                        scale: 1 
+                      } : { 
+                        opacity: 0, 
+                        y: 20, 
+                        scale: 0.8 
+                      }}
+                      transition={{ 
+                        duration: 0.5, 
+                        delay: 0.5 + index * 0.05,
+                        type: "spring",
+                        stiffness: 150
+                      }}
+                      whileHover={{ 
+                        scale: 1.15, 
+                        y: -5,
+                        rotate: 5
+                      }}
                       whileTap={{ scale: 0.95 }}
-                      onMouseEnter={() => setHoveredSocial(index)}
-                      onMouseLeave={() => setHoveredSocial(null)}
+                      onMouseEnter={() => handleSocialHover(index)}
+                      onMouseLeave={handleSocialLeave}
                     >
-                      {/* Background */}
+                      {/* Enhanced Background */}
                       <motion.div
-                        className={`absolute inset-0 bg-gradient-to-br ${social.gradient} opacity-0`}
-                        animate={{ opacity: hoveredSocial === index ? 0.3 : 0 }}
+                        className={`absolute inset-0 bg-gradient-to-br ${social.gradient}`}
+                        animate={{ opacity: hoveredSocial === index ? 0.4 : 0 }}
                         transition={{ duration: 0.3 }}
                       />
                       
-                      {/* Icon */}
-                      <div className="relative z-10 text-white/80 group-hover:text-white transition-colors duration-300">
+                      {/* Enhanced Icon */}
+                      <motion.div 
+                        className="relative z-10 text-white/80 group-hover:text-white transition-colors duration-300"
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.6 }}
+                      >
                         {social.icon}
-                      </div>
+                      </motion.div>
 
-                      {/* Tooltip */}
+                      {/* Enhanced Tooltip */}
                       <motion.div
-                        className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-space-dark/90 backdrop-blur-sm px-3 py-1 rounded-lg text-xs text-white border border-white/20 pointer-events-none"
+                        className="absolute -top-16 left-1/2 transform -translate-x-1/2 bg-space-dark/90 backdrop-blur-sm px-3 py-2 rounded-lg text-xs text-white border border-white/20 pointer-events-none"
                         initial={{ opacity: 0, y: 10, scale: 0.8 }}
-                        animate={hoveredSocial === index ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 10, scale: 0.8 }}
+                        animate={hoveredSocial === index ? { 
+                          opacity: 1, 
+                          y: 0, 
+                          scale: 1 
+                        } : { 
+                          opacity: 0, 
+                          y: 10, 
+                          scale: 0.8 
+                        }}
                         transition={{ duration: 0.2 }}
                       >
                         <div className="font-medium">{social.name}</div>
                         <div className="text-white/60 text-xs">{social.description}</div>
+                        <div className="absolute bottom-[-4px] left-1/2 transform -translate-x-1/2 w-2 h-2 bg-space-dark/90 rotate-45 border-r border-b border-white/20"></div>
                       </motion.div>
                     </motion.a>
                   ))}
@@ -430,23 +692,29 @@ const Footer = () => {
               </div>
             </motion.div>
 
-            {/* Navigation Sections */}
+            {/* Enhanced Navigation Sections */}
             {navigationSections.map((section, sectionIndex) => (
               <motion.div
                 key={sectionIndex}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                transition={{ duration: 0.5, delay: 0.4 + sectionIndex * 0.05 }}
+                variants={sectionVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: false, margin: "-10%" }}
                 onMouseEnter={() => setHoveredSection(sectionIndex)}
                 onMouseLeave={() => setHoveredSection(null)}
               >
                 <motion.h4 
                   className="text-white font-semibold mb-6 flex items-center space-x-3 text-base"
-                  whileHover={{ x: 3 }}
+                  whileHover={{ x: 5, scale: 1.02 }}
+                  transition={{ duration: 0.2 }}
                 >
-                  <div className="text-cosmic p-1 rounded-lg bg-cosmic/20 border border-cosmic/30">
+                  <motion.div 
+                    className="text-cosmic p-1 rounded-lg bg-cosmic/20 border border-cosmic/30"
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{ duration: 0.5 }}
+                  >
                     {section.icon}
-                  </div>
+                  </motion.div>
                   <span>{section.title}</span>
                 </motion.h4>
                 <ul className="space-y-3">
@@ -454,25 +722,37 @@ const Footer = () => {
                     <motion.li
                       key={linkIndex}
                       initial={{ opacity: 0, x: -20 }}
-                      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                      transition={{ duration: 0.4, delay: 0.5 + sectionIndex * 0.05 + linkIndex * 0.02 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ 
+                        duration: 0.4, 
+                        delay: 0.1 + linkIndex * 0.02 
+                      }}
+                      viewport={{ once: false }}
                     >
                       <Link href={link.href}>
                         <motion.div
                           className="text-white/80 hover:text-white transition-all duration-300 flex items-center space-x-3 group relative text-sm py-1"
-                          whileHover={{ x: 5, scale: 1.01 }}
+                          whileHover={{ x: 8, scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
                         >
-                          <div className="w-6 h-6 bg-gradient-to-br from-mars/20 to-cosmic/20 rounded-lg flex items-center justify-center border border-white/10 group-hover:border-mars/40 transition-all duration-300">
+                          <motion.div 
+                            className="w-6 h-6 bg-gradient-to-br from-mars/20 to-cosmic/20 rounded-lg flex items-center justify-center border border-white/10 group-hover:border-mars/40 transition-all duration-300"
+                            whileHover={{ rotate: 360 }}
+                            transition={{ duration: 0.5 }}
+                          >
                             <div className="text-mars group-hover:text-white text-xs">
                               {link.icon}
                             </div>
-                          </div>
+                          </motion.div>
                           <span className="group-hover:text-mars transition-colors duration-300 font-medium">
                             {link.name}
                           </span>
-                          <div className="opacity-0 group-hover:opacity-100 text-cosmic transition-opacity duration-300">
+                          <motion.div 
+                            className="opacity-0 group-hover:opacity-100 text-cosmic transition-opacity duration-300"
+                            whileHover={{ x: 2 }}
+                          >
                             <ExternalLink className="w-3 h-3" />
-                          </div>
+                          </motion.div>
                         </motion.div>
                       </Link>
                     </motion.li>
@@ -482,72 +762,120 @@ const Footer = () => {
             ))}
           </div>
 
-          {/* Contact Section */}
+          {/* Enhanced Contact Section */}
           <motion.div
+            ref={contactRef}
             className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            variants={sectionVariants}
+            initial="hidden"
+            animate={contactInView ? "visible" : "exit"}
           >
             {contactInfo.map((contact, index) => (
               <motion.div
                 key={index}
-                className="relative group"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.5, delay: 0.7 + index * 0.05 }}
-                whileHover={{ scale: 1.02, y: -3 }}
-                onMouseEnter={() => setHoveredContact(index)}
-                onMouseLeave={() => setHoveredContact(null)}
+                className="relative group cursor-pointer perspective-1000"
+                initial={{ opacity: 0, scale: 0.9, rotateX: 15 }}
+                animate={contactInView ? { 
+                  opacity: 1, 
+                  scale: 1, 
+                  rotateX: 0 
+                } : { 
+                  opacity: 0, 
+                  scale: 0.9, 
+                  rotateX: 15 
+                }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: 0.1 + index * 0.1,
+                  type: "spring",
+                  stiffness: 120
+                }}
+                whileHover={{ 
+                  scale: 1.03, 
+                  y: -8,
+                  rotateY: 2
+                }}
+                whileTap={{ scale: 0.98 }}
+                onMouseEnter={() => handleContactHover(index)}
+                onMouseLeave={handleContactLeave}
+                onClick={contact.action}
+                style={{ transformStyle: "preserve-3d" }}
               >
                 <div className={`flex items-center space-x-4 p-6 bg-gradient-to-br ${contact.gradient} backdrop-blur-md border border-white/20 rounded-2xl group-hover:border-white/40 transition-all duration-300 relative overflow-hidden`}>
                   
-                  {/* Background effect */}
+                  {/* Enhanced background effect */}
                   <motion.div
-                    className={`absolute inset-0 bg-gradient-to-br ${contact.gradient} opacity-0`}
-                    animate={{ opacity: hoveredContact === index ? 0.2 : 0 }}
+                    className={`absolute inset-0 bg-gradient-to-br ${contact.gradient}`}
+                    animate={{ opacity: hoveredContact === index ? 0.3 : 0 }}
                     transition={{ duration: 0.3 }}
                   />
                   
-                  <div className="p-4 bg-gradient-to-br from-space-dark/80 to-space/60 rounded-xl border border-white/20 flex-shrink-0 group-hover:border-white/40 transition-all duration-300 relative z-10">
+                  <motion.div 
+                    className="p-4 bg-gradient-to-br from-space-dark/80 to-space/60 rounded-xl border border-white/20 flex-shrink-0 group-hover:border-white/40 transition-all duration-300 relative z-10"
+                    whileHover={{ rotate: 10, scale: 1.05 }}
+                    transition={{ duration: 0.3 }}
+                  >
                     <div className="text-mars group-hover:text-white transition-colors duration-300">
                       {contact.icon}
                     </div>
-                  </div>
+                  </motion.div>
                   
                   <div className="relative z-10">
-                    <h5 className="text-white font-semibold text-base mb-2 group-hover:text-white transition-colors duration-300">
+                    <motion.h5 
+                      className="text-white font-semibold text-base mb-2 group-hover:text-white transition-colors duration-300 flex items-center"
+                      whileHover={{ x: 2 }}
+                    >
                       {contact.title}
-                    </h5>
-                    <p className="text-white/80 text-sm leading-relaxed whitespace-pre-line group-hover:text-white transition-colors duration-300">
+                      <ExternalLink className="w-3 h-3 ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </motion.h5>
+                    <motion.p 
+                      className="text-white/80 text-sm leading-relaxed whitespace-pre-line group-hover:text-white transition-colors duration-300"
+                      initial={{ opacity: 0.8 }}
+                      whileHover={{ opacity: 1 }}
+                    >
                       {contact.text}
-                    </p>
+                    </motion.p>
                   </div>
+
+                  {/* Enhanced glow effect */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-mars/5 to-cosmic/5 rounded-2xl pointer-events-none"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: hoveredContact === index ? 1 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
                 </div>
               </motion.div>
             ))}
           </motion.div>
         </div>
 
-        {/* Footer Bottom */}
+        {/* Enhanced Footer Bottom */}
         <motion.div
           className="border-t border-white/20 backdrop-blur-sm py-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          variants={sectionVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, margin: "-10%" }}
         >
           <div className="container mx-auto px-6">
             <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-              <div className="text-white/60 text-sm flex items-center space-x-2">
+              <motion.div 
+                className="text-white/60 text-sm flex items-center space-x-2"
+                whileHover={{ scale: 1.02 }}
+              >
                 <span>© {new Date().getFullYear()} Mars Rover Team IIT Bombay. All rights reserved.</span>
-              </div>
+              </motion.div>
               
               <div className="flex items-center space-x-6">
-                <div className="text-white/60 text-sm flex items-center space-x-2">
+                <motion.div 
+                  className="text-white/60 text-sm flex items-center space-x-2"
+                  whileHover={{ scale: 1.02 }}
+                >
                   <span>Crafted with</span>
                   <motion.div
                     animate={{ 
-                      scale: [1, 1.2, 1],
+                      scale: [1, 1.3, 1],
                     }}
                     transition={{ 
                       duration: 2, 
@@ -558,27 +886,39 @@ const Footer = () => {
                     <Heart className="w-4 h-4 text-red-500" />
                   </motion.div>
                   <span>by</span>
-                  <span className="font-semibold bg-gradient-to-r from-mars to-cosmic bg-clip-text text-transparent">
+                  <motion.span 
+                    className="font-semibold bg-gradient-to-r from-mars to-cosmic bg-clip-text text-transparent"
+                    whileHover={{ scale: 1.05 }}
+                  >
                     Nittish
-                  </span>
-                </div>
+                  </motion.span>
+                </motion.div>
 
-                {/* Scroll to Top */}
+                {/* Enhanced Scroll to Top */}
                 <motion.button
                   onClick={scrollToTop}
                   className="relative p-3 bg-gradient-to-r from-mars/20 to-cosmic/20 rounded-xl border border-white/20 text-white/80 hover:text-white hover:border-mars/40 transition-all duration-300 group overflow-hidden"
-                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileHover={{ 
+                    scale: 1.15, 
+                    y: -5,
+                    rotate: [0, -5, 5, 0]
+                  }}
                   whileTap={{ scale: 0.95 }}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.5, delay: 0.9 }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  viewport={{ once: false }}
                 >
                   <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-mars to-cosmic opacity-0 group-hover:opacity-30 transition-opacity duration-300"
+                    className="absolute inset-0 bg-gradient-to-br from-mars to-cosmic opacity-0 group-hover:opacity-40 transition-opacity duration-300"
                   />
-                  <div className="relative z-10">
+                  <motion.div 
+                    className="relative z-10"
+                    animate={{ y: [0, -2, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
                     <ChevronUp className="w-5 h-5" />
-                  </div>
+                  </motion.div>
                 </motion.button>
               </div>
             </div>
@@ -586,23 +926,46 @@ const Footer = () => {
         </motion.div>
       </div>
 
-      {/* Simple decorative elements */}
+      {/* Enhanced decorative elements */}
       <motion.div
         className="absolute bottom-4 left-1/2 transform -translate-x-1/2"
-        initial={{ opacity: 0 }}
-        animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ duration: 0.8, delay: 1 }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, delay: 0.5 }}
+        viewport={{ once: false }}
+        animate={{ rotate: [0, 360] }}
+        style={{ transition: { rotate: { duration: 30, repeat: Infinity, ease: "linear" } } }}
       >
         <Sparkles className="w-6 h-6 text-cosmic/40" />
       </motion.div>
 
-      <div className="absolute top-10 right-10 opacity-20">
+      <motion.div 
+        className="absolute top-10 right-10 opacity-20"
+        animate={{ 
+          scale: [1, 1.2, 1],
+          rotate: [0, 180, 360]
+        }}
+        transition={{ 
+          duration: 8, 
+          repeat: Infinity 
+        }}
+      >
         <Star className="w-4 h-4 text-cosmic" />
-      </div>
+      </motion.div>
 
-      <div className="absolute bottom-20 left-10 opacity-20">
+      <motion.div 
+        className="absolute bottom-20 left-10 opacity-20"
+        animate={{ 
+          y: [0, -10, 0],
+          rotate: [0, 15, -15, 0]
+        }}
+        transition={{ 
+          duration: 6, 
+          repeat: Infinity 
+        }}
+      >
         <Rocket className="w-5 h-5 text-mars" />
-      </div>
+      </motion.div>
     </motion.footer>
   );
 };
