@@ -32,15 +32,15 @@ import Footer from '@/components/Footer';
 import { cn } from '@/lib/utils';
 
 // Your existing imports
-import RoverInLab from "@/mrt/RoverInLab.png";
-import TeamPhoto2023 from "@/mrt/TeamPhoto.png";
-import RoverFieldTesting from "@/mrt/RoverFieldTesting.png";
-import RoverField from "@/mrt/RoverField.png";
-import RoverArnmCloseUp from "@/mrt/RoverArmCloseUp.png";
-import Roverwork from '@/mrt/DSCN9715.png';
-import RoverT from '@/mrt/DSCN9799.png';
-import roverFull from '@/mrt/DSCN9731.png';
-import roverLook from '@/mrt/RoverArm.png';
+import RoverInLab from "@/../../public/mrt/RoverInLab.png";
+import TeamPhoto2023 from "@/../../public/mrt/TeamPhoto.png";
+import RoverFieldTesting from "@/../../public/mrt/RoverFieldTesting.png";
+import RoverField from "@/../../public/mrt/RoverField.png";
+import RoverArnmCloseUp from "@/../../public/mrt/RoverArmCloseUp.png";
+import Roverwork from '@/../../public/mrt/DSCN9715.png';
+import RoverT from '@/../../public/mrt/DSCN9799.png';
+import roverFull from '@/../../public/mrt/DSCN9731.png';
+import roverLook from '@/../../public/mrt/RoverArm.png';
 
 // Optimized Image Card Component
 const ImageCard = ({ image, index, viewMode, hoveredImage, setHoveredImage, openLightbox, favoritedImages, toggleFavorite, imageLoadStates, handleImageLoad }) => {

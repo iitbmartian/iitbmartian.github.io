@@ -4,7 +4,7 @@ import { ChevronDown, Rocket, Star, Earth, Sparkles, Target } from 'lucide-react
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import MarsRoverLogo from '@/mrt/Logo/mrtLogo.png';
+import MarsRoverLogo from '@/../public/mrt/Logo/mrtLogo.png';
 import Image from 'next/image';
 
 const HeroSection = () => {

@@ -1,8 +1,8 @@
 
 import { CompetitionProps } from './CompetitionCard';
-import URClogo from '@/mrt/Logo/Competitions/URC.png'; // <--- Corrected path
-import IRClogo from '@/mrt/Logo/Competitions/IRC_1.png'; 
-import ERClogo from '@/mrt/Logo/Competitions/ERC.png';
+import URClogo from '@/../public/mrt/Logo/Competitions/URC.png'; // <--- Corrected path
+import IRClogo from '@/../public/mrt/Logo/Competitions/IRC_1.png';
+import ERClogo from '@/../public/mrt/Logo/Competitions/ERC.png';
 
 export const competitionsData = [
   {
