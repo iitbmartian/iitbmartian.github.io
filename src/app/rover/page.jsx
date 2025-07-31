@@ -1,6 +1,6 @@
 'use client';
 import React, { useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useInView, useSpring } from 'framer-motion';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { 
   Rocket, 
   Star, 
@@ -22,7 +22,7 @@ import { Button } from '@/components/ui/button';
 import RoverTimeline from '@/components/rover/RoverTimeline';
 import { cn } from '@/lib/utils';
 
-// Professional Stats Component
+// Simplified Stats Component
 const StatCard = ({ icon: Icon, number, label, delay = 0 }) => {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
@@ -33,7 +33,7 @@ const StatCard = ({ icon: Icon, number, label, delay = 0 }) => {
       const timer = setTimeout(() => {
         let start = 0;
         const end = parseInt(number);
-        const duration = 2000;
+        const duration = 1500; // Reduced from 2000
         const increment = end / (duration / 16);
         
         const counter = setInterval(() => {
@@ -54,32 +54,24 @@ const StatCard = ({ icon: Icon, number, label, delay = 0 }) => {
   return (
     <motion.div
       ref={ref}
-      className="bg-gradient-to-br from-space-dark/80 to-space/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 hover:border-mars/40 transition-all duration-500 group"
+      className="bg-gradient-to-br from-space-dark/80 to-space/80 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-mars/40 transition-all duration-300 group"
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      transition={{ duration: 0.6, delay }}
-      whileHover={{ 
-        scale: 1.02,
-        boxShadow: "0 20px 40px rgba(255, 69, 0, 0.1)"
-      }}
+      transition={{ duration: 0.5, delay: delay / 1000 }}
+      whileHover={{ scale: 1.02, y: -2 }}
     >
-      <motion.div
-        className="w-12 h-12 bg-gradient-to-r from-mars to-cosmic rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300"
-      >
+      <div className="w-12 h-12 bg-gradient-to-r from-mars to-cosmic rounded-xl flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300">
         <Icon className="w-6 h-6 text-white" />
-      </motion.div>
-      <motion.div
-        className="text-3xl font-bold text-white mb-2 font-technospace"
-        key={count}
-      >
+      </div>
+      <div className="text-3xl font-bold text-white mb-2 font-orbitron">
         {count}+
-      </motion.div>
+      </div>
       <p className="text-white/70 text-sm">{label}</p>
     </motion.div>
   );
 };
 
-// Enhanced Rover Card Component
+// Simplified Rover Card Component
 const RoverCard = ({ rover, index, isActive, onClick }) => {
   const cardRef = useRef(null);
   const isInView = useInView(cardRef, { once: true, margin: "-50px" });
@@ -88,22 +80,19 @@ const RoverCard = ({ rover, index, isActive, onClick }) => {
     <motion.div
       ref={cardRef}
       className={cn(
-        "relative overflow-hidden rounded-2xl border transition-all duration-500 cursor-pointer group",
+        "relative overflow-hidden rounded-2xl border transition-all duration-300 cursor-pointer group",
         isActive 
-          ? "bg-gradient-to-br from-mars/20 to-cosmic/20 border-mars/60 shadow-2xl shadow-mars/20" 
+          ? "bg-gradient-to-br from-mars/20 to-cosmic/20 border-mars/60 shadow-lg" 
           : "bg-gradient-to-br from-space-dark/60 to-space/60 border-white/10 hover:border-mars/30"
       )}
-      initial={{ opacity: 0, y: 50 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-      transition={{ duration: 0.8, delay: index * 0.1 }}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      transition={{ duration: 0.5, delay: index * 0.05 }}
       onClick={onClick}
-      whileHover={{ 
-        scale: 1.03,
-        y: -5
-      }}
+      whileHover={{ scale: 1.02, y: -3 }}
       whileTap={{ scale: 0.98 }}
     >
-      {/* Background Pattern */}
+      {/* Simple background pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0" 
              style={{
@@ -115,45 +104,28 @@ const RoverCard = ({ rover, index, isActive, onClick }) => {
 
       <div className="relative p-6 backdrop-blur-sm">
         {/* Year Badge */}
-        <motion.div
-          className="flex items-center justify-between mb-4"
-          initial={{ opacity: 0, x: -20 }}
-          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-          transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-        >
+        <div className="flex items-center justify-between mb-4">
           <div className="bg-gradient-to-r from-mars/30 to-cosmic/30 text-white text-sm font-medium py-2 px-4 rounded-full border border-mars/40 backdrop-blur-sm">
             <span className="flex items-center space-x-2">
               <Calendar className="w-4 h-4" />
               <span>{rover.year}</span>
             </span>
           </div>
-          <motion.div
-            className="text-white/40 text-sm font-medium"
-            animate={{ opacity: isActive ? 1 : 0.4 }}
-          >
+          <div className={cn(
+            "text-sm font-medium transition-opacity duration-300",
+            isActive ? "text-white" : "text-white/40"
+          )}>
             Gen {index + 1}
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
-        {/* Rover Visual */}
-        <motion.div
-          className="relative h-48 mb-6 rounded-xl overflow-hidden bg-gradient-to-br from-mars/20 to-cosmic/20 border border-white/10"
-          whileHover={{ rotateY: 5 }}
-          transition={{ duration: 0.4 }}
-        >
-          {/* Tech Grid Animation */}
-          <motion.div
+        {/* Simplified Rover Visual */}
+        <div className="relative h-48 mb-6 rounded-xl overflow-hidden bg-gradient-to-br from-mars/20 to-cosmic/20 border border-white/10">
+          {/* Simple tech grid */}
+          <div
             className="absolute inset-0 opacity-20"
             style={{
               backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 12px)`,
-            }}
-            animate={{
-              backgroundPosition: isActive ? ["0px 0px", "20px 20px"] : "0px 0px",
-            }}
-            transition={{
-              duration: 3,
-              repeat: isActive ? Infinity : 0,
-              ease: "linear",
             }}
           />
 
@@ -161,96 +133,49 @@ const RoverCard = ({ rover, index, isActive, onClick }) => {
           <div className="absolute inset-0 flex items-center justify-center">
             <motion.div
               animate={{
-                scale: isActive ? 1.2 : 1,
-                rotate: isActive ? [0, 5, -5, 0] : 0,
+                scale: isActive ? 1.1 : 1,
               }}
-              transition={{ 
-                duration: isActive ? 4 : 0.3,
-                repeat: isActive ? Infinity : 0,
-              }}
+              transition={{ duration: 0.3 }}
             >
               <Rocket className="w-16 h-16 text-white/80" />
             </motion.div>
           </div>
-
-          {/* Floating Particles */}
-          {isActive && (
-            <div className="absolute inset-0 overflow-hidden">
-              {[...Array(6)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute w-1 h-1 bg-white/60 rounded-full"
-                  animate={{
-                    x: [0, 40, 0],
-                    y: [0, -30, 0],
-                    opacity: [0, 1, 0],
-                  }}
-                  transition={{
-                    duration: 2 + i * 0.3,
-                    repeat: Infinity,
-                    delay: i * 0.4,
-                    ease: "easeInOut",
-                  }}
-                  style={{
-                    left: `${10 + i * 15}%`,
-                    top: `${20 + i * 12}%`,
-                  }}
-                />
-              ))}
-            </div>
-          )}
-        </motion.div>
+        </div>
 
         {/* Title */}
-        <motion.h3
-          className="text-xl font-bold mb-3 font-technospace text-white"
-          initial={{ opacity: 0, y: 10 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-          transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-        >
+        <h3 className="text-xl font-bold mb-3 font-orbitron text-white">
           {rover.title}
-        </motion.h3>
+        </h3>
 
         {/* Description Preview */}
-        <motion.p
-          className="text-white/70 text-sm mb-4 line-clamp-3"
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
-        >
+        <p className="text-white/70 text-sm mb-4 line-clamp-3">
           {rover.description}
-        </motion.p>
+        </p>
 
         {/* Achievement Count */}
-        <motion.div
-          className="flex items-center justify-between"
-          initial={{ opacity: 0, y: 10 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-          transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
-        >
+        <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2 text-cosmic">
             <Award className="w-4 h-4" />
             <span className="text-sm font-medium">{rover.achievements.length} Achievements</span>
           </div>
           <motion.div
             className="text-white/40 group-hover:text-white/80 transition-colors duration-300"
-            whileHover={{ x: 5 }}
+            whileHover={{ x: 3 }}
           >
             <ArrowRight className="w-4 h-4" />
           </motion.div>
-        </motion.div>
+        </div>
       </div>
 
-      {/* Hover Effects */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-mars/10 to-cosmic/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{ mixBlendMode: 'overlay' }}
-      />
+      {/* Simple hover effect */}
+      <div className={cn(
+        "absolute inset-0 bg-gradient-to-r from-mars/5 to-cosmic/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+      )} />
     </motion.div>
   );
 };
 
-// Enhanced Rover Detail Panel
+// Simplified Rover Detail Panel
 const RoverDetailPanel = ({ rover, index }) => {
   const panelRef = useRef(null);
   const isInView = useInView(panelRef, { once: true });
@@ -260,20 +185,15 @@ const RoverDetailPanel = ({ rover, index }) => {
   return (
     <motion.div
       ref={panelRef}
-      className="bg-gradient-to-br from-space-dark/90 to-space/90 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl"
-      initial={{ opacity: 0, scale: 0.95, y: 20 }}
-      animate={isInView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.95, y: 20 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="bg-gradient-to-br from-space-dark/90 to-space/90 backdrop-blur-sm border border-white/20 rounded-3xl p-8 shadow-xl"
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.6 }}
     >
       {/* Header */}
-      <motion.div
-        className="flex items-center justify-between mb-8"
-        initial={{ opacity: 0, y: -20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-      >
+      <div className="flex items-center justify-between mb-8">
         <div>
-          <h2 className="text-4xl font-bold text-white mb-2 font-technospace">
+          <h2 className="text-4xl font-bold text-white mb-2 font-orbitron">
             {rover.title}
           </h2>
           <div className="flex items-center space-x-3 text-cosmic">
@@ -285,32 +205,23 @@ const RoverDetailPanel = ({ rover, index }) => {
         </div>
         <motion.div
           className="w-20 h-20 bg-gradient-to-r from-mars to-cosmic rounded-2xl flex items-center justify-center"
-          whileHover={{ scale: 1.1, rotate: 360 }}
-          transition={{ duration: 0.6 }}
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3 }}
         >
           <Rocket className="w-10 h-10 text-white" />
         </motion.div>
-      </motion.div>
+      </div>
 
       {/* Description */}
-      <motion.div
-        className="mb-8"
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
-      >
+      <div className="mb-8">
         <p className="text-white/80 text-lg leading-relaxed">
           {rover.description}
         </p>
-      </motion.div>
+      </div>
 
       {/* Achievements */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
-      >
-        <h3 className="text-2xl font-bold text-white mb-6 font-technospace flex items-center space-x-3">
+      <div>
+        <h3 className="text-2xl font-bold text-white mb-6 font-orbitron flex items-center space-x-3">
           <Award className="w-6 h-6 text-cosmic" />
           <span>Key Achievements</span>
         </h3>
@@ -320,19 +231,15 @@ const RoverDetailPanel = ({ rover, index }) => {
             <motion.div
               key={i}
               className="bg-gradient-to-r from-mars/10 to-cosmic/10 backdrop-blur-sm border border-white/10 rounded-xl p-4 hover:border-mars/30 transition-all duration-300 group"
-              initial={{ opacity: 0, x: -20 }}
-              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-              transition={{ duration: 0.5, delay: 0.5 + i * 0.1 }}
-              whileHover={{ x: 5 }}
+              initial={{ opacity: 0, x: -10 }}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
+              transition={{ duration: 0.4, delay: 0.1 + i * 0.05 }}
+              whileHover={{ x: 3 }}
             >
               <div className="flex items-start space-x-4">
-                <motion.div
-                  className="p-2 bg-gradient-to-r from-cosmic/20 to-blue-500/20 rounded-lg flex-shrink-0 mt-1"
-                  whileHover={{ scale: 1.1, rotate: 360 }}
-                  transition={{ duration: 0.4 }}
-                >
+                <div className="p-2 bg-gradient-to-r from-cosmic/20 to-blue-500/20 rounded-lg flex-shrink-0 mt-1">
                   <Star className="w-4 h-4 text-cosmic" />
-                </motion.div>
+                </div>
                 <p className="text-white/80 group-hover:text-white transition-colors duration-300">
                   {achievement}
                 </p>
@@ -340,7 +247,7 @@ const RoverDetailPanel = ({ rover, index }) => {
             </motion.div>
           ))}
         </div>
-      </motion.div>
+      </div>
     </motion.div>
   );
 };
@@ -354,15 +261,14 @@ const RoverPage = () => {
     offset: ["start start", "end start"]
   });
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -200]);
-  const backgroundScale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
+  const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.3]);
 
-  // Auto-cycle through rovers
+  // Auto-cycle through rovers (reduced frequency)
   React.useEffect(() => {
     const timer = setInterval(() => {
       setActiveRover((prev) => (prev + 1) % rovers.length);
-    }, 8000);
+    }, 10000); // Increased from 8000
     return () => clearInterval(timer);
   }, []);
 
@@ -484,24 +390,23 @@ const RoverPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-space via-space-dark to-space">
-      <Navbar />
+    <div className="min-h-screen bg-gradient-to-br from-space-dark via-space to-space-dark">
       
-      {/* Hero Section */}
+      {/* Simplified Hero Section */}
       <section 
         ref={heroRef}
         className="min-h-screen flex items-center justify-center relative overflow-hidden"
       >
-        {/* Enhanced Background Effects */}
+        {/* Simplified Background Effects */}
         <motion.div
           className="absolute inset-0"
-          style={{ y: backgroundY, scale: backgroundScale, opacity }}
+          style={{ y: backgroundY, opacity }}
         >
-          <div className="absolute top-1/4 right-0 w-1/2 h-1/2 bg-gradient-to-l from-mars/20 to-orange-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 left-0 w-1/2 h-1/2 bg-gradient-to-r from-cosmic/20 to-blue-500/10 rounded-full blur-3xl" />
+          <div className="absolute top-1/4 right-0 w-1/3 h-1/3 bg-gradient-to-l from-mars/15 to-orange-500/8 rounded-full blur-3xl opacity-60" />
+          <div className="absolute bottom-1/4 left-0 w-1/3 h-1/3 bg-gradient-to-r from-cosmic/15 to-blue-500/8 rounded-full blur-3xl opacity-60" />
         </motion.div>
 
-        {/* Animated Grid Background */}
+        {/* Simple grid background */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" 
                style={{
@@ -511,26 +416,25 @@ const RoverPage = () => {
           />
         </div>
 
-        {/* Floating Elements */}
+        {/* Simplified floating elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(12)].map((_, i) => (
+          {[...Array(6)].map((_, i) => (
             <motion.div
               key={i}
               className="absolute"
               animate={{
-                y: [0, -60, 0],
-                rotate: [0, 360],
+                y: [0, -30, 0],
                 opacity: [0.1, 0.3, 0.1],
               }}
               transition={{
-                duration: 15 + i * 2,
+                duration: 10 + i * 2,
                 repeat: Infinity,
-                delay: i * 1.5,
+                delay: i * 2,
                 ease: "easeInOut",
               }}
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: `${20 + Math.random() * 60}%`,
+                top: `${20 + Math.random() * 60}%`,
               }}
             >
               <Rocket className="w-4 h-4 text-white/20" />
@@ -538,19 +442,19 @@ const RoverPage = () => {
           ))}
         </div>
 
-        <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
+        <div className="container mx-auto px-6 relative z-10 text-center">
           {/* Main Title */}
           <motion.div
             className="mb-12"
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
+            transition={{ duration: 0.8 }}
           >
             <motion.h1 
-              className="text-6xl md:text-8xl font-bold mb-6 font-technospace relative"
-              initial={{ opacity: 0, scale: 0.8 }}
+              className="text-6xl md:text-8xl font-bold mb-6 font-orbitron relative"
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.2, delay: 0.2 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
               <span className="bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent">
                 Our Rovers
@@ -559,7 +463,7 @@ const RoverPage = () => {
                 className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 h-2 bg-gradient-to-r from-mars via-orange-500 to-cosmic rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: "60%" }}
-                transition={{ duration: 1.5, delay: 1 }}
+                transition={{ duration: 1.5, delay: 0.8 }}
               />
             </motion.h1>
             
@@ -567,7 +471,7 @@ const RoverPage = () => {
               className="text-xl text-white/80 max-w-3xl mx-auto leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
             >
               Journey through a decade of innovation, from our first prototype to cutting-edge 
               competition-ready designs that push the boundaries of planetary exploration.
@@ -579,7 +483,7 @@ const RoverPage = () => {
             className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
           >
             <StatCard icon={Rocket} number="9" label="Rover Generations" delay={0} />
             <StatCard icon={Award} number="12" label="Competition Wins" delay={100} />
@@ -587,7 +491,7 @@ const RoverPage = () => {
             <StatCard icon={TrendingUp} number="8" label="Years of Innovation" delay={300} />
           </motion.div>
 
-          {/* Scroll Indicator */}
+          {/* Simplified Scroll Indicator */}
           {showScrollIndicator && (
             <motion.div
               className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
@@ -608,15 +512,15 @@ const RoverPage = () => {
 
       {/* Rovers Grid Section */}
       <section className="py-20 relative">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-6">
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 font-technospace">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 font-orbitron">
               <span className="bg-gradient-to-r from-mars to-cosmic bg-clip-text text-transparent">
                 Evolution Timeline
               </span>
@@ -646,23 +550,23 @@ const RoverPage = () => {
 
       {/* Innovation Section */}
       <section className="py-20 relative">
-        <div className="container mx-auto px-4 md:px-6">
+        <div className="container mx-auto px-6">
           <motion.div
-            className="bg-gradient-to-br from-space-dark/60 to-space/60 backdrop-blur-xl border border-white/10 rounded-3xl p-12 text-center"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
+            className="bg-gradient-to-br from-space-dark/60 to-space/60 backdrop-blur-sm border border-white/10 rounded-3xl p-12 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
             <motion.div
               className="w-20 h-20 bg-gradient-to-r from-mars to-cosmic rounded-2xl flex items-center justify-center mx-auto mb-8"
-              whileHover={{ scale: 1.1, rotate: 360 }}
-              transition={{ duration: 0.6 }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
             >
               <Zap className="w-10 h-10 text-white" />
             </motion.div>
             
-            <h2 className="text-4xl font-bold mb-6 font-technospace text-white">
+            <h2 className="text-4xl font-bold mb-6 font-orbitron text-white">
               The Future of Exploration
             </h2>
             
@@ -673,26 +577,14 @@ const RoverPage = () => {
             </p>
             
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
             >
-              <Button className="bg-gradient-to-r from-mars via-orange-500 to-cosmic hover:from-mars-dark hover:via-orange-600 hover:to-cosmic-dark text-white px-8 py-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 relative overflow-hidden group text-lg">
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent"
-                  initial={{ x: "-100%" }}
-                  whileHover={{ x: "100%" }}
-                  transition={{ duration: 0.6 }}
-                />
-                
-                <span className="relative z-10 flex items-center space-x-3">
+              <Button className="bg-gradient-to-r from-mars via-orange-500 to-cosmic hover:from-mars-dark hover:via-orange-600 hover:to-cosmic-dark text-white px-8 py-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 text-lg font-semibold">
+                <span className="flex items-center space-x-3">
                   <Rocket className="w-6 h-6" />
-                  <span className="font-semibold">Join Our Mission</span>
-                  <motion.div
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    <ArrowRight className="w-6 h-6" />
-                  </motion.div>
+                  <span>Join Our Mission</span>
+                  <ArrowRight className="w-6 h-6" />
                 </span>
               </Button>
             </motion.div>
@@ -703,7 +595,6 @@ const RoverPage = () => {
       {/* Timeline Section */}
       <RoverTimeline events={timelineEvents} />
       
-      <Footer />
     </div>
   );
 };

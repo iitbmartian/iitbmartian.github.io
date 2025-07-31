@@ -6,8 +6,6 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
-
-
 const Competition = ({ title, description, location, image, index, gradient }) => {
   const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef(null);
@@ -17,212 +15,126 @@ const Competition = ({ title, description, location, image, index, gradient }) =
     <motion.div
       ref={cardRef}
       className="relative group overflow-hidden"
-      initial={{ opacity: 0, y: 60, rotateX: 20 }}
+      initial={{ opacity: 0, y: 30, scale: 0.95 }}
       animate={isInView ? { 
         opacity: 1, 
         y: 0, 
-        rotateX: 0 
+        scale: 1 
       } : { 
         opacity: 0, 
-        y: 60, 
-        rotateX: 20 
+        y: 30, 
+        scale: 0.95 
       }}
       transition={{ 
-        duration: 0.9, 
-        delay: index * 0.2,
+        duration: 0.5, 
+        delay: index * 0.1,
         ease: "easeOut"
       }}
       whileHover={{ 
-        y: -15,
-        scale: 1.03,
-        rotateY: 5
+        y: -8,
+        scale: 1.02
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <motion.div
-        className="bg-gradient-to-br from-white/20 to-white/5 rounded-2xl overflow-hidden border border-white/10 backdrop-blur-sm relative h-full"
-        whileHover={{ borderColor: "rgba(255, 255, 255, 0.3)" }}
-        transition={{ duration: 0.3 }}
+        className="bg-gradient-to-br from-space-light/30 to-space-light/10 rounded-2xl overflow-hidden border border-white/10 backdrop-blur-sm relative h-full hover:border-white/30 transition-all duration-300"
       >
-        {/* Animated Background Gradient */}
+        {/* Simplified Background Gradient */}
         <motion.div
           className={`absolute inset-0 ${gradient} opacity-0`}
           animate={{ 
-            opacity: isHovered ? 0.15 : 0,
-            scale: isHovered ? 1 : 0.9
+            opacity: isHovered ? 0.1 : 0,
           }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.3 }}
         />
 
         {/* Image Container */}
         <div className="relative h-48 overflow-hidden">
-          {/* Image Placeholder with Enhanced Gradient */}
+          {/* Simplified Image Placeholder */}
           <motion.div
             className={`w-full h-full ${gradient} opacity-70 relative overflow-hidden`}
             animate={{
-              scale: isHovered ? 1.1 : 1,
+              scale: isHovered ? 1.05 : 1,
             }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.3 }}
           >
-            {/* Animated Tech Pattern */}
-            <motion.div
+            {/* Simple tech pattern */}
+            <div
               className="absolute inset-0 opacity-30"
               style={{
                 backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255,255,255,0.1) 15px, rgba(255,255,255,0.1) 30px)`,
               }}
-              animate={{
-                backgroundPosition: isHovered ? ["0px 0px", "30px 30px"] : "0px 0px",
-              }}
-              transition={{
-                duration: 3,
-                repeat: isHovered ? Infinity : 0,
-                ease: "linear",
-              }}
             />
 
             {/* Competition Icon */}
-            <motion.div
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-              animate={{
-                scale: isHovered ? 1.3 : 1,
-                rotate: isHovered ? 360 : 0,
-              }}
-              transition={{ 
-                duration: isHovered ? 2 : 0.3,
-                repeat: isHovered ? Infinity : 0,
-                ease: "linear"
-              }}
-            >
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
               <Trophy className="w-16 h-16 text-white/80" />
-            </motion.div>
-
-            {/* Floating Particles */}
-            {[...Array(4)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-1 h-1 bg-white/40 rounded-full"
-                animate={{
-                  x: [0, 40, 0],
-                  y: [0, -30, 0],
-                  opacity: [0, 1, 0],
-                }}
-                transition={{
-                  duration: 2 + i * 0.5,
-                  repeat: Infinity,
-                  delay: i * 0.3,
-                  ease: "easeInOut",
-                }}
-                style={{
-                  left: `${20 + i * 20}%`,
-                  top: `${30 + i * 15}%`,
-                }}
-              />
-            ))}
+            </div>
           </motion.div>
 
           {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/30 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-space/90 via-space/30 to-transparent" />
           
           {/* Achievement Badge */}
           <motion.div
-            className="absolute top-4 right-4 p-2 bg-gradient-to-r from-red-500/80 to-orange-500/80 rounded-full backdrop-blur-sm"
-            initial={{ scale: 0, rotate: -180 }}
-            animate={isInView ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -180 }}
-            transition={{ duration: 0.8, delay: 0.5 + index * 0.2 }}
-            whileHover={{ scale: 1.1, rotate: 360 }}
+            className="absolute top-4 right-4 p-2 bg-gradient-to-r from-mars/80 to-orange-500/80 rounded-full backdrop-blur-sm"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+            transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
           >
             <Award className="w-5 h-5 text-white" />
           </motion.div>
         </div>
 
         {/* Content Section */}
-        <motion.div
-          className="p-6 relative z-10"
-          animate={{
-            y: isHovered ? -5 : 0,
-          }}
-          transition={{ duration: 0.3 }}
-        >
+        <div className="p-6 relative z-10">
           {/* Location */}
-          <motion.div
-            className="flex items-center mb-3 group"
-            whileHover={{ x: 5 }}
-            transition={{ duration: 0.2 }}
-          >
-            <motion.div
-              className="p-1 bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-full mr-3"
-              whileHover={{ rotate: 360, scale: 1.1 }}
-              transition={{ duration: 0.5 }}
-            >
-              <MapPin className="h-4 w-4 text-red-500" />
-            </motion.div>
-            <motion.span
-              className="text-white/70 text-sm group-hover:text-white/90 transition-colors duration-300"
-              animate={{
-                color: isHovered ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0.7)",
-              }}
-              transition={{ duration: 0.3 }}
-            >
+          <div className="flex items-center mb-3 group/location">
+            <div className="p-1 bg-gradient-to-r from-mars/20 to-orange-500/20 rounded-full mr-3">
+              <MapPin className="h-4 w-4 text-mars" />
+            </div>
+            <span className="text-white/70 text-sm group-hover/location:text-white/90 transition-colors duration-300">
               {location}
-            </motion.span>
-          </motion.div>
+            </span>
+          </div>
 
           {/* Title */}
           <motion.h3
-            className="text-xl font-bold mb-3 relative"
-            animate={{
-              color: isHovered ? "#00d9ff" : "#ffffff",
-            }}
-            transition={{ duration: 0.3 }}
+            className="text-xl font-bold mb-3 relative text-white group-hover:text-cosmic transition-colors duration-300 font-orbitron"
           >
             {title}
             <motion.div
-              className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-red-500 to-purple-500 rounded-full"
+              className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-mars to-cosmic rounded-full"
               initial={{ width: 0 }}
               animate={{ width: isHovered ? "100%" : "0%" }}
-              transition={{ duration: 0.4 }}
+              transition={{ duration: 0.3 }}
             />
           </motion.h3>
 
           {/* Description */}
-          <motion.p
-            className="text-white/70 leading-relaxed"
-            animate={{
-              color: isHovered ? "rgba(255, 255, 255, 0.85)" : "rgba(255, 255, 255, 0.7)",
-            }}
-            transition={{ duration: 0.3 }}
-          >
+          <p className="text-white/70 leading-relaxed group-hover:text-white/85 transition-colors duration-300 mb-4">
             {description}
-          </motion.p>
+          </p>
 
           {/* Competition Ranking Indicator */}
           <motion.div
-            className="mt-4 flex items-center space-x-2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 20 }}
+            className="flex items-center space-x-2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isHovered ? 1 : 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Target className="w-4 h-4 text-purple-500" />
-            <span className="text-xs text-purple-500 font-medium">Global Competition</span>
+            <Target className="w-4 h-4 text-cosmic" />
+            <span className="text-xs text-cosmic font-medium">Global Competition</span>
           </motion.div>
-        </motion.div>
-
-        {/* Hover Border Effect */}
-        <motion.div
-          className="absolute inset-0 rounded-2xl border-2 border-transparent"
-          animate={{
-            borderColor: isHovered ? "rgba(0, 217, 255, 0.4)" : "transparent",
-          }}
-          transition={{ duration: 0.3 }}
-        />
+        </div>
 
         {/* Progress Line */}
         <motion.div
-          className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-red-500 to-purple-500 rounded-full"
+          className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-mars to-cosmic rounded-full"
           initial={{ width: 0 }}
           animate={{ width: isInView ? "100%" : 0 }}
-          transition={{ duration: 1, delay: 0.3 + index * 0.2 }}
+          transition={{ duration: 0.8, delay: 0.2 + index * 0.1 }}
         />
       </motion.div>
     </motion.div>
@@ -231,13 +143,13 @@ const Competition = ({ title, description, location, image, index, gradient }) =
 
 const CompetitionsSection = () => {
   const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
   });
 
   const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -50]);
-  const backgroundScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
 
   const competitions = [
     {
@@ -245,14 +157,14 @@ const CompetitionsSection = () => {
       description: "The world's premier robotics competition for university students, held annually in the desert of southern Utah, USA.",
       location: "Mars Desert Research Station, Utah, USA",
       image: "https://via.placeholder.com/600x400?text=URC",
-      gradient: "bg-gradient-to-br from-red-500/60 to-orange-600/40"
+      gradient: "bg-gradient-to-br from-mars/60 to-orange-600/40"
     },
     {
       title: "International Rover Challenge (IRC)",
       description: "A competition that tests rovers' capabilities in various challenges simulating real Mars mission scenarios.",
       location: "India",
       image: "https://via.placeholder.com/600x400?text=IRC",
-      gradient: "bg-gradient-to-br from-blue-500/60 to-cyan-500/40"
+      gradient: "bg-gradient-to-br from-cosmic/60 to-blue-500/40"
     },
     {
       title: "European Rover Challenge (ERC)",
@@ -263,7 +175,7 @@ const CompetitionsSection = () => {
     }
   ];
 
-  // Animation variants
+  // Simplified animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -276,12 +188,12 @@ const CompetitionsSection = () => {
   };
 
   const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
+    hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 0.8,
+        duration: 0.5,
         ease: "easeOut",
       },
     },
@@ -291,135 +203,132 @@ const CompetitionsSection = () => {
     <section 
       ref={sectionRef}
       id="competitions" 
-      className="py-20 bg-gradient-to-br from-space via-space-dark to-space relative overflow-hidden"
+      className="py-24 bg-gradient-to-br from-space-dark via-space to-space-dark relative overflow-hidden"
     >
-      {/* Enhanced Background Effects */}
-      <motion.div
-        className="absolute top-1/3 right-0 w-1/3 h-1/3 bg-gradient-to-l from-red-500/10 to-orange-500/5 rounded-full blur-3xl"
-        style={{ 
-          y: backgroundY,
-          scale: backgroundScale 
-        }}
-        animate={{
-          rotate: [0, 360],
-          scale: [1, 1.3, 1],
-        }}
-        transition={{
-          rotate: { duration: 50, repeat: Infinity, ease: "linear" },
-          scale: { duration: 15, repeat: Infinity, ease: "easeInOut" }
-        }}
-      />
-      
-      <motion.div
-        className="absolute bottom-1/3 left-0 w-1/3 h-1/3 bg-gradient-to-r from-purple-500/10 to-blue-500/5 rounded-full blur-3xl"
-        style={{ 
-          y: backgroundY,
-          scale: backgroundScale 
-        }}
-        animate={{
-          rotate: [360, 0],
-          scale: [1.2, 1, 1.2],
-        }}
-        transition={{
-          rotate: { duration: 45, repeat: Infinity, ease: "linear" },
-          scale: { duration: 12, repeat: Infinity, ease: "easeInOut", delay: 4 }
-        }}
-      />
-
-      {/* Floating Trophy Icons */}
+      {/* Simplified Background Effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(8)].map((_, i) => (
+        <div
+          style={{ transform: `translateY(${backgroundY}px)` }}
+          className="absolute top-1/3 right-0 w-1/3 h-1/3 bg-gradient-to-l from-mars/10 to-orange-500/5 rounded-full blur-3xl opacity-60"
+        />
+        
+        <div
+          style={{ transform: `translateY(${backgroundY}px)` }}
+          className="absolute bottom-1/3 left-0 w-1/3 h-1/3 bg-gradient-to-r from-cosmic/10 to-blue-500/5 rounded-full blur-3xl opacity-60"
+        />
+
+        {/* Simple floating trophies */}
+        {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute"
             animate={{
-              y: [0, -25, 0],
-              rotate: [0, 360],
+              y: [0, -15, 0],
               opacity: [0.1, 0.3, 0.1],
             }}
             transition={{
-              duration: 8 + i * 1.5,
+              duration: 6 + i * 1.5,
               repeat: Infinity,
               delay: i * 1,
               ease: "easeInOut",
             }}
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
+              left: `${15 + Math.random() * 70}%`,
+              top: `${15 + Math.random() * 70}%`,
             }}
           >
-            <Trophy className="w-4 h-4 text-white/10" />
+            <Trophy className="w-4 h-4 text-white/20" />
           </motion.div>
         ))}
-      </div>
 
-      {/* Achievement Lines */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <svg className="absolute inset-0 w-full h-full opacity-5">
-          <defs>
-            <linearGradient id="achievementGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#ff6b35" />
-              <stop offset="50%" stopColor="#ffd700" />
-              <stop offset="100%" stopColor="#00d9ff" />
-            </linearGradient>
-          </defs>
-          {[...Array(6)].map((_, i) => (
-            <motion.path
-              key={i}
-              d={`M ${i * 20},0 Q ${i * 20 + 50},50 ${i * 20 + 100},100`}
-              fill="none"
-              stroke="url(#achievementGradient)"
-              strokeWidth="2"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ 
-                pathLength: 1, 
-                opacity: [0, 0.3, 0],
-              }}
-              transition={{
-                pathLength: { duration: 4, delay: i * 0.5 },
-                opacity: { duration: 4, delay: i * 0.5 }
-              }}
-            />
-          ))}
-        </svg>
+        {/* Static achievement pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <svg className="absolute inset-0 w-full h-full">
+            <defs>
+              <linearGradient id="achievementGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#ff6b35" />
+                <stop offset="50%" stopColor="#ffd700" />
+                <stop offset="100%" stopColor="#00d9ff" />
+              </linearGradient>
+            </defs>
+            {[...Array(6)].map((_, i) => (
+              <path
+                key={i}
+                d={`M ${i * 20},0 Q ${i * 20 + 50},50 ${i * 20 + 100},100`}
+                fill="none"
+                stroke="url(#achievementGradient)"
+                strokeWidth="2"
+                opacity="0.3"
+              />
+            ))}
+          </svg>
+        </div>
       </div>
       
-      <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-7xl">
+      <div className="container mx-auto px-6 relative z-10">
         {/* Header Section */}
         <motion.div
           className="text-center mb-16"
           variants={containerVariants}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          animate={isInView ? "visible" : "hidden"}
         >
           <motion.h2 
-            className="text-4xl md:text-6xl font-bold text-white mb-6 relative inline-block"
+            className="text-5xl md:text-7xl font-bold font-orbitron mb-6 relative inline-block"
             variants={itemVariants}
           >
-            <span className="relative bg-gradient-to-r from-red-500 via-orange-500 to-purple-500 bg-clip-text text-transparent visible">
-              Proving Grounds For Our Capabilities
-              <motion.div
-                className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-red-500 via-orange-500 to-purple-500 rounded-full"
-                initial={{ width: 0 }}
-                whileInView={{ width: "100%" }}
-                transition={{ duration: 1.5, delay: 0.5 }}
-                viewport={{ once: true }}
-              />
+            <span className="bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent">
+              Proving Grounds
             </span>
+            <motion.div
+              className="absolute -bottom-2 left-0 h-1.5 bg-gradient-to-r from-mars via-orange-500 to-cosmic rounded-full"
+              initial={{ width: 0 }}
+              animate={isInView ? { width: "100%" } : { width: 0 }}
+              transition={{ duration: 1.5, delay: 0.5 }}
+            />
           </motion.h2>
           
           <motion.p 
-            className="text-xl text-white/70 max-w-3xl mx-auto flex items-center justify-center space-x-2"
+            className="text-xl text-white/80 max-w-4xl mx-auto leading-relaxed flex items-center justify-center space-x-3"
             variants={itemVariants}
           >
-            <Globe className="w-5 h-5 text-purple-500" />
-            <span>We test our rovers&apos; capabilities and our team&apos;s skills in premier international competitions.</span>
+            <Globe className="w-6 h-6 text-cosmic flex-shrink-0" />
+            <span>We test our rovers' capabilities and our team's skills in premier international competitions</span>
+            <Trophy className="w-6 h-6 text-mars flex-shrink-0" />
           </motion.p>
+
+          {/* Competition Stats */}
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 max-w-2xl mx-auto"
+            variants={itemVariants}
+          >
+            {[
+              { label: "Global Events", value: "3+", icon: <Globe className="w-4 h-4" />, gradient: "from-mars to-orange-500" },
+              { label: "Countries", value: "3", icon: <MapPin className="w-4 h-4" />, gradient: "from-cosmic to-blue-500" },
+              { label: "Awards Won", value: "15+", icon: <Trophy className="w-4 h-4" />, gradient: "from-purple-500 to-pink-500" }
+            ].map((stat, index) => (
+              <motion.div
+                key={index}
+                className="bg-gradient-to-br from-space-light/20 to-space-light/10 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center group hover:border-white/30 transition-all duration-300"
+                whileHover={{ scale: 1.02, y: -2 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+              >
+                <div className={`inline-flex p-2 rounded-lg bg-gradient-to-r ${stat.gradient}/20 mb-2`}>
+                  <div className={`bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`}>
+                    {stat.icon}
+                  </div>
+                </div>
+                <div className="text-lg font-bold text-white mb-1">{stat.value}</div>
+                <div className="text-xs text-white/70 group-hover:text-white/90 transition-colors duration-300">{stat.label}</div>
+              </motion.div>
+            ))}
+          </motion.div>
         </motion.div>
         
         {/* Competitions Grid */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto mb-16">
+        <div className="grid md:grid-cols-3 gap-8 mb-16">
           {competitions.map((competition, index) => (
             <Competition 
               key={index} 
@@ -432,33 +341,20 @@ const CompetitionsSection = () => {
         {/* Call to Action */}
         <motion.div
           className="text-center"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
         >
           <Link href="/competitions">
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <Button className="bg-gradient-to-r from-red-500 via-orange-500 to-purple-500 hover:from-red-600 hover:via-orange-600 hover:to-purple-600 text-white group px-8 py-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 relative overflow-hidden font-bold text-lg">
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent"
-                  initial={{ x: "-100%" }}
-                  whileHover={{ x: "100%" }}
-                  transition={{ duration: 0.6 }}
-                />
-                
-                <span className="relative z-10 flex items-center space-x-2">
+              <Button className="bg-gradient-to-r from-mars via-orange-500 to-cosmic hover:from-mars-dark hover:via-orange-600 hover:to-cosmic-dark text-white group px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-lg">
+                <span className="flex items-center space-x-3">
                   <Trophy className="w-5 h-5" />
-                  <span className="font-semibold">View Our Competitive Records</span>
-                  <motion.div
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  >
-                    <ArrowRight className="w-5 h-5" />
-                  </motion.div>
+                  <span>View Our Competitive Records</span>
+                  <ArrowRight className="w-5 h-5" />
                 </span>
               </Button>
             </motion.div>

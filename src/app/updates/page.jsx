@@ -6,8 +6,6 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { cn } from '@/lib/utils';
 
-
-
 const UpdateCard = ({ title, date, image, content, link, index, category, priority }) => {
   const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef(null);
@@ -35,109 +33,62 @@ const UpdateCard = ({ title, date, image, content, link, index, category, priori
     <motion.div
       ref={cardRef}
       className="relative group overflow-hidden"
-      initial={{ opacity: 0, y: 60, scale: 0.9 }}
+      initial={{ opacity: 0, y: 30, scale: 0.98 }}
       animate={isInView ? { 
         opacity: 1, 
         y: 0, 
         scale: 1 
       } : { 
         opacity: 0, 
-        y: 60, 
-        scale: 0.9 
+        y: 30, 
+        scale: 0.98 
       }}
       transition={{ 
-        duration: 0.8, 
-        delay: index * 0.15,
+        duration: 0.5, 
+        delay: index * 0.05,
         ease: "easeOut"
       }}
       whileHover={{ 
-        y: -12,
-        scale: 1.03,
-        rotateY: 3
+        y: -6,
+        scale: 1.02
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <motion.div
-        className={`bg-gradient-to-br from-space-light/30 to-space-light/10 rounded-2xl overflow-hidden border ${priorityColors[priority].border} backdrop-blur-sm relative h-full`}
-        whileHover={{ borderColor: "rgba(255, 255, 255, 0.3)" }}
-        transition={{ duration: 0.3 }}
+        className={`bg-gradient-to-br from-space-light/30 to-space-light/10 rounded-2xl overflow-hidden border ${priorityColors[priority].border} backdrop-blur-sm relative h-full hover:border-white/30 transition-all duration-300`}
       >
-        {/* Animated Background Gradient */}
+        {/* Simplified Background Gradient */}
         <motion.div
           className={`absolute inset-0 bg-gradient-to-br ${priorityColors[priority].gradient} opacity-0`}
           animate={{ 
-            opacity: isHovered ? 0.15 : 0,
-            scale: isHovered ? 1 : 0.9
+            opacity: isHovered ? 0.1 : 0,
           }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.3 }}
         />
 
         {/* Image Container */}
         {image && (
           <div className="relative h-48 overflow-hidden">
-            {/* Image Placeholder with Enhanced Gradient */}
+            {/* Simplified Image Placeholder */}
             <motion.div
               className={`w-full h-full bg-gradient-to-br ${priorityColors[priority].gradient} opacity-80 relative overflow-hidden`}
               animate={{
-                scale: isHovered ? 1.1 : 1,
+                scale: isHovered ? 1.05 : 1,
               }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.3 }}
             >
-              {/* Animated Tech Pattern */}
-              <motion.div
+              {/* Simple tech pattern */}
+              <div
                 className="absolute inset-0 opacity-20"
                 style={{
                   backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255,255,255,0.1) 15px, rgba(255,255,255,0.1) 30px)`,
                 }}
-                animate={{
-                  backgroundPosition: isHovered ? ["0px 0px", "30px 30px"] : "0px 0px",
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: isHovered ? Infinity : 0,
-                  ease: "linear",
-                }}
               />
 
               {/* News Icon */}
-              <motion.div
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-                animate={{
-                  scale: isHovered ? 1.3 : 1,
-                  rotate: isHovered ? [0, 10, -10, 0] : 0,
-                }}
-                transition={{ 
-                  duration: isHovered ? 2 : 0.3,
-                  repeat: isHovered ? Infinity : 0,
-                }}
-              >
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <Newspaper className="w-16 h-16 text-white/90" />
-              </motion.div>
-
-              {/* Floating Particles */}
-              <div className="absolute inset-0 overflow-hidden">
-                {[...Array(3)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute w-1 h-1 bg-white/40 rounded-full"
-                    animate={{
-                      x: [0, 40, 0],
-                      y: [0, -30, 0],
-                      opacity: [0, 1, 0],
-                    }}
-                    transition={{
-                      duration: 2.5 + i * 0.5,
-                      repeat: Infinity,
-                      delay: i * 0.4,
-                      ease: "easeInOut",
-                    }}
-                    style={{
-                      left: `${25 + i * 25}%`,
-                      top: `${30 + i * 20}%`,
-                    }}
-                  />
-                ))}
               </div>
             </motion.div>
 
@@ -147,10 +98,9 @@ const UpdateCard = ({ title, date, image, content, link, index, category, priori
             {/* Priority Badge */}
             <motion.div
               className={`absolute top-4 right-4 px-3 py-1 rounded-full bg-gradient-to-r ${priorityColors[priority].badge} backdrop-blur-sm`}
-              initial={{ scale: 0, rotate: -180 }}
-              animate={isInView ? { scale: 1, rotate: 0 } : { scale: 0, rotate: -180 }}
-              transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-              whileHover={{ scale: 1.1, rotate: 360 }}
+              initial={{ scale: 0, opacity: 0 }}
+              animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+              transition={{ duration: 0.4, delay: 0.1 + index * 0.05 }}
             >
               <span className="text-xs text-white font-medium capitalize">{priority}</span>
             </motion.div>
@@ -160,8 +110,7 @@ const UpdateCard = ({ title, date, image, content, link, index, category, priori
               className="absolute top-4 left-4 px-3 py-1 rounded-full bg-space-dark/80 backdrop-blur-sm border border-white/20"
               initial={{ scale: 0, opacity: 0 }}
               animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.4, delay: 0.15 + index * 0.05 }}
             >
               <span className="text-xs text-white/90 font-medium">{category}</span>
             </motion.div>
@@ -169,64 +118,34 @@ const UpdateCard = ({ title, date, image, content, link, index, category, priori
         )}
 
         {/* Content Section */}
-        <motion.div
-          className="p-6 relative z-10"
-          animate={{
-            y: isHovered ? -3 : 0,
-          }}
-          transition={{ duration: 0.3 }}
-        >
+        <div className="p-6 relative z-10">
           {/* Date */}
-          <motion.div
-            className="flex items-center mb-4 group/date"
-            whileHover={{ x: 5 }}
-            transition={{ duration: 0.2 }}
-          >
-            <motion.div
-              className="p-1 bg-gradient-to-r from-cosmic/20 to-blue-500/20 rounded-full mr-3"
-              whileHover={{ rotate: 360, scale: 1.1 }}
-              transition={{ duration: 0.5 }}
-            >
+          <div className="flex items-center mb-4 group/date">
+            <div className="p-1 bg-gradient-to-r from-cosmic/20 to-blue-500/20 rounded-full mr-3">
               <Calendar className="h-4 w-4 text-cosmic" />
-            </motion.div>
-            <motion.span
-              className="text-white/70 text-sm group-hover/date:text-white/90 transition-colors duration-300"
-              animate={{
-                color: isHovered ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0.7)",
-              }}
-              transition={{ duration: 0.3 }}
-            >
+            </div>
+            <span className="text-white/70 text-sm group-hover/date:text-white/90 transition-colors duration-300">
               {date}
-            </motion.span>
-          </motion.div>
+            </span>
+          </div>
 
           {/* Title */}
           <motion.h3
-            className="text-xl font-bold mb-4 font-technospace relative leading-tight"
-            animate={{
-              color: isHovered ? "#00d9ff" : "#ffffff",
-            }}
-            transition={{ duration: 0.3 }}
+            className="text-xl font-bold mb-4 font-orbitron relative leading-tight text-white group-hover:text-cosmic transition-colors duration-300"
           >
             {title}
             <motion.div
               className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-mars to-cosmic rounded-full"
               initial={{ width: 0 }}
               animate={{ width: isHovered ? "100%" : "0%" }}
-              transition={{ duration: 0.4 }}
+              transition={{ duration: 0.3 }}
             />
           </motion.h3>
 
           {/* Content */}
-          <motion.p
-            className="text-white/80 mb-6 leading-relaxed"
-            animate={{
-              color: isHovered ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0.8)",
-            }}
-            transition={{ duration: 0.3 }}
-          >
+          <p className="text-white/80 mb-6 leading-relaxed group-hover:text-white/90 transition-colors duration-300">
             {content}
-          </motion.p>
+          </p>
 
           {/* Link */}
           {link && (
@@ -234,39 +153,16 @@ const UpdateCard = ({ title, date, image, content, link, index, category, priori
               href={link}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-cosmic hover:text-cyan-300 flex items-center space-x-2 group/link relative overflow-hidden"
-              whileHover={{ x: 5 }}
+              className="text-cosmic hover:text-cyan-300 flex items-center space-x-2 group/link transition-colors duration-300"
+              whileHover={{ x: 3 }}
               transition={{ duration: 0.2 }}
             >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-cosmic/10 to-transparent rounded"
-                initial={{ x: "-100%" }}
-                whileHover={{ x: "100%" }}
-                transition={{ duration: 0.6 }}
-              />
-              
-              <div className="relative z-10 flex items-center space-x-2">
-                <Newspaper className="h-4 w-4" />
-                <span className="font-medium">Read full article</span>
-                <motion.div
-                  animate={{ x: isHovered ? [0, 3, 0] : 0 }}
-                  transition={{ duration: 1.5, repeat: isHovered ? Infinity : 0 }}
-                >
-                  <ExternalLink className="h-3 w-3" />
-                </motion.div>
-              </div>
+              <Newspaper className="h-4 w-4" />
+              <span className="font-medium">Read full article</span>
+              <ExternalLink className="h-3 w-3" />
             </motion.a>
           )}
-        </motion.div>
-
-        {/* Hover Border Effect */}
-        <motion.div
-          className="absolute inset-0 rounded-2xl border-2 border-transparent"
-          animate={{
-            borderColor: isHovered ? "rgba(0, 217, 255, 0.4)" : "transparent",
-          }}
-          transition={{ duration: 0.3 }}
-        />
+        </div>
 
         {/* Reading Time Indicator */}
         <motion.div
@@ -291,7 +187,6 @@ const UpdatesPage = () => {
   });
 
   const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -50]);
-  const backgroundScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
 
   const updates = [
     {
@@ -350,132 +245,103 @@ const UpdatesPage = () => {
     }
   ];
 
-  // Animation variants
+  // Simplified animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
+        staggerChildren: 0.05,
+        delayChildren: 0.1,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
+    hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 0.8,
+        duration: 0.5,
         ease: "easeOut",
       },
     },
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-space via-space-dark to-space">
-      <Navbar />
+    <div className="min-h-screen bg-gradient-to-br from-space-dark via-space to-space-dark">
       
       <section 
         ref={sectionRef}
-        className="pt-28 pb-20 bg-gradient-to-br from-space-dark via-space to-space-dark relative overflow-hidden"
+        className="pt-32 pb-24 relative overflow-hidden"
       >
-        {/* Enhanced Background Effects */}
-        <motion.div
-          className="absolute top-1/4 right-0 w-1/3 h-1/3 bg-gradient-to-l from-mars/10 to-orange-500/5 rounded-full blur-3xl"
-          style={{ 
-            y: backgroundY,
-            scale: backgroundScale 
-          }}
-          animate={{
-            rotate: [0, 360],
-            scale: [1, 1.3, 1],
-          }}
-          transition={{
-            rotate: { duration: 90, repeat: Infinity, ease: "linear" },
-            scale: { duration: 30, repeat: Infinity, ease: "easeInOut" }
-          }}
-        />
-        
-        <motion.div
-          className="absolute bottom-1/4 left-0 w-1/3 h-1/3 bg-gradient-to-r from-cosmic/10 to-blue-500/5 rounded-full blur-3xl"
-          style={{ 
-            y: backgroundY,
-            scale: backgroundScale 
-          }}
-          animate={{
-            rotate: [360, 0],
-            scale: [1.2, 1, 1.2],
-          }}
-          transition={{
-            rotate: { duration: 85, repeat: Infinity, ease: "linear" },
-            scale: { duration: 25, repeat: Infinity, ease: "easeInOut", delay: 8 }
-          }}
-        />
+        {/* Simplified Background Effects */}
+        <div className="absolute inset-0">
+          {/* Simple gradient orbs - no complex animations */}
+          <div
+            className="absolute top-1/4 right-0 w-1/3 h-1/3 bg-gradient-to-l from-mars/10 to-orange-500/5 rounded-full blur-3xl opacity-60"
+            style={{ transform: `translateY(${backgroundY}px)` }}
+          />
+          
+          <div
+            className="absolute bottom-1/4 left-0 w-1/3 h-1/3 bg-gradient-to-r from-cosmic/10 to-blue-500/5 rounded-full blur-3xl opacity-60"
+            style={{ transform: `translateY(${backgroundY}px)` }}
+          />
 
-        {/* Floating News Icons */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(12)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute"
-              animate={{
-                y: [0, -35, 0],
-                rotate: [0, 360],
-                opacity: [0.1, 0.3, 0.1],
-              }}
-              transition={{
-                duration: 18 + i * 2,
-                repeat: Infinity,
-                delay: i * 1.8,
-                ease: "easeInOut",
-              }}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-            >
-              <TrendingUp className="w-4 h-4 text-white/10" />
-            </motion.div>
-          ))}
-        </div>
+          {/* Static news pattern */}
+          <div className="absolute inset-0 opacity-5">
+            <svg className="absolute inset-0 w-full h-full">
+              <defs>
+                <linearGradient id="newsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#ff6b35" />
+                  <stop offset="50%" stopColor="#00d9ff" />
+                  <stop offset="100%" stopColor="#ff6b35" />
+                </linearGradient>
+              </defs>
+              {[...Array(6)].map((_, i) => (
+                <line
+                  key={i}
+                  x1={`${5 + i * 18}%`}
+                  y1="10%"
+                  x2={`${15 + i * 18}%`}
+                  y2="90%"
+                  stroke="url(#newsGradient)"
+                  strokeWidth="1"
+                  opacity="0.3"
+                />
+              ))}
+            </svg>
+          </div>
 
-        {/* News Pattern Lines */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <svg className="absolute inset-0 w-full h-full opacity-5">
-            <defs>
-              <linearGradient id="newsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#ff6b35" />
-                <stop offset="50%" stopColor="#00d9ff" />
-                <stop offset="100%" stopColor="#ff6b35" />
-              </linearGradient>
-            </defs>
+          {/* Simple floating news icons */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
             {[...Array(6)].map((_, i) => (
-              <motion.line
+              <motion.div
                 key={i}
-                x1={`${5 + i * 18}%`}
-                y1="10%"
-                x2={`${15 + i * 18}%`}
-                y2="90%"
-                stroke="url(#newsGradient)"
-                strokeWidth="1"
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ 
-                  pathLength: 1, 
-                  opacity: [0, 0.4, 0],
+                className="absolute"
+                animate={{
+                  y: [0, -20, 0],
+                  opacity: [0.1, 0.3, 0.1],
                 }}
                 transition={{
-                  pathLength: { duration: 4, delay: i * 0.5 },
-                  opacity: { duration: 4, delay: i * 0.5, repeat: Infinity, repeatDelay: 6 }
+                  duration: 8 + i * 2,
+                  repeat: Infinity,
+                  delay: i * 1.5,
+                  ease: "easeInOut",
                 }}
-              />
+                style={{
+                  left: `${15 + Math.random() * 70}%`,
+                  top: `${15 + Math.random() * 70}%`,
+                }}
+              >
+                <TrendingUp className="w-4 h-4 text-white/20" />
+              </motion.div>
             ))}
-          </svg>
+          </div>
         </div>
         
-        <div className="container mx-auto px-4 md:px-6 relative z-10">
+        <div className="container mx-auto px-6 relative z-10">
           {/* Header Section */}
           <motion.div
             className="text-center mb-16"
@@ -485,63 +351,56 @@ const UpdatesPage = () => {
             viewport={{ once: true, margin: "-100px" }}
           >
             <motion.h1 
-              className="section-title relative inline-block"
+              className="text-5xl md:text-7xl font-bold font-orbitron bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent relative mb-6"
               variants={itemVariants}
             >
-              <span className="relative">
-                Updates & Media
-                <motion.div
-                  className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-mars via-orange-500 to-cosmic rounded-full"
-                  initial={{ width: 0 }}
-                  whileInView={{ width: "100%" }}
-                  transition={{ duration: 1.5, delay: 0.5 }}
-                  viewport={{ once: true }}
-                />
-              </span>
+              Updates & Media
+              <motion.div
+                className="absolute -bottom-2 left-0 h-1.5 bg-gradient-to-r from-mars via-orange-500 to-cosmic rounded-full"
+                initial={{ width: 0 }}
+                whileInView={{ width: "100%" }}
+                transition={{ duration: 1.5, delay: 0.5 }}
+                viewport={{ once: true }}
+              />
             </motion.h1>
             
             <motion.p 
-              className="section-subtitle flex items-center justify-center space-x-2"
+              className="text-xl text-white/80 max-w-4xl mx-auto leading-relaxed flex items-center justify-center space-x-3"
               variants={itemVariants}
             >
-              <Star className="w-5 h-5 text-cosmic" />
-              <span>Stay up to date with the latest news, achievements, and events from our team.</span>
+              <Star className="w-6 h-6 text-cosmic" />
+              <span>Stay up to date with the latest news, achievements, and events from our team</span>
+              <Newspaper className="w-6 h-6 text-mars" />
             </motion.p>
 
             {/* Update Stats */}
             <motion.div
-              className="flex items-center justify-center space-x-8 mt-8"
+              className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-4xl mx-auto"
               variants={itemVariants}
             >
-              <motion.div
-                className="text-center"
-                whileHover={{ scale: 1.05 }}
-              >
+              {[
+                { label: "Latest Updates", value: updates.length, icon: <Newspaper className="w-5 h-5" />, gradient: "from-mars to-orange-500" },
+                { label: "Categories", value: "6", icon: <Star className="w-5 h-5" />, gradient: "from-cosmic to-blue-500" },
+                { label: "This Year", value: "2023", icon: <Calendar className="w-5 h-5" />, gradient: "from-purple-500 to-pink-500" },
+                { label: "Read Time", value: "2 min", icon: <Clock className="w-5 h-5" />, gradient: "from-green-500 to-emerald-500" }
+              ].map((stat, index) => (
                 <motion.div
-                  className="text-2xl font-bold text-gradient"
-                  animate={{ opacity: [0.7, 1, 0.7] }}
-                  transition={{ duration: 2, repeat: Infinity }}
+                  key={index}
+                  className="bg-gradient-to-br from-space-light/20 to-space-light/10 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center group hover:border-white/30 transition-all duration-300"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
                 >
-                  {updates.length}+
+                  <div className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${stat.gradient}/20 mb-3`}>
+                    <div className={`bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`}>
+                      {stat.icon}
+                    </div>
+                  </div>
+                  <div className="text-2xl font-bold text-white mb-1">{stat.value}</div>
+                  <div className="text-sm text-white/70 group-hover:text-white/90 transition-colors duration-300">{stat.label}</div>
                 </motion.div>
-                <div className="text-white/60 text-sm">Latest Updates</div>
-              </motion.div>
-              
-              <div className="w-px h-8 bg-white/20"></div>
-              
-              <motion.div
-                className="text-center"
-                whileHover={{ scale: 1.05 }}
-              >
-                <motion.div
-                  className="text-2xl font-bold text-gradient"
-                  animate={{ opacity: [0.7, 1, 0.7] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-                >
-                  2023
-                </motion.div>
-                <div className="text-white/60 text-sm">Current Year</div>
-              </motion.div>
+              ))}
             </motion.div>
           </motion.div>
           

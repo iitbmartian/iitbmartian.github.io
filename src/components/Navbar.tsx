@@ -15,7 +15,6 @@ const Navbar = () => {
   
   const { scrollY } = useScroll();
   const headerOpacity = useTransform(scrollY, [0, 100], [1, 0.95]);
-  const headerScale = useTransform(scrollY, [0, 100], [1, 0.98]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -78,86 +77,73 @@ const Navbar = () => {
   return (
     <>
       <motion.nav
-        style={{ opacity: headerOpacity, scale: headerScale }}
+        style={{ opacity: headerOpacity }}
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out',
+          'fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out',
           isScrolled 
-            ? 'bg-gradient-to-r from-space/90 via-space-dark/90 to-space/90 backdrop-blur-2xl shadow-xl py-2 border-b border-mars/20' 
+            ? 'bg-gradient-to-r from-space/90 via-space-dark/90 to-space/90 backdrop-blur-xl shadow-lg py-2 border-b border-mars/20' 
             : 'bg-transparent py-3'
         )}
       >
-        {/* Compact animated border gradient */}
+        {/* Simplified animated border gradient */}
         <motion.div
           className="absolute inset-0 bg-gradient-to-r from-mars/10 via-cosmic/10 to-mars/10"
           animate={{ 
-            opacity: isScrolled ? 1 : 0,
-            backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+            opacity: isScrolled ? 0.3 : 0,
           }}
-          transition={{ 
-            opacity: { duration: 0.5 },
-            backgroundPosition: { duration: 6, repeat: Infinity, ease: "linear" }
-          }}
-          style={{ backgroundSize: '200% 100%' }}
+          transition={{ duration: 0.3 }}
         />
 
         <div className="container mx-auto px-4 relative">
           <div className="flex items-center justify-between">
-            {/* Compact Logo */}
+            {/* Enhanced Logo */}
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
+              initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="flex items-center space-x-2 group cursor-pointer flex-shrink-0"
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="flex items-center space-x-3 group cursor-pointer flex-shrink-0"
             >
-              <Link href="/" className="flex items-center space-x-2">
+              <Link href="/" className="flex items-center space-x-3">
                 <motion.div
                   whileHover={{ 
                     rotate: 360, 
                     scale: 1.1,
                   }}
                   transition={{ duration: 0.6, ease: "easeInOut" }}
-                  className="relative"
+                  className="relative w-8 h-8 bg-gradient-to-r from-mars/20 to-cosmic/20 rounded-lg flex items-center justify-center border border-mars/30"
                 >
                   <Rocket className="w-5 h-5 text-mars" />
-                  <motion.div
-                    className="absolute inset-0 bg-mars/30 rounded-full blur-sm"
-                    animate={{ 
-                      scale: [1, 1.3, 1],
-                      opacity: [0.4, 0.7, 0.4] 
-                    }}
-                    transition={{ 
-                      duration: 2, 
-                      repeat: Infinity,
-                      ease: "easeInOut" 
-                    }}
-                  />
+                  <div className="absolute inset-0 bg-mars/20 rounded-lg blur-sm opacity-60" />
                 </motion.div>
                 
                 <motion.div
                   className="relative overflow-hidden"
-                  whileHover={{ scale: 1.03 }}
+                  whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <span className="text-lg font-bold bg-gradient-to-r from-mars via-orange-400 to-cosmic bg-clip-text text-transparent whitespace-nowrap">
+                  <span className="text-xl font-bold font-orbitron bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent whitespace-nowrap">
                     MRT - IITB
                   </span>
+                  <div className="text-xs text-white/60 font-medium -mt-1">
+                    Mars Rover Team
+                  </div>
                 </motion.div>
               </Link>
             </motion.div>
 
-            {/* Compact Desktop Menu */}
+            {/* Enhanced Desktop Menu */}
             <motion.div 
-              className="hidden xl:flex items-center space-x-0.5"
+              className="hidden xl:flex items-center space-x-1"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
             >
               {navLinks.map((link, index) => (
                 <motion.div
                   key={link.name}
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  transition={{ duration: 0.4, delay: index * 0.03 }}
                   className="relative"
                   onMouseEnter={() => setHoveredLink(link.name)}
                   onMouseLeave={() => setHoveredLink(null)}
@@ -174,51 +160,43 @@ const Navbar = () => {
                   >
                     <motion.div
                       className={cn(
-                        'relative px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-300 whitespace-nowrap',
+                        'relative px-4 py-2 text-sm font-medium rounded-xl transition-all duration-300 whitespace-nowrap border',
                         isActiveLink(link.href) 
-                          ? 'text-white bg-gradient-to-r from-mars/30 to-cosmic/30 border border-mars/40' 
-                          : 'text-white/90 hover:text-white border border-transparent hover:border-mars/30',
+                          ? 'text-white bg-gradient-to-r from-mars/30 to-cosmic/30 border-mars/40 shadow-lg' 
+                          : 'text-white/90 hover:text-white border-transparent hover:border-mars/30 hover:bg-gradient-to-r hover:from-mars/10 hover:to-cosmic/10',
                         'backdrop-blur-sm'
                       )}
                       whileHover={{ 
                         scale: 1.05, 
-                        y: -1
+                        y: -2
                       }}
-                      whileTap={{ scale: 0.95 }}
+                      whileTap={{ scale: 0.98 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <span className="relative z-10 flex items-center space-x-1.5">
-                        <motion.span 
-                          className="text-sm"
-                          animate={hoveredLink === link.name ? { 
-                            scale: [1, 1.2, 1]
-                          } : {}}
-                          transition={{ duration: 0.3 }}
-                        >
+                      <span className="relative z-10 flex items-center space-x-2">
+                        <span className="text-base">
                           {link.icon}
-                        </motion.span>
+                        </span>
                         <span>{link.name}</span>
                       </span>
                       
-                      {/* Compact hover effect */}
+                      {/* Simplified hover effect */}
                       <motion.div
-                        className="absolute inset-0 bg-gradient-to-r from-mars/20 to-cosmic/20 rounded-lg"
-                        initial={{ opacity: 0, scale: 0.9 }}
+                        className="absolute inset-0 bg-gradient-to-r from-mars/20 to-cosmic/20 rounded-xl opacity-0"
                         animate={{ 
                           opacity: hoveredLink === link.name ? 1 : 0,
-                          scale: hoveredLink === link.name ? 1 : 0.9
                         }}
                         transition={{ duration: 0.2 }}
                       />
                       
-                      {/* Compact active indicator */}
+                      {/* Active indicator */}
                       <motion.div
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-mars to-cosmic rounded-full"
+                        className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-gradient-to-r from-mars to-cosmic rounded-full"
                         initial={{ scaleX: 0 }}
                         animate={{ 
                           scaleX: isActiveLink(link.href) || hoveredLink === link.name ? 1 : 0
                         }}
-                        transition={{ duration: 0.2 }}
+                        transition={{ duration: 0.3 }}
                       />
                     </motion.div>
                   </button>
@@ -226,20 +204,18 @@ const Navbar = () => {
               ))}
             </motion.div>
 
-            {/* Compact Mobile Menu Button */}
+            {/* Enhanced Mobile Menu Button */}
             <motion.button 
-              className="xl:hidden relative p-1.5 text-white group flex-shrink-0 border border-mars/30 rounded-md"
+              className="xl:hidden relative p-2 text-white group flex-shrink-0 border border-mars/30 rounded-lg bg-gradient-to-r from-mars/10 to-cosmic/10 backdrop-blur-sm"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, x: 30 }}
+              initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.4 }}
             >
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-mars/20 to-cosmic/20 rounded-md"
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
+                className="absolute inset-0 bg-gradient-to-r from-mars/20 to-cosmic/20 rounded-lg opacity-0 group-hover:opacity-100"
                 transition={{ duration: 0.3 }}
               />
               <AnimatePresence mode="wait">
@@ -251,7 +227,7 @@ const Navbar = () => {
                   transition={{ duration: 0.2 }}
                   className="relative z-10"
                 >
-                  {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+                  {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
                 </motion.div>
               </AnimatePresence>
             </motion.button>
@@ -259,31 +235,31 @@ const Navbar = () => {
         </div>
       </motion.nav>
 
-      {/* Compact Mobile Menu */}
+      {/* Enhanced Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="fixed top-12 left-0 right-0 xl:hidden overflow-hidden z-40"
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="fixed top-16 left-0 right-0 xl:hidden overflow-hidden z-40"
           >
             <motion.div 
-              className="bg-gradient-to-br from-space-dark/95 via-space/95 to-space-dark/95 backdrop-blur-2xl border-b border-mars/20"
+              className="bg-gradient-to-br from-space-dark/95 via-space/95 to-space-dark/95 backdrop-blur-xl border-b border-mars/20 shadow-2xl"
               initial={{ y: -10 }}
               animate={{ y: 0 }}
               transition={{ duration: 0.2, delay: 0.1 }}
             >
-              <div className="container mx-auto px-4 py-4">
+              <div className="container mx-auto px-4 py-6">
                 <motion.div 
-                  className="grid grid-cols-2 sm:grid-cols-4 gap-2"
+                  className="grid grid-cols-2 sm:grid-cols-4 gap-3"
                   variants={{
                     open: {
-                      transition: { staggerChildren: 0.05, delayChildren: 0.1 }
+                      transition: { staggerChildren: 0.03, delayChildren: 0.1 }
                     },
                     closed: {
-                      transition: { staggerChildren: 0.03, staggerDirection: -1 }
+                      transition: { staggerChildren: 0.02, staggerDirection: -1 }
                     }
                   }}
                   initial="closed"
@@ -309,17 +285,17 @@ const Navbar = () => {
                       >
                         <motion.div
                           className={cn(
-                            "w-full text-center p-2.5 rounded-lg border transition-all duration-200",
+                            "w-full text-center p-3 rounded-xl border transition-all duration-300 backdrop-blur-sm",
                             isActiveLink(link.href)
-                              ? "bg-gradient-to-r from-mars/30 to-cosmic/30 border-mars/50 text-white"
-                              : "bg-gradient-to-r from-mars/10 to-cosmic/10 border-mars/20 text-white/90 hover:text-white hover:border-mars/40"
+                              ? "bg-gradient-to-r from-mars/30 to-cosmic/30 border-mars/50 text-white shadow-lg"
+                              : "bg-gradient-to-r from-mars/10 to-cosmic/10 border-mars/20 text-white/90 hover:text-white hover:border-mars/40 hover:shadow-lg"
                           )}
-                          whileHover={{ scale: 1.02 }}
+                          whileHover={{ scale: 1.02, y: -1 }}
                           whileTap={{ scale: 0.98 }}
                         >
-                          <span className="flex flex-col items-center space-y-1">
-                            <span className="text-base">{link.icon}</span>
-                            <span className="font-medium text-xs whitespace-nowrap">{link.name}</span>
+                          <span className="flex flex-col items-center space-y-2">
+                            <span className="text-lg">{link.icon}</span>
+                            <span className="font-medium text-sm whitespace-nowrap">{link.name}</span>
                           </span>
                         </motion.div>
                       </Link>

@@ -49,24 +49,25 @@ const AboutSection = () => {
     "Achieved Excellence Award in Navigation Task in European Rover Challenge 2022"
   ];
 
+  // Simplified animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.3,
+        staggerChildren: 0.1,
         delayChildren: 0.2,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { y: 30, opacity: 0 },
+    hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 0.8,
+        duration: 0.5,
         ease: "easeOut",
       },
     },
@@ -76,41 +77,22 @@ const AboutSection = () => {
     <section 
       ref={sectionRef}
       id="about" 
-      className="relative py-24 overflow-hidden bg-gradient-to-br from-space via-space-dark to-space"
+      className="relative py-24 overflow-hidden bg-gradient-to-br from-space-dark via-space to-space-dark"
     >
-      {/* Fixed Background Effects - No overlapping */}
+      {/* Simplified Background Effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          style={{ y: backgroundY }}
-          className="absolute top-20 right-20 w-72 h-72 bg-gradient-to-r from-mars/15 to-orange-500/15 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+        <div
+          style={{ transform: `translateY(${backgroundY}px)` }}
+          className="absolute top-20 right-20 w-72 h-72 bg-gradient-to-r from-mars/15 to-orange-500/15 rounded-full blur-3xl opacity-60"
         />
         
-        <motion.div
-          style={{ y: backgroundY }}
-          className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-r from-cosmic/15 to-blue-500/15 rounded-full blur-3xl"
-          animate={{
-            scale: [1.1, 1, 1.1],
-            opacity: [0.4, 0.6, 0.4],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2,
-          }}
+        <div
+          style={{ transform: `translateY(${backgroundY}px)` }}
+          className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-r from-cosmic/15 to-blue-500/15 rounded-full blur-3xl opacity-60"
         />
       </div>
 
-      <div className="container mx-auto px-4 py-6 md:px-6 relative z-10">
+      <div className="container mx-auto px-6 relative z-10">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -119,169 +101,104 @@ const AboutSection = () => {
         >
           {/* Header Section */}
           <motion.div 
-            className="flex flex-col items-center text-center "
+            className="text-center"
             variants={itemVariants}
           >
             <motion.h2 
-              className="text-4xl md:text-5xl lg:text-6xl font-bold font-technospace"
+              className="text-5xl md:text-7xl font-bold font-orbitron mb-6"
               variants={itemVariants}
             >
-              <motion.span
-                className="bg-gradient-to-r from-mars via-orange-400 to-cosmic bg-clip-text text-transparent"
-                animate={{
-                  backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-                style={{
-                  backgroundSize: "200% 100%",
-                }}
-              >
+              <span className="bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent">
                 About Us
-              </motion.span>
+              </span>
             </motion.h2>
             
+            <motion.div
+              className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 h-1.5 bg-gradient-to-r from-mars via-orange-500 to-cosmic rounded-full"
+              initial={{ width: 0 }}
+              animate={isInView ? { width: "200px" } : { width: 0 }}
+              transition={{ duration: 1.5, delay: 0.5 }}
+            />
+            
             <motion.p 
-              className="text-lg md:text-xl text-white/80 max-w-4xl leading-relaxed py-6"
+              className="text-xl text-white/80 max-w-4xl mx-auto leading-relaxed mt-8"
               variants={itemVariants}
             >
-              Founded in <motion.span 
-                className="text-mars font-semibold"
-                whileHover={{ scale: 1.1, color: "#f97316" }}
-              >
-                2012
-              </motion.span>, MRT (Mars Rover Team) was established with a vision to make 
+              Founded in <span className="text-mars font-semibold">2012</span>, MRT (Mars Rover Team) was established with a vision to make 
               significant strides in space exploration and autonomous robotics. Over the years, 
               our team has fostered an environment of inclusive growth and continuous learning, 
               leading to remarkable progress and consistent success in premier international competitions.
             </motion.p>
           </motion.div>
           
-          {/* Vision and Mission Section - Flex Instead of Grid */}
+          {/* Vision and Mission Section */}
           <motion.div 
-            className="flex flex-col lg:flex-row gap-8 lg:gap-12"
+            className="grid lg:grid-cols-2 gap-8 lg:gap-12"
             variants={itemVariants}
           >
             {/* Vision */}
             <motion.div
-              className="flex-1"
+              className="bg-gradient-to-br from-space-light/30 to-space-light/10 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-mars/30 transition-all duration-300 group"
               variants={itemVariants}
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.3 }}
+              whileHover={{ scale: 1.01, y: -3 }}
             >
-              <div className="relative h-full">
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-mars/10 to-orange-500/10 rounded-2xl blur-lg -z-10"
-                  animate={{
-                    scale: [1, 1.02, 1],
-                    opacity: [0.3, 0.5, 0.3],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-                
-                <div className="bg-space-light/20 backdrop-blur-sm rounded-2xl p-6 lg:p-8 border border-white/10 hover:border-mars/30 transition-all duration-500 h-full">
-                  <motion.h3 
-                    className="text-2xl lg:text-3xl font-bold mb-6 font-technospace text-mars flex items-center"
-                    whileHover={{ scale: 1.02 }}
+              <h3 className="text-3xl font-bold mb-6 font-orbitron text-mars flex items-center">
+                <Flag className="mr-3 text-mars flex-shrink-0" />
+                Our Vision
+              </h3>
+              
+              <div className="space-y-4">
+                {[
+                  "Establish IIT Bombay as a global leader in space robotics",
+                  "Innovate in Mars Rover technology",
+                  "Nurture sustainable and skilled talent pipeline",
+                  "Contribute to advancements in planetary exploration",
+                  "Build a legacy of engineering excellence and impactful research"
+                ].map((item, index) => (
+                  <motion.div 
+                    key={index}
+                    className="flex items-start group/item"
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
+                    transition={{ duration: 0.4, delay: 0.5 + index * 0.05 }}
+                    whileHover={{ x: 3 }}
                   >
-                    <Flag className="mr-3 text-mars flex-shrink-0" />
-                    Our Vision
-                  </motion.h3>
-                  
-                  <div className="flex flex-col space-y-4">
-                    {[
-                      "Establish IIT Bombay as a global leader in space robotics",
-                      "Innovate in Mars Rover technology",
-                      "Nurture sustainable and skilled talent pipeline",
-                      "Contribute to advancements in planetary exploration",
-                      "Build a legacy of engineering excellence and impactful research"
-                    ].map((item, index) => (
-                      <motion.div 
-                        key={index}
-                        className="flex items-start group"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                        transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
-                        whileHover={{ x: 5 }}
-                      >
-                        <motion.div
-                          whileHover={{ rotate: 180, scale: 1.2 }}
-                          transition={{ duration: 0.3 }}
-                          className="flex-shrink-0"
-                        >
-                          <Flag className="h-4 w-4 text-mars mr-3 mt-1" />
-                        </motion.div>
-                        <span className="text-white/80 group-hover:text-white transition-colors duration-300 text-sm lg:text-base">
-                          {item}
-                        </span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
+                    <Flag className="h-4 w-4 text-mars mr-3 mt-1 flex-shrink-0" />
+                    <span className="text-white/80 group-hover/item:text-white transition-colors duration-300">
+                      {item}
+                    </span>
+                  </motion.div>
+                ))}
               </div>
             </motion.div>
 
             {/* Mission */}
             <motion.div
-              className="flex-1"
+              className="bg-gradient-to-br from-space-light/30 to-space-light/10 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-cosmic/30 transition-all duration-300 group"
               variants={itemVariants}
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.3 }}
+              whileHover={{ scale: 1.01, y: -3 }}
             >
-              <div className="relative h-full">
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-cosmic/10 to-blue-500/10 rounded-2xl blur-lg -z-10"
-                  animate={{
-                    scale: [1, 1.02, 1],
-                    opacity: [0.3, 0.5, 0.3],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 1,
-                  }}
-                />
-                
-                <div className="bg-space-light/20 backdrop-blur-sm rounded-2xl p-6 lg:p-8 border border-white/10 hover:border-cosmic/30 transition-all duration-500 h-full">
-                  <motion.h3 
-                    className="text-2xl lg:text-3xl font-bold mb-6 font-technospace text-cosmic flex items-center"
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <Rocket className="mr-3 text-cosmic flex-shrink-0" />
-                    Our Mission
-                  </motion.h3>
-                  
-                  <motion.p 
-                    className="text-white/80 leading-relaxed text-sm lg:text-base"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                    transition={{ duration: 0.8, delay: 1 }}
-                  >
-                    To design, develop, and innovate cutting-edge extraterrestrial robotic solutions 
-                    while fostering a culture of excellence, collaboration, and technical expertise 
-                    among students. Through hands-on learning and global competitions, we aim to push 
-                    the boundaries of autonomous robotics and inspire the next generation of engineers.
-                  </motion.p>
-                </div>
-              </div>
+              <h3 className="text-3xl font-bold mb-6 font-orbitron text-cosmic flex items-center">
+                <Rocket className="mr-3 text-cosmic flex-shrink-0" />
+                Our Mission
+              </h3>
+              
+              <p className="text-white/80 leading-relaxed group-hover:text-white/90 transition-colors duration-300">
+                To design, develop, and innovate cutting-edge extraterrestrial robotic solutions 
+                while fostering a culture of excellence, collaboration, and technical expertise 
+                among students. Through hands-on learning and global competitions, we aim to push 
+                the boundaries of autonomous robotics and inspire the next generation of engineers.
+              </p>
             </motion.div>
           </motion.div>
           
-          {/* Key Figures - Flex Layout */}
+          {/* Key Figures */}
           <motion.div 
-            className="flex flex-col my-6 py-6"
+            className="text-center"
             variants={itemVariants}
           >
             <motion.h3 
-              className="text-2xl lg:text-3xl font-bold text-center font-technospace"
+              className="text-3xl lg:text-4xl font-bold font-orbitron mb-12"
               variants={itemVariants}
             >
               <span className="bg-gradient-to-r from-mars to-cosmic bg-clip-text text-transparent">
@@ -289,57 +206,29 @@ const AboutSection = () => {
               </span>
             </motion.h3>
             
-            <div className="flex flex-wrap justify-center gap-4 lg:gap-6 py-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
               {figures.map((figure, index) => (
                 <motion.div 
                   key={index}
-                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
-                  animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.9 }}
-                  transition={{ delay: 1.2 + index * 0.15, duration: 0.6 }}
-                  className="relative group flex-1 min-w-[140px] max-w-[200px]"
-                  whileHover={{ 
-                    scale: 1.05, 
-                    y: -5,
-                  }}
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 20, scale: 0.95 }}
+                  transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
+                  className="bg-gradient-to-br from-space-light/30 to-space-light/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:border-white/30 transition-all duration-300 group"
+                  whileHover={{ scale: 1.02, y: -3 }}
                 >
-                  <motion.div
-                    className={`absolute inset-0 bg-gradient-to-br ${figure.gradient} rounded-2xl blur-md -z-10`}
-                    animate={{
-                      scale: [1, 1.05, 1],
-                      opacity: [0.4, 0.6, 0.4],
-                    }}
-                    transition={{
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: index * 0.5,
-                    }}
-                  />
-                  
-                  <div className="bg-space-light/30 backdrop-blur-sm rounded-2xl p-4 lg:p-6 text-center border border-white/10 group-hover:border-mars/30 transition-all duration-500">
-                    <motion.div 
-                      className="flex justify-center mb-3"
-                      whileHover={{ rotate: 360, scale: 1.2 }}
-                      transition={{ duration: 0.6 }}
-                    >
-                      <div className={`p-2 lg:p-3 bg-gradient-to-br ${figure.gradient} rounded-full`}>
-                        {figure.icon}
-                      </div>
-                    </motion.div>
-                    
-                    <motion.h4 
-                      className="text-2xl lg:text-4xl font-bold mb-2 font-technospace bg-gradient-to-r from-mars to-cosmic bg-clip-text text-transparent"
-                      initial={{ scale: 0 }}
-                      animate={isInView ? { scale: 1 } : { scale: 0 }}
-                      transition={{ duration: 0.8, delay: 1.5 + index * 0.2, type: "spring", stiffness: 200 }}
-                    >
-                      {figure.number}
-                    </motion.h4>
-                    
-                    <p className="text-white/70 group-hover:text-white/90 transition-colors duration-300 text-xs lg:text-sm">
-                      {figure.text}
-                    </p>
+                  <div className="flex justify-center mb-4">
+                    <div className={`p-3 bg-gradient-to-br ${figure.gradient} rounded-full group-hover:scale-110 transition-transform duration-300`}>
+                      {figure.icon}
+                    </div>
                   </div>
+                  
+                  <h4 className="text-3xl lg:text-4xl font-bold mb-2 font-orbitron bg-gradient-to-r from-mars to-cosmic bg-clip-text text-transparent">
+                    {figure.number}
+                  </h4>
+                  
+                  <p className="text-white/70 group-hover:text-white/90 transition-colors duration-300 text-sm">
+                    {figure.text}
+                  </p>
                 </motion.div>
               ))}
             </div>
@@ -347,63 +236,41 @@ const AboutSection = () => {
           
           {/* Highlights */}
           <motion.div 
-            className="flex flex-col space-y-8"
+            className="text-center"
             variants={itemVariants}
           >
             <motion.h2 
-              className="text-2xl lg:text-4xl font-bold text-center font-technospace py-6 pt-0"
+              className="text-3xl lg:text-4xl font-bold font-orbitron mb-12"
               variants={itemVariants}
             >
-              <span className=" bg-gradient-to-r from-mars to-cosmic bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-mars to-cosmic bg-clip-text text-transparent">
                 When this team thrived globally
               </span>
             </motion.h2>
             
             <motion.div 
-              className="relative"
+              className="bg-gradient-to-br from-space-light/30 to-space-light/10 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-cosmic/30 transition-all duration-300"
               variants={itemVariants}
             >
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-cosmic/10 via-mars/10 to-orange-500/10 rounded-2xl blur-lg -z-10"
-                animate={{
-                  scale: [1, 1.01, 1],
-                  opacity: [0.3, 0.5, 0.3],
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
-              
-              <div className="bg-space-light/20 backdrop-blur-sm rounded-2xl p-6 lg:p-8 border border-white/10 hover:border-cosmic/30 transition-all duration-500">
-                <div className="flex flex-col space-y-4 lg:space-y-6">
-                  {highlights.map((highlight, index) => (
-                    <motion.div 
-                      key={index}
-                      className="flex items-start group"
-                      initial={{ opacity: 0, x: -30 }}
-                      animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-                      transition={{ duration: 0.6, delay: 2 + index * 0.15 }}
-                      whileHover={{ x: 5 }}
-                    >
-                      <motion.div
-                        whileHover={{ rotate: 360, scale: 1.3 }}
-                        transition={{ duration: 0.5 }}
-                        className="flex-shrink-0 mr-4 mt-1"
-                      >
-                        <Award className="h-5 w-5 lg:h-6 lg:w-6 text-cosmic" />
-                      </motion.div>
-                      
-                      <motion.p 
-                        className="text-white/90 group-hover:text-white transition-colors duration-300 leading-relaxed text-sm lg:text-base"
-                        whileHover={{ scale: 1.01 }}
-                      >
-                        {highlight}
-                      </motion.p>
-                    </motion.div>
-                  ))}
-                </div>
+              <div className="space-y-6">
+                {highlights.map((highlight, index) => (
+                  <motion.div 
+                    key={index}
+                    className="flex items-start group text-left"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                    transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
+                    whileHover={{ x: 3 }}
+                  >
+                    <div className="flex-shrink-0 mr-4 mt-1">
+                      <Award className="h-5 w-5 lg:h-6 lg:w-6 text-cosmic" />
+                    </div>
+                    
+                    <p className="text-white/90 group-hover:text-white transition-colors duration-300 leading-relaxed">
+                      {highlight}
+                    </p>
+                  </motion.div>
+                ))}
               </div>
             </motion.div>
           </motion.div>
