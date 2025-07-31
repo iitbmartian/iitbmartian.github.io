@@ -281,7 +281,7 @@ const CompetitionsSection = () => {
               Proving Grounds
             </span>
             <motion.div
-              className="absolute -bottom-2 left-0 h-1.5 bg-gradient-to-r from-mars via-orange-500 to-cosmic rounded-full"
+              className=""
               initial={{ width: 0 }}
               animate={isInView ? { width: "100%" } : { width: 0 }}
               transition={{ duration: 1.5, delay: 0.5 }}

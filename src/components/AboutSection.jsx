@@ -114,7 +114,7 @@ const AboutSection = () => {
             </motion.h2>
             
             <motion.div
-              className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 h-1.5 bg-gradient-to-r from-mars via-orange-500 to-cosmic rounded-full"
+              className=""
               initial={{ width: 0 }}
               animate={isInView ? { width: "200px" } : { width: 0 }}
               transition={{ duration: 1.5, delay: 0.5 }}

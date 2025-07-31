@@ -252,7 +252,7 @@ const SubsystemsPage = () => {
             >
               Our Subsystems
               <motion.div
-                className="absolute -bottom-2 left-0 h-1.5 bg-gradient-to-r from-mars via-orange-500 to-cosmic rounded-full"
+                className=""
                 initial={{ width: 0 }}
                 whileInView={{ width: "100%" }}
                 transition={{ duration: 1.5, delay: 0.5 }}

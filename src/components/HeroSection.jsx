@@ -135,16 +135,16 @@ const HeroSection = () => {
           initial="hidden"
           animate="visible"
         >
-          <div className="max-w-2xl">
+          <div  className="max-w-2xl">
             <motion.h4
-              className="text-mars font-orbitron text-xl mb-4 relative overflow-hidden"
+              className="text-mars font-orbitron flex justify-center items-center text-xl mb-4 relative overflow-hidden"
               variants={itemVariants}
             >
-              <span className="inline-block">IIT BOMBAY</span>
+              <span className="inline-block text-3xl">IIT BOMBAY</span>
               
               {/* Simple glowing line */}
               <motion.div
-                className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-mars to-orange-500"
+                className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-mars to-orange-500 "
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
                 transition={{ duration: 1.5, delay: 0.8 }}
@@ -152,11 +152,11 @@ const HeroSection = () => {
             </motion.h4>
 
             <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-orbitron mb-6 relative"
+              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-orbitron mb-6 relative "
               variants={itemVariants}
             >
               <motion.div 
-                className="text-white mb-2"
+                className="text-white mb-2 flex justify-center items-center text-center"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
@@ -164,7 +164,7 @@ const HeroSection = () => {
               </motion.div>
               
               <motion.div 
-                className="bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent"
+                className="flex justify-center items-center bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent "
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
@@ -188,7 +188,7 @@ const HeroSection = () => {
             </motion.h1>
 
             <motion.p
-              className="text-white/80 text-lg md:text-xl mb-8 leading-relaxed"
+              className="text-white/80 text-lg md:text-xl mb-8 leading-relaxed text-center"
               variants={itemVariants}
             >
               A unique student-led initiative focused on designing and building advanced rovers 
