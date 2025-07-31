@@ -2,4 +2,140 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Light theme variables (not used but kept for compatibility) */
+  --background: 210 40% 98%;
+  --foreground: 222.2 84% 4.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+  --primary: 221.2 83.2% 53.3%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222.2 47.4% 11.2%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 214.3 31.8% 91.4%;
+  --input: 214.3 31.8% 91.4%;
+  --ring: 221.2 83.2% 53.3%;
+  --chart-1: 12 76% 61%;
+  --chart-2: 173 58% 39%;
+  --chart-3: 197 37% 24%;
+  --chart-4: 43 74% 66%;
+  --chart-5: 27 87% 67%;
+  --radius: 0.75rem;
+}
 
+.dark {
+  /* Dark theme variables optimized for space theme */
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 17 88% 59%; /* Mars color */
+  --primary-foreground: 222.2 47.4% 11.2%;
+  --secondary: 195 100% 62%; /* Cosmic color */
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 17 88% 59%;
+  --chart-1: 220 70% 50%;
+  --chart-2: 160 60% 45%;
+  --chart-3: 30 80% 55%;
+  --chart-4: 280 65% 60%;
+  --chart-5: 340 75% 55%;
+}
+
+/* Custom CSS utilities */
+@layer utilities {
+  .animation-delay-100 { animation-delay: 100ms; }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-500 { animation-delay: 500ms; }
+  .animation-delay-700 { animation-delay: 700ms; }
+  .animation-delay-1000 { animation-delay: 1000ms; }
+  .animation-delay-1500 { animation-delay: 1500ms; }
+  .animation-delay-2000 { animation-delay: 2000ms; }
+  .animation-delay-2500 { animation-delay: 2500ms; }
+  .animation-delay-3000 { animation-delay: 3000ms; }
+  .animation-delay-3500 { animation-delay: 3500ms; }
+  .animation-delay-4000 { animation-delay: 4000ms; }
+
+  .text-gradient-mars {
+    @apply bg-gradient-to-r from-mars via-orange-500 to-red-500 bg-clip-text text-transparent;
+  }
+  
+  .text-gradient-cosmic {
+    @apply bg-gradient-to-r from-cosmic via-blue-500 to-indigo-500 bg-clip-text text-transparent;
+  }
+  
+  .text-gradient-space {
+    @apply bg-gradient-to-r from-mars via-cosmic to-nebula bg-clip-text text-transparent;
+  }
+
+  .glass-effect {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+  
+  .mars-glow {
+    @apply shadow-mars hover:shadow-glow-mars transition-shadow duration-300;
+  }
+  
+  .cosmic-glow {
+    @apply shadow-cosmic hover:shadow-glow-cosmic transition-shadow duration-300;
+  }
+}
+
+/* Global styles */
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  color: hsl(var(--foreground));
+  background: hsl(var(--background));
+  font-feature-settings: "rlig" 1, "calt" 1;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: theme('colors.space-dark');
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, theme('colors.mars'), theme('colors.cosmic'));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, theme('colors.mars-light'), theme('colors.cosmic-light'));
+}
+
+/* Selection styles */
+::selection {
+  background-color: theme('colors.mars/30');
+  color: white;
+}
+
+::-moz-selection {
+  background-color: theme('colors.mars/30');
+  color: white;
+}
