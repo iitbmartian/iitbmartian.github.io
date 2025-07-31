@@ -1,30 +1,13 @@
 "use client";
+
 import React, { useState, useRef, useMemo, useCallback } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
-import { 
-  Linkedin, 
-  Globe, 
-  Users, 
-  Star, 
-  Zap, 
-  Award, 
-  ArrowRight, 
-  UserPlus,
-  Mail,
-  Code,
-  Wrench,
-  Rocket,
-  Search,
-  Trophy,
-  GitBranch,
-  Layers,
-  Sparkles,
-  X
-} from 'lucide-react';
+import { Linkedin, Globe, Users, Star, Zap, Award, ArrowRight, UserPlus, Mail, Code, Wrench, Rocket, Search, Trophy, GitBranch, Layers, Sparkles, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
-// Your existing imports
+// All image imports
 import AnushkaVerma from '@/../public/mrt/Team_Leads/Anushka_Verma.jpg';
 import ArinWeling from '@/../public/mrt/Team_Leads/Arin_Weling.jpeg';
 import Arkapravo from '@/../public/mrt/Team_Leads/arkapravo_patra.jpg';
@@ -47,7 +30,7 @@ import Harshit from '@/../public/mrt/Electrical/Harshit Somani.jpg';
 import Radhika from '@/../public/mrt/Electrical/Radhika agarwal.jpg';
 import shawn from '@/../public/mrt/Electrical/Shawn Thomas Koshy.jpg';
 import Shridhar from '@/../public/mrt/Electrical/Shridhar Patil.jpeg';
-import Siddhant from '@/../public/mrt/Electrical/Siddhant Kaul.jpeg'
+import Siddhant from '@/../public/mrt/Electrical/Siddhant Kaul.jpeg';
 import Sudhindra from '@/../public/mrt/Electrical/Sudhindra Sahoo.jpg';
 import Tanmay from '@/../public/mrt/Electrical/Tanmay Sinha.jpg';
 import Veeresh from '@/../public/mrt/Electrical/Veeresh S K.jpg';
@@ -63,48 +46,30 @@ import Rohan from '@/../public/mrt/MDM/Rohan Shukla.jpeg';
 import Shreya from '@/../public/mrt/MDM/Shreya Goyal.jpeg';
 import Shrishti from '@/../public/mrt/MDM/Srishti Poddar.jpeg';
 
+
 // Enhanced TeamMember Component
 const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = false, department = "", skills = [] }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const cardRef = useRef(null);
-  
-  const isInView = useInView(cardRef, { 
-    once: false, 
-    margin: "-15% 0px -15% 0px",
-    amount: 0.3
-  });
+  const isInView = useInView(cardRef, { once: false, margin: "-15% 0px -15% 0px", amount: 0.3 });
 
   // Memoized animation variants
   const cardVariants = useMemo(() => ({
-    hidden: { 
-      opacity: 0, 
-      y: 50, 
-      scale: 0.9,
-      rotateX: 20
-    },
+    hidden: { opacity: 0, y: 50, scale: 0.9, rotateX: 20 },
     visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      rotateX: 0,
+      opacity: 1, y: 0, scale: 1, rotateX: 0,
       transition: {
         duration: 0.6,
-        delay: (index % 20) * 0.03, // Limit stagger for performance
+        delay: (index % 20) * 0.03,
         type: "spring",
         stiffness: 120,
         damping: 20
       }
     },
     exit: {
-      opacity: 0,
-      y: -30,
-      scale: 0.95,
-      rotateX: -15,
-      transition: {
-        duration: 0.4,
-        ease: "easeInOut"
-      }
+      opacity: 0, y: -30, scale: 0.95, rotateX: -15,
+      transition: { duration: 0.4, ease: "easeInOut" }
     }
   }), [index]);
 
@@ -121,40 +86,22 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
       animate={isInView ? "visible" : "exit"}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      whileHover={{ 
-        y: -12,
-        scale: 1.03,
-        rotateY: 3
-      }}
+      whileHover={{ y: -12, scale: 1.03, rotateY: 3 }}
       whileTap={{ scale: 0.98 }}
       style={{ transformStyle: "preserve-3d" }}
     >
       {/* Enhanced Member Card */}
       <motion.div
         className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-space-light/30 to-space-light/10 backdrop-blur-sm border border-white/10 group-hover:border-white/30 transition-all duration-300"
-        whileHover={{ 
-          boxShadow: "0 25px 50px rgba(0, 0, 0, 0.4)"
-        }}
+        whileHover={{ boxShadow: "0 25px 50px rgba(0, 0, 0, 0.4)" }}
       >
         {/* Enhanced Leader Badge */}
         {isLead && (
           <motion.div
             className="absolute top-3 right-3 z-30 p-2 bg-gradient-to-r from-mars/90 to-orange-500/90 rounded-full backdrop-blur-sm border border-white/20"
             initial={{ scale: 0, opacity: 0, rotate: -180 }}
-            animate={isInView ? { 
-              scale: 1, 
-              opacity: 1, 
-              rotate: 0 
-            } : { 
-              scale: 0, 
-              opacity: 0, 
-              rotate: -180 
-            }}
-            transition={{ 
-              duration: 0.5, 
-              delay: 0.3 + index * 0.02,
-              type: "spring"
-            }}
+            animate={isInView ? { scale: 1, opacity: 1, rotate: 0 } : { scale: 0, opacity: 0, rotate: -180 }}
+            transition={{ duration: 0.5, delay: 0.3 + index * 0.02, type: "spring" }}
             whileHover={{ scale: 1.1, rotate: 10 }}
           >
             <Award className="w-4 h-4 text-white" />
@@ -166,20 +113,8 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
           <motion.div
             className="absolute top-3 left-3 z-30 px-2 py-1 bg-gradient-to-r from-cosmic/80 to-blue-500/80 rounded-full backdrop-blur-sm border border-white/20"
             initial={{ scale: 0, opacity: 0, x: -20 }}
-            animate={isInView ? { 
-              scale: 1, 
-              opacity: 1, 
-              x: 0 
-            } : { 
-              scale: 0, 
-              opacity: 0, 
-              x: -20 
-            }}
-            transition={{ 
-              duration: 0.5, 
-              delay: 0.2 + index * 0.02,
-              type: "spring"
-            }}
+            animate={isInView ? { scale: 1, opacity: 1, x: 0 } : { scale: 0, opacity: 0, x: -20 }}
+            transition={{ duration: 0.5, delay: 0.2 + index * 0.02, type: "spring" }}
             whileHover={{ scale: 1.05 }}
           >
             <span className="text-white text-xs font-medium">{department}</span>
@@ -188,11 +123,9 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
 
         {/* Enhanced Loading Placeholder */}
         {!imageLoaded && (
-          <motion.div 
+          <motion.div
             className="absolute inset-0 bg-gradient-to-br from-mars/20 to-cosmic/20 flex items-center justify-center aspect-square"
-            animate={{
-              backgroundPosition: ["0% 0%", "100% 100%"],
-            }}
+            animate={{ backgroundPosition: ["0% 0%", "100% 100%"] }}
             transition={{ duration: 3, repeat: Infinity }}
           >
             <motion.div
@@ -206,17 +139,18 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
 
         {/* Enhanced Member Image */}
         <motion.div className="relative aspect-square overflow-hidden">
-          <motion.img 
-            src={image} 
-            alt={name} 
-            className="w-full h-full object-cover"
-            onLoad={handleImageLoad}
-            animate={{
-              scale: isHovered ? 1.1 : 1,
-            }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-          />
-          
+          <div className="w-full h-full relative">
+            <Image
+              src={image}
+              alt={name}
+              fill
+              className="object-cover object-center"
+              onLoad={handleImageLoad}
+              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+              style={{ objectFit: 'cover' }}
+            />
+          </div>
+
           {/* Enhanced Gradient Overlay */}
           <motion.div
             className="absolute inset-0 bg-gradient-to-t from-space/90 via-space/20 to-transparent"
@@ -229,42 +163,38 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
           <motion.div
             className="absolute inset-0"
             animate={{
-              background: isHovered 
-                ? ["linear-gradient(0deg, transparent, rgba(255, 107, 53, 0.3), transparent)",
-                   "linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.3), transparent)",
-                   "linear-gradient(180deg, transparent, rgba(255, 107, 53, 0.3), transparent)",
-                   "linear-gradient(270deg, transparent, rgba(0, 217, 255, 0.3), transparent)",
-                   "linear-gradient(360deg, transparent, rgba(255, 107, 53, 0.3), transparent)"]
+              background: isHovered
+                ? [
+                    "linear-gradient(0deg, transparent, rgba(255, 107, 53, 0.3), transparent)",
+                    "linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.3), transparent)",
+                    "linear-gradient(180deg, transparent, rgba(255, 107, 53, 0.3), transparent)",
+                    "linear-gradient(270deg, transparent, rgba(0, 217, 255, 0.3), transparent)",
+                    "linear-gradient(360deg, transparent, rgba(255, 107, 53, 0.3), transparent)"
+                  ]
                 : "linear-gradient(0deg, transparent, transparent, transparent)"
             }}
             transition={{ duration: 2, repeat: isHovered ? Infinity : 0 }}
           />
         </motion.div>
-        
+
         {/* Enhanced Social Links */}
         <motion.div
           className="absolute bottom-0 left-0 right-0 p-4 z-20"
           initial={{ y: "100%", opacity: 0 }}
-          animate={{ 
-            y: isHovered ? 0 : "100%",
-            opacity: isHovered ? 1 : 0
-          }}
+          animate={{ y: isHovered ? 0 : "100%", opacity: isHovered ? 1 : 0 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
-          <motion.div 
+          <motion.div
             className="flex justify-center space-x-2 mb-3"
             initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ 
-              scale: isHovered ? 1 : 0.8,
-              opacity: isHovered ? 1 : 0
-            }}
+            animate={{ scale: isHovered ? 1 : 0.8, opacity: isHovered ? 1 : 0 }}
             transition={{ duration: 0.3, staggerChildren: 0.05 }}
           >
             {linkedin && (
-              <motion.a 
-                href={linkedin} 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <motion.a
+                href={linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="p-2 bg-cosmic/30 hover:bg-cosmic/50 rounded-lg text-white transition-colors backdrop-blur-sm border border-white/20"
                 whileHover={{ scale: 1.15, rotate: 5 }}
                 whileTap={{ scale: 0.95 }}
@@ -273,10 +203,10 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
               </motion.a>
             )}
             {website && (
-              <motion.a 
-                href={website} 
-                target="_blank" 
-                rel="noopener noreferrer" 
+              <motion.a
+                href={website}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="p-2 bg-mars/30 hover:bg-mars/50 rounded-lg text-white transition-colors backdrop-blur-sm border border-white/20"
                 whileHover={{ scale: 1.15, rotate: -5 }}
                 whileTap={{ scale: 0.95 }}
@@ -287,16 +217,13 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
           </motion.div>
 
           {/* Enhanced Member Info */}
-          <motion.div 
+          <motion.div
             className="text-center"
             initial={{ y: 10, opacity: 0 }}
-            animate={{ 
-              y: isHovered ? 0 : 10,
-              opacity: isHovered ? 1 : 0
-            }}
+            animate={{ y: isHovered ? 0 : 10, opacity: isHovered ? 1 : 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
           >
-            <motion.h3 
+            <motion.h3
               className="text-lg font-bold font-orbitron text-white mb-1 group-hover:text-cosmic transition-colors duration-300"
               initial={{ scale: 0.9 }}
               animate={{ scale: isHovered ? 1 : 0.9 }}
@@ -304,7 +231,7 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
             >
               {name}
             </motion.h3>
-            <motion.p 
+            <motion.p
               className="text-white/80 text-sm mb-2 group-hover:text-white/90 transition-colors duration-300"
               initial={{ opacity: 0.8 }}
               animate={{ opacity: isHovered ? 1 : 0.8 }}
@@ -315,25 +242,19 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
 
             {/* Enhanced Skills Tags */}
             {skills.length > 0 && (
-              <motion.div 
+              <motion.div
                 className="flex flex-wrap justify-center gap-1"
                 initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ 
-                  scale: isHovered ? 1 : 0.8,
-                  opacity: isHovered ? 1 : 0
-                }}
+                animate={{ scale: isHovered ? 1 : 0.8, opacity: isHovered ? 1 : 0 }}
                 transition={{ duration: 0.3, delay: 0.15, staggerChildren: 0.02 }}
               >
                 {skills.slice(0, 2).map((skill, i) => (
-                  <motion.span 
+                  <motion.span
                     key={i}
                     className="px-2 py-1 bg-mars/20 text-mars text-xs rounded-full border border-mars/30"
                     whileHover={{ scale: 1.05 }}
                     initial={{ scale: 0, opacity: 0 }}
-                    animate={{ 
-                      scale: isHovered ? 1 : 0,
-                      opacity: isHovered ? 1 : 0
-                    }}
+                    animate={{ scale: isHovered ? 1 : 0, opacity: isHovered ? 1 : 0 }}
                     transition={{ duration: 0.3, delay: 0.2 + i * 0.02 }}
                   >
                     {skill}
@@ -348,10 +269,7 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
         <motion.div
           className="absolute bottom-2 right-2 flex space-x-1"
           initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ 
-            opacity: isHovered ? 1 : 0,
-            scale: isHovered ? 1 : 0.8
-          }}
+          animate={{ opacity: isHovered ? 1 : 0, scale: isHovered ? 1 : 0.8 }}
           transition={{ duration: 0.3, staggerChildren: 0.02 }}
         >
           {[...Array(isLead ? 5 : role.includes('Senior') ? 4 : 3)].map((_, i) => (
@@ -368,9 +286,7 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
         {/* Enhanced Border Effect */}
         <motion.div
           className="absolute inset-0 rounded-2xl border-2 border-transparent"
-          animate={{
-            borderColor: isHovered ? "rgba(64, 224, 255, 0.4)" : "transparent",
-          }}
+          animate={{ borderColor: isHovered ? "rgba(64, 224, 255, 0.4)" : "transparent" }}
           transition={{ duration: 0.3 }}
         />
 
@@ -391,23 +307,19 @@ const TeamSection = () => {
   const headerRef = useRef(null);
   const [selectedSubTeam, setSelectedSubTeam] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
-  
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
   });
 
-  const headerInView = useInView(headerRef, { 
-    once: false, 
-    margin: "-10% 0px -10% 0px",
-    amount: 0.3
-  });
+  const headerInView = useInView(headerRef, { once: false, margin: "-10% 0px -10% 0px", amount: 0.3 });
 
   // Optimized transforms
   const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const orbOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 0.8, 0.3]);
 
-  // Memoized team data
+  // Memoized team data with actual image imports
   const teamMembers = useMemo(() => [
     {
       name: "Anushka Verma",
@@ -447,7 +359,7 @@ const TeamSection = () => {
     }
   ], []);
 
-  // Memoized sub-teams data
+  // Memoized sub-teams data with actual image imports
   const subTeams = useMemo(() => [
     {
       name: "Mechanical Team",
@@ -473,7 +385,6 @@ const TeamSection = () => {
           department: "Mechanical",
           skills: ["Mobility", "Chassis"],
         },
-        // ... (rest of mechanical team members)
         {
           name: "Anvit Khade",
           role: "Senior Design Engineer (Arm & LDT)",
@@ -561,7 +472,6 @@ const TeamSection = () => {
           department: "Electrical",
           skills: ["Circuit Design", "Power Systems"],
         },
-        // ... (rest of electrical team members)
         {
           name: "Sudhindra Sahoo",
           role: "Senior Design Engineer",
@@ -636,7 +546,6 @@ const TeamSection = () => {
           department: "Software",
           skills: ["AI/ML", "Robotics"],
         },
-        // ... (rest of software team members)
         {
           name: "Dheer Prasad",
           role: "Junior Design Engineer",
@@ -729,24 +638,18 @@ const TeamSection = () => {
   // Optimized filter function
   const filteredMembers = useCallback((members) => {
     if (!searchQuery) return members;
-    return members.filter(member => 
+    return members.filter(member =>
       member.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       member.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      member.skills.some(skill => skill.toLowerCase().includes(searchQuery.toLowerCase()))
+      (member.skills && member.skills.some(skill => skill.toLowerCase().includes(searchQuery.toLowerCase())))
     );
   }, [searchQuery]);
 
   // Enhanced animation variants
   const headerVariants = useMemo(() => ({
-    hidden: { 
-      opacity: 0, 
-      y: 50,
-      scale: 0.9
-    },
+    hidden: { opacity: 0, y: 50, scale: 0.9 },
     visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
+      opacity: 1, y: 0, scale: 1,
       transition: {
         duration: 0.8,
         ease: [0.25, 0.46, 0.45, 0.94],
@@ -755,33 +658,23 @@ const TeamSection = () => {
       }
     },
     exit: {
-      opacity: 0,
-      y: -30,
-      scale: 1.05,
-      transition: {
-        duration: 0.5,
-        ease: "easeInOut"
-      }
+      opacity: 0, y: -30, scale: 1.05,
+      transition: { duration: 0.5, ease: "easeInOut" }
     }
   }), []);
 
   const itemVariants = useMemo(() => ({
     hidden: { y: 30, opacity: 0, scale: 0.9 },
     visible: {
-      y: 0,
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
+      y: 0, opacity: 1, scale: 1,
+      transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }
     }
   }), []);
 
   return (
-    <motion.section 
+    <motion.section
       ref={sectionRef}
-      id="team" 
+      id="team"
       className="pt-32 pb-24 bg-gradient-to-br from-space-dark via-space to-space-dark relative overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -791,27 +684,18 @@ const TeamSection = () => {
       <div className="absolute inset-0">
         <motion.div
           className="absolute top-1/4 left-0 w-1/3 h-1/3 bg-gradient-to-r from-cosmic/15 to-blue-500/8 rounded-full blur-3xl"
-          style={{ 
-            y: backgroundY,
-            opacity: orbOpacity
-          }}
+          style={{ y: backgroundY, opacity: orbOpacity }}
         />
-        
         <motion.div
           className="absolute bottom-1/4 right-0 w-1/3 h-1/3 bg-gradient-to-l from-mars/15 to-orange-500/8 rounded-full blur-3xl"
-          style={{ 
-            y: backgroundY,
-            opacity: orbOpacity
-          }}
+          style={{ y: backgroundY, opacity: orbOpacity }}
         />
 
         {/* Enhanced grid pattern */}
         <div className="absolute inset-0 opacity-5">
-          <motion.div 
+          <motion.div
             className="absolute inset-0"
-            animate={{
-              backgroundPosition: ["0% 0%", "100% 100%"],
-            }}
+            animate={{ backgroundPosition: ["0% 0%", "100% 100%"] }}
             transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
             style={{
               backgroundImage: `
@@ -860,14 +744,13 @@ const TeamSection = () => {
           initial="hidden"
           animate={headerInView ? "visible" : "exit"}
         >
-          <motion.h2 
+          <motion.h2
             className="text-5xl md:text-7xl font-bold font-orbitron bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent relative mb-6"
             variants={itemVariants}
           >
             Our Team
           </motion.h2>
-          
-          <motion.p 
+          <motion.p
             className="text-xl text-white/80 max-w-4xl mx-auto leading-relaxed flex items-center justify-center space-x-3"
             variants={itemVariants}
           >
@@ -891,31 +774,19 @@ const TeamSection = () => {
                 key={index}
                 className="bg-gradient-to-br from-space-light/20 to-space-light/10 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center group hover:border-white/30 transition-all duration-300 perspective-1000"
                 initial={{ opacity: 0, y: 30, scale: 0.8 }}
-                animate={headerInView ? { 
-                  opacity: 1, 
-                  y: 0, 
-                  scale: 1 
-                } : { 
-                  opacity: 0, 
-                  y: 30, 
-                  scale: 0.8 
-                }}
-                transition={{ 
-                  duration: 0.6, 
+                animate={headerInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.8 }}
+                transition={{
+                  duration: 0.6,
                   delay: 0.4 + index * 0.1,
                   type: "spring",
                   stiffness: 100,
                   damping: 15
                 }}
-                whileHover={{ 
-                  scale: 1.05, 
-                  y: -5,
-                  rotateY: 5
-                }}
+                whileHover={{ scale: 1.05, y: -5, rotateY: 5 }}
                 whileTap={{ scale: 0.95 }}
                 style={{ transformStyle: "preserve-3d" }}
               >
-                <motion.div 
+                <motion.div
                   className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${stat.gradient}/20 mb-3`}
                   whileHover={{ rotate: 360 }}
                   transition={{ duration: 0.6 }}
@@ -924,7 +795,7 @@ const TeamSection = () => {
                     {stat.icon}
                   </div>
                 </motion.div>
-                <motion.div 
+                <motion.div
                   className="text-2xl font-bold text-white mb-1"
                   initial={{ scale: 0 }}
                   animate={headerInView ? { scale: 1 } : { scale: 0 }}
@@ -973,7 +844,7 @@ const TeamSection = () => {
             )}
           </div>
         </motion.div>
-        
+
         {/* Enhanced Leadership Team */}
         <motion.div
           className="mb-24"
@@ -982,7 +853,7 @@ const TeamSection = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: false, margin: "-10%" }}
         >
-          <motion.h3 
+          <motion.h3
             className="text-3xl font-bold mb-12 font-orbitron text-center flex items-center justify-center space-x-3"
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -992,14 +863,13 @@ const TeamSection = () => {
             <Award className="w-8 h-8 text-mars" />
             <span className="bg-gradient-to-r from-mars to-cosmic bg-clip-text text-transparent">Leadership Team</span>
           </motion.h3>
-          
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
             {filteredMembers(teamMembers).map((member, index) => (
               <TeamMember key={index} {...member} index={index} />
             ))}
           </div>
         </motion.div>
-        
+
         {/* Enhanced Sub-Teams Section */}
         <motion.div
           className="mb-20"
@@ -1008,7 +878,7 @@ const TeamSection = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: false, margin: "-10%" }}
         >
-          <motion.h3 
+          <motion.h3
             className="text-3xl font-bold mb-12 font-orbitron text-center flex items-center justify-center space-x-3"
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -1017,9 +887,9 @@ const TeamSection = () => {
             <GitBranch className="w-8 h-8 text-cosmic" />
             <span className="bg-gradient-to-r from-cosmic to-mars bg-clip-text text-transparent">Our Sub-Teams</span>
           </motion.h3>
-          
+
           {/* Enhanced Team Filter Buttons */}
-          <motion.div 
+          <motion.div
             className="flex flex-wrap justify-center gap-4 mb-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -1040,20 +910,13 @@ const TeamSection = () => {
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.5, delay: idx * 0.05 }}
                 viewport={{ once: false }}
-                whileHover={{ 
-                  scale: 1.03, 
-                  y: -3,
-                  rotateY: 2
-                }}
+                whileHover={{ scale: 1.03, y: -3, rotateY: 2 }}
                 whileTap={{ scale: 0.97 }}
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <div className="flex items-center space-x-3">
                   <motion.div
-                    animate={{ 
-                      rotate: selectedSubTeam === idx ? 360 : 0,
-                      scale: selectedSubTeam === idx ? 1.1 : 1
-                    }}
+                    animate={{ rotate: selectedSubTeam === idx ? 360 : 0, scale: selectedSubTeam === idx ? 1.1 : 1 }}
                     transition={{ duration: 0.5 }}
                   >
                     {team.icon}
@@ -1076,7 +939,7 @@ const TeamSection = () => {
               {subTeams[selectedSubTeam].description}
             </p>
           </motion.div>
-          
+
           {/* Enhanced Team Members Grid */}
           <AnimatePresence mode="wait">
             <motion.div
@@ -1088,57 +951,48 @@ const TeamSection = () => {
               transition={{ duration: 0.5 }}
             >
               {filteredMembers(subTeams[selectedSubTeam].members).map((member, index) => (
-                <TeamMember 
-                  key={`${selectedSubTeam}-${index}`}
-                  {...member} 
-                  index={index}
-                />
+                <TeamMember key={`${selectedSubTeam}-${index}`} {...member} index={index} />
               ))}
             </motion.div>
           </AnimatePresence>
         </motion.div>
-        
+
         {/* Enhanced Join Team Section */}
         <motion.div
-          className="text-center"
-          initial={{ opacity: 0, y: 40, scale: 0.9 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.8 }}
+          className="mt-16 text-center"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
           viewport={{ once: false, margin: "-10%" }}
         >
-          <motion.h3 
-            className="text-3xl font-bold font-orbitron bg-gradient-to-r from-mars to-cosmic bg-clip-text text-transparent flex items-center justify-center space-x-3 mb-8"
-            initial={{ opacity: 0, scale: 0.8 }}
+          <motion.h3
+            className="text-3xl font-bold mb-6 font-orbitron flex items-center justify-center space-x-3"
+            initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+          >
+            <UserPlus className="w-8 h-8 text-cosmic" />
+            <span className="bg-gradient-to-r from-cosmic to-mars bg-clip-text text-transparent">Join Our Team</span>
+          </motion.h3>
+          <motion.p
+            className="text-white/80 max-w-2xl mx-auto mb-8 text-lg leading-relaxed"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <UserPlus className="w-8 h-8 text-mars" />
-            <span>Join Our Mission</span>
-          </motion.h3>
-          
-          <motion.p 
-            className="text-white/80 max-w-4xl mx-auto mb-12 leading-relaxed text-lg"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            Are you passionate about space exploration and rover technology? We're always looking for talented students to join our team and help us build the next generation of Mars rovers.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Are you passionate about space exploration and rover technology? Join our team and help us build 
-            the next generation of Mars rovers.
-          </motion.p>
-          
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Button className="bg-gradient-to-r from-mars via-orange-500 to-cosmic hover:from-mars-dark hover:via-orange-600 hover:to-cosmic-dark text-white px-8 py-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 text-lg font-semibold">
-              <span className="flex items-center space-x-3">
-                <UserPlus className="w-6 h-6" />
+            <Button className="bg-gradient-to-r from-mars to-cosmic hover:opacity-90 text-white px-8 py-6 text-lg rounded-2xl font-semibold transition-all duration-300 shadow-lg shadow-mars/30 hover:shadow-cosmic/30 hover:scale-105">
+              <div className="flex items-center space-x-2">
+                <Mail className="w-5 h-5" />
                 <span>Apply Now</span>
-                <ArrowRight className="w-6 h-6" />
-              </span>
+                <ArrowRight className="w-5 h-5" />
+              </div>
             </Button>
           </motion.div>
         </motion.div>
