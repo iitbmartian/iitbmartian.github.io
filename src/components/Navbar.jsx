@@ -9,7 +9,7 @@ import { usePathname, useRouter } from 'next/navigation';
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const [hoveredLink, setHoveredLink] = useState(null);
   const pathname = usePathname();
   const router = useRouter();
   
@@ -63,7 +63,7 @@ const Navbar = () => {
     { name: 'Contact', href: '/#contact', icon: '📞' },
   ];
 
-  const isActiveLink = (href: string) => {
+  const isActiveLink = (href) => {
     if (href === '/') return pathname === '/';
     if (href === '/#contact') {
       if (typeof window !== 'undefined') {
