@@ -787,7 +787,7 @@ const RoverPage = () => {
                 Our Rovers
               </span>
               <motion.div
-                className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 h-2 bg-gradient-to-r from-mars via-orange-500 to-cosmic rounded-full"
+                className=""
                 initial={{ width: 0, opacity: 0 }}
                 animate={heroInView ? { 
                   width: "60%", 
