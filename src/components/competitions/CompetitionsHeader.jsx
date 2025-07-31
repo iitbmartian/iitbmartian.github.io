@@ -296,7 +296,7 @@ const CompetitionsHeader = () => {
       </motion.div>
 
       {/* Enhanced Subtitle */}
-      <motion.p 
+      <motion.div 
         className="text-xl text-white/80 max-w-4xl mx-auto leading-relaxed mb-8 flex items-center justify-center space-x-3"
         variants={itemVariants}
         initial="hidden"
@@ -322,7 +322,7 @@ const CompetitionsHeader = () => {
         >
           <Trophy className="w-5 h-5 text-mars flex-shrink-0" />
         </motion.div>
-      </motion.p>
+      </motion.div>
 
       {/* Enhanced Competition Stats */}
       <motion.div
@@ -470,7 +470,7 @@ const CompetitionsHeader = () => {
         initial="hidden"
         animate={navigationInView ? "visible" : "exit"}
       >
-        <motion.p 
+        <motion.div 
           className="text-white/60 text-sm flex items-center justify-center space-x-2"
           whileHover={{ scale: 1.02 }}
         >
@@ -487,7 +487,7 @@ const CompetitionsHeader = () => {
           >
             <Sparkles className="w-3 h-3" />
           </motion.div>
-        </motion.p>
+        </motion.div>
       </motion.div>
     </motion.div>
   );

@@ -96,6 +96,13 @@ const CompetitionsPage = () => {
     }
   }), []);
 
+  const floatingElements = useMemo(() => {
+    return [...Array(6)].map(() => ({
+      left: `${10 + Math.random() * 80}%`,
+      top: `${10 + Math.random() * 80}%`,
+    }));
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-space-dark via-space to-space-dark">
       
@@ -211,7 +218,7 @@ const CompetitionsPage = () => {
 
           {/* Enhanced floating elements */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {[...Array(6)].map((_, i) => (
+            {floatingElements.map((style, i) => (
               <motion.div
                 key={i}
                 className="absolute"
@@ -226,10 +233,7 @@ const CompetitionsPage = () => {
                   delay: i * 2,
                   ease: "easeInOut",
                 }}
-                style={{
-                  left: `${10 + Math.random() * 80}%`,
-                  top: `${10 + Math.random() * 80}%`,
-                }}
+                style={style}
               >
                 <motion.div 
                   className="w-6 h-6 bg-gradient-to-r from-mars/20 to-cosmic/20 rounded-full flex items-center justify-center border border-white/10"
@@ -337,7 +341,7 @@ const CompetitionsPage = () => {
               />
             </motion.h1>
             
-            <motion.p 
+            <motion.div 
               className="text-xl text-white/80 max-w-4xl mx-auto leading-relaxed flex items-center justify-center space-x-3"
               variants={itemVariants}
             >
@@ -354,7 +358,7 @@ const CompetitionsPage = () => {
               >
                 <Award className="w-6 h-6 text-mars" />
               </motion.div>
-            </motion.p>
+            </motion.div>
 
             {/* Enhanced Competition Stats */}
             <motion.div
