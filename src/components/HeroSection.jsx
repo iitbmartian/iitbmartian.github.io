@@ -1,9 +1,8 @@
 "use client";
-import React, { useEffect, useState, useRef, useMemo, useCallback } from 'react';
-import { ChevronDown, Rocket, Star, Earth, Sparkles, Target } from 'lucide-react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
+import { ChevronDown, Rocket, Star, Earth, Sparkles } from 'lucide-react';
+import { motion, useScroll, useTransform, useInView, useReducedMotion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
 import MarsRoverLogo from '@/../public/mrt/Logo/mrtLogo.png';
 import Image from 'next/image';
 
@@ -14,6 +13,10 @@ const HeroSection = () => {
   
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Check for reduced motion preference
+  const shouldReduceMotion = useReducedMotion();
   
   // Enhanced useInView with bidirectional animations
   const textInView = useInView(textRef, { 
@@ -30,298 +33,322 @@ const HeroSection = () => {
 
   const { scrollY } = useScroll();
   
-  // Enhanced parallax effects
-  const backgroundY = useTransform(scrollY, [0, 1000], [0, 200]);
-  const textY = useTransform(scrollY, [0, 800], [0, -100]);
-  const imageY = useTransform(scrollY, [0, 800], [0, -50]);
-  const orbsOpacity = useTransform(scrollY, [0, 400], [0.6, 0.2]);
+  // Responsive parallax effects
+  const backgroundY = useTransform(scrollY, [0, 1000], [0, shouldReduceMotion || isMobile ? 0 : 50]);
+  const textY = useTransform(scrollY, [0, 800], [0, shouldReduceMotion || isMobile ? 0 : -25]);
+  const imageY = useTransform(scrollY, [0, 800], [0, shouldReduceMotion || isMobile ? 0 : -15]);
+  const orbsOpacity = useTransform(scrollY, [0, 400], [0.4, 0.1]);
 
   useEffect(() => {
     setIsLoaded(true);
     
+    // Check if mobile device
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    // Throttled mouse move for better performance
+    let ticking = false;
     const handleMouseMove = (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 30; // Enhanced intensity
-      const y = (e.clientY / window.innerHeight - 0.5) * 30;
-      setMousePosition({ x, y });
+      if (!ticking && !isMobile) {
+        requestAnimationFrame(() => {
+          if (!shouldReduceMotion && !isMobile) {
+            const x = (e.clientX / window.innerWidth - 0.5) * 10;
+            const y = (e.clientY / window.innerHeight - 0.5) * 10;
+            setMousePosition({ x, y });
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+    if (!shouldReduceMotion && !isMobile) {
+      window.addEventListener('mousemove', handleMouseMove);
+    }
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, [shouldReduceMotion, isMobile]);
 
-  // Enhanced animation variants
+  // Optimized animation variants with mobile considerations
   const containerVariants = useMemo(() => ({
     hidden: { 
       opacity: 0,
-      scale: 0.95
+      scale: 0.98
     },
     visible: {
       opacity: 1,
       scale: 1,
       transition: {
-        duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94],
-        staggerChildren: 0.15,
-        delayChildren: 0.3,
+        duration: shouldReduceMotion || isMobile ? 0.2 : 0.5,
+        ease: "easeOut",
+        staggerChildren: shouldReduceMotion || isMobile ? 0 : 0.1,
+        delayChildren: shouldReduceMotion || isMobile ? 0 : 0.1,
       },
     },
     exit: {
       opacity: 0,
-      scale: 1.05,
+      scale: 1.02,
       transition: {
-        duration: 0.5,
+        duration: 0.3,
         ease: "easeInOut"
       }
     }
-  }), []);
+  }), [shouldReduceMotion, isMobile]);
 
   const itemVariants = useMemo(() => ({
-    hidden: { y: 50, opacity: 0, scale: 0.9 },
+    hidden: { y: shouldReduceMotion || isMobile ? 0 : 20, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
-      scale: 1,
       transition: {
-        duration: 0.8,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        duration: shouldReduceMotion || isMobile ? 0.2 : 0.4,
+        ease: "easeOut",
       },
     },
     exit: {
-      y: -30,
+      y: shouldReduceMotion || isMobile ? 0 : -15,
       opacity: 0,
-      scale: 0.95,
       transition: {
-        duration: 0.5,
+        duration: 0.3,
         ease: "easeInOut"
       }
     }
-  }), []);
+  }), [shouldReduceMotion, isMobile]);
 
   const imageVariants = useMemo(() => ({
     hidden: { 
       opacity: 0, 
-      scale: 0.8, 
-      rotateX: 20,
-      rotateY: -10
+      scale: shouldReduceMotion || isMobile ? 1 : 0.95
     },
     visible: {
       opacity: 1,
       scale: 1,
-      rotateX: 0,
-      rotateY: 0,
       transition: {
-        duration: 1,
-        ease: [0.25, 0.46, 0.45, 0.94],
-        delay: 0.5
+        duration: shouldReduceMotion || isMobile ? 0.2 : 0.6,
+        ease: "easeOut",
+        delay: shouldReduceMotion || isMobile ? 0 : 0.2
       },
     },
     exit: {
       opacity: 0,
-      scale: 0.9,
-      rotateX: -15,
-      rotateY: 10,
+      scale: shouldReduceMotion || isMobile ? 1 : 0.98,
       transition: {
-        duration: 0.6,
+        duration: 0.4,
         ease: "easeInOut"
       }
     }
-  }), []);
+  }), [shouldReduceMotion, isMobile]);
 
   return (
     <section 
       ref={sectionRef}
       id="home" 
-      className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-gradient-to-br from-space-dark via-space to-space-dark"
+      className="relative min-h-screen flex items-center pt-16 md:pt-20 overflow-hidden bg-gradient-to-br from-space-dark via-space to-space-dark"
     >
-      {/* Enhanced Background Effects */}
+      {/* Simplified Background Effects */}
       <motion.div
-        className="absolute inset-0 opacity-30"
+        className="absolute inset-0 opacity-20 md:opacity-30"
         style={{ y: backgroundY }}
       />
       
-      {/* Enhanced Interactive Background Orbs */}
-      <motion.div
-        className="absolute top-20 right-10 w-96 h-96 bg-gradient-to-r from-mars/15 to-orange-500/15 rounded-full blur-3xl"
-        style={{
-          x: mousePosition.x * 0.8,
-          y: mousePosition.y * 0.8,
-          opacity: orbsOpacity,
-        }}
-        animate={{
-          scale: [1, 1.1, 1],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
-      
-      <motion.div
-        className="absolute bottom-20 left-10 w-72 h-72 bg-gradient-to-r from-cosmic/15 to-blue-500/15 rounded-full blur-3xl"
-        style={{
-          x: mousePosition.x * -0.5,
-          y: mousePosition.y * -0.5,
-          opacity: orbsOpacity,
-        }}
-        animate={{
-          scale: [1, 1.2, 1],
-        }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 2
-        }}
-      />
-
-      {/* Enhanced Floating Particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(12)].map((_, i) => (
+      {/* Optimized Interactive Background Orbs - Desktop only */}
+      {!shouldReduceMotion && !isMobile && (
+        <>
           <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-white/20 rounded-full"
+            className="absolute top-20 right-10 w-60 h-60 lg:w-80 lg:h-80 bg-gradient-to-r from-mars/8 to-orange-500/8 rounded-full blur-3xl"
+            style={{
+              x: mousePosition.x * 0.3,
+              y: mousePosition.y * 0.3,
+              opacity: orbsOpacity,
+              willChange: "transform"
+            }}
             animate={{
-              y: [0, -80, 0],
-              opacity: [0, 1, 0],
-              scale: [0.5, 1.2, 0.5],
+              scale: [1, 1.05, 1],
             }}
             transition={{
-              duration: 8 + i % 4,
+              duration: 6,
               repeat: Infinity,
-              delay: i * 0.6,
-              ease: "easeInOut",
-            }}
-            style={{
-              left: `${10 + Math.random() * 80}%`,
-              top: `${10 + Math.random() * 80}%`,
+              ease: "easeInOut"
             }}
           />
-        ))}
-      </div>
-
-      {/* Enhanced Animated Stars */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(8)].map((_, i) => (
+          
           <motion.div
-            key={`star-${i}`}
-            className="absolute"
+            className="absolute bottom-20 left-10 w-48 h-48 lg:w-60 lg:h-60 bg-gradient-to-r from-cosmic/8 to-blue-500/8 rounded-full blur-3xl"
+            style={{
+              x: mousePosition.x * -0.2,
+              y: mousePosition.y * -0.2,
+              opacity: orbsOpacity,
+              willChange: "transform"
+            }}
             animate={{
-              scale: [1, 1.5, 1],
-              opacity: [0.3, 0.9, 0.3],
-              rotate: [0, 180, 360],
+              scale: [1, 1.08, 1],
             }}
             transition={{
-              duration: 6 + i * 0.5,
+              duration: 8,
               repeat: Infinity,
               ease: "easeInOut",
-              delay: i * 0.3,
+              delay: 2
             }}
-            style={{
-              left: `${15 + i * 12}%`,
-              top: `${20 + (i % 4) * 20}%`,
-            }}
-          >
-            {i % 3 === 0 ? (
-              <Star className="w-4 h-4 text-yellow-400/60" />
-            ) : i % 3 === 1 ? (
-              <Sparkles className="w-3 h-3 text-cosmic/60" />
-            ) : (
-              <Target className="w-3 h-3 text-mars/60" />
-            )}
-          </motion.div>
-        ))}
-      </div>
+          />
+        </>
+      )}
 
-      {/* Main Container - Full Width Split */}
-      <div className="w-full h-screen flex">
-        {/* Enhanced Left Half - Text Content */}
+      {/* Reduced Floating Particles - Desktop only */}
+      {!shouldReduceMotion && !isMobile && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(4)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-white/10 rounded-full"
+              animate={{
+                y: [0, -40, 0],
+                opacity: [0, 0.6, 0],
+              }}
+              transition={{
+                duration: 5 + i,
+                repeat: Infinity,
+                delay: i * 1.5,
+                ease: "easeInOut",
+              }}
+              style={{
+                left: `${30 + Math.random() * 40}%`,
+                top: `${30 + Math.random() * 40}%`,
+                willChange: "transform"
+              }}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Reduced Animated Stars - Desktop only */}
+      {!shouldReduceMotion && !isMobile && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(3)].map((_, i) => (
+            <motion.div
+              key={`star-${i}`}
+              className="absolute"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.6, 0.3],
+              }}
+              transition={{
+                duration: 4 + i,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.8,
+              }}
+              style={{
+                left: `${30 + i * 25}%`,
+                top: `${25 + (i % 2) * 35}%`,
+                willChange: "transform"
+              }}
+            >
+              {i % 2 === 0 ? (
+                <Star className="w-3 h-3 text-yellow-400/40" />
+              ) : (
+                <Sparkles className="w-3 h-3 text-cosmic/40" />
+              )}
+            </motion.div>
+          ))}
+        </div>
+      )}
+
+      {/* Main Container - Responsive Layout */}
+      <div className="w-full min-h-screen flex flex-col md:flex-row">
+        {/* Text Content - Full width on mobile, half on desktop */}
         <motion.div 
           ref={textRef}
-          className="w-1/2 h-full flex items-center justify-center px-8 lg:px-16"
-          style={{ y: textY }}
+          className="w-full md:w-1/2 flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-16 py-8 md:py-0 order-2 md:order-1"
+          style={{ 
+            y: textY,
+            willChange: "transform"
+          }}
           variants={containerVariants}
           initial="hidden"
           animate={textInView ? "visible" : "exit"}
         >
-          <div className="max-w-2xl">
+          <div className="max-w-2xl w-full text-center">
             <motion.h4
-              className="text-mars font-orbitron flex justify-center items-center text-xl mb-4 relative overflow-hidden"
+              className="text-mars font-orbitron text-lg sm:text-xl md:text-2xl mb-3 md:mb-4 relative overflow-hidden"
               variants={itemVariants}
-              whileHover={{ scale: 1.05, y: -2 }}
+              whileHover={shouldReduceMotion || isMobile ? {} : { scale: 1.02 }}
+              style={{ willChange: "transform" }}
             >
-              <span className="inline-block text-3xl">IIT BOMBAY</span>
+              <span className="inline-block">IIT BOMBAY</span>
               
-              {/* Enhanced glowing line */}
-              <motion.div
-                className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-mars to-orange-500"
-                initial={{ width: 0, opacity: 0 }}
-                animate={textInView ? { 
-                  width: "100%", 
-                  opacity: 1 
-                } : { 
-                  width: 0, 
-                  opacity: 0 
-                }}
-                transition={{ duration: 1.5, delay: 0.8 }}
-              />
+              {/* Optimized glowing line - Desktop only */}
+              {!shouldReduceMotion && !isMobile && (
+                <motion.div
+                  className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 bg-gradient-to-r from-mars to-orange-500"
+                  initial={{ width: 0, opacity: 0 }}
+                  animate={textInView ? { 
+                    width: "60%", 
+                    opacity: 1 
+                  } : { 
+                    width: 0, 
+                    opacity: 0 
+                  }}
+                  transition={{ duration: 1, delay: 0.5 }}
+                  style={{ willChange: "width, opacity" }}
+                />
+              )}
             </motion.h4>
 
             <motion.h1
-              className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-orbitron mb-6 relative"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-orbitron mb-4 md:mb-6 relative"
               variants={itemVariants}
             >
               <motion.div 
-                className="text-white mb-2 flex justify-center items-center text-center"
-                whileHover={{ scale: 1.03, y: -3 }}
-                transition={{ duration: 0.3 }}
+                className="text-white mb-1 md:mb-2"
+                whileHover={shouldReduceMotion || isMobile ? {} : { scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+                style={{ willChange: "transform" }}
               >
                 MARS ROVER
               </motion.div>
               
               <motion.div 
-                className="flex justify-center items-center bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent"
-                whileHover={{ scale: 1.03, y: -3 }}
-                transition={{ duration: 0.3 }}
-                animate={{
-                  backgroundPosition: ["0% 0%", "100% 0%", "0% 0%"],
-                }}
-                style={{
-                  transition: {
-                    backgroundPosition: {
-                      duration: 8,
-                      repeat: Infinity,
-                      ease: "linear"
-                    }
-                  }
-                }}
+                className="bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent"
+                whileHover={shouldReduceMotion || isMobile ? {} : { scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+                style={{ willChange: "transform" }}
               >
                 TEAM
               </motion.div>
 
-              {/* Enhanced floating rocket */}
-              <motion.div
-                className="absolute -right-12 top-4 hidden xl:block"
-                animate={{
-                  y: [0, -15, 0],
-                  rotate: [0, 10, -10, 0],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                whileHover={{ scale: 1.2, rotate: 15 }}
-              >
-                <Rocket className="w-8 h-8 text-mars/60" />
-              </motion.div>
+              {/* Simplified floating rocket - Desktop only */}
+              {!shouldReduceMotion && !isMobile && (
+                <motion.div
+                  className="absolute -right-8 lg:-right-12 top-2 lg:top-4 hidden lg:block"
+                  animate={{
+                    y: [0, -8, 0],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  whileHover={{ scale: 1.1 }}
+                  style={{ willChange: "transform" }}
+                >
+                  <Rocket className="w-6 h-6 lg:w-8 lg:h-8 text-mars/60" />
+                </motion.div>
+              )}
             </motion.h1>
 
             <motion.p
-              className="text-white/80 text-lg md:text-xl mb-8 leading-relaxed text-center"
+              className="text-white/80 text-base sm:text-lg md:text-xl mb-6 md:mb-8 leading-relaxed px-2 sm:px-0"
               variants={itemVariants}
-              whileHover={{ scale: 1.01 }}
-              transition={{ duration: 0.3 }}
+              whileHover={shouldReduceMotion || isMobile ? {} : { scale: 1.005 }}
+              transition={{ duration: 0.2 }}
+              style={{ willChange: "transform" }}
             >
               A unique student-led initiative focused on designing and building advanced rovers 
               capable of extraterrestrial exploration. Our rovers are equipped for autonomous 
@@ -329,43 +356,47 @@ const HeroSection = () => {
             </motion.p>
 
             <motion.div
-              className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4"
+              className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-4 px-4 sm:px-0"
               variants={itemVariants}
             >
               <motion.div
-                whileHover={{ 
-                  scale: 1.05, 
-                  y: -5,
-                  boxShadow: "0 10px 30px rgba(255, 107, 53, 0.3)"
+                whileHover={shouldReduceMotion || isMobile ? {} : { 
+                  scale: 1.03, 
+                  y: -2
                 }}
-                whileTap={{ scale: 0.95 }}
+                whileTap={{ scale: 0.98 }}
                 className="w-full sm:w-auto"
+                style={{ willChange: "transform" }}
               >
-                <Button className="bg-gradient-to-r from-mars to-orange-600 hover:from-mars-dark hover:to-orange-700 text-white px-8 py-6 rounded-xl w-full sm:w-auto shadow-lg hover:shadow-xl transition-all duration-300 font-semibold">
-                  <span className="flex items-center space-x-2">
+                <Button className="bg-gradient-to-r from-mars to-orange-600 hover:from-mars-dark hover:to-orange-700 text-white px-6 md:px-8 py-4 md:py-6 rounded-xl w-full sm:w-auto shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-sm md:text-base">
+                  <span className="flex items-center justify-center space-x-2">
                     <span>Explore Projects</span>
-                    <motion.div
-                      animate={{ rotate: [0, 360] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                    >
-                      <Earth className="w-4 h-4" />
-                    </motion.div>
+                    {!shouldReduceMotion && !isMobile && (
+                      <motion.div
+                        animate={{ rotate: [0, 360] }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                        style={{ willChange: "transform" }}
+                      >
+                        <Earth className="w-4 h-4" />
+                      </motion.div>
+                    )}
+                    {(shouldReduceMotion || isMobile) && <Earth className="w-4 h-4" />}
                   </span>
                 </Button>
               </motion.div>
 
               <motion.div
-                whileHover={{ 
-                  scale: 1.05, 
-                  y: -5,
-                  boxShadow: "0 10px 30px rgba(0, 217, 255, 0.3)"
+                whileHover={shouldReduceMotion || isMobile ? {} : { 
+                  scale: 1.03, 
+                  y: -2
                 }}
-                whileTap={{ scale: 0.95 }}
+                whileTap={{ scale: 0.98 }}
                 className="w-full sm:w-auto"
+                style={{ willChange: "transform" }}
               >
                 <Button 
                   variant="outline" 
-                  className="border-2 border-cosmic text-cosmic hover:bg-cosmic/10 hover:border-cosmic/80 px-8 py-6 rounded-xl w-full sm:w-auto transition-all duration-300 backdrop-blur-sm font-semibold"
+                  className="border-2 border-cosmic text-cosmic hover:bg-cosmic/10 hover:border-cosmic/80 px-6 md:px-8 py-4 md:py-6 rounded-xl w-full sm:w-auto transition-all duration-300 backdrop-blur-sm font-semibold text-sm md:text-base"
                 >
                   Meet The Team
                 </Button>
@@ -374,71 +405,64 @@ const HeroSection = () => {
           </div>
         </motion.div>
 
-        {/* Enhanced Right Half - Image Section */}
+        {/* Image Section - Full width on mobile, half on desktop */}
         <motion.div 
           ref={imageRef}
-          className="w-1/2 h-full flex items-center justify-center px-8 lg:px-16 perspective-1000"
+          className="w-full md:w-1/2 flex items-center justify-center px-4 sm:px-6 md:px-8 lg:px-16 py-8 md:py-0 order-1 md:order-2"
           style={{ 
             y: imageY,
-            transformStyle: "preserve-3d"
+            willChange: "transform"
           }}
           variants={imageVariants}
           initial="hidden"
           animate={imageInView ? "visible" : "exit"}
         >
           <motion.div
-            className="relative w-full max-w-lg"
-            animate={{
-              y: [0, -20, 0],
+            className="relative w-full max-w-sm sm:max-w-md md:max-w-lg"
+            animate={shouldReduceMotion || isMobile ? {} : {
+              y: [0, -10, 0],
             }}
             transition={{
-              duration: 8,
+              duration: 6,
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            whileHover={{ 
-              scale: 1.05,
-              rotateY: 5,
-              rotateX: -5
+            whileHover={shouldReduceMotion || isMobile ? {} : { 
+              scale: 1.03
             }}
-            style={{ transformStyle: "preserve-3d" }}
+            style={{ willChange: "transform" }}
           >
-            {/* Enhanced background glow */}
-            <motion.div 
-              className="absolute inset-0 bg-gradient-to-r from-mars/10 via-orange-500/10 to-cosmic/10 rounded-full blur-2xl scale-110"
-              animate={{
-                opacity: [0.4, 0.8, 0.4],
-                scale: [1.1, 1.3, 1.1],
-              }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
+            {/* Simplified background glow - Desktop only */}
+            {!shouldReduceMotion && !isMobile && (
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-r from-mars/6 via-orange-500/6 to-cosmic/6 rounded-full blur-2xl scale-110"
+                animate={{
+                  opacity: [0.2, 0.4, 0.2],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                style={{ willChange: "opacity" }}
+              />
+            )}
             
             <motion.div
-              className="relative z-10 rounded-xl overflow-hidden shadow-2xl"
-              initial={{ scale: 0.8, opacity: 0, rotateX: 20 }}
+              className="relative z-10 rounded-xl overflow-hidden shadow-2xl mx-auto"
+              initial={{ scale: shouldReduceMotion || isMobile ? 1 : 0.9, opacity: 0 }}
               animate={imageInView ? { 
                 scale: 1, 
-                opacity: 1, 
-                rotateX: 0 
+                opacity: 1
               } : { 
-                scale: 0.8, 
-                opacity: 0, 
-                rotateX: 20 
+                scale: shouldReduceMotion || isMobile ? 1 : 0.9, 
+                opacity: 0
               }}
               transition={{ 
-                duration: 1, 
-                delay: 0.4,
-                type: "spring",
-                stiffness: 100,
-                damping: 20
+                duration: shouldReduceMotion || isMobile ? 0.2 : 0.8, 
+                delay: shouldReduceMotion || isMobile ? 0 : 0.2
               }}
-              whileHover={{
-                boxShadow: "0 25px 50px rgba(0, 0, 0, 0.5)"
-              }}
+              style={{ willChange: "transform, opacity" }}
             >
               <Image
                 src={MarsRoverLogo}
@@ -450,145 +474,68 @@ const HeroSection = () => {
                 onLoad={() => setIsLoaded(true)}
               />
               
-              {/* Image loading overlay */}
+              {/* Simplified loading overlay */}
               {!isLoaded && (
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-br from-mars/20 to-cosmic/20 flex items-center justify-center"
                   initial={{ opacity: 1 }}
                   animate={{ opacity: 0 }}
-                  transition={{ duration: 0.5, delay: 1 }}
+                  transition={{ duration: 0.3, delay: 0.5 }}
                 >
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                  >
-                    <Rocket className="w-12 h-12 text-white/40" />
-                  </motion.div>
+                  <Rocket className="w-8 h-8 md:w-12 md:h-12 text-white/40" />
                 </motion.div>
               )}
             </motion.div>
 
-            {/* Enhanced Decorative Elements */}
-            <motion.div
-              className="absolute -top-4 -left-4 w-12 h-12 border-2 border-mars rounded-full opacity-60"
-              animate={{
-                rotate: 360,
-                scale: [1, 1.2, 1],
-              }}
-              transition={{
-                rotate: {
-                  duration: 20,
-                  repeat: Infinity,
-                  ease: "linear",
-                },
-                scale: {
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }
-              }}
-            />
-            
-            <motion.div
-              className="absolute -bottom-4 -right-4 w-16 h-16 border-2 border-cosmic rounded-full opacity-60"
-              animate={{
-                rotate: -360,
-                scale: [1, 1.1, 1],
-              }}
-              transition={{
-                rotate: {
-                  duration: 25,
-                  repeat: Infinity,
-                  ease: "linear",
-                },
-                scale: {
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 1
-                }
-              }}
-            />
-
-            {/* Enhanced floating elements */}
-            <motion.div
-              className="absolute top-10 right-10 w-6 h-6 bg-mars/30 rounded-full blur-sm"
-              animate={{
-                y: [0, -30, 0],
-                opacity: [0.3, 0.9, 0.3],
-                scale: [1, 1.3, 1],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-            
-            <motion.div
-              className="absolute bottom-20 left-5 w-4 h-4 bg-cosmic/40 rounded-full blur-sm"
-              animate={{
-                x: [0, 20, 0],
-                opacity: [0.4, 0.9, 0.4],
-                scale: [1, 1.2, 1],
-              }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1.5,
-              }}
-            />
-
-            {/* New orbital elements */}
-            <motion.div
-              className="absolute top-1/2 left-1/2 w-32 h-32 border border-white/20 rounded-full"
-              style={{
-                x: "-50%",
-                y: "-50%",
-              }}
-              animate={{
-                rotate: 360,
-              }}
-              transition={{
-                duration: 30,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-            >
-              <motion.div
-                className="absolute top-0 left-1/2 w-2 h-2 bg-cosmic rounded-full"
-                style={{ x: "-50%", y: "-50%" }}
-                animate={{
-                  scale: [1, 1.5, 1],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              />
-            </motion.div>
+            {/* Simplified Decorative Elements - Desktop only */}
+            {!shouldReduceMotion && !isMobile && (
+              <>
+                <motion.div
+                  className="absolute -top-3 -left-3 md:-top-4 md:-left-4 w-8 h-8 md:w-12 md:h-12 border-2 border-mars/60 rounded-full"
+                  animate={{
+                    rotate: 360,
+                  }}
+                  transition={{
+                    duration: 15,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                  style={{ willChange: "transform" }}
+                />
+                
+                <motion.div
+                  className="absolute -bottom-3 -right-3 md:-bottom-4 md:-right-4 w-10 h-10 md:w-16 md:h-16 border-2 border-cosmic/60 rounded-full"
+                  animate={{
+                    rotate: -360,
+                  }}
+                  transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                  style={{ willChange: "transform" }}
+                />
+              </>
+            )}
           </motion.div>
         </motion.div>
       </div>
 
-      {/* Enhanced Scroll Indicator */}
+      {/* Optimized Scroll Indicator */}
       <motion.div
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
-        initial={{ opacity: 0, y: 30, scale: 0.8 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
+        className="absolute top-80 sm:bottom-6 md:bottom-10 sm:left-1/2 left-28 transform -translate-x-1/2 flex flex-col items-center"
+        initial={{ opacity: 0, y: shouldReduceMotion || isMobile ? 0 : 15 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ 
-          duration: 1, 
-          delay: 2,
-          type: "spring",
-          stiffness: 100
+          duration: shouldReduceMotion || isMobile ? 0.2 : 0.6, 
+          delay: shouldReduceMotion || isMobile ? 0 : 1.5
         }}
-        whileHover={{ scale: 1.1 }}
+        whileHover={shouldReduceMotion || isMobile ? {} : { scale: 1.05 }}
+        style={{ willChange: "transform" }}
       >
         <motion.span
-          className="text-white/60 text-sm mb-2 font-medium"
-          animate={{
+          className="text-white/60 text-xs md:text-sm mb-2 font-medium text-center"
+          animate={shouldReduceMotion || isMobile ? {} : {
             opacity: [0.6, 1, 0.6],
           }}
           transition={{
@@ -601,56 +548,28 @@ const HeroSection = () => {
         </motion.span>
         
         <motion.div
-          animate={{
-            y: [0, 12, 0],
+          animate={shouldReduceMotion || isMobile ? {} : {
+            y: [0, 6, 0],
           }}
           transition={{
-            duration: 1.5,
+            duration: 1.2,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          whileHover={{ scale: 1.2 }}
+          whileHover={shouldReduceMotion || isMobile ? {} : { scale: 1.1 }}
+          style={{ willChange: "transform" }}
         >
-          <ChevronDown className="text-white/60 w-6 h-6" />
+          <ChevronDown className="text-white/60 w-5 h-5 md:w-6 md:h-6" />
         </motion.div>
         
         <motion.div
-          className="w-px h-12 bg-gradient-to-b from-white/40 to-transparent mt-2"
+          className="w-px h-8 md:h-12 bg-gradient-to-b from-white/40 to-transparent mt-2"
           initial={{ scaleY: 0, opacity: 0 }}
           animate={{ scaleY: 1, opacity: 1 }}
-          transition={{ duration: 1, delay: 2.5 }}
+          transition={{ duration: shouldReduceMotion || isMobile ? 0.2 : 0.8, delay: shouldReduceMotion || isMobile ? 0 : 2 }}
+          style={{ willChange: "transform, opacity" }}
         />
       </motion.div>
-
-      {/* Additional ambient elements */}
-      <motion.div
-        className="absolute top-1/4 left-1/4 w-2 h-2 bg-white/30 rounded-full"
-        animate={{
-          scale: [0, 1, 0],
-          opacity: [0, 1, 0],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut",
-          repeatDelay: 2
-        }}
-      />
-
-      <motion.div
-        className="absolute bottom-1/3 right-1/3 w-1 h-1 bg-cosmic/50 rounded-full"
-        animate={{
-          scale: [0, 1.5, 0],
-          opacity: [0, 0.8, 0],
-        }}
-        transition={{
-          duration: 3,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 1,
-          repeatDelay: 1.5
-        }}
-      />
     </section>
   );
 };
