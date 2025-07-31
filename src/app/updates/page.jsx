@@ -558,7 +558,6 @@ const UpdatesPage = () => {
         </div>
       </section>
       
-      <Footer />
     </div>
   );
 };
