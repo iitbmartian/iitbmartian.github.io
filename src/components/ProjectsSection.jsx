@@ -498,7 +498,7 @@ const ProjectsSection = () => {
               Our Projects
             </span>
             <motion.div
-              className="absolute -bottom-2 left-0 h-1.5 bg-gradient-to-r from-mars via-orange-500 to-cosmic rounded-full"
+              className=""
               initial={{ width: 0, opacity: 0 }}
               animate={headerInView ? { 
                 width: "100%", 
