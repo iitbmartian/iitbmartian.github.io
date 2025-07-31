@@ -559,7 +559,7 @@ const Footer = () => {
                   </motion.div>
                   <span>by</span>
                   <span className="font-semibold bg-gradient-to-r from-mars to-cosmic bg-clip-text text-transparent">
-                    ESHWAY
+                    Nittish
                   </span>
                 </div>
 
