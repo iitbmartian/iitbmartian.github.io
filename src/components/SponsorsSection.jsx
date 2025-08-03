@@ -11,6 +11,7 @@ import Servocity from '@/../public/mrt/sponsors/servocity.png';
 import Robu from '@/../public/mrt/sponsors/Robu.in.png';
 import SBGSystems from '@/../public/mrt/sponsors/SBG_Systems.png';
 import IITBombay from '@/../public/mrt/sponsors/IIT_BOMBAY.png';
+import {useRouter} from 'next/navigation'
 
 const SponsorCard = ({ name, logo, url, index, category, gradient }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -173,6 +174,8 @@ const SponsorCard = ({ name, logo, url, index, category, gradient }) => {
 };
 
 const SponsorsSection = () => {
+const router = useRouter()
+
   const sectionRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -461,12 +464,14 @@ const SponsorsSection = () => {
             <span className="text-white/80 font-medium">
               Interested in partnering with us? 
             </span>
-            <motion.span
+            <motion.button onClick={()=>{
+              router.push("#contact")
+            }}
               className="text-purple-500 cursor-pointer hover:text-cyan-300 transition-colors"
               whileHover={{ scale: 1.05 }}
             >
               Get in touch
-            </motion.span>
+            </motion.button>
           </motion.div>
         </motion.div>
       </div>

@@ -350,10 +350,13 @@ const CompetitionsSection = () => {
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
             >
-              <Button className="bg-gradient-to-r from-mars via-orange-500 to-cosmic hover:from-mars-dark hover:via-orange-600 hover:to-cosmic-dark text-white group px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-lg">
+              <Button onClick={()=>{
+                    router.push("/records")
+                  }} className="bg-gradient-to-r from-mars via-orange-500 to-cosmic hover:from-mars-dark hover:via-orange-600 hover:to-cosmic-dark text-white group px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-lg">
                 <span className="flex items-center space-x-3">
                   <Trophy className="w-5 h-5" />
-                  <span>View Our Competitive Records</span>
+                  <span >View Our Competitive Records
+                  </span>
                   <ArrowRight className="w-5 h-5" />
                 </span>
               </Button>

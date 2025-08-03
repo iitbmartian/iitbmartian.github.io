@@ -524,7 +524,7 @@ const TeamSection = () => {
         },
         {
           name: "Veeresh S K",
-          role: "Junior Design Engineer",
+          role: "Senior Design Engineer",
           image: Veeresh,
           department: "Electrical",
           skills: ["Circuit Design", "Innovation"],

@@ -5,8 +5,11 @@ import { motion, useScroll, useTransform, useInView, useReducedMotion } from 'fr
 import { Button } from '@/components/ui/button';
 import MarsRoverLogo from '@/../public/mrt/Logo/mrtLogo.png';
 import Image from 'next/image';
+import Link from 'next/link'
+import {useRouter} from 'next/navigation'
 
 const HeroSection = () => {
+  const router = useRouter()
   const sectionRef = useRef(null);
   const textRef = useRef(null);
   const imageRef = useRef(null);
@@ -14,6 +17,7 @@ const HeroSection = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
   
   // Check for reduced motion preference
   const shouldReduceMotion = useReducedMotion();
@@ -40,41 +44,32 @@ const HeroSection = () => {
   const orbsOpacity = useTransform(scrollY, [0, 400], [0.4, 0.1]);
 
   useEffect(() => {
+    setHasMounted(true);
     setIsLoaded(true);
-    
-    // Check if mobile device
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
+
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    
-    // Throttled mouse move for better performance
+
     let ticking = false;
     const handleMouseMove = (e) => {
-      if (!ticking && !isMobile) {
-        requestAnimationFrame(() => {
-          if (!shouldReduceMotion && !isMobile) {
-            const x = (e.clientX / window.innerWidth - 0.5) * 10;
-            const y = (e.clientY / window.innerHeight - 0.5) * 10;
-            setMousePosition({ x, y });
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
+      if (ticking || shouldReduceMotion || window.innerWidth < 768) return;
 
-    if (!shouldReduceMotion && !isMobile) {
-      window.addEventListener('mousemove', handleMouseMove);
-    }
-    
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('resize', checkMobile);
+      ticking = true;
+      requestAnimationFrame(() => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 10;
+        const y = (e.clientY / window.innerHeight - 0.5) * 10;
+        setMousePosition({ x, y });
+        ticking = false;
+      });
     };
-  }, [shouldReduceMotion, isMobile]);
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [shouldReduceMotion]);
 
   // Optimized animation variants with mobile considerations
   const containerVariants = useMemo(() => ({
@@ -159,7 +154,7 @@ const HeroSection = () => {
       />
       
       {/* Optimized Interactive Background Orbs - Desktop only */}
-      {!shouldReduceMotion && !isMobile && (
+      {hasMounted && !shouldReduceMotion && !isMobile && (
         <>
           <motion.div
             className="absolute top-20 right-10 w-60 h-60 lg:w-80 lg:h-80 bg-gradient-to-r from-mars/8 to-orange-500/8 rounded-full blur-3xl"
@@ -201,7 +196,7 @@ const HeroSection = () => {
       )}
 
       {/* Reduced Floating Particles - Desktop only */}
-      {!shouldReduceMotion && !isMobile && (
+      {hasMounted && !shouldReduceMotion && !isMobile && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {[...Array(4)].map((_, i) => (
             <motion.div
@@ -228,7 +223,7 @@ const HeroSection = () => {
       )}
 
       {/* Reduced Animated Stars - Desktop only */}
-      {!shouldReduceMotion && !isMobile && (
+      {hasMounted && !shouldReduceMotion && !isMobile && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {[...Array(3)].map((_, i) => (
             <motion.div
@@ -284,7 +279,7 @@ const HeroSection = () => {
               <span className="inline-block">IIT BOMBAY</span>
               
               {/* Optimized glowing line - Desktop only */}
-              {!shouldReduceMotion && !isMobile && (
+              {hasMounted && !shouldReduceMotion && !isMobile && (
                 <motion.div
                   className="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 bg-gradient-to-r from-mars to-orange-500"
                   initial={{ width: 0, opacity: 0 }}
@@ -324,7 +319,7 @@ const HeroSection = () => {
               </motion.div>
 
               {/* Simplified floating rocket - Desktop only */}
-              {!shouldReduceMotion && !isMobile && (
+              {hasMounted && !shouldReduceMotion && !isMobile && (
                 <motion.div
                   className="absolute -right-8 lg:-right-12 top-2 lg:top-4 hidden lg:block"
                   animate={{
@@ -370,8 +365,8 @@ const HeroSection = () => {
               >
                 <Button className="bg-gradient-to-r from-mars to-orange-600 hover:from-mars-dark hover:to-orange-700 text-white px-6 md:px-8 py-4 md:py-6 rounded-xl w-full sm:w-auto shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-sm md:text-base">
                   <span className="flex items-center justify-center space-x-2">
-                    <span>Explore Projects</span>
-                    {!shouldReduceMotion && !isMobile && (
+                    <Link href="#projects" >Explore Projects</Link>
+                    {hasMounted && !shouldReduceMotion && !isMobile && (
                       <motion.div
                         animate={{ rotate: [0, 360] }}
                         transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
@@ -380,7 +375,7 @@ const HeroSection = () => {
                         <Earth className="w-4 h-4" />
                       </motion.div>
                     )}
-                    {(shouldReduceMotion || isMobile) && <Earth className="w-4 h-4" />}
+                    {hasMounted && (shouldReduceMotion || isMobile) && <Earth className="w-4 h-4" />}
                   </span>
                 </Button>
               </motion.div>
@@ -395,6 +390,9 @@ const HeroSection = () => {
                 style={{ willChange: "transform" }}
               >
                 <Button 
+                onClick={()=>{
+                  router.push("/team")
+                }}
                   variant="outline" 
                   className="border-2 border-cosmic text-cosmic hover:bg-cosmic/10 hover:border-cosmic/80 px-6 md:px-8 py-4 md:py-6 rounded-xl w-full sm:w-auto transition-all duration-300 backdrop-blur-sm font-semibold text-sm md:text-base"
                 >
@@ -433,7 +431,7 @@ const HeroSection = () => {
             style={{ willChange: "transform" }}
           >
             {/* Simplified background glow - Desktop only */}
-            {!shouldReduceMotion && !isMobile && (
+            {hasMounted && !shouldReduceMotion && !isMobile && (
               <motion.div 
                 className="absolute inset-0 bg-gradient-to-r from-mars/6 via-orange-500/6 to-cosmic/6 rounded-full blur-2xl scale-110"
                 animate={{
@@ -475,7 +473,7 @@ const HeroSection = () => {
               />
               
               {/* Simplified loading overlay */}
-              {!isLoaded && (
+              {hasMounted && !isLoaded && (
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-br from-mars/20 to-cosmic/20 flex items-center justify-center"
                   initial={{ opacity: 1 }}
@@ -488,7 +486,7 @@ const HeroSection = () => {
             </motion.div>
 
             {/* Simplified Decorative Elements - Desktop only */}
-            {!shouldReduceMotion && !isMobile && (
+            {hasMounted && !shouldReduceMotion && !isMobile && (
               <>
                 <motion.div
                   className="absolute -top-3 -left-3 md:-top-4 md:-left-4 w-8 h-8 md:w-12 md:h-12 border-2 border-mars/60 rounded-full"
@@ -523,7 +521,7 @@ const HeroSection = () => {
 
       {/* Optimized Scroll Indicator */}
       <motion.div
-        className="absolute top-80 sm:bottom-6 md:bottom-10 sm:left-1/2 left-28 transform -translate-x-1/2 flex flex-col items-center"
+        className="absolute top-80 md:top-96 sm:left-1/2 left-28 transform -translate-x-1/2 flex flex-col items-center"
         initial={{ opacity: 0, y: shouldReduceMotion || isMobile ? 0 : 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ 

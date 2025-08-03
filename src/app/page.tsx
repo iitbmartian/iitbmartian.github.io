@@ -7,12 +7,14 @@ import SubsystemsSection from '@/components/SubsystemsSection';
 import CompetitionsSection from '@/components/CompetitionsSection';
 import SponsorsSection from '@/components/SponsorsSection';
 import ContactSection from '@/components/ContactSection';
+import CCarousel from '@/components/CCarousel';
 
 const Index = () => {
   return (
     <>
       <HeroSection />           
-      <AboutSection />          
+      <CCarousel/>     
+      <AboutSection />     
       <RoversSection />         
       <SubsystemsSection />     
       <CompetitionsSection />   

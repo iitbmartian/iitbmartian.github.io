@@ -103,7 +103,9 @@ const Navbar = () => {
               transition={{ duration: 0.5, ease: "easeOut" }}
               className="flex items-center space-x-3 group cursor-pointer flex-shrink-0"
             >
-              <Link href="/" className="flex items-center space-x-3">
+              <button onClick={()=>{
+                router.push('/')
+              }} className="flex items-center space-x-3">
                 <motion.div
                   whileHover={{ 
                     rotate: 360, 
@@ -128,7 +130,7 @@ const Navbar = () => {
                     Mars Rover Team
                   </div>
                 </motion.div>
-              </Link>
+              </button>
             </motion.div>
 
             {/* Enhanced Desktop Menu */}
@@ -274,12 +276,13 @@ const Navbar = () => {
                       }}
                       transition={{ duration: 0.2 }}
                     >
-                      <Link
-                        href={link.href}
+                      <button
                         onClick={() => {
                           setIsMobileMenuOpen(false);
                           if (link.href === '/#contact') {
                             handleContactClick();
+                          }else{
+                            router.push(link.href)
                           }
                         }}
                       >
@@ -298,7 +301,7 @@ const Navbar = () => {
                             <span className="font-medium text-sm whitespace-nowrap">{link.name}</span>
                           </span>
                         </motion.div>
-                      </Link>
+                      </button>
                     </motion.div>
                   ))}
                 </motion.div>

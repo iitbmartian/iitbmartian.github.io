@@ -823,7 +823,7 @@ const RoverPage = () => {
           {/* Enhanced Scroll Indicator */}
           {showScrollIndicator && (
             <motion.div
-              className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+              className="absolute -bottom-18 left-1/2 transform -translate-x-1/2"
               transition={{ duration: 2.5, repeat: Infinity }}
               initial={{ opacity: 0 }}
               animate={heroInView ? { opacity: 1 } : { opacity: 0 }}

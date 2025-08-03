@@ -20,9 +20,11 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import {useRouter} from 'next/navigation'
 
 // Enhanced ProjectCard Component
 const ProjectCard = ({ project, index }) => {
+  const router = useRouter()
   const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef(null);
   
@@ -584,7 +586,7 @@ const ProjectsSection = () => {
             className="text-5xl md:text-7xl font-bold font-orbitron mb-6 relative inline-block"
             variants={itemVariants}
           >
-            <span className="bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent">
+            <span id='projects' className="bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent">
               Our Projects
             </span>
             <motion.div
@@ -704,7 +706,7 @@ const ProjectsSection = () => {
             }}
             whileTap={{ scale: 0.95 }}
           >
-            <Button className="bg-gradient-to-r from-cosmic via-blue-500 to-blue-600 hover:from-cosmic-dark hover:via-blue-600 hover:to-blue-700 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-lg">
+            <Button onClick={()=>{router.push("#projects")}}   className="bg-gradient-to-r from-cosmic via-blue-500 to-blue-600 hover:from-cosmic-dark hover:via-blue-600 hover:to-blue-700 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-lg">
               <span className="flex items-center space-x-3">
                 <span>View All Projects</span>
                 <motion.div
