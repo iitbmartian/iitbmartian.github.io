@@ -67,7 +67,7 @@ interface RoverTimelineProps {
 
 const RoverTimeline = ({ events }: RoverTimelineProps) => {
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12 md:py-20">
+    <div className="max-w-6xl mx-auto px-4 py-12 md:py-20 text-white">
       <div className="text-center mb-8 md:mb-16">
         <h2 className="section-title">The story of how we got started</h2>
         <p className="section-subtitle">

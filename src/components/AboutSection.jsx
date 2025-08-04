@@ -655,19 +655,7 @@ const AboutSection = () => {
                     transition={{ duration: 0.3 }}
                   />
 
-                  {/* Pulsing indicator */}
-                  <motion.div
-                    className="absolute top-2 right-2 w-2 h-2 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full"
-                    animate={{
-                      scale: [1, 1.5, 1],
-                      opacity: [0.5, 1, 0.5]
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      delay: index * 0.3
-                    }}
-                  />
+
                 </motion.div>
               ))}
             </div>
@@ -765,19 +753,7 @@ const AboutSection = () => {
                 transition={{ duration: 0.3 }}
               />
 
-              {/* Achievement counter */}
-              <motion.div
-                className="absolute top-4 right-4 px-3 py-1 bg-gradient-to-r from-cosmic/80 to-blue-500/80 rounded-full backdrop-blur-sm border border-white/20"
-                initial={{ opacity: 0, scale: 0 }}
-                animate={highlightsInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
-                transition={{ duration: 0.5, delay: 1 }}
-                whileHover={{ scale: 1.05 }}
-              >
-                <span className="text-xs text-white font-medium flex items-center">
-                  <TrendingUp className="w-3 h-3 mr-1" />
-                  {highlights.length} Achievements
-                </span>
-              </motion.div>
+
             </motion.div>
           </motion.div>
         </div>

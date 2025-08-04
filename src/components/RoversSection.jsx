@@ -488,20 +488,7 @@ const RoversSection = () => {
                 </motion.div>
               </div>
 
-              {/* Enhanced Progress Indicator */}
-              <motion.div
-                className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-mars to-cosmic rounded-b-xl"
-                initial={{ scaleX: 0, opacity: 0 }}
-                animate={roversInView ? { 
-                  scaleX: 1, 
-                  opacity: 1 
-                } : { 
-                  scaleX: 0, 
-                  opacity: 0 
-                }}
-                transition={{ duration: 0.6, delay: index * 0.05 }}
-                style={{ transformOrigin: 'left' }}
-              />
+
 
               {/* Enhanced Rover number indicator */}
               <motion.div 
@@ -524,19 +511,6 @@ const RoversSection = () => {
                 {index + 1}
               </motion.div>
 
-              {/* Generation timeline indicator */}
-              <motion.div
-                className="absolute left-0 top-1/2 w-1 bg-gradient-to-b from-mars to-cosmic rounded-full transform -translate-y-1/2"
-                initial={{ height: 0, opacity: 0 }}
-                animate={roversInView ? { 
-                  height: "60%", 
-                  opacity: 0.6 
-                } : { 
-                  height: 0, 
-                  opacity: 0 
-                }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-              />
 
               {/* Glow effect */}
               <motion.div

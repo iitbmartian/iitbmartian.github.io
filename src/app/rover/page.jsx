@@ -212,10 +212,10 @@ const RoverCard = ({ rover, index, isActive, onClick }) => {
         />
       </motion.div>
 
-      <div className="relative p-6 backdrop-blur-sm">
+      <div className="relative p-6 backdrop-blur-sm ">
         {/* Year Badge with enhanced animation */}
         <motion.div 
-          className="flex items-center justify-between mb-4"
+          className="flex items-center justify-between mb-4 "
           initial={{ opacity: 0, x: -20 }}
           animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
           transition={{ duration: 0.5, delay: 0.2 + index * 0.05 }}
@@ -232,7 +232,7 @@ const RoverCard = ({ rover, index, isActive, onClick }) => {
           <motion.div 
             className={cn(
               "text-sm font-medium transition-opacity duration-300",
-              isActive ? "text-white" : "text-white/40"
+              isActive ? "text-white" : "text-white/90"
             )}
             animate={{ opacity: isActive ? 1 : 0.4 }}
           >
@@ -306,28 +306,7 @@ const RoverCard = ({ rover, index, isActive, onClick }) => {
           {rover.description}
         </motion.p>
 
-        {/* Achievement Count with micro-interactions */}
-        <motion.div 
-          className="flex items-center justify-between"
-          initial={{ opacity: 0, x: -10 }}
-          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
-          transition={{ duration: 0.5, delay: 0.6 + index * 0.05 }}
-        >
-          <motion.div 
-            className="flex items-center space-x-2 text-cosmic"
-            whileHover={{ x: 3 }}
-          >
-            <Award className="w-4 h-4" />
-            <span className="text-sm font-medium">{rover.achievements.length} Achievements</span>
-          </motion.div>
-          <motion.div
-            className="text-white/40 group-hover:text-white/80 transition-colors duration-300"
-            whileHover={{ x: 5, scale: 1.1 }}
-            transition={{ duration: 0.2 }}
-          >
-            <ArrowRight className="w-4 h-4" />
-          </motion.div>
-        </motion.div>
+
       </div>
 
       {/* Enhanced hover effect */}
