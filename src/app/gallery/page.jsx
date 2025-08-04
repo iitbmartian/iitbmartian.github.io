@@ -72,7 +72,6 @@ const ImageCard = ({ image, index, viewMode, hoveredImage, setHoveredImage, open
         "group relative overflow-hidden rounded-2xl bg-gradient-to-br from-space-light/30 to-space-light/10 cursor-pointer border border-white/10 backdrop-blur-sm hover:border-white/30 transition-all duration-300 perspective-1000",
         viewMode === "list" && "flex items-center space-x-6 p-6"
       )}
-      onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       whileHover={{ y: -10, scale: 1.03, rotateY: 2 }}
@@ -145,52 +144,12 @@ const ImageCard = ({ image, index, viewMode, hoveredImage, setHoveredImage, open
           animate={{ opacity: isHovered ? 1 : 0, scale: isHovered ? 1 : 0.8, y: isHovered ? 0 : -10 }}
           transition={{ duration: 0.3, staggerChildren: 0.05 }}
         >
-          <motion.button
-            onClick={handleFavoriteClick}
-            className={cn(
-              "p-2 rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300",
-              favoritedImages.has(index)
-                ? "bg-red-500/80 text-white shadow-lg shadow-red-500/25"
-                : "bg-space-dark/80 text-white/70 hover:text-white"
-            )}
-            whileHover={{ scale: 1.15, rotate: 5 }}
-            whileTap={{ scale: 0.9 }}
-            animate={{ scale: favoritedImages.has(index) ? [1, 1.2, 1] : 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Heart className={cn("w-4 h-4", favoritedImages.has(index) && "fill-current")} />
-          </motion.button>
-          <motion.button
-            className="p-2 bg-space-dark/80 rounded-full backdrop-blur-sm border border-white/20 text-white/70 hover:text-white transition-all duration-300"
-            whileHover={{ scale: 1.15, rotate: -5 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <ZoomIn className="w-4 h-4" />
-          </motion.button>
+
+
         </motion.div>
 
-        {/* Enhanced Stats Overlay */}
-        <motion.div
-          className="absolute bottom-4 left-4 flex items-center space-x-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 20 }}
-          transition={{ duration: 0.3, staggerChildren: 0.1 }}
-        >
-          <motion.div
-            className="flex items-center space-x-1 px-3 py-1 bg-space-dark/80 rounded-full backdrop-blur-sm border border-white/20"
-            whileHover={{ scale: 1.05 }}
-          >
-            <Eye className="w-3 h-3 text-white/70" />
-            <span className="text-xs text-white/70">{image.views}</span>
-          </motion.div>
-          <motion.div
-            className="flex items-center space-x-1 px-3 py-1 bg-space-dark/80 rounded-full backdrop-blur-sm border border-white/20"
-            whileHover={{ scale: 1.05 }}
-          >
-            <Heart className="w-3 h-3 text-white/70" />
-            <span className="text-xs text-white/70">{image.likes}</span>
-          </motion.div>
-        </motion.div>
+
+
       </div>
 
       {/* Enhanced Content Section */}
@@ -206,53 +165,7 @@ const ImageCard = ({ image, index, viewMode, hoveredImage, setHoveredImage, open
             exit={{ opacity: 0, y: viewMode === "grid" ? 20 : 0 }}
             transition={{ duration: 0.3 }}
           >
-            <motion.h3
-              className="text-white font-semibold text-lg mb-2"
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
-            >
-              {image.alt}
-            </motion.h3>
-            <motion.p
-              className="text-white/70 text-sm mb-3 line-clamp-2"
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: 0.15 }}
-            >
-              {image.description}
-            </motion.p>
-            <motion.div
-              className="flex items-center justify-between"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.2 }}
-            >
-              <div className="flex items-center space-x-4 text-xs text-white/50">
-                <div className="flex items-center space-x-1">
-                  <Calendar className="w-3 h-3" />
-                  <span>{new Date(image.date).toLocaleDateString()}</span>
-                </div>
-                <div className="flex items-center space-x-1">
-                  <MapPin className="w-3 h-3" />
-                  <span>{image.location}</span>
-                </div>
-              </div>
-              <div className="flex space-x-2">
-                {image.tags.slice(0, 2).map((tag, tagIndex) => (
-                  <motion.span
-                    key={tagIndex}
-                    className="px-2 py-1 bg-mars/20 text-mars text-xs rounded-full border border-mars/30"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.3, delay: 0.25 + tagIndex * 0.05 }}
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    #{tag}
-                  </motion.span>
-                ))}
-              </div>
-            </motion.div>
+
           </motion.div>
         )}
       </AnimatePresence>
@@ -307,100 +220,55 @@ const GalleryPage = () => {
       src: RoverInLab,
       alt: "Rover in the lab",
       category: "rovers",
-      date: "2024-01-15",
-      location: "IIT Bombay Lab",
-      description: "Our latest rover prototype undergoing final assembly and testing in the lab environment.",
-      tags: ["rover", "lab", "assembly", "testing"],
-      likes: 128,
-      views: 1250
+
     },
     {
       src: TeamPhoto2023,
       alt: "Team photo 2023",
       category: "team",
-      date: "2023-08-20",
-      location: "IIT Bombay",
-      description: "Annual team photo with all subsystem members and mentors.",
-      tags: ["team", "group", "annual", "members"],
-      likes: 156,
-      views: 2100
+
     },
     {
       src: RoverFieldTesting,
       alt: "Rover field testing",
       category: "rovers",
-      date: "2024-02-28",
-      location: "Desert Simulation",
-      description: "Comprehensive outdoor testing in Mars-like desert conditions.",
-      tags: ["outdoor", "desert", "simulation", "comprehensive"],
-      likes: 187,
-      views: 2140
+
     },
     {
       src: RoverField,
       alt: "Rover testing",
       category: "rovers",
-      date: "2024-01-30",
-      location: "Outdoor Test Site",
-      description: "Field testing rover performance in simulated Mars terrain conditions.",
-      tags: ["field", "testing", "terrain", "simulation"],
-      likes: 165,
-      views: 1890
+
     },
     {
       src: RoverArmCloseUp,
       alt: "Rover arm close-up",
       category: "rovers",
-      date: "2024-02-05",
-      location: "Detail Studio",
-      description: "Close-up detail of rover arm joint mechanisms and sensors.",
-      tags: ["closeup", "arm", "joints", "sensors"],
-      likes: 176,
-      views: 1970
+
     },
     {
       src: Roverwork,
       alt: "Rover in action",
       category: "rovers",
-      date: "2023-12-10",
-      location: "Workshop",
-      description: "Team members working on rover subsystem integration.",
-      tags: ["assembly", "work", "integration", "development"],
-      likes: 98,
-      views: 1120
+
     },
     {
       src: RoverT,
       alt: "Rover in action",
       category: "rovers",
-      date: "2024-02-20",
-      location: "Test Field",
-      description: "Dynamic testing of rover mobility and navigation systems.",
-      tags: ["rover", "testing", "mobility", "navigation"],
-      likes: 142,
-      views: 1680
+
     },
     {
       src: roverFull,
       alt: "Rover full view",
       category: "rovers",
-      date: "2024-03-01",
-      location: "Display Area",
-      description: "Complete assembled rover ready for mission deployment.",
-      tags: ["complete", "assembled", "mission", "ready"],
-      likes: 201,
-      views: 2450
+
     },
     {
       src: roverLook,
       alt: "Rover testing",
       category: "rovers",
-      date: "2024-01-25",
-      location: "Lab Testing",
-      description: "Detailed view of rover arm mechanism and control systems.",
-      tags: ["arm", "mechanism", "control", "precision"],
-      likes: 134,
-      views: 1560
+
     }
   ], []);
 
@@ -549,7 +417,6 @@ const GalleryPage = () => {
                   top: `${15 + Math.random() * 70}%`,
                 }}
               >
-                <Camera className="w-5 h-5 text-white/20" />
               </motion.div>
             ))}
           </div>

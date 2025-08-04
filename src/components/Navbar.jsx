@@ -1,10 +1,15 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import { Menu, X, ChevronDown, Rocket } from 'lucide-react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import React, { useState, useEffect } from "react";
+import { Menu, X, ChevronDown, Rocket } from "lucide-react";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+} from "framer-motion";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -12,7 +17,7 @@ const Navbar = () => {
   const [hoveredLink, setHoveredLink] = useState(null);
   const pathname = usePathname();
   const router = useRouter();
-  
+
   const { scrollY } = useScroll();
   const headerOpacity = useTransform(scrollY, [0, 100], [1, 0.95]);
 
@@ -21,8 +26,8 @@ const Navbar = () => {
       setIsScrolled(window.scrollY > 30);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -30,11 +35,11 @@ const Navbar = () => {
   }, [pathname]);
 
   const handleContactClick = () => {
-    if (pathname === '/') {
+    if (pathname === "/") {
       setTimeout(() => {
-        const contactSection = document.getElementById('contact');
+        const contactSection = document.getElementById("contact");
         if (contactSection) {
-          contactSection.scrollIntoView({ behavior: 'smooth' });
+          contactSection.scrollIntoView({ behavior: "smooth" });
         }
       }, 100);
     }
@@ -42,32 +47,32 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    if (window.location.hash === '#contact') {
+    if (window.location.hash === "#contact") {
       setTimeout(() => {
-        const contactSection = document.getElementById('contact');
+        const contactSection = document.getElementById("contact");
         if (contactSection) {
-          contactSection.scrollIntoView({ behavior: 'smooth' });
+          contactSection.scrollIntoView({ behavior: "smooth" });
         }
       }, 100);
     }
   }, [pathname]);
 
   const navLinks = [
-    { name: 'Home', href: '/', icon: '🏠' },
-    { name: 'Updates', href: '/updates', icon: '📰' },
-    { name: 'Rover', href: '/rover', icon: '🤖' },
-    { name: 'Subsystems', href: '/subsystems', icon: '⚙️' },
-    { name: 'Records', href: '/competitions', icon: '🏆' },
-    { name: 'Team', href: '/team', icon: '👥' },
-    { name: 'Gallery', href: '/gallery', icon: '📸' },
-    { name: 'Contact', href: '/#contact', icon: '📞' },
+    { name: "Home", href: "/"},
+    { name: "Updates", href: "/updates" },
+    { name: "Rover", href: "/rover" },
+    { name: "Subsystems", href: "/subsystems"},
+    { name: "Records", href: "/competitions" },
+    { name: "Team", href: "/team"},
+    { name: "Gallery", href: "/gallery"},
+    { name: "Contact", href: "/#contact"},
   ];
 
   const isActiveLink = (href) => {
-    if (href === '/') return pathname === '/';
-    if (href === '/#contact') {
-      if (typeof window !== 'undefined') {
-        return window.location.hash === '#contact';
+    if (href === "/") return pathname === "/";
+    if (href === "/#contact") {
+      if (typeof window !== "undefined") {
+        return window.location.hash === "#contact";
       }
       return false;
     }
@@ -79,16 +84,16 @@ const Navbar = () => {
       <motion.nav
         style={{ opacity: headerOpacity }}
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out',
-          isScrolled 
-            ? 'bg-gradient-to-r from-space/90 via-space-dark/90 to-space/90 backdrop-blur-xl shadow-lg py-2 border-b border-mars/20' 
-            : 'bg-transparent py-3'
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out",
+          isScrolled
+            ? "bg-gradient-to-r from-space/90 via-space-dark/90 to-space/90 backdrop-blur-xl shadow-lg py-2 border-b border-mars/20"
+            : "bg-transparent py-3"
         )}
       >
         {/* Simplified animated border gradient */}
         <motion.div
           className="absolute inset-0 bg-gradient-to-r from-mars/10 via-cosmic/10 to-mars/10"
-          animate={{ 
+          animate={{
             opacity: isScrolled ? 0.3 : 0,
           }}
           transition={{ duration: 0.3 }}
@@ -103,12 +108,15 @@ const Navbar = () => {
               transition={{ duration: 0.5, ease: "easeOut" }}
               className="flex items-center space-x-3 group cursor-pointer flex-shrink-0"
             >
-              <button onClick={()=>{
-                router.push('/')
-              }} className="flex items-center space-x-3">
+              <button
+                onClick={() => {
+                  router.push("/");
+                }}
+                className="flex items-center space-x-3"
+              >
                 <motion.div
-                  whileHover={{ 
-                    rotate: 360, 
+                  whileHover={{
+                    rotate: 360,
                     scale: 1.1,
                   }}
                   transition={{ duration: 0.6, ease: "easeInOut" }}
@@ -117,7 +125,7 @@ const Navbar = () => {
                   <Rocket className="w-5 h-5 text-mars" />
                   <div className="absolute inset-0 bg-mars/20 rounded-lg blur-sm opacity-60" />
                 </motion.div>
-                
+
                 <motion.div
                   className="relative overflow-hidden"
                   whileHover={{ scale: 1.02 }}
@@ -134,7 +142,7 @@ const Navbar = () => {
             </motion.div>
 
             {/* Enhanced Desktop Menu */}
-            <motion.div 
+            <motion.div
               className="hidden xl:flex items-center space-x-1"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -152,9 +160,9 @@ const Navbar = () => {
                 >
                   <button
                     onClick={() => {
-                      if (link.href === '/#contact') {
+                      if (link.href === "/#contact") {
                         handleContactClick();
-                        router.push('/#contact');
+                        router.push("/#contact");
                       } else {
                         router.push(link.href);
                       }
@@ -162,44 +170,33 @@ const Navbar = () => {
                   >
                     <motion.div
                       className={cn(
-                        'relative px-4 py-2 text-sm font-medium rounded-xl transition-all duration-300 whitespace-nowrap border',
-                        isActiveLink(link.href) 
-                          ? 'text-white bg-gradient-to-r from-mars/30 to-cosmic/30 border-mars/40 shadow-lg' 
-                          : 'text-white/90 hover:text-white border-transparent hover:border-mars/30 hover:bg-gradient-to-r hover:from-mars/10 hover:to-cosmic/10',
-                        'backdrop-blur-sm'
+                        "relative px-4 py-2 text-sm font-medium rounded-xl transition-all duration-300 whitespace-nowrap border",
+                        isActiveLink(link.href)
+                          ? "text-white bg-gradient-to-r from-mars/30 to-cosmic/30 border-mars/40 shadow-lg"
+                          : "text-white/90 hover:text-white border-transparent hover:border-mars/30 hover:bg-gradient-to-r hover:from-mars/10 hover:to-cosmic/10",
+                        "backdrop-blur-sm"
                       )}
-                      whileHover={{ 
-                        scale: 1.05, 
-                        y: -2
+                      whileHover={{
+                        scale: 1.05,
+                        y: -2,
                       }}
                       whileTap={{ scale: 0.98 }}
                       transition={{ duration: 0.2 }}
                     >
                       <span className="relative z-10 flex items-center space-x-2">
-                        <span className="text-base">
-                          {link.icon}
-                        </span>
-                        <span>{link.name}</span>
+                                                <span>{link.name}</span>
                       </span>
-                      
+
                       {/* Simplified hover effect */}
                       <motion.div
                         className="absolute inset-0 bg-gradient-to-r from-mars/20 to-cosmic/20 rounded-xl opacity-0"
-                        animate={{ 
+                        animate={{
                           opacity: hoveredLink === link.name ? 1 : 0,
                         }}
                         transition={{ duration: 0.2 }}
                       />
-                      
-                      {/* Active indicator */}
-                      <motion.div
-                        className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-gradient-to-r from-mars to-cosmic rounded-full"
-                        initial={{ scaleX: 0 }}
-                        animate={{ 
-                          scaleX: isActiveLink(link.href) || hoveredLink === link.name ? 1 : 0
-                        }}
-                        transition={{ duration: 0.3 }}
-                      />
+
+
                     </motion.div>
                   </button>
                 </motion.div>
@@ -207,7 +204,7 @@ const Navbar = () => {
             </motion.div>
 
             {/* Enhanced Mobile Menu Button */}
-            <motion.button 
+            <motion.button
               className="xl:hidden relative p-2 text-white group flex-shrink-0 border border-mars/30 rounded-lg bg-gradient-to-r from-mars/10 to-cosmic/10 backdrop-blur-sm"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               whileHover={{ scale: 1.05 }}
@@ -222,7 +219,7 @@ const Navbar = () => {
               />
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={isMobileMenuOpen ? 'close' : 'open'}
+                  key={isMobileMenuOpen ? "close" : "open"}
                   initial={{ rotate: -45, opacity: 0 }}
                   animate={{ rotate: 0, opacity: 1 }}
                   exit={{ rotate: 45, opacity: 0 }}
@@ -242,27 +239,30 @@ const Navbar = () => {
         {isMobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
+            animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="fixed top-16 left-0 right-0 xl:hidden overflow-hidden z-40"
           >
-            <motion.div 
+            <motion.div
               className="bg-gradient-to-br from-space-dark/95 via-space/95 to-space-dark/95 backdrop-blur-xl border-b border-mars/20 shadow-2xl"
               initial={{ y: -10 }}
               animate={{ y: 0 }}
               transition={{ duration: 0.2, delay: 0.1 }}
             >
               <div className="container mx-auto px-4 py-6">
-                <motion.div 
+                <motion.div
                   className="grid grid-cols-2 sm:grid-cols-4 gap-3"
                   variants={{
                     open: {
-                      transition: { staggerChildren: 0.03, delayChildren: 0.1 }
+                      transition: { staggerChildren: 0.03, delayChildren: 0.1 },
                     },
                     closed: {
-                      transition: { staggerChildren: 0.02, staggerDirection: -1 }
-                    }
+                      transition: {
+                        staggerChildren: 0.02,
+                        staggerDirection: -1,
+                      },
+                    },
                   }}
                   initial="closed"
                   animate="open"
@@ -272,17 +272,17 @@ const Navbar = () => {
                       key={link.name}
                       variants={{
                         open: { y: 0, opacity: 1 },
-                        closed: { y: 10, opacity: 0 }
+                        closed: { y: 10, opacity: 0 },
                       }}
                       transition={{ duration: 0.2 }}
                     >
                       <button
                         onClick={() => {
                           setIsMobileMenuOpen(false);
-                          if (link.href === '/#contact') {
+                          if (link.href === "/#contact") {
                             handleContactClick();
-                          }else{
-                            router.push(link.href)
+                          } else {
+                            router.push(link.href);
                           }
                         }}
                       >
@@ -297,8 +297,9 @@ const Navbar = () => {
                           whileTap={{ scale: 0.98 }}
                         >
                           <span className="flex flex-col items-center space-y-2">
-                            <span className="text-lg">{link.icon}</span>
-                            <span className="font-medium text-sm whitespace-nowrap">{link.name}</span>
+                                                        <span className="font-medium text-sm whitespace-nowrap">
+                              {link.name}
+                            </span>
                           </span>
                         </motion.div>
                       </button>

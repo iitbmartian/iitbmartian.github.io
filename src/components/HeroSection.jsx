@@ -467,7 +467,7 @@ const HeroSection = () => {
                 alt="Mars Rover"
                 width={600}
                 height={600}
-                className="w-full h-auto"
+                className="w-full h-auto invert"
                 priority
                 onLoad={() => setIsLoaded(true)}
               />
@@ -521,7 +521,7 @@ const HeroSection = () => {
 
       {/* Optimized Scroll Indicator */}
       <motion.div
-        className="absolute top-80 md:top-96 sm:left-1/2 left-28 transform -translate-x-1/2 flex flex-col items-center"
+        className="absolute top-80 md:top-[90%] sm:left-[50%] left-[33%] transform -translate-x-1/2 flex flex-col items-center"
         initial={{ opacity: 0, y: shouldReduceMotion || isMobile ? 0 : 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ 
