@@ -32,6 +32,11 @@ const StatCard = ({ icon: Icon, number, label, delay = 0 }) => {
     margin: "-20% 0px -20% 0px",
     amount: 0.5
   });
+  const [hoverScale, setHoverScale] = useState(1.02);
+
+  React.useEffect(() => {
+    setHoverScale(window.innerWidth >= 768 ? 1.05 : 1.02);
+  }, []);
 
   const cardVariants = useMemo(() => ({
     hidden: { 
@@ -100,7 +105,7 @@ const StatCard = ({ icon: Icon, number, label, delay = 0 }) => {
       initial="hidden"
       animate={isInView ? "visible" : "exit"}
       whileHover={{ 
-        scale: [1.02, 1.05][Math.min(1, Math.floor(window?.innerWidth / 768))], // Responsive hover scale
+        scale: hoverScale,
         y: -3,
         rotateY: 3,
         transition: { duration: 0.3 }
