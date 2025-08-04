@@ -69,7 +69,7 @@ const RoverTimeline = ({ events }: RoverTimelineProps) => {
   return (
     <div className="max-w-6xl mx-auto px-4 py-12 md:py-20 text-white">
       <div className="text-center mb-8 md:mb-16">
-        <h2 className="section-title">The story of how we got started</h2>
+        <h2 className="section-title">How we started</h2>
         <p className="section-subtitle">
           MRT was started by 5 students with the same mission.<br />
           Our story starts 11 years ago... Step in.
