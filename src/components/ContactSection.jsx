@@ -127,7 +127,7 @@ const ContactSection = () => {
     {
       icon: <MapPin className="h-5 w-5 text-mars" />,
       title: "Address",
-      content: "IIT Bombay, Powai, Mumbai, Maharashtra 400076, India",
+      content: "IIT Bombay, Powai, Mumbai, Maharashtra 400076",
       gradient: "from-mars/30 to-orange-500/20",
       bgColor: "bg-mars/20"
     },
@@ -319,34 +319,7 @@ const ContactSection = () => {
             <MessageCircle className="w-6 h-6 text-mars flex-shrink-0" />
           </motion.p>
 
-          {/* Contact Stats */}
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 max-w-2xl mx-auto"
-            variants={itemVariants}
-          >
-            {[
-              { label: "Response Time", value: "24h", icon: <MessageCircle className="w-4 h-4" />, gradient: "from-mars to-orange-500" },
-              { label: "Social Platforms", value: "5+", icon: <Globe className="w-4 h-4" />, gradient: "from-cosmic to-blue-500" },
-              { label: "Team Members", value: "50+", icon: <Users className="w-4 h-4" />, gradient: "from-purple-500 to-pink-500" }
-            ].map((stat, index) => (
-              <motion.div
-                key={index}
-                className="bg-gradient-to-br from-space-light/20 to-space-light/10 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center group hover:border-white/30 transition-all duration-300"
-                whileHover={{ scale: 1.02, y: -2 }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-              >
-                <div className={`inline-flex p-2 rounded-lg bg-gradient-to-r ${stat.gradient}/20 mb-2`}>
-                  <div className={`bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`}>
-                    {stat.icon}
-                  </div>
-                </div>
-                <div className="text-lg font-bold text-white mb-1">{stat.value}</div>
-                <div className="text-xs text-white/70 group-hover:text-white/90 transition-colors duration-300">{stat.label}</div>
-              </motion.div>
-            ))}
-          </motion.div>
+
         </motion.div>
         
         <motion.div
