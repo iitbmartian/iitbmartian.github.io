@@ -104,12 +104,7 @@ const Competition = ({ title, description, location, image, index, gradient }) =
             className="text-xl font-bold mb-3 relative text-white group-hover:text-cosmic transition-colors duration-300 font-orbitron"
           >
             {title}
-            <motion.div
-              className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-mars to-cosmic rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: isHovered ? "100%" : "0%" }}
-              transition={{ duration: 0.3 }}
-            />
+
           </motion.h3>
 
           {/* Description */}
@@ -129,13 +124,6 @@ const Competition = ({ title, description, location, image, index, gradient }) =
           </motion.div>
         </div>
 
-        {/* Progress Line */}
-        <motion.div
-          className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-mars to-cosmic rounded-full"
-          initial={{ width: 0 }}
-          animate={{ width: isInView ? "100%" : 0 }}
-          transition={{ duration: 0.8, delay: 0.2 + index * 0.1 }}
-        />
       </motion.div>
     </motion.div>
   );

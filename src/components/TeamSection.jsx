@@ -84,9 +84,7 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
       variants={cardVariants}
       initial="hidden"
       animate={isInView ? "visible" : "exit"}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      whileHover={{ y: -12, scale: 1.03, rotateY: 3 }}
+
       whileTap={{ scale: 0.98 }}
       style={{ transformStyle: "preserve-3d" }}
     >
@@ -96,26 +94,14 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
         whileHover={{ boxShadow: "0 25px 50px rgba(0, 0, 0, 0.4)" }}
       >
         {/* Enhanced Leader Badge */}
-        {isLead && (
-          <motion.div
-            className="absolute top-3 right-3 z-30 p-2 bg-gradient-to-r from-mars/90 to-orange-500/90 rounded-full backdrop-blur-sm border border-white/20"
-            initial={{ scale: 0, opacity: 0, rotate: -180 }}
-            animate={isInView ? { scale: 1, opacity: 1, rotate: 0 } : { scale: 0, opacity: 0, rotate: -180 }}
-            transition={{ duration: 0.5, delay: 0.3 + index * 0.02, type: "spring" }}
-            whileHover={{ scale: 1.1, rotate: 10 }}
-          >
-            <Award className="w-4 h-4 text-white" />
-          </motion.div>
-        )}
+
 
         {/* Enhanced Department Badge */}
         {department && (
           <motion.div
             className="absolute top-3 left-3 z-30 px-2 py-1 bg-gradient-to-r from-cosmic/80 to-blue-500/80 rounded-full backdrop-blur-sm border border-white/20"
             initial={{ scale: 0, opacity: 0, x: -20 }}
-            animate={isInView ? { scale: 1, opacity: 1, x: 0 } : { scale: 0, opacity: 0, x: -20 }}
             transition={{ duration: 0.5, delay: 0.2 + index * 0.02, type: "spring" }}
-            whileHover={{ scale: 1.05 }}
           >
             <span className="text-white text-xs font-medium">{department}</span>
           </motion.div>
@@ -149,6 +135,7 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
               sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
               style={{ objectFit: 'cover' }}
             />
+
           </div>
 
           {/* Enhanced Gradient Overlay */}
@@ -179,7 +166,7 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
 
         {/* Enhanced Social Links */}
         <motion.div
-          className="absolute bottom-0 left-0 right-0 p-4 z-20"
+          className="absolute bottom-0 left-0 right-0 p-4 z-50"
           initial={{ y: "100%", opacity: 0 }}
           animate={{ y: isHovered ? 0 : "100%", opacity: isHovered ? 1 : 0 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
@@ -196,7 +183,6 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 bg-cosmic/30 hover:bg-cosmic/50 rounded-lg text-white transition-colors backdrop-blur-sm border border-white/20"
-                whileHover={{ scale: 1.15, rotate: 5 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <Linkedin size={16} />
@@ -208,7 +194,6 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 bg-mars/30 hover:bg-mars/50 rounded-lg text-white transition-colors backdrop-blur-sm border border-white/20"
-                whileHover={{ scale: 1.15, rotate: -5 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <Globe size={16} />
@@ -223,14 +208,7 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
             animate={{ y: isHovered ? 0 : 10, opacity: isHovered ? 1 : 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
           >
-            <motion.h3
-              className="text-lg font-bold font-orbitron text-white mb-1 group-hover:text-cosmic transition-colors duration-300"
-              initial={{ scale: 0.9 }}
-              animate={{ scale: isHovered ? 1 : 0.9 }}
-              transition={{ duration: 0.3 }}
-            >
-              {name}
-            </motion.h3>
+
             <motion.p
               className="text-white/80 text-sm mb-2 group-hover:text-white/90 transition-colors duration-300"
               initial={{ opacity: 0.8 }}
@@ -252,7 +230,6 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
                   <motion.span
                     key={i}
                     className="px-2 py-1 bg-mars/20 text-mars text-xs rounded-full border border-mars/30"
-                    whileHover={{ scale: 1.05 }}
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{ scale: isHovered ? 1 : 0, opacity: isHovered ? 1 : 0 }}
                     transition={{ duration: 0.3, delay: 0.2 + i * 0.02 }}
@@ -276,8 +253,7 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
             <motion.div
               key={i}
               className="w-2 h-2 bg-gradient-to-r from-mars to-cosmic rounded-full"
-              initial={{ scale: 0 }}
-              animate={{ scale: isHovered ? 1 : 0 }}
+   
               transition={{ duration: 0.2, delay: i * 0.03 }}
             />
           ))}
@@ -293,8 +269,7 @@ const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = 
         {/* Subtle glow effect */}
         <motion.div
           className="absolute inset-0 bg-gradient-to-r from-mars/5 to-cosmic/5 rounded-2xl pointer-events-none"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: isHovered ? 1 : 0 }}
+
           transition={{ duration: 0.3 }}
         />
       </motion.div>
@@ -328,7 +303,6 @@ const TeamSection = () => {
       linkedin: "https://www.linkedin.com/in/anushka-verma-534084217?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
       isLead: true,
       department: "Leadership",
-      skills: ["Leadership", "Strategy"],
     },
     {
       name: "Arin Weling",
@@ -337,7 +311,6 @@ const TeamSection = () => {
       linkedin: "https://www.linkedin.com/in/arin-weling-584a39252?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
       isLead: true,
       department: "Leadership",
-      skills: ["Leadership", "Coordination"],
     },
     {
       name: "Arkapravo Patra",
@@ -346,7 +319,6 @@ const TeamSection = () => {
       linkedin: "https://www.linkedin.com/in/arkapravo-patra-2a7819266?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
       isLead: true,
       department: "Leadership",
-      skills: ["Leadership", "Innovation"],
     },
     {
       name: "Tarshit Sehgal",
@@ -355,7 +327,6 @@ const TeamSection = () => {
       linkedin: "http://www.linkedin.com/in/tarshit-sehgal-a37665253",
       isLead: true,
       department: "Leadership",
-      skills: ["Leadership", "Operations"],
     }
   ], []);
 
@@ -374,7 +345,6 @@ const TeamSection = () => {
           linkedin: "https://www.linkedin.com/in/bhuvan-k-prasad-62124b297?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
           isLead: true,
           department: "Mechanical",
-          skills: ["CAD Design", "Robotics"],
         },
         {
           name: "Ajitesh Joshi",
@@ -383,77 +353,66 @@ const TeamSection = () => {
           linkedin: "https://www.linkedin.com/in/madhav48/",
           isLead: true,
           department: "Mechanical",
-          skills: ["Mobility", "Chassis"],
         },
         {
           name: "Anvit Khade",
           role: "Senior Design Engineer (Arm & LDT)",
           image: AnvitKhade,
           department: "Mechanical",
-          skills: ["Design", "Analysis"],
         },
         {
           name: "Dev Suthar",
           role: "Senior Design Engineer (Mobility)",
           image: Dev,
           department: "Mechanical",
-          skills: ["Mobility", "Testing"],
         },
         {
           name: "Param Aghera",
           role: "Senior Design Engineer (Mobility)",
           image: Param,
           department: "Mechanical",
-          skills: ["Design", "Manufacturing"],
         },
         {
           name: "Rudra Khandelwal",
           role: "Junior Design Engineer (Arm & LDT)",
           image: Rudra,
           department: "Mechanical",
-          skills: ["CAD", "Prototyping"],
         },
         {
           name: "Ryan D'Souza",
           role: "Junior Design Engineer (Arm & LDT)",
           image: Ryan,
           department: "Mechanical",
-          skills: ["Design", "Assembly"],
         },
         {
           name: "Vidit Bohra",
           role: "Junior Design Engineer (Arm & LDT)",
           image: Vidit,
           department: "Mechanical",
-          skills: ["Engineering", "Innovation"],
         },
         {
           name: "Ayush Mohapatra",
           role: "Junior Design Engineer (Mobility)",
           image: Ayush,
           department: "Mechanical",
-          skills: ["Mobility", "Design"],
         },
         {
           name: "Jay Mistry",
           role: "Junior Design Engineer (Mobility)",
           image: Jay,
           department: "Mechanical",
-          skills: ["Design", "Testing"],
         },
         {
           name: "Shashwat Singh",
           role: "Junior Design Engineer (Mobility)",
           image: Shashwat,
           department: "Mechanical",
-          skills: ["Engineering", "Analysis"],
         },
         {
           name: "Tanish Kharbanda",
           role: "Junior Design Engineer (Mobility)",
           image: Tanish,
           department: "Mechanical",
-          skills: ["Design", "Development"],
         }
       ]
     },
@@ -470,14 +429,12 @@ const TeamSection = () => {
           linkedin: "https://www.linkedin.com/in/arjoe-basak-a49256285",
           isLead: true,
           department: "Electrical",
-          skills: ["Circuit Design", "Power Systems"],
         },
         {
           name: "Sudhindra Sahoo",
           role: "Senior Design Engineer",
           image: Sudhindra,
           department: "Electrical",
-          skills: ["Electronics", "Circuit Design"],
         },
         {
           name: "Harshit Somani",
@@ -485,49 +442,42 @@ const TeamSection = () => {
           image: Harshit,
           linkedin: "#",
           department: "Electrical",
-          skills: ["PCB Design", "Testing"],
         },
         {
           name: "Radhika Agarwal",
           role: "Junior Design Engineer",
           image: Radhika,
           department: "Electrical",
-          skills: ["Circuit Analysis", "Design"],
         },
         {
           name: "Shawn Thomas Koshy",
           role: "Junior Design Engineer",
           image: shawn,
           department: "Electrical",
-          skills: ["Electronics", "Programming"],
         },
         {
           name: "Shridhar Patil",
           role: "Junior Design Engineer",
           image: Shridhar,
           department: "Electrical",
-          skills: ["Design", "Implementation"],
         },
         {
           name: "Siddhant Kaul",
           role: "Junior Design Engineer",
           image: Siddhant,
           department: "Electrical",
-          skills: ["Circuit Design", "Testing"],
         },
         {
           name: "Tanmay Sinha",
           role: "Junior Design Engineer",
           image: Tanmay,
           department: "Electrical",
-          skills: ["Electronics", "Analysis"],
         },
         {
           name: "Veeresh S K",
           role: "Senior Design Engineer",
           image: Veeresh,
           department: "Electrical",
-          skills: ["Circuit Design", "Innovation"],
         }
       ]
     },
@@ -544,49 +494,42 @@ const TeamSection = () => {
           website: "https://www.linkedin.com/in/madhav48/",
           isLead: true,
           department: "Software",
-          skills: ["AI/ML", "Robotics"],
         },
         {
           name: "Dheer Prasad",
           role: "Junior Design Engineer",
           image: Dheer,
           department: "Software",
-          skills: ["Programming", "Algorithms"],
         },
         {
           name: "Gautam Mahale",
           role: "Junior Design Engineer",
           image: Gautam,
           department: "Software",
-          skills: ["Software Development", "Testing"],
         },
         {
           name: "Jiya Gada",
           role: "Junior Design Engineer",
           image: Jiya,
           department: "Software",
-          skills: ["Programming", "Analysis"],
         },
         {
           name: "Rishabh Parwal",
           role: "Junior Design Engineer",
           image: Rishabh,
           department: "Software",
-          skills: ["Software Engineering", "Design"],
         },
         {
           name: "Sairam Chari",
           role: "Junior Design Engineer",
           image: Sairam,
           department: "Software",
-          skills: ["Development", "Innovation"],
         },
         {
           name: "Tejas Kulkarni",
           role: "Junior Design Engineer",
           image: Tejas,
           department: "Software",
-          skills: ["Programming", "Architecture"],
         }
       ]
     },
@@ -601,35 +544,30 @@ const TeamSection = () => {
           role: "Team Member",
           image: Aditi,
           department: "MDM",
-          skills: ["Design", "Marketing"],
         },
         {
           name: "Disha Gugale",
           role: "Team Member",
           image: Disha,
           department: "MDM",
-          skills: ["Media", "Communications"],
         },
         {
           name: "Rohan Shukla",
           role: "Team Member",
           image: Rohan,
           department: "MDM",
-          skills: ["Design", "Content"],
         },
         {
           name: "Shreya Goyal",
           role: "Team Member",
           image: Shreya,
           department: "MDM",
-          skills: ["Marketing", "Strategy"],
         },
         {
           name: "Srishti Poddar",
           role: "Team Member",
           image: Shrishti,
           department: "MDM",
-          skills: ["Design", "Creative"],
         }
       ]
     }
@@ -759,56 +697,7 @@ const TeamSection = () => {
             <Rocket className="w-6 h-6 text-mars" />
           </motion.p>
 
-          {/* Enhanced Stats */}
-          <motion.div
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-4xl mx-auto"
-            variants={itemVariants}
-          >
-            {[
-              { label: "Team Members", value: "40+", icon: <Users className="w-5 h-5" />, gradient: "from-mars to-orange-500" },
-              { label: "Sub-Teams", value: "4", icon: <Layers className="w-5 h-5" />, gradient: "from-cosmic to-blue-500" },
-              { label: "Leaders", value: "8+", icon: <Award className="w-5 h-5" />, gradient: "from-purple-500 to-pink-500" },
-              { label: "Years Experience", value: "12+", icon: <Trophy className="w-5 h-5" />, gradient: "from-green-500 to-emerald-500" }
-            ].map((stat, index) => (
-              <motion.div
-                key={index}
-                className="bg-gradient-to-br from-space-light/20 to-space-light/10 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center group hover:border-white/30 transition-all duration-300 perspective-1000"
-                initial={{ opacity: 0, y: 30, scale: 0.8 }}
-                animate={headerInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.8 }}
-                transition={{
-                  duration: 0.6,
-                  delay: 0.4 + index * 0.1,
-                  type: "spring",
-                  stiffness: 100,
-                  damping: 15
-                }}
-                whileHover={{ scale: 1.05, y: -5, rotateY: 5 }}
-                whileTap={{ scale: 0.95 }}
-                style={{ transformStyle: "preserve-3d" }}
-              >
-                <motion.div
-                  className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${stat.gradient}/20 mb-3`}
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <div className={`bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`}>
-                    {stat.icon}
-                  </div>
-                </motion.div>
-                <motion.div
-                  className="text-2xl font-bold text-white mb-1"
-                  initial={{ scale: 0 }}
-                  animate={headerInView ? { scale: 1 } : { scale: 0 }}
-                  transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-                >
-                  {stat.value}
-                </motion.div>
-                <div className="text-sm text-white/70 group-hover:text-white/90 transition-colors duration-300">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+
         </motion.div>
 
         {/* Enhanced Search */}
@@ -836,7 +725,6 @@ const TeamSection = () => {
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0, opacity: 0 }}
-                whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <X className="w-4 h-4 text-white/70" />
@@ -910,7 +798,6 @@ const TeamSection = () => {
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.5, delay: idx * 0.05 }}
                 viewport={{ once: false }}
-                whileHover={{ scale: 1.03, y: -3, rotateY: 2 }}
                 whileTap={{ scale: 0.97 }}
                 style={{ transformStyle: "preserve-3d" }}
               >

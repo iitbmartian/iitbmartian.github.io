@@ -375,13 +375,7 @@ const router = useRouter()
           >
             <span className="relative bg-gradient-to-r from-red-500 via-orange-500 to-purple-500 bg-clip-text text-transparent">
               Our Sponsors
-              <motion.div
-                className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-red-500 via-orange-500 to-purple-500 rounded-full"
-                initial={{ width: 0 }}
-                whileInView={{ width: "100%" }}
-                transition={{ duration: 1.5, delay: 0.5 }}
-                viewport={{ once: true }}
-              />
+
             </span>
           </motion.h2>
           
@@ -393,41 +387,7 @@ const router = useRouter()
             <span>We are grateful for the support of our sponsors who make our projects possible.</span>
           </motion.p>
 
-          {/* Partnership Stats */}
-          <motion.div
-            className="flex items-center justify-center space-x-8 mt-8"
-            variants={itemVariants}
-          >
-            <motion.div
-              className="text-center"
-              whileHover={{ scale: 1.05 }}
-            >
-              <motion.div
-                className="text-2xl font-bold bg-gradient-to-r from-red-500 to-purple-500 bg-clip-text text-transparent"
-                animate={{ opacity: [0.7, 1, 0.7] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                {sponsors.length}+
-              </motion.div>
-              <div className="text-white/60 text-sm">Partners</div>
-            </motion.div>
-            
-            <div className="w-px h-8 bg-white/20"></div>
-            
-            <motion.div
-              className="text-center"
-              whileHover={{ scale: 1.05 }}
-            >
-              <motion.div
-                className="text-2xl font-bold bg-gradient-to-r from-red-500 to-purple-500 bg-clip-text text-transparent"
-                animate={{ opacity: [0.7, 1, 0.7] }}
-                transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-              >
-                5+
-              </motion.div>
-              <div className="text-white/60 text-sm">Categories</div>
-            </motion.div>
-          </motion.div>
+
         </motion.div>
         
         {/* Sponsors Grid with Uniform Sizing */}

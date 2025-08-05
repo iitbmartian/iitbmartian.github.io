@@ -5,10 +5,8 @@ import { Trophy, Target, Award, Star, Zap } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import CompetitionsHeader from '@/components/competitions/CompetitionsHeader';
-import CompetitionsTimeline from '@/components/competitions/CompetitionsTimeline';
 import CompetitionsList from '@/components/competitions/CompetitionsList';
-import { timelineData } from '@/components/competitions/CompetitionsData';
-import { cn } from '@/lib/utils';
+
 
 const CompetitionsPage = () => {
   const sectionRef = useRef(null);
@@ -312,132 +310,7 @@ const CompetitionsPage = () => {
 
         {/* Enhanced Main Content Container */}
         <div className="container mx-auto px-6 relative z-10">
-          {/* Enhanced Page Header with scroll-based animations */}
-          <motion.div
-            ref={headerRef}
-            className="text-center mb-16"
-            variants={headerVariants}
-            initial="hidden"
-            animate={headerInView ? "visible" : "exit"}
-          >
-            <motion.h1 
-              className="text-5xl md:text-7xl font-bold font-orbitron bg-gradient-to-r from-mars via-yellow-500 to-cosmic bg-clip-text text-transparent relative mb-6"
-              variants={itemVariants}
-              whileHover={{ scale: 1.02, y: -5 }}
-              transition={{ duration: 0.3 }}
-            >
-              Competitions
-              <motion.div
-                className="absolute -bottom-2 left-0 h-1.5 bg-gradient-to-r from-mars via-yellow-500 to-cosmic rounded-full"
-                initial={{ width: 0, opacity: 0 }}
-                animate={headerInView ? { 
-                  width: "100%", 
-                  opacity: 1 
-                } : { 
-                  width: 0, 
-                  opacity: 0 
-                }}
-                transition={{ duration: 1.5, delay: 0.5 }}
-              />
-            </motion.h1>
-            
-            <motion.div 
-              className="text-xl text-white/80 max-w-4xl mx-auto leading-relaxed flex items-center justify-center space-x-3"
-              variants={itemVariants}
-            >
-              <motion.div
-                animate={{ rotate: [0, 15, -15, 0] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                <Trophy className="w-6 h-6 text-yellow-500" />
-              </motion.div>
-              <span>Showcasing our achievements and victories in Mars rover competitions worldwide</span>
-              <motion.div
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-              >
-                <Award className="w-6 h-6 text-mars" />
-              </motion.div>
-            </motion.div>
 
-            {/* Enhanced Competition Stats */}
-            <motion.div
-              className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-4xl mx-auto"
-              variants={itemVariants}
-            >
-              {[
-                { label: "Competitions", value: "25+", icon: <Target className="w-5 h-5" />, gradient: "from-mars to-orange-500" },
-                { label: "Awards Won", value: "15+", icon: <Award className="w-5 h-5" />, gradient: "from-yellow-500 to-amber-500" },
-                { label: "Global Rank", value: "Top 10", icon: <Trophy className="w-5 h-5" />, gradient: "from-cosmic to-blue-500" },
-                { label: "Team Spirit", value: "100%", icon: <Star className="w-5 h-5" />, gradient: "from-purple-500 to-pink-500" }
-              ].map((stat, index) => (
-                <motion.div
-                  key={index}
-                  className="bg-gradient-to-br from-space-light/20 to-space-light/10 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center group hover:border-white/30 transition-all duration-300 perspective-1000"
-                  initial={{ opacity: 0, y: 30, scale: 0.8 }}
-                  animate={headerInView ? { 
-                    opacity: 1, 
-                    y: 0, 
-                    scale: 1 
-                  } : { 
-                    opacity: 0, 
-                    y: 30, 
-                    scale: 0.8 
-                  }}
-                  transition={{ 
-                    duration: 0.6, 
-                    delay: 0.4 + index * 0.1,
-                    type: "spring",
-                    stiffness: 100,
-                    damping: 15
-                  }}
-                  whileHover={{ 
-                    scale: 1.05, 
-                    y: -8,
-                    rotateY: 5
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  style={{ transformStyle: "preserve-3d" }}
-                >
-                  <motion.div 
-                    className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${stat.gradient}/20 mb-3`}
-                    whileHover={{ rotate: 360, scale: 1.1 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <div className={`bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`}>
-                      {stat.icon}
-                    </div>
-                  </motion.div>
-                  
-                  <motion.div 
-                    className="text-2xl font-bold text-white mb-1"
-                    initial={{ scale: 0 }}
-                    animate={headerInView ? { scale: 1 } : { scale: 0 }}
-                    transition={{ 
-                      duration: 0.5, 
-                      delay: 0.6 + index * 0.1,
-                      type: "spring",
-                      stiffness: 200
-                    }}
-                  >
-                    {stat.value}
-                  </motion.div>
-                  
-                  <div className="text-sm text-white/70 group-hover:text-white/90 transition-colors duration-300">
-                    {stat.label}
-                  </div>
-
-                  {/* Enhanced glow effect */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-mars/5 to-cosmic/5 rounded-2xl pointer-events-none"
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </motion.div>
-              ))}
-            </motion.div>
-          </motion.div>
 
           {/* Enhanced Component Sections with scroll-based animations */}
           <motion.div
@@ -458,7 +331,6 @@ const CompetitionsPage = () => {
             viewport={{ once: false, margin: "-10%" }}
             transition={{ delay: 0.2 }}
           >
-            <CompetitionsTimeline events={timelineData} />
           </motion.div>
           
           <motion.div

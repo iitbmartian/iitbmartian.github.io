@@ -369,68 +369,7 @@ const SubsystemsPage = () => {
               <Settings className="w-6 h-6 text-mars" />
             </motion.p>
 
-            {/* Enhanced Stats Grid */}
-            <motion.div
-              className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-4xl mx-auto"
-              variants={itemVariants}
-            >
-              {[
-                { label: "Subsystems", value: subsystems.length, icon: <Settings className="w-5 h-5" />, gradient: "from-mars to-orange-500" },
-                { label: "Components", value: "50+", icon: <Cpu className="w-5 h-5" />, gradient: "from-cosmic to-blue-500" },
-                { label: "Technologies", value: "15+", icon: <Code className="w-5 h-5" />, gradient: "from-purple-500 to-pink-500" },
-                { label: "Integration", value: "100%", icon: <Zap className="w-5 h-5" />, gradient: "from-green-500 to-emerald-500" }
-              ].map((stat, index) => (
-                <motion.div
-                  key={index}
-                  className="bg-gradient-to-br from-space-light/20 to-space-light/10 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center group hover:border-white/30 transition-all duration-300 perspective-1000"
-                  initial={{ opacity: 0, y: 30, scale: 0.8 }}
-                  animate={headerInView ? { 
-                    opacity: 1, 
-                    y: 0, 
-                    scale: 1 
-                  } : { 
-                    opacity: 0, 
-                    y: 30, 
-                    scale: 0.8 
-                  }}
-                  transition={{ 
-                    duration: 0.6, 
-                    delay: 0.4 + index * 0.1,
-                    type: "spring",
-                    stiffness: 100,
-                    damping: 15
-                  }}
-                  whileHover={{ 
-                    scale: 1.05, 
-                    y: -5,
-                    rotateY: 5
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  style={{ transformStyle: "preserve-3d" }}
-                >
-                  <motion.div 
-                    className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${stat.gradient}/20 mb-3`}
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <div className={`bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`}>
-                      {stat.icon}
-                    </div>
-                  </motion.div>
-                  <motion.div 
-                    className="text-2xl font-bold text-white mb-1"
-                    initial={{ scale: 0 }}
-                    animate={headerInView ? { scale: 1 } : { scale: 0 }}
-                    transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-                  >
-                    {stat.value}
-                  </motion.div>
-                  <div className="text-sm text-white/70 group-hover:text-white/90 transition-colors duration-300">
-                    {stat.label}
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
+
           </motion.div>
           
           {/* Enhanced Subsystem Tabs */}

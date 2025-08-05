@@ -51,8 +51,6 @@ const CCarousel = () => {
   const CustomLeftArrow = ({ onClick }) => (
     <motion.button
       onClick={onClick}
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.9 }}
       className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 z-20 w-8 h-8 md:w-12 md:h-12 bg-black/60 backdrop-blur-sm rounded-full shadow-lg border border-white/20 flex items-center justify-center text-white hover:bg-black/80 transition-all duration-300"
     >
       <FaArrowLeft className="text-xs md:text-base" />
@@ -62,8 +60,6 @@ const CCarousel = () => {
   const CustomRightArrow = ({ onClick }) => (
     <motion.button
       onClick={onClick}
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.9 }}
       className="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 z-20 w-8 h-8 md:w-12 md:h-12 bg-black/60 backdrop-blur-sm rounded-full shadow-lg border border-white/20 flex items-center justify-center text-white hover:bg-black/80 transition-all duration-300"
     >
       <FaArrowRight className="text-xs md:text-base" />
@@ -177,28 +173,9 @@ const CCarousel = () => {
                           />
                         </motion.div>
 
-                        {/* Hover Overlay */}
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: isHovered ? 1 : 0 }}
-                          className="absolute inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300"
-                        >
-                          <motion.div
-                            initial={{ scale: 0.8, opacity: 0 }}
-                            animate={{ 
-                              scale: isHovered ? 1 : 0.8, 
-                              opacity: isHovered ? 1 : 0 
-                            }}
-                            className="w-12 h-12 md:w-16 md:h-16 bg-white/20 backdrop-blur-sm text-white rounded-full flex items-center justify-center border border-white/30"
-                          >
-                            <span className="text-lg md:text-xl">📷</span>
-                          </motion.div>
-                        </motion.div>
+
                       </div>
                     </div>
-
-                    {/* Bottom Gradient Indicator */}
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 md:h-1 bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
                   </motion.div>
                 </motion.div>
               )

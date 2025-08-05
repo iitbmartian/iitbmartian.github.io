@@ -24,7 +24,6 @@ import {useRouter} from 'next/navigation'
 
 // Enhanced ProjectCard Component
 const ProjectCard = ({ project, index }) => {
-  const router = useRouter()
   const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef(null);
   
@@ -204,18 +203,9 @@ const ProjectCard = ({ project, index }) => {
         >
           <motion.h3 
             className="text-xl font-bold text-white mb-3 font-orbitron group-hover:text-mars transition-colors duration-300 relative"
-            whileHover={{ x: 3, scale: 1.02 }}
           >
             {project.title}
-            <motion.div
-              className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-mars to-cosmic rounded-full"
-              initial={{ width: 0, opacity: 0 }}
-              animate={{ 
-                width: isHovered ? "100%" : "0%",
-                opacity: isHovered ? 1 : 0
-              }}
-              transition={{ duration: 0.3 }}
-            />
+
           </motion.h3>
           
           <motion.p 
@@ -393,6 +383,7 @@ const ProjectsSection = () => {
     target: sectionRef,
     offset: ["start end", "end start"]
   });
+  const router = useRouter()
 
   // Optimized transforms
   const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -100]);
@@ -612,80 +603,21 @@ const ProjectsSection = () => {
             space exploration and autonomous robotics
           </motion.p>
 
-          {/* Enhanced Project Stats */}
-          <motion.div
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-3xl mx-auto"
-            variants={itemVariants}
-          >
-            {[
-              { label: "Active Projects", value: projects.length, icon: <Rocket className="w-4 h-4" />, gradient: "from-mars to-orange-500" },
-              { label: "Team Members", value: "18+", icon: <Users className="w-4 h-4" />, gradient: "from-cosmic to-blue-500" },
-              { label: "Technologies", value: "15+", icon: <Cpu className="w-4 h-4" />, gradient: "from-purple-500 to-pink-500" },
-              { label: "Completion", value: "75%", icon: <Award className="w-4 h-4" />, gradient: "from-green-500 to-emerald-500" }
-            ].map((stat, index) => (
-              <motion.div
-                key={index}
-                className="bg-gradient-to-br from-space-light/20 to-space-light/10 backdrop-blur-sm border border-white/10 rounded-xl p-4 text-center group hover:border-white/30 transition-all duration-300 perspective-1000"
-                initial={{ opacity: 0, y: 30, scale: 0.8 }}
-                animate={headerInView ? { 
-                  opacity: 1, 
-                  y: 0, 
-                  scale: 1 
-                } : { 
-                  opacity: 0, 
-                  y: 30, 
-                  scale: 0.8 
-                }}
-                transition={{ 
-                  duration: 0.6, 
-                  delay: 0.3 + index * 0.1,
-                  type: "spring",
-                  stiffness: 100,
-                  damping: 15
-                }}
-                whileHover={{ 
-                  scale: 1.05, 
-                  y: -5,
-                  rotateY: 5
-                }}
-                whileTap={{ scale: 0.95 }}
-                style={{ transformStyle: "preserve-3d" }}
-              >
-                <motion.div 
-                  className={`inline-flex p-2 rounded-lg bg-gradient-to-r ${stat.gradient}/20 mb-2`}
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <div className={`bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`}>
-                    {stat.icon}
-                  </div>
-                </motion.div>
-                <motion.div 
-                  className="text-lg font-bold text-white mb-1"
-                  initial={{ scale: 0 }}
-                  animate={headerInView ? { scale: 1 } : { scale: 0 }}
-                  transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-                >
-                  {stat.value}
-                </motion.div>
-                <div className="text-xs text-white/70 group-hover:text-white/90 transition-colors duration-300">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+
         </motion.div>
 
         {/* Enhanced Projects Grid */}
         <motion.div 
           ref={projectsRef}
           className="grid md:grid-cols-2 gap-8 mb-16"
+          
         >
           {projects.map((project, index) => (
             <ProjectCard 
               key={index} 
               project={project} 
               index={index}
+              
             />
           ))}
         </motion.div>
@@ -697,14 +629,10 @@ const ProjectsSection = () => {
           variants={sectionVariants}
           initial="hidden"
           animate={ctaInView ? "visible" : "exit"}
+          transition={{duration:0.7}}
+          
         >
-          <motion.div
-            whileHover={{ 
-              scale: 1.05, 
-              y: -5,
-              boxShadow: "0 15px 40px rgba(0, 217, 255, 0.3)"
-            }}
-            whileTap={{ scale: 0.95 }}
+          <div
           >
             <Button onClick={()=>{router.push("#projects")}}   className="bg-gradient-to-r from-cosmic via-blue-500 to-blue-600 hover:from-cosmic-dark hover:via-blue-600 hover:to-blue-700 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-lg">
               <span className="flex items-center space-x-3">
@@ -717,7 +645,7 @@ const ProjectsSection = () => {
                 </motion.div>
               </span>
             </Button>
-          </motion.div>
+          </div>
         </motion.div>
       </div>
     </section>

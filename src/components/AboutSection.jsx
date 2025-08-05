@@ -320,7 +320,6 @@ const AboutSection = () => {
             <motion.h2 
               className="text-5xl md:text-7xl font-bold font-orbitron mb-6"
               variants={itemVariants}
-              whileHover={{ scale: 1.02, y: -3 }}
               animate={{
                 backgroundPosition: ["0% 0%", "100% 0%", "0% 0%"],
               }}
@@ -353,16 +352,11 @@ const AboutSection = () => {
             <motion.p 
               className="text-xl text-white/80 max-w-4xl mx-auto leading-relaxed"
               variants={itemVariants}
-              whileHover={{ scale: 1.02 }}
             >
               Founded in{" "}
               <motion.span 
                 className="text-mars font-semibold"
-                whileHover={{ 
-                  scale: 1.08,
-                  textShadow: "0 0 15px rgba(255, 107, 53, 0.5)"
-                }}
-                transition={{ duration: 0.2 }}
+
               >
                 2012
               </motion.span>
@@ -385,25 +379,16 @@ const AboutSection = () => {
             <motion.div
               className="bg-gradient-to-br from-space-light/30 to-space-light/10 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-mars/30 transition-all duration-300 group perspective-1000 relative"
               variants={itemVariants}
-              whileHover={{ 
-                scale: 1.03, 
-                y: -12,
-                rotateY: 3
-              }}
+
               onMouseEnter={() => handleCardHover('vision')}
               onMouseLeave={handleCardLeave}
               style={{ transformStyle: "preserve-3d" }}
             >
               <motion.h3 
                 className="text-3xl font-bold mb-6 font-orbitron text-mars flex items-center"
-                whileHover={{ x: 5 }}
               >
                 <motion.div
-                  whileHover={{ 
-                    rotate: 15, 
-                    scale: 1.15
-                  }}
-                  transition={{ duration: 0.3 }}
+
                   animate={{
                     boxShadow: hoveredCard === 'vision' ? [
                       "0 0 0 rgba(255, 107, 53, 0)",
@@ -441,13 +426,9 @@ const AboutSection = () => {
                       type: "spring",
                       stiffness: 120
                     }}
-                    whileHover={{ x: 8, scale: 1.02 }}
                   >
                     <motion.div
-                      whileHover={{ 
-                        rotate: 360,
-                        scale: 1.2
-                      }}
+
                       transition={{ duration: 0.6 }}
                       animate={{
                         rotate: [0, 10, -10, 0]
@@ -462,7 +443,6 @@ const AboutSection = () => {
                     </motion.div>
                     <motion.span 
                       className="text-white/80 group-hover/item:text-white transition-colors duration-300"
-                      whileHover={{ x: 2 }}
                     >
                       {item}
                     </motion.span>
@@ -483,24 +463,16 @@ const AboutSection = () => {
             <motion.div
               className="bg-gradient-to-br from-space-light/30 to-space-light/10 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-cosmic/30 transition-all duration-300 group perspective-1000 relative"
               variants={itemVariants}
-              whileHover={{ 
-                scale: 1.03, 
-                y: -12,
-                rotateY: -3
-              }}
+
               onMouseEnter={() => handleCardHover('mission')}
               onMouseLeave={handleCardLeave}
               style={{ transformStyle: "preserve-3d" }}
             >
               <motion.h3 
                 className="text-3xl font-bold mb-6 font-orbitron text-cosmic flex items-center"
-                whileHover={{ x: 5 }}
               >
                 <motion.div
-                  whileHover={{ 
-                    rotate: [0, 20, -20, 0],
-                    scale: 1.15
-                  }}
+
                   transition={{ duration: 0.8 }}
                   animate={{
                     y: [0, -5, 0],
@@ -529,7 +501,6 @@ const AboutSection = () => {
                 className="text-white/80 leading-relaxed group-hover:text-white/90 transition-colors duration-300"
                 initial={{ opacity: 0.8 }}
                 animate={visionMissionInView ? { opacity: 0.8 } : { opacity: 0 }}
-                whileHover={{ opacity: 1, x: 3 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
               >
                 To design, develop, and innovate cutting-edge extraterrestrial robotic solutions 
@@ -559,7 +530,6 @@ const AboutSection = () => {
             <motion.h3 
               className="text-3xl lg:text-4xl font-bold font-orbitron mb-12"
               variants={itemVariants}
-              whileHover={{ scale: 1.02, y: -2 }}
             >
               <span className="bg-gradient-to-r from-mars to-cosmic bg-clip-text text-transparent">
                 Our Journey in Numbers
@@ -574,12 +544,7 @@ const AboutSection = () => {
                   variants={figureVariants(index)}
                   initial="hidden"
                   animate={figuresInView ? "visible" : "exit"}
-                  whileHover={{ 
-                    scale: 1.08, 
-                    y: -12,
-                    rotateY: 8,
-                    boxShadow: `0 20px 40px ${figure.shadowColor}`
-                  }}
+
                   whileTap={{ scale: 0.95 }}
                   onMouseEnter={() => handleCardHover(index)}
                   onMouseLeave={handleCardLeave}
@@ -588,10 +553,6 @@ const AboutSection = () => {
                   <div className="flex justify-center mb-4">
                     <motion.div 
                       className={`p-3 bg-gradient-to-br ${figure.gradient} rounded-full group-hover:scale-110 transition-transform duration-300`}
-                      whileHover={{ 
-                        rotate: 360,
-                        scale: 1.3
-                      }}
                       transition={{ duration: 0.8 }}
                       animate={{
                         boxShadow: hoveredCard === index ? [
@@ -635,14 +596,12 @@ const AboutSection = () => {
                       type: "spring",
                       stiffness: 200
                     }}
-                    whileHover={{ scale: 1.1 }}
                   >
                     {figure.number}
                   </motion.h4>
                   
                   <motion.p 
                     className="text-white/70 group-hover:text-white/90 transition-colors duration-300 text-sm"
-                    whileHover={{ y: -1 }}
                   >
                     {figure.text}
                   </motion.p>
@@ -672,7 +631,6 @@ const AboutSection = () => {
             <motion.h2 
               className="text-3xl lg:text-4xl font-bold font-orbitron mb-12"
               variants={itemVariants}
-              whileHover={{ scale: 1.02, y: -3 }}
             >
               <span className="bg-gradient-to-r from-mars to-cosmic bg-clip-text text-transparent">
                 When this team thrived globally
@@ -682,7 +640,6 @@ const AboutSection = () => {
             <motion.div 
               className="bg-gradient-to-br from-space-light/30 to-space-light/10 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-cosmic/30 transition-all duration-300 relative"
               variants={itemVariants}
-              whileHover={{ scale: 1.01, y: -5 }}
               onMouseEnter={() => handleCardHover('highlights')}
               onMouseLeave={handleCardLeave}
             >
@@ -694,19 +651,12 @@ const AboutSection = () => {
                     variants={highlightVariants(index)}
                     initial="hidden"
                     animate={highlightsInView ? "visible" : "exit"}
-                    whileHover={{ 
-                      x: 12, 
-                      scale: 1.02,
-                      rotateY: 1
-                    }}
+
                     style={{ transformStyle: "preserve-3d" }}
                   >
                     <motion.div 
                       className="flex-shrink-0 mr-4 mt-1"
-                      whileHover={{ 
-                        rotate: 360,
-                        scale: 1.3
-                      }}
+
                       transition={{ duration: 0.6 }}
                       animate={{
                         rotate: [0, 15, -15, 0],
@@ -737,7 +687,6 @@ const AboutSection = () => {
                     <motion.p 
                       className="text-white/90 group-hover:text-white transition-colors duration-300 leading-relaxed"
                       initial={{ opacity: 0.9 }}
-                      whileHover={{ opacity: 1, x: 3 }}
                     >
                       {highlight}
                     </motion.p>
