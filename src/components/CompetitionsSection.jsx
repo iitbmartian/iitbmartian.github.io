@@ -5,8 +5,12 @@ import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import {useRouter} from 'next/navigation'
+
 
 const Competition = ({ title, description, location, image, index, gradient }) => {
+  const router = useRouter()
+
   const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef(null);
   const isInView = useInView(cardRef, { once: true, margin: "-100px" });
@@ -130,6 +134,8 @@ const Competition = ({ title, description, location, image, index, gradient }) =
 };
 
 const CompetitionsSection = () => {
+  const router = useRouter()
+
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   const { scrollYProgress } = useScroll({

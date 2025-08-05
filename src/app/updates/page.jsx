@@ -74,12 +74,7 @@ const UpdateCard = ({ title, date, image, content, link, index, category, priori
       variants={cardVariants}
       initial="hidden"
       animate={isInView ? "visible" : "exit"}
-      whileHover={{ 
-        y: -8,
-        scale: 1.03,
-        rotateY: 2,
-        transition: { duration: 0.3 }
-      }}
+
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -193,12 +188,10 @@ const UpdateCard = ({ title, date, image, content, link, index, category, priori
           {/* Date with micro-interaction */}
           <motion.div 
             className="flex items-center mb-4 group/date"
-            whileHover={{ x: 5 }}
             transition={{ duration: 0.2 }}
           >
             <motion.div 
               className="p-1 bg-gradient-to-r from-cosmic/20 to-blue-500/20 rounded-full mr-3"
-              whileHover={{ rotate: 360 }}
               transition={{ duration: 0.5 }}
             >
               <Calendar className="h-4 w-4 text-cosmic" />
@@ -247,7 +240,6 @@ const UpdateCard = ({ title, date, image, content, link, index, category, priori
               initial={{ opacity: 0, x: -10 }}
               animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
               transition={{ duration: 0.5, delay: 0.7 + index * 0.05 }}
-              whileHover={{ x: 6, scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               <Newspaper className="h-4 w-4" />
@@ -472,72 +464,9 @@ const UpdatesPage = () => {
               className="text-xl text-white/80 max-w-4xl mx-auto leading-relaxed flex items-center justify-center space-x-3"
               variants={itemVariants}
             >
-              <Star className="w-6 h-6 text-cosmic" />
               <span>Stay up to date with the latest news, achievements, and events from our team</span>
-              <Newspaper className="w-6 h-6 text-mars" />
             </motion.p>
 
-            {/* Stats Grid with enhanced animations */}
-            <motion.div
-              className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-4xl mx-auto"
-              variants={itemVariants}
-            >
-              {[
-                { label: "Latest Updates", value: updates.length, icon: <Newspaper className="w-5 h-5" />, gradient: "from-mars to-orange-500" },
-                { label: "Categories", value: "6", icon: <Star className="w-5 h-5" />, gradient: "from-cosmic to-blue-500" },
-                { label: "This Year", value: "2023", icon: <Calendar className="w-5 h-5" />, gradient: "from-purple-500 to-pink-500" },
-                { label: "Read Time", value: "2 min", icon: <Clock className="w-5 h-5" />, gradient: "from-green-500 to-emerald-500" }
-              ].map((stat, index) => (
-                <motion.div
-                  key={index}
-                  className="bg-gradient-to-br from-space-light/20 to-space-light/10 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center group hover:border-white/30 transition-all duration-300"
-                  initial={{ opacity: 0, y: 30, scale: 0.8 }}
-                  animate={headerInView ? { 
-                    opacity: 1, 
-                    y: 0, 
-                    scale: 1 
-                  } : { 
-                    opacity: 0, 
-                    y: 30, 
-                    scale: 0.8 
-                  }}
-                  transition={{ 
-                    duration: 0.6, 
-                    delay: 0.4 + index * 0.1,
-                    type: "spring",
-                    stiffness: 100,
-                    damping: 15
-                  }}
-                  whileHover={{ 
-                    scale: 1.05, 
-                    y: -5,
-                    rotateY: 5
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <motion.div 
-                    className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${stat.gradient}/20 mb-3`}
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <div className={`bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`}>
-                      {stat.icon}
-                    </div>
-                  </motion.div>
-                  <motion.div 
-                    className="text-2xl font-bold text-white mb-1"
-                    initial={{ scale: 0 }}
-                    animate={headerInView ? { scale: 1 } : { scale: 0 }}
-                    transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-                  >
-                    {stat.value}
-                  </motion.div>
-                  <div className="text-sm text-white/70 group-hover:text-white/90 transition-colors duration-300">
-                    {stat.label}
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
           </motion.div>
           
           {/* Updates Grid */}

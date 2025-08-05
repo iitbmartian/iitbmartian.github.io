@@ -146,11 +146,7 @@ const CCarousel = () => {
                   onMouseLeave={() => setHoveredImage(null)}
                 >
                   <motion.div
-                    whileHover={{ 
-                      y: -5,
-                      scale: 1.02,
-                      boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3)"
-                    }}
+
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     className="group relative bg-white/10 backdrop-blur-sm rounded-lg md:rounded-2xl lg:rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-white/20 hover:border-white/40 h-full"
                   >

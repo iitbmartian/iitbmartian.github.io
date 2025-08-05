@@ -395,11 +395,7 @@ const SubsystemsPage = () => {
                 whileInView="visible"
                 custom={index}
                 viewport={{ once: false, margin: "-10%" }}
-                whileHover={{ 
-                  scale: 1.05, 
-                  y: -3,
-                  rotateY: 3
-                }}
+
                 whileTap={{ scale: 0.95 }}
                 style={{ transformStyle: "preserve-3d" }}
               >
@@ -442,7 +438,6 @@ const SubsystemsPage = () => {
                 >
                   <motion.div
                     className={`inline-flex p-6 rounded-2xl ${selectedSubsystem.bgColor} mb-6 relative overflow-hidden`}
-                    whileHover={{ scale: 1.1, rotate: 5 }}
                     transition={{ duration: 0.3 }}
                   >
                     <motion.div 
@@ -494,11 +489,7 @@ const SubsystemsPage = () => {
                         variants={cardVariants}
                         initial="hidden"
                         animate="visible"
-                        whileHover={{ 
-                          y: -8, 
-                          scale: 1.02,
-                          rotateY: 2
-                        }}
+
                         onMouseEnter={() => handleCardHover(index)}
                         onMouseLeave={handleCardLeave}
                         transition={{ duration: 0.3 }}
@@ -520,7 +511,6 @@ const SubsystemsPage = () => {
                             <div className="flex items-center space-x-3">
                               <motion.div
                                 className={`p-2 rounded-lg ${selectedSubsystem.bgColor}`}
-                                whileHover={{ scale: 1.2, rotate: 360 }}
                                 transition={{ duration: 0.5 }}
                               >
                                 <ArrowRight className={`w-4 h-4 ${selectedSubsystem.color}`} />
@@ -537,16 +527,7 @@ const SubsystemsPage = () => {
                             </CardDescription>
                           </CardContent>
                           
-                          {/* Enhanced hover indicator */}
-                          <motion.div
-                            className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-mars to-cosmic rounded-full"
-                            initial={{ width: 0, opacity: 0 }}
-                            animate={{ 
-                              width: hoveredCard === index ? "100%" : "0%",
-                              opacity: hoveredCard === index ? 1 : 0
-                            }}
-                            transition={{ duration: 0.4, ease: "easeOut" }}
-                          />
+
 
                           {/* Additional glow effect */}
                           <motion.div
@@ -574,7 +555,6 @@ const SubsystemsPage = () => {
                   >
                     <motion.div
                       className={`inline-flex p-6 rounded-2xl ${selectedSubsystem.bgColor} mb-6`}
-                      whileHover={{ scale: 1.1, rotate: 10 }}
                       transition={{ duration: 0.3 }}
                     >
                       {selectedSubsystem.icon}

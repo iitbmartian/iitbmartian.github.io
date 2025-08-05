@@ -104,18 +104,12 @@ const StatCard = ({ icon: Icon, number, label, delay = 0 }) => {
       variants={cardVariants}
       initial="hidden"
       animate={isInView ? "visible" : "exit"}
-      whileHover={{ 
-        scale: hoverScale,
-        y: -3,
-        rotateY: 3,
-        transition: { duration: 0.3 }
-      }}
+
       whileTap={{ scale: 0.97 }}
       style={{ transformStyle: "preserve-3d" }}
     >
       <motion.div 
         className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-r from-mars to-cosmic rounded-lg sm:rounded-xl flex items-center justify-center mb-2 sm:mb-3 lg:mb-4 group-hover:scale-110 transition-transform duration-300"
-        whileHover={{ rotate: 360 }}
         transition={{ duration: 0.6 }}
       >
         <Icon className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-white" />
@@ -185,12 +179,7 @@ const RoverCard = ({ rover, index, onClick }) => {
       initial="hidden"
       animate={isInView ? "visible" : "exit"}
       onClick={onClick}
-      whileHover={{ 
-        scale: 1.02, // Reduced hover scale for mobile
-        y: -4,
-        rotateY: 2,
-        transition: { duration: 0.3 }
-      }}
+
       whileTap={{ scale: 0.98 }}
       style={{ transformStyle: "preserve-3d" }}
     >
@@ -220,7 +209,6 @@ const RoverCard = ({ rover, index, onClick }) => {
         >
           <motion.div 
             className="bg-gradient-to-r from-mars/30 to-cosmic/30 text-white text-xs sm:text-sm font-medium py-1.5 sm:py-2 px-3 sm:px-4 rounded-full border border-mars/40 backdrop-blur-sm"
-            whileHover={{ scale: 1.03 }}
           >
             <span className="flex items-center space-x-1.5 sm:space-x-2">
               <Calendar className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -264,7 +252,6 @@ const RoverCard = ({ rover, index, onClick }) => {
               transition={{ 
                 duration: 0.3,
               }}
-              whileHover={{ scale: 1.15, rotate: 8 }}
             >
               <Rocket className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 text-white/80" />
             </motion.div>
@@ -300,7 +287,6 @@ const RoverCard = ({ rover, index, onClick }) => {
         {/* Click indicator - responsive */}
         <motion.div 
           className="flex items-center justify-center py-1.5 sm:py-2 text-mars text-xs sm:text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          whileHover={{ scale: 1.03 }}
         >
           <span className="flex items-center space-x-1.5 sm:space-x-2">
             <span>Click to explore</span>
@@ -413,7 +399,6 @@ const RoverDetailModal = ({ rover, index, isOpen, onClose }) => {
               <motion.button
                 className="absolute top-3 right-3 sm:top-4 sm:right-4 lg:top-6 lg:right-6 w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 bg-gradient-to-r from-mars/20 to-cosmic/20 border border-white/20 rounded-full flex items-center justify-center hover:border-mars/40 transition-colors duration-300 z-10"
                 onClick={onClose}
-                whileHover={{ scale: 1.08, rotate: 90 }}
                 whileTap={{ scale: 0.92 }}
               >
                 <X className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
@@ -452,7 +437,6 @@ const RoverDetailModal = ({ rover, index, isOpen, onClose }) => {
                   initial={{ opacity: 0, scale: 0, rotate: -180 }}
                   animate={{ opacity: 1, scale: 1, rotate: 0 }}
                   transition={{ duration: 0.6, delay: 0.4, type: "spring" }}
-                  whileHover={{ scale: 1.08, rotate: 8 }}
                 >
                   <Rocket className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-white" />
                 </motion.div>
@@ -504,12 +488,10 @@ const RoverDetailModal = ({ rover, index, isOpen, onClose }) => {
                         type: "spring",
                         stiffness: 150
                       }}
-                      whileHover={{ x: 3, scale: 1.01 }}
                     >
                       <div className="flex items-start space-x-3 sm:space-x-4">
                         <motion.div 
                           className="p-1.5 sm:p-2 bg-gradient-to-r from-cosmic/20 to-blue-500/20 rounded-md sm:rounded-lg flex-shrink-0 mt-0.5 sm:mt-1"
-                          whileHover={{ scale: 1.08, rotate: 360 }}
                           transition={{ duration: 0.4 }}
                         >
                           <Star className="w-3 h-3 sm:w-4 sm:h-4 text-cosmic" />
@@ -835,14 +817,13 @@ const RoverPage = () => {
           {/* Scroll Indicator - Mobile optimized */}
           {showScrollIndicator && (
             <motion.div
-              className="absolute bottom-8 sm:bottom-12 lg:bottom-16 left-1/2 transform -translate-x-1/2"
+              className="absolute bottom-8 sm:top-[100%] lg:top-[110%] left-1/2 transform -translate-x-1/2"
               transition={{ duration: 2.5, repeat: Infinity }}
               initial={{ opacity: 0 }}
               animate={heroInView ? { opacity: 1 } : { opacity: 0 }}
             >
               <motion.div 
                 className="flex flex-col items-center space-y-1 sm:space-y-2"
-                whileHover={{ scale: 1.05 }}
               >
                 <span className="text-white/60 text-xs sm:text-sm">Explore Our Journey</span>
                 <ChevronDown className="w-5 h-5 sm:w-6 sm:h-6 text-mars" />
@@ -894,49 +875,6 @@ const RoverPage = () => {
         onClose={handleModalClose}
       />
 
-      {/* Innovation Section - Responsive */}
-      <section className="py-12 sm:py-16 lg:py-20 relative">
-        <div className="container mx-auto px-4 sm:px-6">
-          <motion.div
-            className="bg-gradient-to-br from-space-dark/60 to-space/60 backdrop-blur-sm border border-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 lg:p-12 text-center"
-            initial={{ opacity: 0, y: 20, scale: 0.98 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: false, margin: "-10%" }}
-          >
-            <motion.div
-              className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-gradient-to-r from-mars to-cosmic rounded-xl sm:rounded-2xl flex items-center justify-center mx-auto mb-6 sm:mb-8"
-              whileHover={{ scale: 1.08, rotate: 8 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Zap className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-white" />
-            </motion.div>
-            
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 font-orbitron text-white">
-              The Future of Exploration
-            </h2>
-            
-            <p className="text-white/80 max-w-xs sm:max-w-2xl lg:max-w-4xl mx-auto mb-6 sm:mb-8 text-sm sm:text-base lg:text-lg leading-relaxed">
-              As we continue to innovate and push the boundaries of what's possible, 
-              our next generation of rovers will feature swarm robotics, AI-powered decision making, 
-              and advanced materials designed specifically for the harsh conditions of Mars.
-            </p>
-            
-            <motion.div
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <Button className="bg-gradient-to-r from-mars via-orange-500 to-cosmic hover:from-mars-dark hover:via-orange-600 hover:to-cosmic-dark text-white px-6 sm:px-8 py-4 sm:py-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 text-base sm:text-lg font-semibold">
-                <span className="flex items-center space-x-2 sm:space-x-3">
-                  <Rocket className="w-5 h-5 sm:w-6 sm:h-6" />
-                  <span>Join Our Mission</span>
-                  <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
-                </span>
-              </Button>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
       
       {/* Timeline Section */}
       <RoverTimeline events={timelineEvents} />

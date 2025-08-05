@@ -36,7 +36,6 @@ import { cn } from '@/lib/utils';
 const Footer = () => {
   const footerRef = useRef(null);
   const brandRef = useRef(null);
-  const statsRef = useRef(null);
   const contactRef = useRef(null);
   
   const [hoveredSection, setHoveredSection] = useState(null);
@@ -53,11 +52,7 @@ const Footer = () => {
     amount: 0.3
   });
 
-  const statsInView = useInView(statsRef, { 
-    once: false, 
-    margin: "-15% 0px -15% 0px",
-    amount: 0.3
-  });
+
 
   const contactInView = useInView(contactRef, { 
     once: false, 

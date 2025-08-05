@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useMemo, useCallback } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
-import { X, Camera, Image as ImageIcon, Filter, ZoomIn, Star, Sparkles, Download, Share2, Heart, Eye, ArrowLeft, ArrowRight, Grid3X3, List, Search, Calendar, MapPin, Award, Users, Rocket, Target, Cpu, Globe } from 'lucide-react';
+import { X, Camera, Image as ImageIcon, ArrowLeft, ArrowRight, Calendar, MapPin, Eye, Download, Share2, Sparkles } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { cn } from '@/lib/utils';
@@ -19,8 +19,8 @@ import RoverT from '@/../public/mrt/DSCN9799.png';
 import roverFull from '@/../public/mrt/DSCN9731.png';
 import roverLook from '@/../public/mrt/RoverArm.png';
 
-// Optimized Image Card Component
-const ImageCard = ({ image, index, viewMode, hoveredImage, setHoveredImage, openLightbox, favoritedImages, toggleFavorite, imageLoadStates, handleImageLoad }) => {
+// Optimized Image Card Component (unchanged)
+const ImageCard = ({ image, index, viewMode, hoveredImage, imageLoadStates, handleImageLoad }) => {
   const cardRef = useRef(null);
   const isInView = useInView(cardRef, { once: false, margin: "-15% 0px -15% 0px", amount: 0.3 });
 
@@ -43,22 +43,8 @@ const ImageCard = ({ image, index, viewMode, hoveredImage, setHoveredImage, open
     }
   }), [index]);
 
-  const handleClick = useCallback(() => {
-    openLightbox(image.src, index);
-  }, [image.src, index, openLightbox]);
 
-  const handleMouseEnter = useCallback(() => {
-    setHoveredImage(index);
-  }, [index, setHoveredImage]);
 
-  const handleMouseLeave = useCallback(() => {
-    setHoveredImage(null);
-  }, [setHoveredImage]);
-
-  const handleFavoriteClick = useCallback((e) => {
-    e.stopPropagation();
-    toggleFavorite(index);
-  }, [index, toggleFavorite]);
 
   const isHovered = hoveredImage === index;
 
@@ -72,9 +58,7 @@ const ImageCard = ({ image, index, viewMode, hoveredImage, setHoveredImage, open
         "group relative overflow-hidden rounded-2xl bg-gradient-to-br from-space-light/30 to-space-light/10 cursor-pointer border border-white/10 backdrop-blur-sm hover:border-white/30 transition-all duration-300 perspective-1000",
         viewMode === "list" && "flex items-center space-x-6 p-6"
       )}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      whileHover={{ y: -10, scale: 1.03, rotateY: 2 }}
+
       whileTap={{ scale: 0.98 }}
       style={{ transformStyle: "preserve-3d" }}
     >
@@ -91,7 +75,6 @@ const ImageCard = ({ image, index, viewMode, hoveredImage, setHoveredImage, open
             transition={{ duration: 3, repeat: Infinity }}
           >
             <motion.div
-              animate={{ rotate: 360 }}
               transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
             >
               <Camera className="w-8 h-8 text-white/40" />
@@ -136,20 +119,6 @@ const ImageCard = ({ image, index, viewMode, hoveredImage, setHoveredImage, open
           }}
           transition={{ duration: 2, repeat: isHovered ? Infinity : 0 }}
         />
-
-        {/* Action Buttons */}
-        <motion.div
-          className="absolute top-4 right-4 flex space-x-2"
-          initial={{ opacity: 0, scale: 0.8, y: -10 }}
-          animate={{ opacity: isHovered ? 1 : 0, scale: isHovered ? 1 : 0.8, y: isHovered ? 0 : -10 }}
-          transition={{ duration: 0.3, staggerChildren: 0.05 }}
-        >
-
-
-        </motion.div>
-
-
-
       </div>
 
       {/* Enhanced Content Section */}
@@ -165,7 +134,6 @@ const ImageCard = ({ image, index, viewMode, hoveredImage, setHoveredImage, open
             exit={{ opacity: 0, y: viewMode === "grid" ? 20 : 0 }}
             transition={{ duration: 0.3 }}
           >
-
           </motion.div>
         )}
       </AnimatePresence>
@@ -186,11 +154,9 @@ const GalleryPage = () => {
   const headerRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [activeCategory, setActiveCategory] = useState("all");
   const [hoveredImage, setHoveredImage] = useState(null);
   const [imageLoadStates, setImageLoadStates] = useState({});
   const [viewMode, setViewMode] = useState("grid");
-  const [searchQuery, setSearchQuery] = useState("");
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [favoritedImages, setFavoritedImages] = useState(new Set());
 
@@ -205,94 +171,54 @@ const GalleryPage = () => {
   const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const orbOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 0.8, 0.3]);
 
-  // Memoized data with actual images
-  const categories = useMemo(() => [
-    { name: "All", id: "all", icon: <Globe className="w-5 h-5" />, gradient: "from-mars/40 to-cosmic/40", description: "All images" },
-    { name: "Rovers", id: "rovers", icon: <Rocket className="w-5 h-5" />, gradient: "from-mars/40 to-orange-500/40", description: "Our Mars rovers" },
-    { name: "Competitions", id: "competitions", icon: <Award className="w-5 h-5" />, gradient: "from-cosmic/40 to-blue-500/40", description: "Competition moments" },
-    { name: "Team", id: "team", icon: <Users className="w-5 h-5" />, gradient: "from-purple-500/40 to-pink-500/40", description: "Team activities" },
-    { name: "Workshops", id: "workshops", icon: <Cpu className="w-5 h-5" />, gradient: "from-green-500/40 to-emerald-500/40", description: "Learning sessions" },
-    { name: "Events", id: "events", icon: <Star className="w-5 h-5" />, gradient: "from-yellow-500/40 to-amber-500/40", description: "Special events" }
-  ], []);
-
+  // Gallery images - all images shown without filtering
   const galleryImages = useMemo(() => [
     {
       src: RoverInLab,
       alt: "Rover in the lab",
       category: "rovers",
-
     },
     {
       src: TeamPhoto2023,
       alt: "Team photo 2023",
       category: "team",
-
     },
     {
       src: RoverFieldTesting,
       alt: "Rover field testing",
       category: "rovers",
-
     },
     {
       src: RoverField,
       alt: "Rover testing",
       category: "rovers",
-
     },
     {
       src: RoverArmCloseUp,
       alt: "Rover arm close-up",
       category: "rovers",
-
     },
     {
       src: Roverwork,
       alt: "Rover in action",
       category: "rovers",
-
     },
     {
       src: RoverT,
       alt: "Rover in action",
       category: "rovers",
-
     },
     {
       src: roverFull,
       alt: "Rover full view",
       category: "rovers",
-
     },
     {
       src: roverLook,
       alt: "Rover testing",
       category: "rovers",
-
     }
   ], []);
-
-  // Update category counts
-  const categoriesWithCounts = useMemo(() =>
-    categories.map(cat => ({
-      ...cat,
-      count: cat.id === "all" ? galleryImages.length : galleryImages.filter(img => img.category === cat.id).length
-    })),
-    [categories, galleryImages]
-  );
-
-  // Filter images
-  const filteredImages = useMemo(() =>
-    galleryImages.filter(img => {
-      const matchesCategory = activeCategory === "all" || img.category === activeCategory;
-      const matchesSearch = searchQuery === "" ||
-        img.alt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        img.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        img.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-      return matchesCategory && matchesSearch;
-    }),
-    [galleryImages, activeCategory, searchQuery]
-  );
 
   // Optimized event handlers
   const handleImageLoad = useCallback((index) => {
@@ -314,11 +240,11 @@ const GalleryPage = () => {
 
   const navigateLightbox = useCallback((direction) => {
     const newIndex = direction === 'next'
-      ? (selectedImageIndex + 1) % filteredImages.length
-      : (selectedImageIndex - 1 + filteredImages.length) % filteredImages.length;
+      ? (selectedImageIndex + 1) % galleryImages.length
+      : (selectedImageIndex - 1 + galleryImages.length) % galleryImages.length;
     setSelectedImageIndex(newIndex);
-    setSelectedImage(filteredImages[newIndex].src);
-  }, [selectedImageIndex, filteredImages]);
+    setSelectedImage(galleryImages[newIndex].src);
+  }, [selectedImageIndex, galleryImages]);
 
   const toggleFavorite = useCallback((index) => {
     setFavoritedImages(prev => {
@@ -445,151 +371,12 @@ const GalleryPage = () => {
               <span>Witness our journey through space robotics, competitions, and innovations</span>
               <Sparkles className="w-6 h-6 text-mars" />
             </motion.p>
-
-            {/* Enhanced Stats */}
-            <motion.div
-              className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 max-w-4xl mx-auto"
-              variants={itemVariants}
-            >
-              {[
-                { label: "Total Images", value: galleryImages.length, icon: <ImageIcon className="w-5 h-5" />, gradient: "from-mars to-orange-500" },
-                { label: "Categories", value: categoriesWithCounts.length - 1, icon: <Filter className="w-5 h-5" />, gradient: "from-cosmic to-blue-500" },
-                { label: "Total Views", value: "15.8K", icon: <Eye className="w-5 h-5" />, gradient: "from-purple-500 to-pink-500" },
-                { label: "Total Likes", value: "1.4K", icon: <Heart className="w-5 h-5" />, gradient: "from-green-500 to-emerald-500" }
-              ].map((stat, index) => (
-                <motion.div
-                  key={index}
-                  className="bg-gradient-to-br from-space-light/20 to-space-light/10 backdrop-blur-sm border border-white/10 rounded-2xl p-6 text-center group hover:border-white/30 transition-all duration-300 perspective-1000"
-                  initial={{ opacity: 0, y: 30, scale: 0.8 }}
-                  animate={headerInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.8 }}
-                  transition={{
-                    duration: 0.6,
-                    delay: 0.4 + index * 0.1,
-                    type: "spring",
-                    stiffness: 100,
-                    damping: 15
-                  }}
-                  whileHover={{ scale: 1.05, y: -5, rotateY: 5 }}
-                  whileTap={{ scale: 0.95 }}
-                  style={{ transformStyle: "preserve-3d" }}
-                >
-                  <motion.div
-                    className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${stat.gradient}/20 mb-3`}
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    <div className={`bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent`}>
-                      {stat.icon}
-                    </div>
-                  </motion.div>
-                  <motion.div
-                    className="text-2xl font-bold text-white mb-1"
-                    initial={{ scale: 0 }}
-                    animate={headerInView ? { scale: 1 } : { scale: 0 }}
-                    transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-                  >
-                    {stat.value}
-                  </motion.div>
-                  <div className="text-sm text-white/70 group-hover:text-white/90 transition-colors duration-300">
-                    {stat.label}
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
           </motion.div>
 
-          {/* Enhanced Search */}
-          <motion.div
-            className="mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: false, margin: "-10%" }}
-          >
-            <div className="relative max-w-2xl mx-auto">
-              <motion.input
-                type="text"
-                placeholder="Search images by title, description, or tags..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-6 py-4 pl-14 pr-16 bg-space-light/20 backdrop-blur-sm border border-white/20 rounded-2xl text-white placeholder-white/50 focus:outline-none focus:border-cosmic/50 focus:ring-2 focus:ring-cosmic/20 transition-all duration-300"
-                whileFocus={{ scale: 1.02 }}
-              />
-              <Search className="absolute left-5 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
-              {searchQuery && (
-                <motion.button
-                  onClick={() => setSearchQuery("")}
-                  className="absolute right-5 top-1/2 transform -translate-y-1/2 p-1 hover:bg-white/10 rounded-full transition-colors duration-200"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0, opacity: 0 }}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <X className="w-4 h-4 text-white/70" />
-                </motion.button>
-              )}
-            </div>
-          </motion.div>
-
-          {/* Enhanced Filter Buttons */}
-          <motion.div
-            className="mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, staggerChildren: 0.05 }}
-            viewport={{ once: false, margin: "-10%" }}
-          >
-            <div className="flex justify-center mb-6">
-              <motion.button
-                onClick={() => setViewMode(viewMode === "grid" ? "list" : "grid")}
-                className="p-3 bg-space-light/20 backdrop-blur-sm border border-white/20 rounded-xl text-white/70 hover:text-white hover:border-white/40 transition-all duration-300"
-                whileHover={{ scale: 1.05, rotate: 5 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {viewMode === "grid" ? <List className="w-5 h-5" /> : <Grid3X3 className="w-5 h-5" />}
-              </motion.button>
-            </div>
-            <div className="flex flex-wrap justify-center gap-4">
-              {categoriesWithCounts.map((category, index) => (
-                <motion.button
-                  key={category.id}
-                  onClick={() => setActiveCategory(category.id)}
-                  className={cn(
-                    "py-4 px-6 rounded-2xl flex items-center space-x-3 transition-all duration-300 border backdrop-blur-sm perspective-1000",
-                    activeCategory === category.id
-                      ? "bg-gradient-to-r from-mars/20 to-cosmic/20 text-white border-white/30 shadow-lg shadow-mars/20"
-                      : "bg-space-light/20 text-white/70 hover:text-white border-white/10 hover:border-white/30"
-                  )}
-                  initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
-                  viewport={{ once: false, margin: "-10%" }}
-                  whileHover={{ scale: 1.03, y: -3, rotateY: 2 }}
-                  whileTap={{ scale: 0.97 }}
-                  style={{ transformStyle: "preserve-3d" }}
-                >
-                  <motion.div
-                    animate={{ rotate: activeCategory === category.id ? 360 : 0, scale: activeCategory === category.id ? 1.1 : 1 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    {category.icon}
-                  </motion.div>
-                  <div>
-                    <span className="font-medium">{category.name}</span>
-                    <div className="text-xs text-white/50 group-hover:text-white/70">
-                      {category.count} images
-                    </div>
-                  </div>
-                </motion.button>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Enhanced Gallery Grid */}
+          {/* Enhanced Gallery Grid - All Images */}
           <AnimatePresence mode="wait">
             <motion.div
-              key={`${activeCategory}-${searchQuery}-${viewMode}`}
+              key={viewMode}
               className={cn(
                 "gap-6",
                 viewMode === "grid"
@@ -601,9 +388,9 @@ const GalleryPage = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
             >
-              {filteredImages.map((image, index) => (
+              {galleryImages.map((image, index) => (
                 <ImageCard
-                  key={`${activeCategory}-${searchQuery}-${viewMode}-${index}`}
+                  key={`${viewMode}-${index}`}
                   image={image}
                   index={index}
                   viewMode={viewMode}
@@ -618,219 +405,8 @@ const GalleryPage = () => {
               ))}
             </motion.div>
           </AnimatePresence>
-
-          {/* Enhanced Empty State */}
-          {filteredImages.length === 0 && (
-            <motion.div
-              className="text-center py-20"
-              initial={{ opacity: 0, y: 40, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.6 }}
-            >
-              <motion.div
-                className="inline-flex p-8 bg-space-light/20 rounded-2xl mb-6 backdrop-blur-sm border border-white/10"
-                animate={{ scale: [1, 1.05, 1], rotate: [0, 5, -5, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <ImageIcon className="w-16 h-16 text-white/40" />
-              </motion.div>
-              <motion.h3
-                className="text-2xl font-semibold text-white mb-2"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-              >
-                No Images Found
-              </motion.h3>
-              <motion.p
-                className="text-white/70 text-lg mb-6"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                {searchQuery
-                  ? `No images match "${searchQuery}" in the ${activeCategory === "all" ? "gallery" : activeCategory + " category"}.`
-                  : `No images found in the ${activeCategory} category.`}
-              </motion.p>
-              {searchQuery && (
-                <motion.button
-                  onClick={() => setSearchQuery("")}
-                  className="px-6 py-3 bg-gradient-to-r from-mars to-cosmic rounded-xl text-white font-medium hover:shadow-lg transition-all duration-300"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Clear Search
-                </motion.button>
-              )}
-            </motion.div>
-          )}
         </div>
       </motion.section>
-
-      {/* Enhanced Lightbox */}
-      <AnimatePresence>
-        {isLightboxOpen && selectedImage && (
-          <motion.div
-            className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-6 backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            onClick={closeLightbox}
-          >
-            {/* Enhanced Close Button */}
-            <motion.button
-              className="absolute top-8 right-8 text-white p-4 rounded-full bg-space-dark/80 hover:bg-space-dark backdrop-blur-sm border border-white/20 z-60 group"
-              onClick={closeLightbox}
-              initial={{ scale: 0, rotate: -90 }}
-              animate={{ scale: 1, rotate: 0 }}
-              exit={{ scale: 0, rotate: 90 }}
-              transition={{ duration: 0.3 }}
-              whileHover={{ scale: 1.1, rotate: 90 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <X className="h-6 w-6 group-hover:text-mars transition-colors duration-300" />
-            </motion.button>
-
-            {/* Enhanced Navigation Buttons */}
-            {filteredImages.length > 1 && (
-              <>
-                <motion.button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigateLightbox('prev');
-                  }}
-                  className="absolute left-8 top-1/2 transform -translate-y-1/2 p-4 bg-space-dark/80 hover:bg-space-dark rounded-full backdrop-blur-sm border border-white/20 text-white z-60 group"
-                  initial={{ x: -100, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: -100, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  whileHover={{ scale: 1.1, x: -5 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <ArrowLeft className="w-6 h-6 group-hover:text-cosmic transition-colors duration-300" />
-                </motion.button>
-                <motion.button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigateLightbox('next');
-                  }}
-                  className="absolute right-8 top-1/2 transform -translate-y-1/2 p-4 bg-space-dark/80 hover:bg-space-dark rounded-full backdrop-blur-sm border border-white/20 text-white z-60 group"
-                  initial={{ x: 100, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: 100, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  whileHover={{ scale: 1.1, x: 5 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <ArrowRight className="w-6 h-6 group-hover:text-cosmic transition-colors duration-300" />
-                </motion.button>
-              </>
-            )}
-
-            {/* Enhanced Image Container */}
-            <motion.div
-              className="relative max-w-[90vw] max-h-[80vh] mx-auto"
-              initial={{ scale: 0.8, opacity: 0, y: 100 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.8, opacity: 0, y: 100 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="relative w-full h-full">
-                <Image
-                  src={selectedImage}
-                  alt="Enlarged view"
-                  fill
-                  className="object-contain rounded-2xl shadow-2xl"
-                  sizes="90vw"
-                  style={{ objectFit: 'contain' }}
-                />
-              </div>
-
-              {/* Enhanced Image Border */}
-              <motion.div
-                className="absolute inset-0 rounded-2xl border-2 border-cosmic/40"
-                animate={{
-                  borderColor: [
-                    "rgba(64, 224, 255, 0.4)",
-                    "rgba(255, 107, 53, 0.4)",
-                    "rgba(64, 224, 255, 0.4)"
-                  ],
-                }}
-                transition={{ duration: 3, repeat: Infinity }}
-              />
-
-              {/* Enhanced Image Info Panel */}
-              {filteredImages[selectedImageIndex] && (
-                <motion.div
-                  className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-space/95 to-transparent backdrop-blur-sm p-6 rounded-b-2xl"
-                  initial={{ y: 100, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                  <motion.h3
-                    className="text-white text-xl font-semibold mb-2"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
-                  >
-                    {filteredImages[selectedImageIndex].alt}
-                  </motion.h3>
-                  <motion.p
-                    className="text-white/80 text-sm mb-4"
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.5, delay: 0.4 }}
-                  >
-                    {filteredImages[selectedImageIndex].description}
-                  </motion.p>
-                  <motion.div
-                    className="flex items-center justify-between"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                  >
-                    <div className="flex items-center space-x-6 text-sm text-white/60">
-                      <div className="flex items-center space-x-2">
-                        <Calendar className="w-4 h-4" />
-                        <span>{new Date(filteredImages[selectedImageIndex].date).toLocaleDateString()}</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <MapPin className="w-4 h-4" />
-                        <span>{filteredImages[selectedImageIndex].location}</span>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Eye className="w-4 h-4" />
-                        <span>{filteredImages[selectedImageIndex].views} views</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <motion.button
-                        className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors duration-300"
-                        whileHover={{ scale: 1.1, rotate: 10 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <Download className="w-5 h-5 text-white" />
-                      </motion.button>
-                      <motion.button
-                        className="p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors duration-300"
-                        whileHover={{ scale: 1.1, rotate: -10 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <Share2 className="w-5 h-5 text-white" />
-                      </motion.button>
-                    </div>
-                  </motion.div>
-                </motion.div>
-              )}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
     </div>
   );

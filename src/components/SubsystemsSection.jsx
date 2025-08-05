@@ -77,11 +77,7 @@ const ProjectCard = ({ project, index }) => {
       variants={cardVariants}
       initial="hidden"
       animate={isInView ? "visible" : "exit"}
-      whileHover={{ 
-        y: -12,
-        scale: 1.03,
-        rotateY: 2
-      }}
+
       whileTap={{ scale: 0.98 }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -136,49 +132,8 @@ const ProjectCard = ({ project, index }) => {
             </motion.div>
           </div>
 
-          {/* Enhanced Status Badge */}
-          <motion.div
-            className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm border border-white/20 ${project.statusBg}`}
-            initial={{ scale: 0, opacity: 0, rotate: -180 }}
-            animate={isInView ? { 
-              scale: 1, 
-              opacity: 1, 
-              rotate: 0 
-            } : { 
-              scale: 0, 
-              opacity: 0, 
-              rotate: -180 
-            }}
-            transition={{ 
-              duration: 0.5, 
-              delay: 0.3 + index * 0.05,
-              type: "spring"
-            }}
-            whileHover={{ scale: 1.05, rotate: 5 }}
-          >
-            {project.status}
-          </motion.div>
 
-          {/* Progress indicator */}
-          <motion.div
-            className="absolute top-4 left-4 px-3 py-1 bg-gradient-to-r from-cosmic/80 to-blue-500/80 rounded-full backdrop-blur-sm border border-white/20"
-            initial={{ scale: 0, opacity: 0, x: -20 }}
-            animate={isInView ? { 
-              scale: 1, 
-              opacity: 1, 
-              x: 0 
-            } : { 
-              scale: 0, 
-              opacity: 0, 
-              x: -20 
-            }}
-            transition={{ 
-              duration: 0.5, 
-              delay: 0.2 + index * 0.05
-            }}
-          >
-            <span className="text-xs text-white font-medium">#{index + 1}</span>
-          </motion.div>
+
 
           {/* Animated glow effect */}
           <motion.div
@@ -238,7 +193,6 @@ const ProjectCard = ({ project, index }) => {
                   type: "spring",
                   stiffness: 150
                 }}
-                whileHover={{ scale: 1.08, y: -2 }}
               >
                 {tech}
               </motion.span>
@@ -254,7 +208,6 @@ const ProjectCard = ({ project, index }) => {
           >
             <motion.div 
               className="flex items-center space-x-1"
-              whileHover={{ scale: 1.05, x: 3 }}
             >
               <motion.div
                 animate={{ rotate: [0, 360] }}
@@ -266,7 +219,6 @@ const ProjectCard = ({ project, index }) => {
             </motion.div>
             <motion.div 
               className="flex items-center space-x-1"
-              whileHover={{ scale: 1.05, x: -3 }}
             >
               <motion.div
                 animate={{ 
@@ -292,15 +244,10 @@ const ProjectCard = ({ project, index }) => {
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-gradient-to-r from-white/10 to-white/5 rounded-xl border border-white/20 text-white/80 hover:text-white hover:border-white/30 transition-all duration-300"
-              whileHover={{ 
-                scale: 1.03, 
-                y: -2,
-                boxShadow: "0 5px 15px rgba(255, 255, 255, 0.1)"
-              }}
+              
               whileTap={{ scale: 0.97 }}
             >
               <motion.div
-                whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.5 }}
               >
                 <Github className="w-4 h-4" />
@@ -313,11 +260,7 @@ const ProjectCard = ({ project, index }) => {
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-gradient-to-r from-mars to-orange-600 rounded-xl text-white hover:from-mars-dark hover:to-orange-700 transition-all duration-300"
-              whileHover={{ 
-                scale: 1.03, 
-                y: -2,
-                boxShadow: "0 5px 15px rgba(255, 107, 53, 0.3)"
-              }}
+
               whileTap={{ scale: 0.97 }}
             >
               <motion.div
@@ -597,7 +540,6 @@ const ProjectsSection = () => {
           <motion.p 
             className="text-xl text-white/80 max-w-4xl mx-auto leading-relaxed"
             variants={itemVariants}
-            whileHover={{ scale: 1.02 }}
           >
             Discover our innovative rover technologies and systems currently revolutionizing 
             space exploration and autonomous robotics

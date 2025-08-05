@@ -235,7 +235,6 @@ const CompetitionsPage = () => {
               >
                 <motion.div 
                   className="w-6 h-6 bg-gradient-to-r from-mars/20 to-cosmic/20 rounded-full flex items-center justify-center border border-white/10"
-                  whileHover={{ scale: 1.2 }}
                 >
                   {i % 3 === 0 ? (
                     <Trophy className="w-3 h-3 text-white/30" />

@@ -48,234 +48,82 @@ import Shrishti from '@/../public/mrt/MDM/Srishti Poddar.jpeg';
 
 
 // Enhanced TeamMember Component
-const TeamMember = ({ name, role, image, linkedin, website, index = 0, isLead = false, department = "", skills = [] }) => {
-  const [isHovered, setIsHovered] = useState(false);
+const TeamMember = ({ name, role, image, linkedin, index = 0 }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const cardRef = useRef(null);
   const isInView = useInView(cardRef, { once: false, margin: "-15% 0px -15% 0px", amount: 0.3 });
 
-  // Memoized animation variants
+  const handleImageLoad = useCallback(() => setImageLoaded(true), []);
+
+  // Simplified animation variants
   const cardVariants = useMemo(() => ({
-    hidden: { opacity: 0, y: 50, scale: 0.9, rotateX: 20 },
+    hidden: { opacity: 0, y: 50 },
     visible: {
-      opacity: 1, y: 0, scale: 1, rotateX: 0,
+      opacity: 1, y: 0,
       transition: {
         duration: 0.6,
-        delay: (index % 20) * 0.03,
+        delay: (index % 20) * 0.05,
         type: "spring",
         stiffness: 120,
         damping: 20
       }
-    },
-    exit: {
-      opacity: 0, y: -30, scale: 0.95, rotateX: -15,
-      transition: { duration: 0.4, ease: "easeInOut" }
     }
   }), [index]);
-
-  const handleMouseEnter = useCallback(() => setIsHovered(true), []);
-  const handleMouseLeave = useCallback(() => setIsHovered(false), []);
-  const handleImageLoad = useCallback(() => setImageLoaded(true), []);
 
   return (
     <motion.div
       ref={cardRef}
-      className="group relative perspective-1000"
+      className="flex flex-col items-center text-center space-y-3"
       variants={cardVariants}
       initial="hidden"
-      animate={isInView ? "visible" : "exit"}
-
-      whileTap={{ scale: 0.98 }}
-      style={{ transformStyle: "preserve-3d" }}
+      animate={isInView ? "visible" : "hidden"}
     >
-      {/* Enhanced Member Card */}
-      <motion.div
-        className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-space-light/30 to-space-light/10 backdrop-blur-sm border border-white/10 group-hover:border-white/30 transition-all duration-300"
-        whileHover={{ boxShadow: "0 25px 50px rgba(0, 0, 0, 0.4)" }}
-      >
-        {/* Enhanced Leader Badge */}
-
-
-        {/* Enhanced Department Badge */}
-        {department && (
-          <motion.div
-            className="absolute top-3 left-3 z-30 px-2 py-1 bg-gradient-to-r from-cosmic/80 to-blue-500/80 rounded-full backdrop-blur-sm border border-white/20"
-            initial={{ scale: 0, opacity: 0, x: -20 }}
-            transition={{ duration: 0.5, delay: 0.2 + index * 0.02, type: "spring" }}
-          >
-            <span className="text-white text-xs font-medium">{department}</span>
-          </motion.div>
-        )}
-
-        {/* Enhanced Loading Placeholder */}
+      {/* Member Image */}
+      <div className="relative w-60 h-60 rounded-lg overflow-hidden bg-gradient-to-br from-space-light/30 to-space-light/10 border border-white/10">
         {!imageLoaded && (
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-br from-mars/20 to-cosmic/20 flex items-center justify-center aspect-square"
-            animate={{ backgroundPosition: ["0% 0%", "100% 100%"] }}
-            transition={{ duration: 3, repeat: Infinity }}
-          >
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            >
-              <Users className="w-12 h-12 text-white/40" />
-            </motion.div>
-          </motion.div>
-        )}
-
-        {/* Enhanced Member Image */}
-        <motion.div className="relative aspect-square overflow-hidden">
-          <div className="w-full h-full relative">
-            <Image
-              src={image}
-              alt={name}
-              fill
-              className="object-cover object-center"
-              onLoad={handleImageLoad}
-              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
-              style={{ objectFit: 'cover' }}
-            />
-
+          <div className="absolute inset-0 bg-gradient-to-br from-mars/20 to-cosmic/20 flex items-center justify-center">
+            <Users className="w-8 h-8 text-white/40" />
           </div>
-
-          {/* Enhanced Gradient Overlay */}
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-t from-space/90 via-space/20 to-transparent"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: isHovered ? 1 : 0 }}
-            transition={{ duration: 0.3 }}
-          />
-
-          {/* Animated border effect */}
-          <motion.div
-            className="absolute inset-0"
-            animate={{
-              background: isHovered
-                ? [
-                    "linear-gradient(0deg, transparent, rgba(255, 107, 53, 0.3), transparent)",
-                    "linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.3), transparent)",
-                    "linear-gradient(180deg, transparent, rgba(255, 107, 53, 0.3), transparent)",
-                    "linear-gradient(270deg, transparent, rgba(0, 217, 255, 0.3), transparent)",
-                    "linear-gradient(360deg, transparent, rgba(255, 107, 53, 0.3), transparent)"
-                  ]
-                : "linear-gradient(0deg, transparent, transparent, transparent)"
-            }}
-            transition={{ duration: 2, repeat: isHovered ? Infinity : 0 }}
-          />
-        </motion.div>
-
-        {/* Enhanced Social Links */}
-        <motion.div
-          className="absolute bottom-0 left-0 right-0 p-4 z-50"
-          initial={{ y: "100%", opacity: 0 }}
-          animate={{ y: isHovered ? 0 : "100%", opacity: isHovered ? 1 : 0 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-        >
-          <motion.div
-            className="flex justify-center space-x-2 mb-3"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: isHovered ? 1 : 0.8, opacity: isHovered ? 1 : 0 }}
-            transition={{ duration: 0.3, staggerChildren: 0.05 }}
-          >
-            {linkedin && (
-              <motion.a
-                href={linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 bg-cosmic/30 hover:bg-cosmic/50 rounded-lg text-white transition-colors backdrop-blur-sm border border-white/20"
-                whileTap={{ scale: 0.95 }}
-              >
-                <Linkedin size={16} />
-              </motion.a>
-            )}
-            {website && (
-              <motion.a
-                href={website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 bg-mars/30 hover:bg-mars/50 rounded-lg text-white transition-colors backdrop-blur-sm border border-white/20"
-                whileTap={{ scale: 0.95 }}
-              >
-                <Globe size={16} />
-              </motion.a>
-            )}
-          </motion.div>
-
-          {/* Enhanced Member Info */}
-          <motion.div
-            className="text-center"
-            initial={{ y: 10, opacity: 0 }}
-            animate={{ y: isHovered ? 0 : 10, opacity: isHovered ? 1 : 0 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-          >
-
-            <motion.p
-              className="text-white/80 text-sm mb-2 group-hover:text-white/90 transition-colors duration-300"
-              initial={{ opacity: 0.8 }}
-              animate={{ opacity: isHovered ? 1 : 0.8 }}
-              transition={{ duration: 0.3 }}
-            >
-              {role}
-            </motion.p>
-
-            {/* Enhanced Skills Tags */}
-            {skills.length > 0 && (
-              <motion.div
-                className="flex flex-wrap justify-center gap-1"
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: isHovered ? 1 : 0.8, opacity: isHovered ? 1 : 0 }}
-                transition={{ duration: 0.3, delay: 0.15, staggerChildren: 0.02 }}
-              >
-                {skills.slice(0, 2).map((skill, i) => (
-                  <motion.span
-                    key={i}
-                    className="px-2 py-1 bg-mars/20 text-mars text-xs rounded-full border border-mars/30"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: isHovered ? 1 : 0, opacity: isHovered ? 1 : 0 }}
-                    transition={{ duration: 0.3, delay: 0.2 + i * 0.02 }}
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
-              </motion.div>
-            )}
-          </motion.div>
-        </motion.div>
-
-        {/* Enhanced Skill Level Indicator */}
-        <motion.div
-          className="absolute bottom-2 right-2 flex space-x-1"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: isHovered ? 1 : 0, scale: isHovered ? 1 : 0.8 }}
-          transition={{ duration: 0.3, staggerChildren: 0.02 }}
-        >
-          {[...Array(isLead ? 5 : role.includes('Senior') ? 4 : 3)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="w-2 h-2 bg-gradient-to-r from-mars to-cosmic rounded-full"
-   
-              transition={{ duration: 0.2, delay: i * 0.03 }}
-            />
-          ))}
-        </motion.div>
-
-        {/* Enhanced Border Effect */}
-        <motion.div
-          className="absolute inset-0 rounded-2xl border-2 border-transparent"
-          animate={{ borderColor: isHovered ? "rgba(64, 224, 255, 0.4)" : "transparent" }}
-          transition={{ duration: 0.3 }}
+        )}
+        <Image
+          src={image}
+          alt={name}
+          fill
+          className="object-cover object-center"
+          onLoad={handleImageLoad}
+          sizes="128px"
+          style={{ objectFit: 'cover' }}
         />
+      </div>
 
-        {/* Subtle glow effect */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-mars/5 to-cosmic/5 rounded-2xl pointer-events-none"
+      {/* Member Name */}
+      <h4 className="text-white font-semibold text-lg font-orbitron">
+        {name}
+      </h4>
 
-          transition={{ duration: 0.3 }}
-        />
-      </motion.div>
+      {/* Member Role */}
+      <div className='flex justify-center items-center gap-4 '>
+
+      <p className="text-white/80 text-sm">
+        {role}
+      </p>
+      {/* LinkedIn Link */}
+      {linkedin && (
+        <a
+          href={linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="p-2 bg-cosmic/20 hover:bg-cosmic/40 rounded-full text-white transition-colors duration-300 border border-white/20"
+        >
+          <Linkedin size={16} />
+        </a>
+      )}
+      </div>
+
     </motion.div>
   );
 };
+
 
 const TeamSection = () => {
   const sectionRef = useRef(null);
@@ -708,29 +556,7 @@ const TeamSection = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: false, margin: "-10%" }}
         >
-          <div className="relative max-w-2xl mx-auto">
-            <motion.input
-              type="text"
-              placeholder="Search team members..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-6 py-4 pl-14 pr-16 bg-space-light/20 backdrop-blur-sm border border-white/20 rounded-2xl text-white placeholder-white/50 focus:outline-none focus:border-cosmic/50 focus:ring-2 focus:ring-cosmic/20 transition-all duration-300"
-              whileFocus={{ scale: 1.02 }}
-            />
-            <Search className="absolute left-5 top-1/2 transform -translate-y-1/2 w-5 h-5 text-white/50" />
-            {searchQuery && (
-              <motion.button
-                onClick={() => setSearchQuery("")}
-                className="absolute right-5 top-1/2 transform -translate-y-1/2 p-1 hover:bg-white/10 rounded-full transition-colors duration-200"
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0, opacity: 0 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <X className="w-4 h-4 text-white/70" />
-              </motion.button>
-            )}
-          </div>
+
         </motion.div>
 
         {/* Enhanced Leadership Team */}
@@ -844,45 +670,7 @@ const TeamSection = () => {
           </AnimatePresence>
         </motion.div>
 
-        {/* Enhanced Join Team Section */}
-        <motion.div
-          className="mt-16 text-center"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: false, margin: "-10%" }}
-        >
-          <motion.h3
-            className="text-3xl font-bold mb-6 font-orbitron flex items-center justify-center space-x-3"
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-          >
-            <UserPlus className="w-8 h-8 text-cosmic" />
-            <span className="bg-gradient-to-r from-cosmic to-mars bg-clip-text text-transparent">Join Our Team</span>
-          </motion.h3>
-          <motion.p
-            className="text-white/80 max-w-2xl mx-auto mb-8 text-lg leading-relaxed"
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            Are you passionate about space exploration and rover technology? We're always looking for talented students to join our team and help us build the next generation of Mars rovers.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <Button className="bg-gradient-to-r from-mars to-cosmic hover:opacity-90 text-white px-8 py-6 text-lg rounded-2xl font-semibold transition-all duration-300 shadow-lg shadow-mars/30 hover:shadow-cosmic/30 hover:scale-105">
-              <div className="flex items-center space-x-2">
-                <Mail className="w-5 h-5" />
-                <span>Apply Now</span>
-                <ArrowRight className="w-5 h-5" />
-              </div>
-            </Button>
-          </motion.div>
-        </motion.div>
+
       </div>
     </motion.section>
   );
