@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Trophy, Rocket, Settings, Camera, Star, Award } from 'lucide-react';
+import { Trophy, Settings, Camera, Star, Award } from 'lucide-react';
 
 const CompetitionsHeader = () => {
   const headerRef = useRef(null);
@@ -55,7 +55,6 @@ const CompetitionsHeader = () => {
       >
         <motion.h1 
           className="text-5xl md:text-7xl font-bold font-orbitron bg-gradient-to-r from-mars via-yellow-500 to-cosmic bg-clip-text text-transparent relative"
-          whileHover={{ scale: 1.02 }}
           transition={{ duration: 0.3 }}
         >
           Competitive Records

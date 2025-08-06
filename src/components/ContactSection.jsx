@@ -341,7 +341,6 @@ const ContactSection = () => {
                   key={index}
                   className="flex items-start space-x-4 group"
                   variants={itemVariants}
-                  whileHover={{ x: 5, scale: 1.01 }}
                   onMouseEnter={() => setHoveredContact(index)}
                   onMouseLeave={() => setHoveredContact(null)}
                 >
@@ -388,7 +387,6 @@ const ContactSection = () => {
                     key={index}
                     href="#"
                     className="relative group overflow-hidden"
-                    whileHover={{ scale: 1.05, y: -3 }}
                     whileTap={{ scale: 0.95 }}
                     initial={{ opacity: 0, y: 20 }}
                     animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}

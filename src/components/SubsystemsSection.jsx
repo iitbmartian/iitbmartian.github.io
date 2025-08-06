@@ -2,7 +2,6 @@
 import React, { useRef, useState, useMemo, useCallback } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { 
-  Rocket, 
   Cpu, 
   Camera, 
   Zap, 
@@ -21,6 +20,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import {useRouter} from 'next/navigation'
+import RoverIcon from './icons/RoverIcon';
 
 // Enhanced ProjectCard Component
 const ProjectCard = ({ project, index }) => {
@@ -337,7 +337,7 @@ const ProjectsSection = () => {
     {
       title: "Autonomous Navigation System",
       description: "Advanced AI-powered navigation system capable of real-time obstacle detection and path optimization for Mars terrain exploration.",
-      icon: Rocket,
+      icon: RoverIcon,
       status: "Completed",
       statusBg: "bg-green-500/80 text-white",
       duration: "8 months",
@@ -495,7 +495,7 @@ const ProjectsSection = () => {
             }}
           >
             {i % 4 === 0 ? (
-              <Rocket className="w-4 h-4 text-white/20" />
+              <RoverIcon className="w-4 h-4 text-white/20" />
             ) : i % 4 === 1 ? (
               <Code className="w-3 h-3 text-white/20" />
             ) : i % 4 === 2 ? (

@@ -24,13 +24,11 @@ const CompetitionCard = ({
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      whileHover={{ scale: 1.01, y: -3 }}
     >
       <div className="md:flex">
         {/* Image Section */}
         <motion.div 
           className="md:w-1/3 h-64 md:h-auto flex items-start justify-center relative overflow-hidden"
-          whileHover={{ scale: 1.02 }}
           transition={{ duration: 0.3 }}
         >
           <Image
@@ -63,7 +61,6 @@ const CompetitionCard = ({
             initial={{ opacity: 0, x: -10 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            whileHover={{ x: 3 }}
           >
             <div className="p-1 bg-gradient-to-r from-mars/20 to-orange-500/20 rounded-full mr-3">
               <MapPin className="h-4 w-4 text-mars" />
@@ -114,13 +111,12 @@ const CompetitionCard = ({
                   initial={{ opacity: 0, x: -20 }}
                   animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                   transition={{ duration: 0.4, delay: 0.7 + resultIndex * 0.1 }}
-                  whileHover={{ x: 5 }}
                 >
                   {/* Year Badge */}
                   <div className="w-20 flex-shrink-0">
                     <motion.div 
                       className="bg-gradient-to-r from-cosmic/30 to-blue-500/30 rounded-full px-4 py-2 text-center text-white font-medium border border-cosmic/30 backdrop-blur-sm"
-                      whileHover={{ scale: 1.05 }}
+                      
                       transition={{ duration: 0.2 }}
                     >
                       {result.year}

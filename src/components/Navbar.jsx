@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Menu, X, ChevronDown, Rocket } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
+import RoverIcon from "./icons/RoverIcon";
 import {
   motion,
   AnimatePresence,
@@ -115,20 +116,16 @@ const Navbar = () => {
                 className="flex items-center space-x-3"
               >
                 <motion.div
-                  whileHover={{
-                    rotate: 360,
-                    scale: 1.1,
-                  }}
+
                   transition={{ duration: 0.6, ease: "easeInOut" }}
                   className="relative w-8 h-8 bg-gradient-to-r from-mars/20 to-cosmic/20 rounded-lg flex items-center justify-center border border-mars/30"
                 >
-                  <Rocket className="w-5 h-5 text-mars" />
+                  <RoverIcon className="w-5 h-5 text-mars" />
                   <div className="absolute inset-0 bg-mars/20 rounded-lg blur-sm opacity-60" />
                 </motion.div>
 
                 <motion.div
                   className="relative overflow-hidden"
-                  whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.3 }}
                 >
                   <span className="text-xl font-bold font-orbitron bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent whitespace-nowrap">
@@ -207,7 +204,7 @@ const Navbar = () => {
             <motion.button
               className="xl:hidden relative p-2 text-white group flex-shrink-0 border border-mars/30 rounded-lg bg-gradient-to-r from-mars/10 to-cosmic/10 backdrop-blur-sm"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              whileHover={{ scale: 1.05 }}
+              
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -293,7 +290,6 @@ const Navbar = () => {
                               ? "bg-gradient-to-r from-mars/30 to-cosmic/30 border-mars/50 text-white shadow-lg"
                               : "bg-gradient-to-r from-mars/10 to-cosmic/10 border-mars/20 text-white/90 hover:text-white hover:border-mars/40 hover:shadow-lg"
                           )}
-                          whileHover={{ scale: 1.02, y: -1 }}
                           whileTap={{ scale: 0.98 }}
                         >
                           <span className="flex flex-col items-center space-y-2">

@@ -314,7 +314,6 @@ const CompetitionsSection = () => {
         >
           <Link href="/competitions">
             <motion.div
-              whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
             >
               <Button onClick={()=>{

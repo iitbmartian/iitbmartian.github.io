@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useState, useRef, useMemo } from 'react';
-import { ChevronDown, Rocket, Star, Earth, Sparkles } from 'lucide-react';
+import { ChevronDown, Star, Earth, Sparkles } from 'lucide-react';
 import { motion, useScroll, useTransform, useInView, useReducedMotion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import MarsRoverLogo from '@/../public/mrt/Logo/mrtLogo.png';
 import Image from 'next/image';
 import Link from 'next/link'
 import {useRouter} from 'next/navigation'
+import RoverIcon from '@/components/icons/RoverIcon'
 
 const HeroSection = () => {
   const router = useRouter()
@@ -333,7 +334,7 @@ const HeroSection = () => {
                   whileHover={{ scale: 1.1 }}
                   style={{ willChange: "transform" }}
                 >
-                  <Rocket className="w-6 h-6 lg:w-8 lg:h-8 text-mars/60" />
+                  <RoverIcon className="w-6 h-6 lg:w-8 lg:h-8 text-mars/60" />
                 </motion.div>
               )}
             </motion.h1>
@@ -480,7 +481,7 @@ const HeroSection = () => {
                   animate={{ opacity: 0 }}
                   transition={{ duration: 0.3, delay: 0.5 }}
                 >
-                  <Rocket className="w-8 h-8 md:w-12 md:h-12 text-white/40" />
+                  <RoverIcon className="w-8 h-8 md:w-12 md:h-12 text-white/40" />
                 </motion.div>
               )}
             </motion.div>
@@ -521,7 +522,7 @@ const HeroSection = () => {
 
       {/* Optimized Scroll Indicator */}
       <motion.div
-        className="absolute top-80 md:top-[90%] sm:left-[50%] left-[33%] transform -translate-x-1/2 flex flex-col items-center"
+        className="absolute top-80 md:top-[90%] sm:left-[50%] left-[37%] transform -translate-x-1/2 flex flex-col items-center"
         initial={{ opacity: 0, y: shouldReduceMotion || isMobile ? 0 : 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ 

@@ -2,7 +2,6 @@
 import React, { useRef, useState, useMemo, useCallback } from 'react';
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
 import { 
-  Rocket, 
   Star, 
   Calendar, 
   Award, 
@@ -17,6 +16,7 @@ import {
   TrendingUp,
   X
 } from 'lucide-react';
+import RoverIcon from '@/components/icons/RoverIcon';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -253,7 +253,7 @@ const RoverCard = ({ rover, index, onClick }) => {
                 duration: 0.3,
               }}
             >
-              <Rocket className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 text-white/80" />
+              <RoverIcon className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 text-white/80" />
             </motion.div>
           </div>
 
@@ -438,7 +438,7 @@ const RoverDetailModal = ({ rover, index, isOpen, onClose }) => {
                   animate={{ opacity: 1, scale: 1, rotate: 0 }}
                   transition={{ duration: 0.6, delay: 0.4, type: "spring" }}
                 >
-                  <Rocket className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-white" />
+                  <RoverIcon className="w-6 h-6 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-white" />
                 </motion.div>
               </motion.div>
 
@@ -760,7 +760,7 @@ const RoverPage = () => {
                 top: `${30 + Math.random() * 40}%`,
               }}
             >
-              <Rocket className="w-3 h-3 sm:w-4 sm:h-4 text-white/20" />
+              <RoverIcon className="w-3 h-3 sm:w-4 sm:h-4 text-white/20" />
             </motion.div>
           ))}
         </div>
@@ -808,7 +808,7 @@ const RoverPage = () => {
             className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-8 sm:mb-10 lg:mb-12"
             variants={itemVariants}
           >
-            <StatCard icon={Rocket} number="9" label="Rover Generations" delay={0} />
+            <StatCard icon={RoverIcon} number="9" label="Rover Generations" delay={0} />
             <StatCard icon={Award} number="12" label="Competition Wins" delay={100} />
             <StatCard icon={Target} number="25" label="Mission Success" delay={200} />
             <StatCard icon={TrendingUp} number="8" label="Years of Innovation" delay={300} />

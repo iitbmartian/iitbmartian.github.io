@@ -6,8 +6,9 @@ import { Linkedin, Globe, Users, Star, Zap, Award, ArrowRight, UserPlus, Mail, C
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import RoverIcon from './icons/RoverIcon';
 
-// All image imports
+// All image imports (keeping your existing imports)
 import AnushkaVerma from '@/../public/mrt/Team_Leads/Anushka_Verma.jpg';
 import ArinWeling from '@/../public/mrt/Team_Leads/Arin_Weling.jpeg';
 import Arkapravo from '@/../public/mrt/Team_Leads/arkapravo_patra.jpg';
@@ -46,26 +47,85 @@ import Rohan from '@/../public/mrt/MDM/Rohan Shukla.jpeg';
 import Shreya from '@/../public/mrt/MDM/Shreya Goyal.jpeg';
 import Shrishti from '@/../public/mrt/MDM/Srishti Poddar.jpeg';
 
-
-// Enhanced TeamMember Component
+// Enhanced TeamMember Component with bottom-to-top animation
 const TeamMember = ({ name, role, image, linkedin, index = 0 }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const cardRef = useRef(null);
-  const isInView = useInView(cardRef, { once: false, margin: "-15% 0px -15% 0px", amount: 0.3 });
+  const imageRef = useRef(null);
+  
+  // More sensitive viewport detection for smoother animations
+  const isInView = useInView(cardRef, { 
+    once: false, 
+    margin: "-20% 0px -20% 0px", 
+    amount: 0.2 
+  });
+  
+  const imageInView = useInView(imageRef, { 
+    once: false, 
+    margin: "-10% 0px -10% 0px", 
+    amount: 0.3 
+  });
 
   const handleImageLoad = useCallback(() => setImageLoaded(true), []);
 
-  // Simplified animation variants
+  // Enhanced card animation variants with stronger bottom-to-top effect
   const cardVariants = useMemo(() => ({
-    hidden: { opacity: 0, y: 50 },
+    hidden: { 
+      opacity: 0, 
+      y: 80,  // Increased from 50 to 80 for more dramatic effect
+      scale: 0.9 
+    },
     visible: {
-      opacity: 1, y: 0,
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
       transition: {
-        duration: 0.6,
-        delay: (index % 20) * 0.05,
+        duration: 0.8,  // Slightly longer duration
+        delay: (index % 20) * 0.08,  // Slightly longer stagger
+        type: "spring",
+        stiffness: 100,  // Slightly less stiff for smoother animation
+        damping: 25
+      }
+    }
+  }), [index]);
+
+  // Separate animation for the image container with bottom-to-top effect
+  const imageVariants = useMemo(() => ({
+    hidden: { 
+      opacity: 0, 
+      y: 60,  // Strong bottom-to-top movement
+      scale: 0.8,
+      rotateX: 15  // Slight 3D tilt effect
+    },
+    visible: {
+      opacity: 1, 
+      y: 0, 
+      scale: 1,
+      rotateX: 0,
+      transition: {
+        duration: 0.9,
+        delay: (index % 20) * 0.1 + 0.2,  // Delayed after card animation
         type: "spring",
         stiffness: 120,
-        damping: 20
+        damping: 20,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  }), [index]);
+
+  // Text animation variants
+  const textVariants = useMemo(() => ({
+    hidden: { 
+      opacity: 0, 
+      y: 30 
+    },
+    visible: {
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.6,
+        delay: (index % 20) * 0.1 + 0.4,  // Delayed after image
+        ease: "easeOut"
       }
     }
   }), [index]);
@@ -78,52 +138,91 @@ const TeamMember = ({ name, role, image, linkedin, index = 0 }) => {
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
     >
-      {/* Member Image */}
-      <div className="relative w-60 h-60 rounded-lg overflow-hidden bg-gradient-to-br from-space-light/30 to-space-light/10 border border-white/10">
+      {/* Enhanced Member Image with bottom-to-top animation */}
+      <motion.div
+        ref={imageRef}
+        className="relative w-60 h-60 rounded-lg overflow-hidden bg-gradient-to-br from-space-light/30 to-space-light/10 border border-white/10"
+        variants={imageVariants}
+        initial="hidden"
+        animate={imageInView ? "visible" : "hidden"}
+        whileHover={{ 
+          scale: 1.05, 
+          y: -10,  // Slight lift on hover
+          transition: { duration: 0.3 } 
+        }}
+        style={{ transformStyle: "preserve-3d" }}
+      >
         {!imageLoaded && (
-          <div className="absolute inset-0 bg-gradient-to-br from-mars/20 to-cosmic/20 flex items-center justify-center">
+          <motion.div 
+            className="absolute inset-0 bg-gradient-to-br from-mars/20 to-cosmic/20 flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             <Users className="w-8 h-8 text-white/40" />
-          </div>
+          </motion.div>
         )}
-        <Image
-          src={image}
-          alt={name}
-          fill
-          className="object-cover object-center"
-          onLoad={handleImageLoad}
-          sizes="128px"
-          style={{ objectFit: 'cover' }}
-        />
-      </div>
-
-      {/* Member Name */}
-      <h4 className="text-white font-semibold text-lg font-orbitron">
-        {name}
-      </h4>
-
-      {/* Member Role */}
-      <div className='flex justify-center items-center gap-4 '>
-
-      <p className="text-white/80 text-sm">
-        {role}
-      </p>
-      {/* LinkedIn Link */}
-      {linkedin && (
-        <a
-          href={linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="p-2 bg-cosmic/20 hover:bg-cosmic/40 rounded-full text-white transition-colors duration-300 border border-white/20"
+        <motion.div
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ 
+            opacity: imageLoaded ? 1 : 0, 
+            scale: imageLoaded ? 1 : 1.1 
+          }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <Linkedin size={16} />
-        </a>
-      )}
-      </div>
+          <Image
+            src={image}
+            alt={name}
+            fill
+            className="object-cover object-center"
+            onLoad={handleImageLoad}
+            sizes="240px"
+            style={{ objectFit: 'cover' }}
+          />
+        </motion.div>
+      </motion.div>
 
+      {/* Enhanced Member Name with staggered animation */}
+      <motion.h4 
+        className="text-white font-semibold text-lg font-orbitron"
+        variants={textVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+      >
+        {name}
+      </motion.h4>
+
+      {/* Enhanced Member Role and LinkedIn with staggered animation */}
+      <motion.div 
+        className='flex justify-center items-center gap-4'
+        variants={textVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+      >
+        <p className="text-white/80 text-sm">
+          {role}
+        </p>
+        {/* LinkedIn Link */}
+        {linkedin && (
+          <motion.a
+            href={linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-2 bg-cosmic/20 hover:bg-cosmic/40 rounded-full text-white transition-colors duration-300 border border-white/20"
+            whileHover={{ 
+              scale: 1.1, 
+              y: -2,
+              transition: { duration: 0.2 } 
+            }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Linkedin size={16} />
+          </motion.a>
+        )}
+      </motion.div>
     </motion.div>
   );
 };
-
 
 const TeamSection = () => {
   const sectionRef = useRef(null);
@@ -142,7 +241,7 @@ const TeamSection = () => {
   const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const orbOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 0.8, 0.3]);
 
-  // Memoized team data with actual image imports
+  // Your existing team members data...
   const teamMembers = useMemo(() => [
     {
       name: "Anushka Verma",
@@ -178,7 +277,7 @@ const TeamSection = () => {
     }
   ], []);
 
-  // Memoized sub-teams data with actual image imports
+  // Your existing sub-teams data...
   const subTeams = useMemo(() => [
     {
       name: "Mechanical Team",
@@ -194,6 +293,7 @@ const TeamSection = () => {
           isLead: true,
           department: "Mechanical",
         },
+        // ... rest of your mechanical team members
         {
           name: "Ajitesh Joshi",
           role: "Mechanical Lead (Mobility)",
@@ -542,21 +642,8 @@ const TeamSection = () => {
           >
             <Star className="w-6 h-6 text-cosmic" />
             <span>Meet the brilliant minds behind our Mars rover designs and innovations</span>
-            <Rocket className="w-6 h-6 text-mars" />
+            <RoverIcon className="w-6 h-6 text-mars" />
           </motion.p>
-
-
-        </motion.div>
-
-        {/* Enhanced Search */}
-        <motion.div
-          className="mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: false, margin: "-10%" }}
-        >
-
         </motion.div>
 
         {/* Enhanced Leadership Team */}
@@ -653,15 +740,19 @@ const TeamSection = () => {
             </p>
           </motion.div>
 
-          {/* Enhanced Team Members Grid */}
+          {/* Enhanced Team Members Grid with bottom-to-top animations */}
           <AnimatePresence mode="wait">
             <motion.div
               key={selectedSubTeam}
               className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 max-w-7xl mx-auto"
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -30 }}
-              transition={{ duration: 0.5 }}
+              transition={{ 
+                duration: 0.6,
+                staggerChildren: 0.1,
+                delayChildren: 0.1
+              }}
             >
               {filteredMembers(subTeams[selectedSubTeam].members).map((member, index) => (
                 <TeamMember key={`${selectedSubTeam}-${index}`} {...member} index={index} />
@@ -669,8 +760,6 @@ const TeamSection = () => {
             </motion.div>
           </AnimatePresence>
         </motion.div>
-
-
       </div>
     </motion.section>
   );

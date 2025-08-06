@@ -154,7 +154,7 @@ const CCarousel = () => {
                     <div className="relative w-full h-48 sm:h-56 md:h-64 lg:h-80 xl:h-96">
                       <div className="relative w-full h-full overflow-hidden rounded-lg md:rounded-2xl lg:rounded-3xl">
                         <motion.div
-                          whileHover={{ scale: 1.05 }}
+                          
                           transition={{ duration: 0.3 }}
                           className="relative w-full h-full"
                         >

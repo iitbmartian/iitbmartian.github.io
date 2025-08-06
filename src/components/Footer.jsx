@@ -2,7 +2,6 @@
 import React, { useRef, useState, useEffect, useMemo, useCallback } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { 
-  Rocket, 
   Star, 
   Mail, 
   MapPin, 
@@ -32,7 +31,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-
+import RoverIcon from './icons/RoverIcon';
 const Footer = () => {
   const footerRef = useRef(null);
   const brandRef = useRef(null);
@@ -118,7 +117,7 @@ const Footer = () => {
       title: "Navigation",
       icon: <Globe className="w-5 h-5" />,
       links: [
-        { name: "Home", href: "/", icon: <Rocket className="w-3 h-3" /> },
+        { name: "Home", href: "/", icon: <RoverIcon className="w-3 h-3" /> },
         { name: "Updates", href: "/updates", icon: <Zap className="w-3 h-3" /> },
         { name: "Rover", href: "/rover", icon: <Target className="w-3 h-3" /> },
         { name: "Subsystems", href: "/subsystems", icon: <Cpu className="w-3 h-3" /> }
@@ -400,7 +399,7 @@ const Footer = () => {
                   <div className="absolute inset-0 bg-gradient-to-br from-mars to-cosmic rounded-2xl blur-lg opacity-40 group-hover:opacity-70 transition-opacity duration-300" />
                   <motion.div
                   >
-                    <Rocket className="w-7 h-7 text-white relative z-10" />
+                    <RoverIcon className="w-7 h-7 text-white relative z-10" />
                   </motion.div>
                 </motion.div>
                 <div>
@@ -816,7 +815,7 @@ const Footer = () => {
           repeat: Infinity 
         }}
       >
-        <Rocket className="w-5 h-5 text-mars" />
+        <RoverIcon className="w-5 h-5 text-mars" />
       </motion.div>
     </motion.footer>
   );

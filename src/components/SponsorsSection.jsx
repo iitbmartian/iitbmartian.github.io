@@ -417,7 +417,6 @@ const router = useRouter()
         >
           <motion.div
             className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-white/10 to-white/5 rounded-full border border-white/10 backdrop-blur-sm"
-            whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
           >
             <Star className="w-5 h-5 text-purple-500" />
@@ -428,7 +427,7 @@ const router = useRouter()
               router.push("#contact")
             }}
               className="text-purple-500 cursor-pointer hover:text-cyan-300 transition-colors"
-              whileHover={{ scale: 1.05 }}
+              
             >
               Get in touch
             </motion.button>
