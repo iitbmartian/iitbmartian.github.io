@@ -385,6 +385,12 @@ const TeamSection = () => {
           image: Sudhindra,
           department: "Electrical",
         },
+                {
+          name: "Veeresh S K",
+          role: "Senior Design Engineer",
+          image: Veeresh,
+          department: "Electrical",
+        },
         {
           name: "Harshit Somani",
           role: "Junior Design Engineer",
@@ -422,12 +428,7 @@ const TeamSection = () => {
           image: Tanmay,
           department: "Electrical",
         },
-        {
-          name: "Veeresh S K",
-          role: "Senior Design Engineer",
-          image: Veeresh,
-          department: "Electrical",
-        }
+
       ]
     },
     {
