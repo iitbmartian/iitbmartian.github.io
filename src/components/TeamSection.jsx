@@ -46,6 +46,7 @@ import Disha from '@/../public/mrt/MDM/Disha Gugale.jpg';
 import Rohan from '@/../public/mrt/MDM/Rohan Shukla.jpeg';
 import Shreya from '@/../public/mrt/MDM/Shreya Goyal.jpeg';
 import Shrishti from '@/../public/mrt/MDM/Srishti Poddar.jpeg';
+import Anshul from '@/../public/mrt/MDM/Anshul Choudhary.jpg'
 
 // Enhanced TeamMember Component with bottom-to-top animation
 const TeamMember = ({ name, role, image, linkedin, index = 0 }) => {
@@ -515,6 +516,12 @@ const TeamSection = () => {
           name: "Srishti Poddar",
           role: "Team Member",
           image: Shrishti,
+          department: "MDM",
+        },
+        {
+          name: "Anshul Choudhary",
+          role: "Team Member",
+          image: Anshul,
           department: "MDM",
         }
       ]
