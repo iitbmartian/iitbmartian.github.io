@@ -19,7 +19,7 @@ const TimelineItem = ({ date, title, description,  align = 'right' }: TimelineIt
       {/* Date marker */}
       <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-space-dark border-2 border-mars z-10"></div>
       
-      {/* Content container - Mobile first, stacked layout */}
+      {/* Content container - Mobile 1st, stacked layout */}
       <div className="md:hidden mb-8">
         <div className="bg-space-dark/40 p-6 rounded-xl border border-white/10">
           <div className="bg-mars text-white text-lg font-medium py-1 px-4 rounded-full inline-block mb-4">

@@ -13,9 +13,9 @@ const Index = () => {
     <>
       <HeroSection />           
       <CCarousel/>     
-      <AboutSection />     
       <SubsystemsSection />     
       <CompetitionsSection />   
+      <AboutSection />     
       <SponsorsSection />         
       <ContactSection />        
     </>

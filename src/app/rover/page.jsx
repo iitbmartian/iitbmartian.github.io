@@ -23,7 +23,7 @@ import { Button } from '@/components/ui/button';
 import RoverTimeline from '@/components/rover/RoverTimeline';
 import { cn } from '@/lib/utils';
 
-// Optimized Stats Component with mobile-first responsive design
+// Optimized Stats Component with mobile-1st responsive design
 const StatCard = ({ icon: Icon, number, label, delay = 0 }) => {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
@@ -304,7 +304,7 @@ const RoverCard = ({ rover, index, onClick }) => {
   );
 };
 
-// Enhanced Modal with mobile-first responsive design
+// Enhanced Modal with mobile-1st responsive design
 const RoverDetailModal = ({ rover, index, isOpen, onClose }) => {
   const modalRef = useRef(null);
 
@@ -539,10 +539,10 @@ const RoverPage = () => {
     {
       year: "2015",
       title: "Akrula 1.0",
-      description: "Akrula 1.0 was the first-ever prototype developed by the IITB Mars Rover Team, launched in 2015. Equipped with advanced sensors, powerful computing systems, and robust mobility features, Akrula 1.0 was designed to navigate the harsh terrains of Mars with ease.",
+      description: "Akrula 1.0 was the 1st-ever prototype developed by the IITB Mars Rover Team, launched in 2015. Equipped with advanced sensors, powerful computing systems, and robust mobility features, Akrula 1.0 was designed to navigate the harsh terrains of Mars with ease.",
       achievements: [
         "Enhanced suspension system for improved terrain handling",
-        "Implemented first-generation robotic arm with 3 degrees of freedom",
+        "Implemented 1st-generation robotic arm with 3 degrees of freedom",
         "Ranked in top 10 at IRC 2019"
       ]
     },
@@ -552,7 +552,7 @@ const RoverPage = () => {
       description: "Agathsya 1.0, the second Mars rover prototype by the IITB Mars Rover Team, was built in 0. It features advanced navigational systems, data-gathering cameras, and a powerful AI capable of real-time object detection and data analysis.",
       achievements: [
         "Enhanced suspension system for improved terrain handling",
-        "Implemented first-generation robotic arm with 3 degrees of freedom",
+        "Implemented 1st-generation robotic arm with 3 degrees of freedom",
         "Ranked in top 10 at IRC 2019"
       ]
     },
@@ -573,7 +573,7 @@ const RoverPage = () => {
       achievements: [
         "Designed and implemented a rocker-bogie suspension system",
         "Advanced computer vision system for obstacle detection",
-        "Qualified for University Rover Challenge for the first time"
+        "Qualified for University Rover Challenge for the 1st time"
       ]
     },
     {
@@ -628,7 +628,7 @@ const RoverPage = () => {
     {
       date: "May 2015",
       title: "Arjuna 1.0",
-      description: "Arjuna 1.0 was the first prototype ever created by IITB MRT, completed in May 2015.",
+      description: "Arjuna 1.0 was the 1st prototype ever created by IITB MRT, completed in May 2015.",
       image: "https://via.placeholder.com/600x400?text=Arjuna+1.0"
     },
     {
@@ -798,7 +798,7 @@ const RoverPage = () => {
               className="text-base sm:text-lg lg:text-xl text-white/80 max-w-xs sm:max-w-2xl lg:max-w-3xl mx-auto leading-relaxed px-2"
               variants={itemVariants}
             >
-              Journey through a decade of innovation, from our first prototype to cutting-edge 
+              Journey through a decade of innovation, from our 1st prototype to cutting-edge 
               competition-ready designs that push the boundaries of planetary exploration.
             </motion.p>
           </motion.div>

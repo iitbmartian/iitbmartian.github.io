@@ -209,13 +209,7 @@ const ProjectCard = ({ project, index }) => {
             <motion.div 
               className="flex items-center space-x-1"
             >
-              <motion.div
-                animate={{ rotate: [0, 360] }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              >
-                <Calendar className="w-4 h-4" />
-              </motion.div>
-              <span>{project.duration}</span>
+
             </motion.div>
             <motion.div 
               className="flex items-center space-x-1"
@@ -233,7 +227,7 @@ const ProjectCard = ({ project, index }) => {
           </motion.div>
 
           {/* Enhanced Action Buttons */}
-          <motion.div 
+          {/* <motion.div 
             className="flex space-x-3"
             initial={{ opacity: 0, y: 10 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
@@ -271,7 +265,7 @@ const ProjectCard = ({ project, index }) => {
               </motion.div>
               <span className="text-sm">Live</span>
             </motion.a>
-          </motion.div>
+          </motion.div> */}
         </motion.div>
 
         {/* Enhanced border effect */}
@@ -576,17 +570,40 @@ const ProjectsSection = () => {
         >
           <div
           >
-            <Button onClick={()=>{router.push("#projects")}}   className="bg-gradient-to-r from-cosmic via-blue-500 to-blue-600 hover:from-cosmic-dark hover:via-blue-600 hover:to-blue-700 text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-lg">
-              <span className="flex items-center space-x-3">
-                <span>View All Projects</span>
-                <motion.div
-                  animate={{ x: [0, 3, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  <ArrowRight className="w-5 h-5" />
-                </motion.div>
-              </span>
-            </Button>
+            <Button
+  onClick={() => { router.push("#projects"); }}
+  className="
+    inline-flex items-center gap-2
+    bg-[#24292f] hover:bg-[#1b1f23]
+    border border-[#30363d] hover:border-[#8b949e]
+    text-white font-semibold text-base
+    px-6 py-3 rounded-lg
+    shadow-sm hover:shadow-md
+    transition-all duration-200
+    focus:outline-none focus:ring-2 focus:ring-[#58a6ff] focus:ring-offset-2
+  "
+>
+  <span className="flex items-center gap-2">
+    {/* GitHub Octicon (book icon) */}
+    <svg
+      aria-hidden="true"
+      height="20"
+      viewBox="0 0 16 16"
+      width="20"
+      className="fill-white"
+    >
+      <path d="M1.75 2.5A.75.75 0 0 0 1 3.25v10.5c0 .414.336.75.75.75h12.5a.75.75 0 0 0 .75-.75V3.25a.75.75 0 0 0-.75-.75zm.75 1.5h11v9H2.5zm2.25 2.25a.75.75 0 0 1 .75-.75h4a.75.75 0 0 1 0 1.5h-4a.75.75 0 0 1-.75-.75zm0 2.25a.75.75 0 0 1 .75-.75h4a.75.75 0 0 1 0 1.5h-4a.75.75 0 0 1-.75-.75z"></path>
+    </svg>
+    <span>View All Projects</span>
+    <motion.div
+      animate={{ x: [0, 4, 0] }}
+      transition={{ duration: 1.5, repeat: Infinity }}
+      className="ml-1"
+    >
+      <ArrowRight className="w-5 h-5" />
+    </motion.div>
+  </span>
+</Button>
           </div>
         </motion.div>
       </div>

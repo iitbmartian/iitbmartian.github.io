@@ -298,7 +298,7 @@ const UpdatesPage = () => {
       title: "MRT secures top Indian team position at URC 2023",
       date: "June 15, 2023",
       image: "https://via.placeholder.com/600x400?text=URC+2023",
-      content: "The Mars Rover Team from IIT Bombay secured the first position among all Indian teams at the University Rover Challenge 2023 held in Utah, USA.",
+      content: "The Mars Rover Team from IIT Bombay secured the 1st position among all Indian teams at the University Rover Challenge 2023 held in Utah, USA.",
       link: "#",
       category: "Competition",
       priority: "high" 

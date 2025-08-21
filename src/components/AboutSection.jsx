@@ -4,8 +4,10 @@ import { Award, Flag, Users, Star, Rocket, Sparkles, Target, TrendingUp, Zap, Cr
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import RoverIcon from "@/components/icons/RoverIcon"
 import { cn } from '@/lib/utils';
+import { useRouter } from 'next/navigation';
 
 const AboutSection = () => {
+  const router = useRouter();
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
   const visionMissionRef = useRef(null);
@@ -75,7 +77,7 @@ const AboutSection = () => {
   ], []);
 
   const highlights = useMemo(() => [
-    "Secured First position among all Indian teams in University Rover Challenge 2023, USA",
+    "Secured 1st position among all Indian teams in University Rover Challenge 2023, USA",
     "Secured 6th rank in Bio-sciences task in University Rover Challenge 2023, USA", 
     "Achieved Excellence Award in Autonomous category in International Rover Challenge 2023",
     "Secured 5th Position out of 18 teams in International Rover Challenge IRC 2023",
@@ -359,8 +361,27 @@ const AboutSection = () => {
               <span className="bg-gradient-to-r from-mars to-cosmic bg-clip-text text-transparent">
                 When this team thrived globally
               </span>
+
+
             </motion.h2>
-            
+<button
+  type="button"
+  onClick={() => router.push("/competitions")}
+  className="
+    inline-flex items-center justify-center
+    rounded-lg px-4 py-2
+    bg-mars text-white font-semibold
+    shadow-sm ring-1 ring-inset ring-black/5
+    transition-colors duration-200
+    hover:bg-mars/90
+    focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-mars
+    active:scale-[0.99] mb-3
+  "
+  aria-label="View Records"
+>
+  <span>Records</span>
+</button>
+
             <motion.div 
               className="bg-gradient-to-br from-space-light/30 to-space-light/10 backdrop-blur-sm rounded-2xl p-8 border border-white/10"
               variants={standardCardVariants}

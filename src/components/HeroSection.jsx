@@ -364,9 +364,11 @@ const HeroSection = () => {
                 className="w-full sm:w-auto"
                 style={{ willChange: "transform" }}
               >
-                <Button className="bg-gradient-to-r from-mars to-orange-600 hover:from-mars-dark hover:to-orange-700 text-white px-6 md:px-8 py-4 md:py-6 rounded-xl w-full sm:w-auto shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-sm md:text-base">
+                <Button onClick={()=>{
+                      router.push("/rover");
+                    }} className="bg-gradient-to-r from-mars to-orange-600 hover:from-mars-dark hover:to-orange-700 text-white px-6 md:px-8 py-4 md:py-6 rounded-xl w-full sm:w-auto shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-sm md:text-base">
                   <span className="flex items-center justify-center space-x-2">
-                    <Link href="#projects" >Explore Projects</Link>
+                    <div >Our Rovers</div>
                     {hasMounted && !shouldReduceMotion && !isMobile && (
                       <motion.div
                         animate={{ rotate: [0, 360] }}

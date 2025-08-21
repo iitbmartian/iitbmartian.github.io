@@ -1,4 +1,3 @@
-
 import { CompetitionProps } from './CompetitionCard';
 import URClogo from '@/../public/mrt/Logo/Competitions/URC.png'; // <--- Corrected path
 import IRClogo from '@/../public/mrt/Logo/Competitions/IRC_1.png';
@@ -39,7 +38,7 @@ export const competitionsData = [
       {
         year: "2021",
         achievement: "Qualification",
-        description: "First-ever qualification for the competition, marking a significant milestone for our team."
+        description: "1st-ever qualification for the competition, marking a significant milestone for our team."
       }
     ]
   },
@@ -58,6 +57,16 @@ export const competitionsData = [
         year: "2025",
         achievement: "9th Position Internationally",
         description: "Ranked 9th internationally at the international rover challenge (IRC), Goa."
+      },
+      {
+        year: "2025",
+        achievement: "8th Position Internationally",
+        description: "Ranked 8th internationally at the International Rover Challenge (IRC), Goa."
+      },
+      {
+        year: "2025",
+        achievement: "Excellence Award in Bio Sciences",
+        description: "Won the Bio Sciences Excellence Award at International Rover Challenge (IRC), Goa."
       },
       {
         year: "2023",
@@ -82,7 +91,7 @@ export const competitionsData = [
       {
         year: "2020",
         achievement: "4th Position",
-        description: "Strong performance despite challenges in first-generation autonomous systems."
+        description: "Strong performance despite challenges in 1st-generation autonomous systems."
       }
     ]
   },
@@ -113,11 +122,11 @@ export const competitionsData = [
 
 export const timelineData = [
   { year: "2012", event: "Mars Rover Team founded at IIT Bombay" },
-  { year: "2014", event: "First rover prototype developed" },
-  { year: "2016", event: "First participation in national-level competition" },
-  { year: "2018", event: "First international competition participation" },
+  { year: "2014", event: "1st rover prototype developed" },
+  { year: "2016", event: "1st participation in national-level competition" },
+  { year: "2018", event: "1st international competition participation" },
   { year: "2020", event: "Reached top 5 in IRC" },
-  { year: "2021", event: "First qualification for URC" },
+  { year: "2021", event: "1st qualification for URC" },
   { year: "2022", event: "Excellence Award at ERC" },
   { year: "2023", event: "Top Indian team at URC, 5th position at IRC" },
   { year: "2024", event: "2nd Indian team at URC" },
