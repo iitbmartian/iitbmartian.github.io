@@ -432,6 +432,20 @@ const router = useRouter()
               Get in touch
             </motion.button>
           </motion.div>
+          <motion.div
+            className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-white/10 to-white/5 rounded-full border border-white/10 backdrop-blur-sm"
+            transition={{ duration: 0.3 }}
+          >
+            <Star className="w-5 h-5 text-purple-500" />
+            <span className="text-white/80 font-medium">
+              Check out our projects on
+            </span>
+            <motion.a href="https://github.com/iitbmartian" target='_blank'
+              className="text-purple-500 cursor-pointer hover:text-cyan-300 transition-colors"
+            >
+              GitHub
+            </motion.a>
+          </motion.div>
         </motion.div>
       </div>
     </section>

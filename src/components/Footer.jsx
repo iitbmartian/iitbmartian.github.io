@@ -71,35 +71,19 @@ const Footer = () => {
   // Memoized data
   const socialLinks = useMemo(() => [
     {
-      name: "Twitter",
-      icon: <Twitter className="h-5 w-5" />,
-      gradient: "from-cyan-400 via-blue-500 to-blue-600",
-      hoverColor: "hover:shadow-cyan-400/30",
-      href: "https://twitter.com/marsroverteam",
-      description: "Latest updates"
-    },
-    {
       name: "Instagram", 
       icon: <Instagram className="h-5 w-5" />,
       gradient: "from-pink-500 via-purple-500 to-indigo-600",
       hoverColor: "hover:shadow-pink-500/30",
-      href: "https://instagram.com/marsroverteam",
+      href: "https://www.instagram.com/iitb.marsroverteam?igsh=MWozeDZ2Z25tdjJmNA==",
       description: "Behind the scenes"
-    },
-    {
-      name: "Facebook",
-      icon: <Facebook className="h-5 w-5" />,
-      gradient: "from-blue-600 via-blue-700 to-blue-800",
-      hoverColor: "hover:shadow-blue-600/30",
-      href: "https://facebook.com/marsroverteam",
-      description: "Community updates"
     },
     {
       name: "Github",
       icon: <Github className="h-5 w-5" />,
       gradient: "from-gray-600 via-gray-700 to-gray-900",
       hoverColor: "hover:shadow-gray-600/30",
-      href: "https://github.com/marsroverteam",
+      href: "https://github.com/iitbmartian",
       description: "Open source projects"
     },
     {
@@ -107,7 +91,7 @@ const Footer = () => {
       icon: <Youtube className="h-5 w-5" />,
       gradient: "from-red-500 via-red-600 to-red-700",
       hoverColor: "hover:shadow-red-500/30",
-      href: "https://youtube.com/marsroverteam",
+      href: "https://www.youtube.com/@marsroverteamiitbombay2940",
       description: "Video content"
     }
   ], []);
@@ -156,9 +140,9 @@ const Footer = () => {
     {
       icon: <Mail className="h-5 w-5" />,
       title: "Email",
-      text: "contact@mrtiitb.com",
+      text: "iitbmartian@gmail.com",
       gradient: "from-cosmic/20 via-blue-500/20 to-indigo-500/20",
-      action: () => window.open("mailto:contact@mrtiitb.com", "_blank")
+      action: () => window.open("mailto:iitbmartian@gmail.com", "_blank")
     },
     {
       icon: <Phone className="h-5 w-5" />,
