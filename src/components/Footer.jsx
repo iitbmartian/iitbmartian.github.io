@@ -712,7 +712,7 @@ const Footer = () => {
                 <motion.div 
                   className="text-white/60 text-sm flex items-center space-x-2"
                 >
-                  <span>Crafted with</span>
+                  <span>Developed and Maintained</span>
                   <motion.div
                     animate={{ 
                       scale: [1, 1.3, 1],
@@ -729,7 +729,7 @@ const Footer = () => {
                   <motion.span 
                     className="font-semibold bg-gradient-to-r from-mars to-cosmic bg-clip-text text-transparent"
                   >
-                    Nittish
+                    Eshway
                   </motion.span>
                 </motion.div>
 
