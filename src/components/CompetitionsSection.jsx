@@ -7,7 +7,6 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import {useRouter} from 'next/navigation'
 
-
 const Competition = ({ title, description, location, image, index, gradient }) => {
   const router = useRouter()
 
@@ -18,7 +17,7 @@ const Competition = ({ title, description, location, image, index, gradient }) =
   return (
     <motion.div
       ref={cardRef}
-      className="relative group overflow-hidden"
+      className="relative group overflow-hidden w-full"
       initial={{ opacity: 0, y: 30, scale: 0.95 }}
       animate={isInView ? { 
         opacity: 1, 
@@ -54,7 +53,7 @@ const Competition = ({ title, description, location, image, index, gradient }) =
         />
 
         {/* Image Container */}
-        <div className="relative h-48 overflow-hidden">
+        <div className="relative h-40 sm:h-48 md:h-44 lg:h-48 xl:h-52 overflow-hidden">
           {/* Simplified Image Placeholder */}
           <motion.div
             className={`w-full h-full ${gradient} opacity-70 relative overflow-hidden`}
@@ -73,7 +72,7 @@ const Competition = ({ title, description, location, image, index, gradient }) =
 
             {/* Competition Icon */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <Trophy className="w-16 h-16 text-white/80" />
+              <Trophy className="w-12 h-12 sm:w-16 sm:h-16 text-white/80" />
             </div>
           </motion.div>
 
@@ -82,37 +81,36 @@ const Competition = ({ title, description, location, image, index, gradient }) =
           
           {/* Achievement Badge */}
           <motion.div
-            className="absolute top-4 right-4 p-2 bg-gradient-to-r from-mars/80 to-orange-500/80 rounded-full backdrop-blur-sm"
+            className="absolute top-3 right-3 sm:top-4 sm:right-4 p-2 bg-gradient-to-r from-mars/80 to-orange-500/80 rounded-full backdrop-blur-sm"
             initial={{ scale: 0, opacity: 0 }}
             animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
             transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
           >
-            <Award className="w-5 h-5 text-white" />
+            <Award className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
           </motion.div>
         </div>
 
         {/* Content Section */}
-        <div className="p-6 relative z-10">
+        <div className="p-4 sm:p-5 lg:p-6 relative z-10">
           {/* Location */}
           <div className="flex items-center mb-3 group/location">
-            <div className="p-1 bg-gradient-to-r from-mars/20 to-orange-500/20 rounded-full mr-3">
-              <MapPin className="h-4 w-4 text-mars" />
+            <div className="p-1 bg-gradient-to-r from-mars/20 to-orange-500/20 rounded-full mr-2 sm:mr-3">
+              <MapPin className="h-3 w-3 sm:h-4 sm:w-4 text-mars" />
             </div>
-            <span className="text-white/70 text-sm group-hover/location:text-white/90 transition-colors duration-300">
+            <span className="text-white/70 text-xs sm:text-sm group-hover/location:text-white/90 transition-colors duration-300">
               {location}
             </span>
           </div>
 
           {/* Title */}
           <motion.h3
-            className="text-xl font-bold mb-3 relative text-white group-hover:text-cosmic transition-colors duration-300 font-orbitron"
+            className="text-base sm:text-lg lg:text-xl font-bold mb-2 sm:mb-3 relative text-white group-hover:text-cosmic transition-colors duration-300 font-orbitron leading-tight"
           >
             {title}
-
           </motion.h3>
 
           {/* Description */}
-          <p className="text-white/70 leading-relaxed group-hover:text-white/85 transition-colors duration-300 mb-4">
+          <p className="text-white/70 text-xs sm:text-sm leading-relaxed group-hover:text-white/85 transition-colors duration-300 mb-3 sm:mb-4 line-clamp-3">
             {description}
           </p>
 
@@ -123,11 +121,10 @@ const Competition = ({ title, description, location, image, index, gradient }) =
             animate={{ opacity: isHovered ? 1 : 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Target className="w-4 h-4 text-cosmic" />
+            <Target className="w-3 h-3 sm:w-4 sm:h-4 text-cosmic" />
             <span className="text-xs text-cosmic font-medium">Global Competition</span>
           </motion.div>
         </div>
-
       </motion.div>
     </motion.div>
   );
@@ -197,46 +194,48 @@ const CompetitionsSection = () => {
     <section 
       ref={sectionRef}
       id="competitions" 
-      className="py-24 bg-gradient-to-br from-space-dark via-space to-space-dark relative overflow-hidden"
+      className="py-12 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-br from-space-dark via-space to-space-dark relative overflow-hidden"
     >
       {/* Simplified Background Effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div
           style={{ transform: `translateY(${backgroundY}px)` }}
-          className="absolute top-1/3 right-0 w-1/3 h-1/3 bg-gradient-to-l from-mars/10 to-orange-500/5 rounded-full blur-3xl opacity-60"
+          className="absolute top-1/3 right-0 w-1/2 sm:w-1/3 h-1/3 bg-gradient-to-l from-mars/10 to-orange-500/5 rounded-full blur-3xl opacity-60"
         />
         
         <div
           style={{ transform: `translateY(${backgroundY}px)` }}
-          className="absolute bottom-1/3 left-0 w-1/3 h-1/3 bg-gradient-to-r from-cosmic/10 to-blue-500/5 rounded-full blur-3xl opacity-60"
+          className="absolute bottom-1/3 left-0 w-1/2 sm:w-1/3 h-1/3 bg-gradient-to-r from-cosmic/10 to-blue-500/5 rounded-full blur-3xl opacity-60"
         />
 
-        {/* Simple floating trophies */}
-        {[...Array(6)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute"
-            animate={{
-              y: [0, -15, 0],
-              opacity: [0.1, 0.3, 0.1],
-            }}
-            transition={{
-              duration: 6 + i * 1.5,
-              repeat: Infinity,
-              delay: i * 1,
-              ease: "easeInOut",
-            }}
-            style={{
-              left: `${15 + Math.random() * 70}%`,
-              top: `${15 + Math.random() * 70}%`,
-            }}
-          >
-            <Trophy className="w-4 h-4 text-white/20" />
-          </motion.div>
-        ))}
+        {/* Simple floating trophies - Hide on mobile for performance */}
+        <div className="hidden sm:block">
+          {[...Array(6)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute"
+              animate={{
+                y: [0, -15, 0],
+                opacity: [0.1, 0.3, 0.1],
+              }}
+              transition={{
+                duration: 6 + i * 1.5,
+                repeat: Infinity,
+                delay: i * 1,
+                ease: "easeInOut",
+              }}
+              style={{
+                left: `${15 + Math.random() * 70}%`,
+                top: `${15 + Math.random() * 70}%`,
+              }}
+            >
+              <Trophy className="w-3 h-3 sm:w-4 sm:h-4 text-white/20" />
+            </motion.div>
+          ))}
+        </div>
 
-        {/* Static achievement pattern */}
-        <div className="absolute inset-0 opacity-5">
+        {/* Static achievement pattern - Hide on mobile for performance */}
+        <div className="absolute inset-0 opacity-5 hidden sm:block">
           <svg className="absolute inset-0 w-full h-full">
             <defs>
               <linearGradient id="achievementGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -259,16 +258,16 @@ const CompetitionsSection = () => {
         </div>
       </div>
       
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header Section */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-12 sm:mb-14 lg:mb-16"
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
         >
           <motion.h2 
-            className="text-5xl md:text-7xl font-bold font-orbitron mb-6 relative inline-block"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-orbitron mb-4 sm:mb-6 relative inline-block leading-tight"
             variants={itemVariants}
           >
             <span className="bg-gradient-to-r from-mars via-orange-500 to-cosmic bg-clip-text text-transparent">
@@ -282,20 +281,25 @@ const CompetitionsSection = () => {
             />
           </motion.h2>
           
-          <motion.p 
-            className="text-xl text-white/80 max-w-4xl mx-auto leading-relaxed flex items-center justify-center space-x-3"
+          <motion.div 
+            className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 max-w-4xl mx-auto leading-relaxed"
             variants={itemVariants}
           >
-            <Globe className="w-6 h-6 text-cosmic flex-shrink-0" />
-            <span>We test our rovers' capabilities and our team's skills in premier international competitions</span>
-            <Trophy className="w-6 h-6 text-mars flex-shrink-0" />
-          </motion.p>
-
-
+            <div className="flex flex-col sm:flex-row items-center justify-center space-y-2 sm:space-y-0 sm:space-x-3">
+              <div className="flex items-center space-x-2">
+                <Globe className="w-5 h-5 sm:w-6 sm:h-6 text-cosmic flex-shrink-0" />
+                <span className="text-center sm:text-left">We test our rovers' capabilities and our team's skills</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="text-center sm:text-left">in premier international competitions</span>
+                <Trophy className="w-5 h-5 sm:w-6 sm:h-6 text-mars flex-shrink-0" />
+              </div>
+            </div>
+          </motion.div>
         </motion.div>
         
         {/* Competitions Grid */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-12 sm:mb-14 lg:mb-16">
           {competitions.map((competition, index) => (
             <Competition 
               key={index} 
@@ -307,23 +311,20 @@ const CompetitionsSection = () => {
         
         {/* Call to Action */}
         <motion.div
-          className="text-center"
+          className="text-center px-4 flex justify-center"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
-          <Link href="/competitions">
-            <motion.div
-              whileTap={{ scale: 0.98 }}
-            >
-              <Button onClick={()=>{
-                    router.push("/records")
-                  }} className="bg-gradient-to-r from-mars via-orange-500 to-cosmic hover:from-mars-dark hover:via-orange-600 hover:to-cosmic-dark text-white group px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-lg">
-                <span className="flex items-center space-x-3">
-                  <Trophy className="w-5 h-5" />
-                  <span >View Our Competitive Records
+          <Link href="/competitions" className="w-full sm:w-auto">
+            <motion.div whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
+              <Button className="bg-gradient-to-r from-mars via-orange-500 to-cosmic hover:from-mars-dark hover:via-orange-600 hover:to-cosmic-dark text-white group px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 lg:py-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-sm sm:text-base md:text-lg lg:text-xl w-full sm:w-auto">
+                <span className="flex flex-col sm:flex-row items-center justify-center space-y-1 sm:space-y-0 sm:space-x-2 lg:space-x-3">
+                  <Trophy className="w-4 h-4 hidden sm:visible sm:w-5 sm:h-5" />
+                  <span className="text-center whitespace-nowrap sm:whitespace-normal">
+                    View Our Competitive Records
                   </span>
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-4 h-4 hidden sm:visible sm:w-5 sm:h-5" />
                 </span>
               </Button>
             </motion.div>
