@@ -1,127 +1,19 @@
 "use client";
 import React, { useRef, useState } from 'react';
-import { Mail, MapPin, Phone, Send, MessageCircle, Users, Globe, Star, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Mail, MapPin, Send, MessageCircle, Users, Globe, Star } from 'lucide-react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
 
 const ContactSection = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   const [hoveredContact, setHoveredContact] = useState(null);
-  const [focusedField, setFocusedField] = useState(null);
-  
-  // Form state
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
-  const [formStatus, setFormStatus] = useState({
-    loading: false,
-    success: false,
-    error: null
-  });
-  const [errors, setErrors] = useState({});
-  
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
   });
 
   const backgroundY = useTransform(scrollYProgress, [0, 1], [0, -50]);
-
-  // Handle form input changes
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
-    // Clear error for this field when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: null }));
-    }
-  };
-
-  // Validate form data
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!formData.name.trim() || formData.name.length < 2) {
-      newErrors.name = 'Name must be at least 2 characters';
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-    }
-
-    if (!formData.subject.trim() || formData.subject.length < 5) {
-      newErrors.subject = 'Subject must be at least 5 characters';
-    }
-
-    if (!formData.message.trim() || formData.message.length < 10) {
-      newErrors.message = 'Message must be at least 10 characters';
-    }
-
-    return newErrors;
-  };
-
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    // Reset status
-    setFormStatus({ loading: false, success: false, error: null });
-    setErrors({});
-
-    // Validate form
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
-    // Set loading state
-    setFormStatus({ loading: true, success: false, error: null });
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        setFormStatus({ loading: false, success: true, error: null });
-        setFormData({ name: '', email: '', subject: '', message: '' });
-        
-        // Reset success message after 5 seconds
-        setTimeout(() => {
-          setFormStatus({ loading: false, success: false, error: null });
-        }, 5000);
-      } else {
-        setFormStatus({ 
-          loading: false, 
-          success: false, 
-          error: result.message || 'Failed to send message' 
-        });
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      setFormStatus({ 
-        loading: false, 
-        success: false, 
-        error: 'Network error. Please try again.' 
-      });
-    }
-  };
 
   const contactInfo = [
     {
@@ -141,24 +33,6 @@ const ContactSection = () => {
   ];
 
   const socialLinks = [
-    // {
-    //   name: "Facebook",
-    //   icon: (
-    //     <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-    //       <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd"></path>
-    //     </svg>
-    //   ),
-    //   gradient: "from-blue-600/80 to-blue-800/80"
-    // },
-    // {
-    //   name: "Twitter",
-    //   icon: (
-    //     <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-    //       <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
-    //     </svg>
-    //   ),
-    //   gradient: "from-cyan-400/80 to-blue-500/80"
-    // },
     {
       name: "Instagram",
       icon: (
@@ -188,7 +62,6 @@ const ContactSection = () => {
     }
   ];
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -230,7 +103,6 @@ const ContactSection = () => {
           className="absolute top-0 left-0 w-1/3 h-1/3 bg-gradient-to-r from-mars/10 to-orange-500/5 rounded-full blur-3xl opacity-60"
         />
 
-        {/* Simple floating message icons */}
         {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
@@ -254,7 +126,6 @@ const ContactSection = () => {
           </motion.div>
         ))}
 
-        {/* Static communication pattern */}
         <div className="absolute inset-0 opacity-5">
           <svg className="absolute inset-0 w-full h-full">
             <defs>
@@ -281,7 +152,7 @@ const ContactSection = () => {
       </div>
       
       <div className="container mx-auto px-6 relative z-10">
-        {/* Header Section */}
+        {/* Header */}
         <motion.div
           className="text-center mb-16"
           variants={containerVariants}
@@ -311,8 +182,6 @@ const ContactSection = () => {
             <span>Have questions or want to learn more about our team? Get in touch with us</span>
             <MessageCircle className="w-6 h-6 text-mars flex-shrink-0" />
           </motion.p>
-
-
         </motion.div>
         
         <motion.div
@@ -364,11 +233,8 @@ const ContactSection = () => {
               ))}
             </div>
             
-            {/* Social Media Section */}
-            <motion.div
-              className="mt-12"
-              variants={itemVariants}
-            >
+            {/* Social Media */}
+            <motion.div className="mt-12" variants={itemVariants}>
               <h3 className="text-2xl font-bold mb-6 font-orbitron flex items-center space-x-3">
                 <Star className="w-6 h-6 text-mars" />
                 <span>Follow Us</span>
@@ -400,197 +266,85 @@ const ContactSection = () => {
             </motion.div>
           </motion.div>
           
-          {/* Contact Form */}
-          <motion.div
-            className="relative"
-            variants={itemVariants}
-          >
+          {/* Contact Form (Getform) */}
+          <motion.div className="relative" variants={itemVariants}>
             <div className="bg-gradient-to-br from-space-light/30 to-space-light/10 p-8 rounded-2xl border border-white/10 backdrop-blur-sm hover:border-white/20 transition-all duration-300">
               <h3 className="text-3xl font-bold mb-8 font-orbitron flex items-center space-x-3">
                 <Send className="w-7 h-7 text-cosmic" />
                 <span>Send us a message</span>
               </h3>
-              
-              {/* Status Messages */}
-              {formStatus.success && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="mb-6 p-4 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 rounded-xl flex items-center space-x-3"
-                >
-                  <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
-                  <p className="text-green-100 text-sm">
-                    Message sent successfully! We'll get back to you within 24 hours.
-                  </p>
-                </motion.div>
-              )}
 
-              {formStatus.error && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="mb-6 p-4 bg-gradient-to-r from-red-500/20 to-pink-500/20 border border-red-500/30 rounded-xl flex items-center space-x-3"
-                >
-                  <AlertCircle className="w-5 h-5 text-red-400 flex-shrink-0" />
-                  <p className="text-red-100 text-sm">{formStatus.error}</p>
-                </motion.div>
-              )}
-              
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-white/80 mb-2">
-                      Name *
-                    </label>
-                    <motion.div
-                      className="relative"
-                      animate={{
-                        scale: focusedField === 'name' ? 1.01 : 1,
-                      }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <Input 
-                        id="name"
-                        name="name"
-                        type="text" 
-                        placeholder="Your name" 
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        className={cn(
-                          "bg-space-light/50 text-white border-white/10 focus:border-cosmic/50 transition-all duration-300 placeholder:text-white/50",
-                          errors.name && "border-red-500/50 focus:border-red-500"
-                        )}
-                        onFocus={() => setFocusedField('name')}
-                        onBlur={() => setFocusedField(null)}
-                        disabled={formStatus.loading}
-                      />
-                      {errors.name && (
-                        <p className="text-red-400 text-xs mt-1">{errors.name}</p>
-                      )}
-                    </motion.div>
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-white/80 mb-2">
-                      Email *
-                    </label>
-                    <motion.div
-                      className="relative"
-                      animate={{
-                        scale: focusedField === 'email' ? 1.01 : 1,
-                      }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <Input 
-                        id="email"
-                        name="email"
-                        type="email" 
-                        placeholder="Your email" 
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        className={cn(
-                          "bg-space-light/50 border-white/10 text-white focus:border-cosmic/50 transition-all duration-300 placeholder:text-white/50",
-                          errors.email && "border-red-500/50 focus:border-red-500"
-                        )}
-                        onFocus={() => setFocusedField('email')}
-                        onBlur={() => setFocusedField(null)}
-                        disabled={formStatus.loading}
-                      />
-                      {errors.email && (
-                        <p className="text-red-400 text-xs mt-1">{errors.email}</p>
-                      )}
-                    </motion.div>
-                  </div>
-                </div>
-                
-                <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-white/80 mb-2">
-                    Subject *
+              <form
+                action="https://getform.io/f/awnqrldb"
+                method="POST"
+                className="md:p-1 p-0 space-y-6"
+                data-aos="fade-up"
+                data-aos-duration="1000"
+              >
+                <div className="mb-6" data-aos="fade-up" data-aos-duration="600">
+                  <label htmlFor="name" className="block text-[#ced4d7] font-semibold mb-2">
+                    Name / Title
                   </label>
-                  <motion.div
-                    className="relative"
-                    animate={{
-                      scale: focusedField === 'subject' ? 1.01 : 1,
-                    }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Input 
-                      id="subject"
-                      name="subject"
-                      type="text" 
-                      placeholder="Subject" 
-                      value={formData.subject}
-                      onChange={handleInputChange}
-                      className={cn(
-                        "bg-space-light/50 border-white/10 text-white focus:border-cosmic/50 transition-all duration-300 placeholder:text-white/50",
-                        errors.subject && "border-red-500/50 focus:border-red-500"
-                      )}
-                      onFocus={() => setFocusedField('subject')}
-                      onBlur={() => setFocusedField(null)}
-                      disabled={formStatus.loading}
-                    />
-                    {errors.subject && (
-                      <p className="text-red-400 text-xs mt-1">{errors.subject}</p>
-                    )}
-                  </motion.div>
+                  <input
+                    required
+                    type="text"
+                    name="name"
+                    id="name"
+                    autoComplete="off"
+                    placeholder="Your Name"
+                    className="w-full px-3 py-2 border h-14 rounded-lg focus:outline-none focus:border-[#ced4d7] bg-transparent text-[#a6adba]"
+                  />
                 </div>
-                
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-white/80 mb-2">
-                    Message *
+
+                <div className="mb-6">
+                  <label htmlFor="email" className="block text-[#ced4d7] font-semibold mb-2">
+                    Email
                   </label>
-                  <motion.div
-                    className="relative"
-                    animate={{
-                      scale: focusedField === 'message' ? 1.01 : 1,
-                    }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <textarea 
-                      id="message"
-                      name="message"
-                      rows={4} 
-                      placeholder="Your message" 
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      className={cn(
-                        "w-full bg-space-light/50 border border-white/10 rounded-md px-3 py-2 text-white focus:outline-none focus:border-cosmic/50 resize-none transition-all duration-300 placeholder:text-white/50",
-                        errors.message && "border-red-500/50 focus:border-red-500"
-                      )}
-                      onFocus={() => setFocusedField('message')}
-                      onBlur={() => setFocusedField(null)}
-                      disabled={formStatus.loading}
-                    />
-                    {errors.message && (
-                      <p className="text-red-400 text-xs mt-1">{errors.message}</p>
-                    )}
-                  </motion.div>
+                  <input
+                    required
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="you@example.com"
+                    className="w-full px-3 py-2 h-14 border rounded-lg focus:outline-none focus:border-[#ced4d7] bg-transparent text-[#a6adba]"
+                  />
                 </div>
-                
-                <motion.div
-                  whileHover={formStatus.loading ? {} : { scale: 1.01, y: -1 }}
-                  whileTap={formStatus.loading ? {} : { scale: 0.99 }}
+
+                <div className="mb-6">
+                  <label htmlFor="subject" className="block text-[#ced4d7] font-semibold mb-2">
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
+                    className="w-full px-3 py-2 h-14 border rounded-lg focus:outline-none focus:border-[#ced4d7] bg-transparent text-[#a6adba]"
+                  />
+                </div>
+
+                <div className="mb-5" data-aos="fade-up" data-aos-duration="1000">
+                  <label htmlFor="message" className="block text-[#ced4d7] font-semibold mb-2">
+                    Message
+                  </label>
+                  <textarea
+                    required
+                    name="message"
+                    id="message"
+                    placeholder="Message"
+                    className="w-full px-3 py-2 md:h-48 h-40 border rounded-lg focus:outline-none focus:border-[#ced4d7] bg-transparent text-[#a6adba]"
+                  />
+                </div>
+
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_template" value="table" />
+
+                <button
+                  type="submit"
+                  className="text-center bg-[#ced4d7] text-[#212121] mb-20 font-semibold py-2 px-4 rounded-lg hover:bg-[#1f2937] hover:text-[#ced4d7] transition-all duration-200 ease-out"
                 >
-                  <Button 
-                    type="submit"
-                    disabled={formStatus.loading}
-                    className="w-full bg-gradient-to-r from-mars via-orange-500 to-cosmic hover:from-mars-dark hover:via-orange-600 hover:to-cosmic-dark text-white py-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    <span className="flex items-center justify-center space-x-3">
-                      {formStatus.loading ? (
-                        <>
-                          <Loader2 className="w-5 h-5 animate-spin" />
-                          <span>Sending...</span>
-                        </>
-                      ) : (
-                        <>
-                          <Send className="w-5 h-5" />
-                          <span>Send Message</span>
-                        </>
-                      )}
-                    </span>
-                  </Button>
-                </motion.div>
+                  Send
+                </button>
               </form>
             </div>
           </motion.div>
