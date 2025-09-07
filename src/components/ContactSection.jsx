@@ -1,12 +1,14 @@
 "use client";
 import React, { useRef, useState } from 'react';
-import { Mail, MapPin, Send, MessageCircle, Users, Globe, Star } from 'lucide-react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { Mail, MapPin, Send, MessageCircle, Users, Globe, Star, Loader2, CheckCircle2, XCircle } from 'lucide-react';
+import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion';
 
 const ContactSection = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   const [hoveredContact, setHoveredContact] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [toast, setToast] = useState({ open: false, type: 'success', message: '' });
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -83,6 +85,38 @@ const ContactSection = () => {
         ease: "easeOut",
       },
     },
+  };
+
+  const showToast = (type, message) => {
+    setToast({ open: true, type, message });
+    setTimeout(() => setToast((t) => ({ ...t, open: false })), 3500);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    try {
+      setSubmitting(true);
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { Accept: 'application/json' },
+      });
+
+      if (res.ok) {
+        form.reset();
+        showToast('success', 'Message sent successfully.');
+      } else {
+        const err = await res.json().catch(() => null);
+        showToast('error', err?.message || 'Failed to send message.');
+      }
+    } catch (err) {
+      showToast('error', 'Network error. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -277,6 +311,7 @@ const ContactSection = () => {
               <form
                 action="https://getform.io/f/awnqrldb"
                 method="POST"
+                onSubmit={handleSubmit}
                 className="md:p-1 p-0 space-y-6"
                 data-aos="fade-up"
                 data-aos-duration="1000"
@@ -341,15 +376,50 @@ const ContactSection = () => {
 
                 <button
                   type="submit"
-                  className="text-center bg-[#ced4d7] text-[#212121] mb-20 font-semibold py-2 px-4 rounded-lg hover:bg-[#1f2937] hover:text-[#ced4d7] transition-all duration-200 ease-out"
+                  disabled={submitting}
+                  className="text-center bg-[#ced4d7] text-[#212121] mb-20 font-semibold py-2 px-4 rounded-lg hover:bg-[#1f2937] hover:text-[#ced4d7] transition-all duration-200 ease-out disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
                 >
-                  Send
+                  {submitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    'Send'
+                  )}
                 </button>
               </form>
             </div>
           </motion.div>
         </motion.div>
       </div>
+
+      {/* Toast */}
+      <AnimatePresence>
+        {toast.open && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 16 }}
+            className="fixed bottom-6 right-6 z-50 pointer-events-auto"
+          >
+            <div
+              className={`flex items-center gap-3 px-4 py-3 rounded-lg border shadow-lg ${
+                toast.type === 'success'
+                  ? 'bg-emerald-500/10 border-emerald-400/30 text-emerald-200'
+                  : 'bg-red-500/10 border-red-400/30 text-red-200'
+              }`}
+            >
+              {toast.type === 'success' ? (
+                <CheckCircle2 className="w-5 h-5" />
+              ) : (
+                <XCircle className="w-5 h-5" />
+              )}
+              <span className="text-sm">{toast.message}</span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
