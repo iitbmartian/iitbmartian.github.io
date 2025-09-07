@@ -309,7 +309,7 @@ const ContactSection = () => {
               </h3>
 
               <form
-                action={process.env.FORM_ACTION}
+                action={process.env.NEXT_PUBLIC_FORM_ACTION}
                 method="POST"
                 onSubmit={handleSubmit}
                 className="md:p-1 p-0 space-y-6"
@@ -370,9 +370,8 @@ const ContactSection = () => {
                     className="w-full px-3 py-2 md:h-48 h-40 border rounded-lg focus:outline-none focus:border-[#ced4d7] bg-transparent text-[#a6adba]"
                   />
                 </div>
-
-                <input type="hidden" name="_captcha" value="false" />
-                <input type="hidden" name="_template" value="table" />
+                {/* Honeypot field for spam protection (Formspree-friendly) */}
+                <input type="text" name="_gotcha" className="hidden" tabIndex="-1" autoComplete="off" />
 
                 <button
                   type="submit"
