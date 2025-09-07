@@ -709,7 +709,7 @@ const Footer = () => {
               </motion.div>
               
               <div className="flex items-center space-x-6">
-                <motion.div 
+                <Link target='_blank' href={'https://eshway.com/'} 
                   className="text-white/60 text-sm flex items-center space-x-2"
                 >
                   <span>Developed and Maintained</span>
@@ -731,7 +731,7 @@ const Footer = () => {
                   >
                     Eshway
                   </motion.span>
-                </motion.div>
+                </Link>
 
                 {/* Enhanced Scroll to Top */}
                 <motion.button
