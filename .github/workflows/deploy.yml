@@ -25,6 +25,10 @@ jobs:
       - name: Install dependencies
         run: npm install --force
 
+      - name: Create env file   # 👈 add this
+        run: |
+          echo "NEXT_PUBLIC_FORM_ACTION=${{ secrets.FORM_ACTION }}" >> .env.local
+
       - name: Build Next.js app
         run: npm run build 
 
