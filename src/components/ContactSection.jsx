@@ -309,7 +309,7 @@ const ContactSection = () => {
               </h3>
 
               <form
-                action="https://getform.io/f/awnqrldb"
+                action={process.env.FORM_ACTION}
                 method="POST"
                 onSubmit={handleSubmit}
                 className="md:p-1 p-0 space-y-6"
