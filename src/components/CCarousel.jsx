@@ -77,7 +77,7 @@ const CCarousel = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-6 md:mb-12 lg:mb-16"
         >
-          <motion.h2
+          {/* <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3 }}
@@ -86,7 +86,7 @@ const CCarousel = () => {
             <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
               IIT Bombay Campus
             </span>
-          </motion.h2>
+          </motion.h2> */}
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
