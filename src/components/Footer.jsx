@@ -697,7 +697,7 @@ const Footer = () => {
           className="border-t border-white/20 backdrop-blur-sm py-8"
           variants={sectionVariants}
           initial="hidden"
-          whileInView="visible"
+          whileInView="visible" 
           viewport={{ once: false, margin: "-10%" }}
         >
           <div className="container mx-auto px-6">
@@ -707,7 +707,7 @@ const Footer = () => {
               >
                 <span>© {new Date().getFullYear()} Mars Rover Team IIT Bombay. All rights reserved.</span>
               </motion.div>
-              
+               
               <div className="flex items-center space-x-6">
                 <Link target='_blank' href={'https://eshway.com/'} 
                   className="text-white/60 text-sm flex items-center space-x-2"
