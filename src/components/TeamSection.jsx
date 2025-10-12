@@ -26,7 +26,7 @@ import Dev from '@/../public/mrt/Mechanical/Mobility/Dev Suthar.jpg';
 import Shashwat from '@/../public/mrt/Mechanical/Mobility/Shashwat Gupta.jpg';
 import Jay from '@/../public/mrt/Mechanical/Mobility/JAY MISTRY.jpg';
 import Param from '@/../public/mrt/Mechanical/Mobility/Param Aghera.jpg';
-import Tanish from '@/../public/mrt/Mechanical/Mobility/Tanish Kharbanda.jpg';
+import Tanish from '@/../public/mrt/Mechanical/Mobility/Tanish Kharbanda.jpeg';
 import Atharv from '@/../public/mrt/Mechanical/Mobility/Atharv Maheshwari.jpg';
 import Harshit from '@/../public/mrt/Electrical/Harshit Somani.jpg';
 import Radhika from '@/../public/mrt/Electrical/Radhika agarwal.jpg';
