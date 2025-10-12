@@ -19,15 +19,15 @@ import Ajitesh from '@/../public/mrt/Mechanical/Mobility/Subsystem Lead/Ajitesh 
 import Madhav from '@/../public/mrt/Software/Subsystem Lead/Madhav Agrawal.jpg';
 import AnvitKhade from '@/../public/mrt/Mechanical/Arm & LDT/Anvit Khade.jpg';
 import Rudra from '@/../public/mrt/Mechanical/Arm & LDT/Rudra Khandelwal.jpg';
-import Ryan from '@/../public/mrt/Mechanical/Arm & LDT/Ryan D_Souza.jpg';
+import Rudra1 from '@/../public/mrt/Electrical/Rudra.jpeg';
 import Vidit from '@/../public/mrt/Mechanical/Arm & LDT/Vidit Bohra.jpeg';
 import Ayush from '@/../public/mrt/Mechanical/Mobility/Ayush Mohapatra.jpg';
 import Dev from '@/../public/mrt/Mechanical/Mobility/Dev Suthar.jpg';
 import Shashwat from '@/../public/mrt/Mechanical/Mobility/Shashwat Gupta.jpg';
 import Jay from '@/../public/mrt/Mechanical/Mobility/JAY MISTRY.jpg';
 import Param from '@/../public/mrt/Mechanical/Mobility/Param Aghera.jpg';
-// NOTE: Avoid importing this image to prevent EXIF orientation parsing error during build
-const Tanish = '/mrt/Mechanical/Mobility/Tanish Kharbanda.jpg';
+import Tanish from '@/../public/mrt/Mechanical/Mobility/Tanish Kharbanda.jpg';
+import Atharv from '@/../public/mrt/Mechanical/Mobility/Atharv Maheshwari.jpg';
 import Harshit from '@/../public/mrt/Electrical/Harshit Somani.jpg';
 import Radhika from '@/../public/mrt/Electrical/Radhika agarwal.jpg';
 import shawn from '@/../public/mrt/Electrical/Shawn Thomas Koshy.jpg';
@@ -47,7 +47,7 @@ import Disha from '@/../public/mrt/MDM/Disha Gugale.jpg';
 import Rohan from '@/../public/mrt/MDM/Rohan Shukla.jpeg';
 import Shreya from '@/../public/mrt/MDM/Shreya Goyal.jpeg';
 import Shrishti from '@/../public/mrt/MDM/Srishti Poddar.jpeg';
-import Anshul from '@/../public/mrt/MDM/Anshul Choudhary.jpg'
+import Anshul from '@/../public/mrt/MDM/Anshul Choudhary.jpeg'
 
 // Enhanced TeamMember Component with bottom-to-top animation
 const TeamMember = ({ name, role, image, linkedin, index = 0 }) => {
@@ -300,7 +300,7 @@ const TeamSection = () => {
           name: "Ajitesh Joshi",
           role: "Mechanical Lead (Mobility)",
           image: Ajitesh,
-          linkedin: "https://www.linkedin.com/in/madhav48/",
+          linkedin: "https://www.linkedin.com/in/ajitesh-joshi-b9b351308?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
           isLead: true,
           department: "Mechanical",
         },
@@ -329,12 +329,6 @@ const TeamSection = () => {
           department: "Mechanical",
         },
         {
-          name: "Ryan D'Souza",
-          role: "Junior Design Engineer (Arm & LDT)",
-          image: Ryan,
-          department: "Mechanical",
-        },
-        {
           name: "Vidit Bohra",
           role: "Junior Design Engineer (Arm & LDT)",
           image: Vidit,
@@ -353,7 +347,7 @@ const TeamSection = () => {
           department: "Mechanical",
         },
         {
-          name: "Shashwat Singh",
+          name: "Shashwat Gupta",
           role: "Junior Design Engineer (Mobility)",
           image: Shashwat,
           department: "Mechanical",
@@ -363,7 +357,15 @@ const TeamSection = () => {
           role: "Junior Design Engineer (Mobility)",
           image: Tanish,
           department: "Mechanical",
-        }
+        },
+        {
+          name: "Atharv Maheshwari",
+          role: "Mechanical Lead (Arm & LDT) ",
+          image: Atharv,
+          department: "Mechanical",
+          linkedin: " https://www.linkedin.com/in/atharv-maheshwari/",
+        },
+
       ]
     },
     {
@@ -427,6 +429,12 @@ const TeamSection = () => {
           name: "Tanmay Sinha",
           role: "Junior Design Engineer",
           image: Tanmay,
+          department: "Electrical",
+        },
+        {
+          name: "Rudra Arya",
+          role: "Junior Design Engineer",
+          image: Rudra1,
           department: "Electrical",
         },
 
