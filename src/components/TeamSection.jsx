@@ -295,6 +295,13 @@ const TeamSection = () => {
           isLead: true,
           department: "Mechanical",
         },
+                {
+          name: "Atharv Maheshwari",
+          role: "Mechanical Lead (Arm & LDT) ",
+          image: Atharv,
+          department: "Mechanical",
+          linkedin: " https://www.linkedin.com/in/atharv-maheshwari/",
+        },
         // ... rest of your mechanical team members
         {
           name: "Ajitesh Joshi",
@@ -304,12 +311,14 @@ const TeamSection = () => {
           isLead: true,
           department: "Mechanical",
         },
+        
         {
           name: "Anvit Khade",
           role: "Senior Design Engineer (Arm & LDT)",
           image: AnvitKhade,
           department: "Mechanical",
         },
+        
         {
           name: "Dev Suthar",
           role: "Senior Design Engineer (Mobility)",
@@ -358,13 +367,7 @@ const TeamSection = () => {
           image: Tanish,
           department: "Mechanical",
         },
-        {
-          name: "Atharv Maheshwari",
-          role: "Mechanical Lead (Arm & LDT) ",
-          image: Atharv,
-          department: "Mechanical",
-          linkedin: " https://www.linkedin.com/in/atharv-maheshwari/",
-        },
+
 
       ]
     },
@@ -450,7 +453,7 @@ const TeamSection = () => {
           name: "Madhav Agrawal",
           role: "Software Lead",
           image: Madhav,
-          website: "https://www.linkedin.com/in/madhav48/",
+          linkedin: "https://www.linkedin.com/in/madhav48/",
           isLead: true,
           department: "Software",
         },
